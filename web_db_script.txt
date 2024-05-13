@@ -148,10 +148,3 @@ INSERT INTO `A_text` (`TextKey`, `DisplayOn`, `TextMessage`, `LanguageID`) VALUE
 INSERT INTO `A_text` (`TextKey`, `DisplayOn`, `TextMessage`, `LanguageID`) VALUES ('website_key_143', 'label', "Contact Enablers to get introduced with impact investors that are found on the Marketplace", '1');
 INSERT INTO `A_text` (`TextKey`, `DisplayOn`, `TextMessage`, `LanguageID`) VALUES ('website_key_144', 'label', "Access matching investors with % match score and send introduction request / express interest to Enablers", '1');
 INSERT INTO `A_text` (`TextKey`, `DisplayOn`, `TextMessage`, `LanguageID`) VALUES ('website_key_145', 'label', "Receive pre-matched investors from Enablers of choice by keeping raise requirements up to date", '1');
-
-INSERT INTO `A_text` (`TextKey`, `DisplayOn`, `TextMessage`, `LanguageID`) VALUES ('website_key_145', 'label', "Receive pre-matched investors from Enablers of choice by keeping raise requirements up to date", '1');
-
-
-INSERT INTO `A_text` (`TextKey`, `DisplayOn`, `TextMessage`, `LanguageID`) VALUES ('website_key_145', 'label', "Receive pre-matched investors from Enablers of choice by keeping raise requirements up to date", '1');
-
-
