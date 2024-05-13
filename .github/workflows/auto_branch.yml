@@ -18,8 +18,7 @@ jobs:
 
     - name: Replace text
       run: |
-        # Use sed or other tools to replace text
-        sed -i 's/A_text/A_text-A/g' {} +
+            find . -type f -name '*.txt' -exec sed -i 's/A_text/A_text-A/g' {} +
 
     - name: Commit and push changes
       run: |
