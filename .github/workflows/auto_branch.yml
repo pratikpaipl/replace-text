@@ -1,0 +1,28 @@
+name: Auto Branch and Replace Text
+
+on:
+  push:
+    branches:
+      - main  # Specify the branch you want to trigger this workflow on
+
+jobs:
+  auto_branch_and_replace_text:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create new branch
+      run: git checkout -b test
+
+    - name: Replace text
+      run: |
+        # Use sed or other tools to replace text
+        sed -i 's/A_text/A_text-text/g' file-to-modify
+
+    - name: Commit and push changes
+      run: |
+        git add .
+        git commit -m "Automated text replacement"
+        git push origin test
