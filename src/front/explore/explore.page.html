@@ -1,0 +1,148 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="true" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <head-title [headTitle]="store.pageTittle"></head-title>
+    <refresher (change)="callPullRefresh($event)"></refresher>
+    <div class="container-fluid tab-container" style="padding-top: 20px !important; padding-bottom:0px; --background: var(--ion-color-white) !important; background: var(--ion-color-white) !important;">
+        <div class="container" style="display: flex;">
+            <app-tabs [segments]="segments" customClass="explore" [selectedSegment]="pageType" from='home' (change)="onClickSegment($event)" style="background: var(--ion-color-white); border-radius: 8px; padding: 0px 10px;"></app-tabs>
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-bottom:0px; margin-top: 20px;">
+        <div class="container padding-0">
+            <div class="tab-content" >
+                <div *ngIf="pageType == 'enablers'">
+                    <ion-label>
+                        <a [href]="adminPath" target="_blank">{{store.getVal('create_your_enabler_account')}}</a>
+                        <span>&nbsp;{{store.getVal('to_streamline_introduction_process_in_your_curated_community_of_investors_and_investees')}}</span>
+                    </ion-label>
+                </div>
+                <div *ngIf="pageType == 'funding-profiles'">
+                    <ion-label>
+                        <span (click)="openPage('/explore/enablers')" style="margin-right: 0px;">
+                            <a [href]="'/explore/enablers'" class="clickEv" >{{store.getVal('join_enabler')}}</a>
+                        </span> 
+                        <span>&nbsp;{{store.getVal('or')}}&nbsp;</span>
+                        <span (click)="openPage('investor/add')" style="margin-right: 0px;">
+                            <a [href]="'investor/add'" class="clickEv" >{{store.getVal('create_your_free_account')}}</a>
+                        </span>
+                        <span>&nbsp;{{store.getVal('to_get_introduced_by_enablers_to_curated_investors')}}</span>
+                    </ion-label>
+
+                </div>
+                <div *ngIf="pageType == 'fundraise-needs'">
+                    
+                    <ion-label>
+                        <span (click)="openPage('/explore/enablers')">
+                            <a [href]="'/explore/enablers'" class="clickEv" >{{store.getVal('join_enabler')}}</a>
+                        </span>
+                        <span>&nbsp;{{store.getVal('or')}}&nbsp;</span>
+                        <span (click)="openPage('investee/add')">
+                            <a [href]="'investee/add'" class="clickEv" >{{store.getVal('create_your_free_account')}}</a>
+                        </span>
+                        <span>&nbsp;{{store.getVal('to_get_introduced_by_enablers_to_curated_investees')}}</span>
+                    </ion-label>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container padding-0">
+            <ion-grid>
+                <ion-row class="counts_filter_block">
+                    <ion-col class="left_filter_panel" size="6">
+                        <div class="counts_searchbox">
+                            <div id="serch_component" style="width: 100%;">
+                                <app-search-bar [isShow]="true" fromPage="home" [pageType]="pageType" [keyword]="keyword" (change)="callFilter($event)"></app-search-bar>
+                            </div>
+                            <!-- <div class="count_boxs navigation_compo">
+                                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+                            </div> -->
+                            <div class="downloads navigation_compo" *ngIf="allTotal>0 && store.checkPermissionObj(permissions,'download_all') ">
+                                <i class="fas fa-download pointer" (click)="download($event)"></i>
+                            </div>
+                            
+                        </div>
+                    </ion-col>
+                    <ion-col class="right_filter_panel">
+                        <div class="filter_nav">
+                            <div class="sharing navigation_compo">
+                                <i class="fas fa-share-alt pointer" style="padding: 0 15px; font-size: 25px !important;" (click)="Share()"></i>
+                            </div>
+                            <filter-count [filteCnt]="filteCnt" [pageType]="pageType" [pageFrom]="'user'" (change)="openFilter($event)"></filter-count>
+                            <div class="drop_box" *ngIf="store.sortItemList.length>0">
+                                <drop-down from="sort" [itemList]="store.sortItemList" [preSlected]="sort" [slected]="sort" [isSort]="true" (change)="selectSort($event)"></drop-down>
+                            </div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row [ngClass]='activePage'>
+                    <ion-col class="main_cols auto-cols">
+                        <ion-label *ngIf="allTotal>0" class="note-padding filterCriteriaNote count-note">
+                            <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count> 
+                            <span>{{store.getVal('result_filter_criteria_note')}}</span>
+                        </ion-label>
+                        <enabler-items apiEnd="enabler/valid_explorer_list" *ngIf="pageType == 'enablers'" [pageType]="pageType" from="front" pageFrom="list" [type]="pageType" [updateTime]="updateTime" apiAction="enabler" (change)="updateCount($event)"></enabler-items>
+                        <fundraise-items *ngIf="pageType == 'fundraise-needs'" [pageType]="pageType" [type]="pageType" apiAction="fundraise_enabler" from="front" openFront="1" pageFrom="list" [EnablerSlug]="''" [FN_EnablerSlug]="''" [updateTime]="updateTime" (change)="updateCount($event)"></fundraise-items>
+                        <funding-profile-items *ngIf="pageType == 'funding-profiles'" apiEnd="funding_profile/valid_submitted_at_enablers_list"  [pageType]="pageType" [type]="pageType" from="front" pageFrom="list" [type]="'fundraise'" apiAction="funding_profile_enabler" [EnablerSlug]="EnablerSlug" [FP_EnablerSlug]="''" [updateTime]="updateTime"  (change)="updateCount($event)"></funding-profile-items>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<!-- <ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    
+    
+    <div id="serch_component" style="padding-top: 10px;">
+        <app-search-bar [isShow]="true" fromPage="home" [pageType]="pageType" [keyword]="keyword" (change)="callFilter($event)"></app-search-bar>
+    </div>
+    <div id="tabblings">
+        <ion-grid class="container">
+            <ion-row>
+                <ion-col>
+                    <app-tabs [segments]="segments" [selectedSegment]="pageType" from='home' (change)="onClickSegment($event)"></app-tabs>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div class="page_wapper">
+        <div id="all_ui">
+            <ion-grid class="container">
+                <ion-row class="counts_filter_block">
+                    <ion-col class="left_filter_panel">
+                        <div class="counts_searchbox">
+                            <div class="count_boxs navigation_compo">
+                                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+                            </div>
+                            <div class="downloads navigation_compo" *ngIf="allTotal>0 && store.checkPermissionObj(permissions,'download_all') ">
+                                <i class="fas fa-download pointer" (click)="download($event)"></i>
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col class="right_filter_panel">
+                        <div class="filter_nav">
+                            <div class="sharing navigation_compo">
+                                <i class="fas fa-share-alt pointer" style="padding: 0 15px; font-size: 25px !important;" (click)="Share()"></i>
+                            </div>
+                            <filter-count [filteCnt]="filteCnt" [pageType]="pageType" [pageFrom]="'user'" (change)="openFilter($event)"></filter-count>
+                            <div class="drop_box" *ngIf="store.sortItemList.length>0">
+                                <drop-down from="sort" [itemList]="store.sortItemList" [preSlected]="sort" [slected]="sort" [isSort]="true" (change)="selectSort($event)"></drop-down>
+                            </div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row [ngClass]='activePage'>
+                    <ion-col class="main_cols auto-cols">
+                        <ion-label *ngIf="allTotal>0" class="note-padding filterCriteriaNote">{{store.getVal('result_filter_criteria_note')}}</ion-label>
+                        <enabler-items apiEnd="enabler/valid_explorer_list" *ngIf="pageType == 'enablers'" [pageType]="pageType" from="front" pageFrom="list" [type]="pageType" [updateTime]="updateTime" apiAction="enabler" (change)="updateCount($event)"></enabler-items>
+                        <fundraise-items *ngIf="pageType == 'fundraise-needs'" [pageType]="pageType" [type]="pageType" apiAction="fundraise_enabler" from="front" openFront="1" pageFrom="list" [EnablerSlug]="''" [FN_EnablerSlug]="''" [updateTime]="updateTime" (change)="updateCount($event)"></fundraise-items>
+                        <funding-profile-items *ngIf="pageType == 'funding-profiles'" apiEnd="funding_profile/valid_submitted_at_enablers_list"  [pageType]="pageType" [type]="pageType" from="front" pageFrom="list" [type]="'fundraise'" apiAction="funding_profile_enabler" [EnablerSlug]="EnablerSlug" [FP_EnablerSlug]="''" [updateTime]="updateTime"  (change)="updateCount($event)"></funding-profile-items>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content> -->
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

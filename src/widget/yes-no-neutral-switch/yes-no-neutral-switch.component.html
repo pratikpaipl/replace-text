@@ -1,0 +1,10 @@
+<!-- yes-no-neutral-switch.component.html -->
+<div class="main" *ngIf="isView">
+    <ion-label>{{store.getVal('express_interest')}}</ion-label>
+    <div [class]="isDisabled?'toggle-switch disabled':'toggle-switch'" [ngClass]="{'yes': isSelected === 'yes', 'remove': isSelected === 'remove', 'no': isSelected === 'no'}">
+      <div [class]="isDisabled?'option '+isSelected:'option'" (click)="isSelected == 'yes'?undefined :toggleSelection('yes')"><span *ngIf="isDisabled && isSelected == 'yes'">{{store.getVal(isSelected)}}</span><i class="fa-circle-check fa-solid"></i></div>
+      <div [class]="isDisabled?'option '+isSelected:'option'" (click)="isSelected == 'remove'?undefined :toggleSelection('remove')"><i class="fa-solid fa-circle-question"></i></div>
+      <div [class]="isDisabled?'option '+isSelected:'option'" (click)="isSelected == 'no'?undefined :toggleSelection('no')"><i class="fa-circle-xmark fa-solid"></i><span *ngIf="isDisabled && isSelected == 'no'">{{store.getVal(isSelected)}}</span></div>
+      </div>
+</div>
+  

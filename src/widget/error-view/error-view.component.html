@@ -1,0 +1,32 @@
+<div class="page_wapper">
+    <div id="all_ui">
+        <ion-grid class="container">
+            <ion-row class="forms_row">
+                <ion-col class="right_panel" id="other_auth_forms">
+                    <div class="forms_conponenl" id="authforms">
+                        <form>
+                            <ion-grid id="myprofile" class="forms_block">
+                                <ion-row class="forms_headers" *ngIf="isShow">
+                                    <ion-col size="12">
+                                        <ion-label class="heading">
+                                            <span class="icons"><i class="fa fa fa-warning" style="color:var(--ion-color-logo-red)"></i></span>error
+                                        </ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="forms_body">
+                                    <ion-col size="12">
+                                        <div class="form-group">
+                                            <ion-label class="content" [ngClass]='activePage' [innerHTML]="message"></ion-label>
+                                        </div>
+                                        <bottom-btn styleD="center" [justify]="'center'" [leftKey]="leftKey" [leftBtn]="leftBtn" isShow="0" (change)="callAction($event)">
+                                        </bottom-btn>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </form>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</div>

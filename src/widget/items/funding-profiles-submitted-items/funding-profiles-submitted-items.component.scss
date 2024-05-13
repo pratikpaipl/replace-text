@@ -1,0 +1,164 @@
+.item-logo-img{
+    padding-right: 0px;
+    }
+.active-0 {
+    color: var(--ion-color-dark-green);
+    font-size: 14px !important;
+    font-style: normal !important;
+    border: 1px solid var(--ion-color-dark-green);
+    padding: 0px 5px;
+}
+
+.td-right-align {
+    justify-content: end;
+    margin: 5px !important;
+}
+
+.inActive {
+    color: var(--ion-color-logo-red);
+    font-size: 14px !important;
+    font-style: normal !important;
+    border: 1px solid var(--ion-color-logo-red);
+    padding: 0px 5px;
+}
+.fixTableHead {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    max-height: calc(100vh - 315px);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    position: relative;
+    padding: 5px;
+    border: 1px solid var(--ion-color-light-gray);
+    vertical-align: top;
+    width: 200px;
+    font-size: 14px;
+    line-height: 15px;
+    text-align: left;
+    max-width: 200px;
+    min-width: 200px;
+    // overflow:hidden;
+}
+
+th {
+    background: #f5f5f5;
+    height: 42px;
+    text-align: center;
+    vertical-align: middle;
+    
+}
+
+#app-ui td:first-child{
+    background: var(--ion-color-black);
+    color: var(--ion-color-white) !important;
+    max-width: 120px;
+}
+
+td:first-child,
+th:first-child {
+    min-width: 120px !important;
+    vertical-align: middle;
+}
+
+.cardlist {
+    background-color: var(--ion-color-white);
+    border-radius: 10px;
+    display: flex;
+    box-shadow: 0 0 4px rgba(32, 33, 36, 0.28);
+    position: relative;
+    margin-bottom: 15px;
+    padding: 10px;
+    overflow: visible;
+}
+.admin_rows {
+    border-top: none;
+}
+
+.admin_rows .card_right_boxs ion-label {
+    border-top: 1px solid var(--ion-color-dark-gray);
+}
+
+.tags {
+    position: absolute;
+    left: -25px; // -60px;
+    top: -25px;// -60px;
+    padding: 0;
+    z-index: 11;
+    width: 50px; // 120px;
+    height: 50px; //120px;
+    background: var(--ion-color-dark-green);
+    transform: rotate(-45deg);
+}
+
+.tags span {
+    position: absolute;
+    display: block;
+    margin-right: 0;
+    height: auto;
+    padding: 0px;
+    font-size: 15px;
+    color: var(--ion-color-white);
+    bottom: 7px;
+    right: 30px;
+    line-height: 15px;
+}
+
+
+
+.tags i {
+    display: none;
+}
+.datatable-row-detail ion-col{
+    display: block !important;
+}
+ion-col{
+    white-space: normal;
+    word-break: break-all;
+}
+ion-col.title {
+    flex: 0 0 150px !important;
+    max-width: 150px;
+}
+ion-col.title ion-label {
+    color: var(--ion-color-black) !important;
+    line-height: 16px;
+}
+ion-col.value ion-label {
+    font-weight: bold !important;
+}
+@media (max-width: 768px) {
+    
+    ion-col.title {
+        flex: 0 0 120px !important;
+        max-width: 120px;
+    }
+    .tags {
+        position: absolute;
+        left: -25px;
+        top: -25px;
+        width: 50px;
+        height: 50px;
+    }
+    .tags i {
+        position: absolute;
+        display: none;
+        margin-right: 0;
+        height: auto;
+        padding: 0px;
+        font-size: 17px;
+        color: var(--ion-color-white);
+        bottom: 5px;
+        right: 34px;
+        line-height: 15px;
+    }
+    .tags span {
+        display: none;
+    }
+}

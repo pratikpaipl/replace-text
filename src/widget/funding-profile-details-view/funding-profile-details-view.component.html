@@ -1,0 +1,218 @@
+<ion-row class="Overview_block" *ngIf="fundingProfileData != undefined">
+    <ion-col [class]="fundingProfileData.Email != undefined?'Overview_box left':'Overview_box'">
+        <ion-grid class="Overview-box">
+            <ion-row class="content_box">
+                <ion-col sixe="12">
+                    <div class="m-part">
+                        <ion-card-title>{{store.getVal('impact_objectives')}}</ion-card-title>
+                        <div class="forms_block radius">
+                            <div *ngIf="ImpactThemesAndAreas != undefined && ImpactThemesAndAreas.length >0">
+                                <ion-label class="title">{{store.getVal('impact_themes_and_areas')}}{{fundingProfileData.ImpactThemesAndAreasTotal != undefined?store.dispCount(fundingProfileData.ImpactThemesAndAreasSelectedTotal,fundingProfileData.ImpactThemesAndAreasTotal):''}}</ion-label>
+                                <div class="two-level" *ngFor="let item of ImpactThemesAndAreas; let i = index">
+                                    <span class="two-leve-data">{{item.ParentReferenceName}}{{item.ImpactThemesAndAreasTotal != undefined?store.dispCount(item.ImpactThemesAndAreasSelectedTotal,item.ImpactThemesAndAreasTotal):''}}</span>
+                                    <ion-label class="impact-themes-content" style="padding-left: 15px;"> {{item.ReferenceName}}</ion-label>
+                                </div>
+                            </div>
+                            <div *ngIf="Sdgs != undefined && Sdgs.length>0">
+                                <ion-label class="title">{{store.getVal('sdgs')}}{{fundingProfileData.SdgsTotal != undefined?store.dispCount(Sdgs.length,fundingProfileData.SdgsTotal):''}}</ion-label>
+                                <label-right-img *ngIf="Sdgs !=undefined" [Slug]="''" [prod]="fundingProfileData" [dataType]="'sdgs'" [SdgList]="Sdgs" [subtype]="'funding-profile'" [pageFrom]="'details'" [from]="'admin'" [Click]="true" (change)="moveToEnabler('sdgs',Sdgs)"></label-right-img>
+                            </div>
+                            <div *ngIf="Esg != undefined && Esg.length>0">
+                                <ion-label class="title">{{store.getVal('esg')}}{{fundingProfileData.EsgTotal != undefined?store.dispCount(fundingProfileData.EsgSelectedTotal,fundingProfileData.EsgTotal):''}}</ion-label>
+                                <div class="two-level" *ngFor="let item of Esg; let i = index" (click)="moveToEnabler('esg',Esg)">
+                                    <span class="two-leve-data">{{item.ParentReferenceName}}{{item.EsgTotal != undefined?store.dispCount(item.EsgSelectedTotal,item.EsgTotal):''}}</span>
+                                    <ion-label class="impact-themes-content pointer" style="padding-left: 15px;"> {{item.ReferenceName}}</ion-label>
+                                </div>
+                            </div>
+                            <div *ngIf="fundingProfileData.GenderLens != undefined && fundingProfileData.GenderLens != ''">
+                                <ion-label class="title">{{this.store.getVal('gender_lens')}}{{fundingProfileData.GenderLensTotal != undefined?store.dispCount(fundingProfileData.GenderLensSelectedTotal,fundingProfileData.GenderLensTotal):''}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.GenderLens}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.AdditionalImpactThemesOrAreas != undefined && fundingProfileData.AdditionalImpactThemesOrAreas != ''">
+                                <ion-label class="title">{{this.store.getVal('additional_impact_themes_or_areas')}}</ion-label>
+                                <ion-label class="content" [innerHtml]="store.nl2br(fundingProfileData.AdditionalImpactThemesOrAreas)"></ion-label>
+                            </div>
+                            <div *ngIf="(!(ImpactThemesAndAreas != undefined && ImpactThemesAndAreas.length >0) && !(Sdgs != undefined && Sdgs.length>0) && !(Esg != undefined && Esg.length>0) && !(fundingProfileData.AdditionalImpactThemesOrAreas != undefined && fundingProfileData.AdditionalImpactThemesOrAreas != ''))">
+                                <ion-note>{{store.getVal('investor_blank_details_msg')}}</ion-note>
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-col>
+    <ion-col class="Overview_box right" *ngIf="fundingProfileData.Email != undefined">
+        <ion-grid class="Overview-box">
+            <ion-row class="content_box">
+                <ion-col sixe="12">
+                    <div class="m-part">
+                        <div class="forms_block">
+                            <div *ngIf="fundingProfileData.CompanyName != undefined && fundingProfileData.CompanyName != ''">
+                                <ion-label class="title">{{this.store.getVal('company_name')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.CompanyName}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.ContactName != undefined && fundingProfileData.ContactName != ''">
+                                <ion-label class="title">{{this.store.getVal('contact')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.ContactName}}</ion-label>
+                                <ion-label class="content"><a class="content" href="mailto:{{fundingProfileData.Email}}" tabindex="-1">{{fundingProfileData.Email}}<i class="fa fa-envelope-o" aria-hidden="true"></i></a></ion-label>
+                            </div>
+
+                            <div *ngIf="fundingProfileData.RepresentingForFirstName != undefined && fundingProfileData.RepresentingForFirstName != ''">
+                                <ion-label class="title">{{this.store.getVal('investor_profiles_representing_for')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.RepresentingForFirstName}} {{fundingProfileData.RepresentingForLastName != undefined?fundingProfileData.RepresentingForLastName:''}}  </ion-label>
+                                <ion-label class="content"><a class="content" href="mailto:{{fundingProfileData.RepresentingForEmail}}" tabindex="-1">{{fundingProfileData.RepresentingForEmail}}<i class="fa fa-envelope-o" aria-hidden="true"></i></a></ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.CreatedTs != undefined && fundingProfileData.CreatedTs != ''">
+                                <ion-label class="title">{{this.store.getVal('created_on')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.CreatedTs| date:'dd MMM yyyy hh:mm a':'UTC'}}&nbsp;{{store.getVal('utc')}}</ion-label>
+                            </div>
+
+                            <div *ngIf="fundingProfileData.ModifiedTs != undefined && fundingProfileData.ModifiedTs != ''">
+                                <ion-label class="title">{{this.store.getVal('last_update')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.ModifiedTs| date:'dd MMM yyyy hh:mm a':'UTC'}}&nbsp;{{store.getVal('utc')}}</ion-label>
+                            </div>
+
+                            <div *ngIf="fundingProfileData.CreatedBy != undefined && fundingProfileData.CreatedBy != ''">
+                                <ion-label class="title">{{this.store.getVal('created_by')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.CreatedBy}}</ion-label>
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-col>
+</ion-row>
+<ion-row class="Overview_block" *ngIf="fundingProfileData != undefined">
+    <ion-col class="Overview_box ">
+        <ion-grid class="Overview-box">
+            <ion-row class="content_box">
+                <ion-col sixe="12">
+                    <div class="m-part" *ngIf="FundingType != undefined && FundingType != '' || fundingProfileData.FundingStage != undefined && fundingProfileData.FundingStage != '' || fundingProfileData.CountriesOfIncorporation != undefined && fundingProfileData.CountriesOfIncorporation != '' || fundingProfileData.IndustriesSectors != undefined && fundingProfileData.IndustriesSectors != '' || fundingProfileData.TotalRaiseAmount != undefined || fundingProfileData.CumulativeRevenue != undefined && fundingProfileData.CumulativeRevenue != ''">
+                        <ion-card-title>{{store.getVal('criteria_for_fundraise_needs')}}</ion-card-title>
+                        <div class="forms_block radius">
+
+                            <div *ngIf="FundingType != undefined && FundingType.length >0">
+                                <ion-label class="title">{{store.getVal('funding_type')}}{{fundingProfileData.FundingTypeTotal != undefined?store.dispCount(fundingProfileData.FundingTypeSelectedTotal,fundingProfileData.FundingTypeTotal):''}}</ion-label>
+                                <div class="two-level" *ngFor="let item of FundingType; let i = index">
+                                    <span class="two-leve-data">{{item.ParentReferenceName}}{{item.FundingTypeTotal != undefined?store.dispCount(item.FundingTypeSelectedTotal,item.FundingTypeTotal):''}}</span>
+                                    <ion-label class="impact-themes-content" style="padding-left: 15px;">{{item.ReferenceName}}</ion-label>
+                                </div>
+                            </div>
+                            <div *ngIf="fundingProfileData.FundingStage != undefined && fundingProfileData.FundingStage != ''">
+                                <ion-label class="title">{{this.store.getVal('funding_stage')}}{{fundingProfileData.InvestmentStageTotal != undefined?store.dispCount(fundingProfileData.InvestmentStageSelectedTotal,fundingProfileData.InvestmentStageTotal):''}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.FundingStage}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.TicketSizePerFunding != undefined && fundingProfileData.TicketSizePerFunding != ''">
+                                <ion-label class="title">{{this.store.getVal('ticket_size_per_investment')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.TicketSizePerFunding}}</ion-label>
+                            </div>                            
+                            <div *ngIf="fundingProfileData.TotalRaiseAmount != undefined && fundingProfileData.TotalRaiseAmount != '' ">
+                                <ion-label class="title">{{this.store.getVal('total_raise_amount1')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.TotalRaiseAmount}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.CumulativeRevenue != undefined && fundingProfileData.CumulativeRevenue != ''">
+                                <ion-label class="title">{{this.store.getVal('cumulative_revenue_last_two_years_till_date_in_eur')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.CumulativeRevenue}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.IndustriesSectors != undefined && fundingProfileData.IndustriesSectors != ''">
+                                <ion-label class="title">{{this.store.getVal('company_industries_sectors')}}{{fundingProfileData.IndustriesSectorsTotal != undefined?store.dispCount(fundingProfileData.IndustriesSectorsSelectedTotal,fundingProfileData.IndustriesSectorsTotal):''}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.IndustriesSectors}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.CountriesOfIncorporation != undefined && fundingProfileData.CountriesOfIncorporation != ''">
+                                <ion-label class="title">{{this.store.getVal('country_ies_of_incorporation')}}{{fundingProfileData.CountriesOfIncorporationTotal != undefined?store.dispCount(fundingProfileData.CountriesOfIncorporationSelectedTotal,fundingProfileData.CountriesOfIncorporationTotal):''}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.CountriesOfIncorporation}}</ion-label>
+                            </div>
+
+                            <div *ngIf="(!(FundingType != undefined && FundingType.length >0) && !(fundingProfileData.FundingStage != undefined && fundingProfileData.FundingStage != '') && !(fundingProfileData.TicketSizePerFunding != undefined && fundingProfileData.TicketSizePerFunding != '') && !(fundingProfileData.TotalRaiseAmount != undefined && fundingProfileData.TotalRaiseAmount != '') && !(fundingProfileData.CumulativeRevenue != undefined && fundingProfileData.CumulativeRevenue != '') && !(fundingProfileData.IndustriesSectors != undefined && fundingProfileData.IndustriesSectors != '') && !(fundingProfileData.CountriesOfIncorporation != undefined && fundingProfileData.CountriesOfIncorporation != ''))">
+                                <ion-note>{{store.getVal('investor_blank_details_msg')}}</ion-note>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="m-part" *ngIf="fundingProfileData.FundingProviderType != undefined && fundingProfileData.FundingProviderType != '' || fundingProfileData.MinTicketSizePerInvestor != undefined && fundingProfileData.MinTicketSizePerInvestor != '' || fundingProfileData.CountriesOfDomicileNationality != undefined && fundingProfileData.CountriesOfDomicileNationality != ''">
+                        <ion-card-title>{{store.getVal('about_investor_profile')}}</ion-card-title>
+                        <div class="forms_block radius">
+                            <div *ngIf="fundingProfileData.FundingProviderType != undefined && fundingProfileData.FundingProviderType != ''">
+                                <ion-label class="title">{{this.store.getVal('funding_provider_type')}}{{fundingProfileData.InvestorTypeTotal != undefined?store.dispCount(fundingProfileData.InvestorTypeSelectedTotal,fundingProfileData.InvestorTypeTotal):''}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.FundingProviderType}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.MinTicketSizePerInvestor != undefined && fundingProfileData.MinTicketSizePerInvestor != ''">
+                                <ion-label class="title">{{this.store.getVal('minimum_ticket_size_per_funding_provider_eur')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.MinTicketSizePerInvestor}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.CountriesOfDomicileNationality != undefined && fundingProfileData.CountriesOfDomicileNationality != ''">
+                                <ion-label class="title">{{this.store.getVal('countries_of_domicile_nationality')}}{{fundingProfileData.CountriesOfDomicileNationalityTotal != undefined?store.dispCount(fundingProfileData.CountriesOfDomicileNationalitySelectedTotal,fundingProfileData.CountriesOfDomicileNationalityTotal):''}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.CountriesOfDomicileNationality}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.AdditionalNotes != undefined && fundingProfileData.AdditionalNotes != ''">
+                                <ion-label class="title">{{this.store.getVal('additional_notes')}}</ion-label>
+                                <ion-label class="content" [innerHtml]="store.nl2br(fundingProfileData.AdditionalNotes)"></ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.Website != undefined && fundingProfileData.Website != ''">
+                                <ion-label class="title">{{this.store.getVal('website')}}</ion-label>
+                                <ion-label class="content"><a href="{{fundingProfileData.Website}}" target="_blank" tabindex="-1">{{fundingProfileData.Website}}<i class="fa fa-external-link" aria-hidden="true"></i></a></ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.About != undefined && fundingProfileData.About != ''">
+                                <ion-label class="title">{{this.store.getVal('about')}}</ion-label>
+                                <ion-label class="content" [innerHtml]="store.nl2br(fundingProfileData.About)"></ion-label>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="m-part" *ngIf="(fundingProfileData.SourceOrReferral != undefined && fundingProfileData.SourceOrReferral != '') || (fundingProfileData.InternalReferenceNumber != undefined && fundingProfileData.InternalReferenceNumber != '') || (fundingProfileData.Tags != undefined && fundingProfileData.Tags != '') || (fundingProfileData.ScreeningStatusName != undefined && fundingProfileData.ScreeningStatusName != '')">
+                        <ion-card-title>{{store.getVal('for_internal_use')}}</ion-card-title>
+                        <div class="forms_block radius">
+                            <div *ngIf="fundingProfileData.SourceOrReferral != undefined && fundingProfileData.SourceOrReferral != ''">
+                                <ion-label class="title">{{this.store.getVal('sources')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.SourceOrReferral}}</ion-label>
+                            </div>
+
+                            <div *ngIf="fundingProfileData.InternalReferenceNumber != undefined && fundingProfileData.InternalReferenceNumber != ''">
+                                <ion-label class="title">{{this.store.getVal('internal_reference_number')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.InternalReferenceNumber}}</ion-label>
+                            </div>
+
+                            <div *ngIf="fundingProfileData.Tags != undefined && fundingProfileData.Tags != ''">
+                                <ion-label class="title">{{this.store.getVal('tags')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.Tags}}</ion-label>
+                            </div>
+                            <div *ngIf="fundingProfileData.ScreeningStatusName != undefined && fundingProfileData.ScreeningStatusName != ''">
+                                <ion-label class="title">{{this.store.getVal('screening_status')}}</ion-label>
+                                <ion-label class="content">{{fundingProfileData.ScreeningStatusName}}</ion-label>
+                            </div>
+                        </div>
+                    </div>
+                    <editor-data-view *ngIf="fundingProfileData.InternalNotes != undefined && fundingProfileData.InternalNotes != ''" [title]="store.getVal('internal_notes')" [content]="fundingProfileData.InternalNotes" clName="InternalNotes"></editor-data-view>
+
+                    <div class="m-part" *ngIf="(fundingProfileData.DisclaimerText != undefined)">
+                        <ion-card-title>{{store.getVal('disclaimer_title')}}</ion-card-title>
+                        <div class="forms_block radius">
+                            <div class="check-more-action">
+                                <ion-label [class]="'labels'" [innerHtml]="store.nl2br(fundingProfileData.DisclaimerText)"></ion-label>
+                                <div>
+                                    <ion-label class="linkv" (click)="openDesModal('DisclaimerText','investor_disclaimer')">{{store.getVal('view_more')}}</ion-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-part" *ngIf="(fundingProfileData.ConfidentialityText
+                    != undefined)">
+                        <ion-card-title>{{store.getVal('confidentiality_title')}}</ion-card-title>
+                        <div class="forms_block radius">
+                            <div class="check-more-action">
+                                <ion-label [class]="'labels'" [innerHtml]="store.nl2br(fundingProfileData.ConfidentialityText)"></ion-label>
+                                <div>
+                                    <ion-label class="linkv" (click)="openDesModal('ConfidentialityText','investor_confidentiality')">{{store.getVal('view_more')}}</ion-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-col>
+</ion-row>

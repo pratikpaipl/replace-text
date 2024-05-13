@@ -1,0 +1,185 @@
+<ion-grid class="p-0" *ngIf="prod != undefined">
+    <ion-row class="cardlist_filter_row p-0" style="align-items: center; justify-content: space-between;">
+        <ion-col>
+            <ion-grid class="p-0">
+                <ion-row [class]="((prod.FPSubmissionAccept != 0 && store.appType =='front') ||  store.appType =='admin') &&  store.checkPermission(prod,'submit_funding_profile') || ((prod.FNSubmissionAccept != 0 && store.appType =='front') || store.appType =='admin') && store.checkPermission(prod,'submit_fundraise_form')?'counts_row true':'counts_row'" >
+                    <ion-col class="fiter_names">
+                        <div class="filter_count_list" style="justify-content: space-between;">
+                            <div>
+                                <div class="count_list">
+                                    <!-- <ion-row> -->
+                                        <div class="min-col-33">
+                                            <ion-label class="online" *ngIf="((prod.FPSubmissionAccept != 0 && store.appType =='front') || store.appType =='admin')&&  store.checkPermission(prod,'submit_funding_profile')">
+                                                <div class="enabler-button-div pointer" (click)="actionCall('investor')" tabindex="-1">
+                                                    <a target="_blank" class="btn-investor clickEv">
+                                                        <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+                                                        <span>{{store.getVal('submit_funding_profile')}}</span>
+                                                    </a>
+                                                </div>
+                                            </ion-label>
+                                            <ion-label class="online" *ngIf="((prod.FNSubmissionAccept != 0 && store.appType =='front') || store.appType =='admin')  && store.checkPermission(prod,'submit_fundraise_form')">
+                                                <div class="enabler-button-div pointer" (click)="actionCall('investee')" tabindex="-1">
+                                                    <a target="_blank" class="btn-investee clickEv">
+                                                        <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>{{store.getVal('submit_fundraise_need')}}
+                                                    </a>
+                                                </div>
+                                            </ion-label>
+                                        </div>
+                                        <div class="min-col-33">
+                                            <ion-label class="points" *ngIf="prod.Website != undefined && prod.Website != ''">
+                                                <span [class]="'contents pointer'" >
+                                                    <a href="{{prod.Website}}" target="_blank" [class]="'data-point-a'" tabindex="-1">
+                                                        <div class="icon-container">
+                                                            <i class="fa-external-link fa-solid"></i>
+                                                        </div>
+                                                        <span class="count text-center">{{store.getVal('website')}}</span>
+                                                    </a>
+                                                </span>
+                                            </ion-label>
+                                            <ion-label class="online" *ngIf="prod.TotalFundingProfile>0">
+                                                <span class="contents pointer" (click)="enablerDetails('enablers', prod,'funding-profiles',undefined,'main')">
+                                                    <a [href]="routePathMain('enablers', prod, 'funding-profiles')" [class]="'clickEv pointer data-point-a '" tabindex="-1">
+                                                        <div class="icon-container">
+                                                            <i class="fa-money-bill-transfer fa-solid"></i>
+                                                        </div>
+                                                        <span class="count text-center">{{prod.TotalSubmittedFundingProfiles>0 && store.isLogin?prod.TotalSubmittedFundingProfiles+' / ':''}}{{prod.TotalFundingProfile }}</span>
+                                                    </a>
+                                                </span>
+                                            </ion-label>
+                                            <ion-label class="points" *ngIf="prod.TotalFundraise>0">
+                                                <span class="contents pointer" (click)="enablerDetails('enablers', prod, 'fundraise-needs',undefined,'main')">
+                                                    <a [href]="routePathMain('enablers', prod, 'fundraise-needs')" [class]="'clickEv pointer data-point-a'" tabindex="-1">
+                                                        <!-- <i class="data-point data-point-round-i fa-rocket fa-solid"></i> -->
+                                                        <div class="icon-container">
+                                                            <i class="fa-rocket fa-solid"></i>
+                                                        </div>
+                                                        <span class="count text-center">{{prod.TotalSubmittedFundraiseNeeds>0 && store.isLogin?prod.TotalSubmittedFundraiseNeeds+' / ':''}}{{ prod.TotalFundraise }}</span>
+                                                    </a>
+                                                </span>
+                                            </ion-label>
+                                        </div>
+                                        <div class="min-col-33">
+                                            <ion-label class="points" *ngIf="prod.TotalMatched>0">
+                                                <span [class]="store.isLogin?'contents pointer':'contents no-pointer'" (click)="store.isLogin?openFullReport('matched','matched'):null">
+                                                    <a *ngIf="!store.isLogin" [class]="'clickEv no-pointer data-point-a'" tabindex="-1">
+                                                        <div class="icon-container user_group_icon">
+                                                            <i class="fa-infinity fa-solid"></i>
+                                                        </div>
+                                                        <span class="count text-center">{{prod.TotalMatched}}</span>
+                                                    </a>
+                                                    <a *ngIf="store.isLogin" [href]="fullReportPath('matched','matched')" [class]="'clickEv pointer data-point-a'" tabindex="-1">
+                                                        <div class="icon-container user_group_icon">
+                                                            <i class="fa-infinity fa-solid"></i>
+                                                        </div>
+                                                        <span class="count text-center">{{prod.TotalMatched}}</span>
+                                                    </a>
+                                                </span>
+                                            </ion-label>
+                                            <ion-label class="points" *ngIf="prod.TotalIntroductionRequested>0">
+                                                <span [class]="store.isLogin?'contents pointer':'contents no-pointer'" (click)="store.isLogin?openFullReport('introduction_requested','introduction_requested'):null">
+                                                    <a *ngIf="!store.isLogin" tabindex="-1" [class]="'data-point-a'">
+                                                        <!-- <i class="data-point data-point-round-i fa-circle-check fa-solid"></i> -->
+                                                        <div class="icon-container user_group_icon">
+                                                            <i class="fa-solid fa-check"></i>
+                                                        </div>
+                                                        <span class="count text-center">{{ prod.TotalIntroductionRequested }}</span>
+                                                    </a>
+        
+                                                    <a *ngIf="store.isLogin" [href]="fullReportPath('introduction_requested','introduction_requested')" [class]="'clickEv pointer data-point-a'" tabindex="-1">
+                                                        <!-- <i class="data-point data-point-round-i fa-circle-check fa-solid"></i> -->
+                                                        <div class="icon-container user_group_icon">
+                                                            <i class="fa-solid fa-check"></i>
+                                                        </div>
+                                                        <span class="count text-center">{{prod.TotalIntroductionRequested}}</span>
+                                                    </a>
+                                                </span>
+                                            </ion-label>
+                                            <ion-label class="points" *ngIf="prod.TotalIntroductions>0">
+                                                <span [class]="store.isLogin?'contents pointer':'contents no-pointer'" (click)="store.isLogin?openFullReport('total_introductions','introductions'):null">
+                                                    <a *ngIf="!store.isLogin" [class]="'data-point-a'" tabindex="-1">
+                                                        <!-- <i class="data-point data-point-round-i fa-handshake fa-solid"></i> -->
+                                                        <div class="icon-container user_group_icon">
+                                                            <i class="fa-handshake fa-solid"></i>
+                                                        </div>
+                                                        <span class="count text-center">{{ prod.TotalIntroductions }}</span>
+                                                    </a>
+                                                    <a *ngIf="store.isLogin" [href]="fullReportPath('total_introductions','introductions')" [class]="'clickEv pointer data-point-a'" tabindex="-1">
+                                                        <!-- <i class="data-point data-point-round-i fa-handshake fa-solid"></i> -->
+                                                        <div class="icon-container user_group_icon">
+                                                            <i class="fa-handshake fa-solid"></i>
+                                                        </div>
+                                                        <span class="count text-center">{{prod.TotalIntroductions}}</span>
+                                                    </a>
+                                                </span>
+                                            </ion-label>  
+
+                                            <ion-label class="points" *ngIf="((prod.IsFundingProfileSubmitted !='0' || prod.IsFundraiseNeedSubmitted !='0') && from =='profile')">
+                                                <div class="users_icons clickEv" >
+                                                    <a class="display-block data-point-a" *ngIf="((prod.IsFundingProfileSubmitted !='0' || prod.IsFundraiseNeedSubmitted !='0') && from =='profile')" tabindex="-1">
+                                                        <div class="icon-container user_group_icon">
+                                                            <i class="fa-regular fa-user"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </ion-label> 
+
+                                            <ion-label class="points" *ngIf="(prod.IsMyEnabler != undefined && prod.IsMyEnabler == '1')">
+                                                <div class="users_icons clickEv">
+                                                    <a class="display-block data-point-a" [href]="routePath('enablers', prod, 'my-enabler')" (click)="navigateToAdmin(prod)" tabindex="-1">
+                                                        <div class="icon-container user_group_icon">
+                                                            <i class="fa-solid fa-user-gear"></i>
+                                                        </div>
+                                                    </a>
+                                                    
+                                                </div>
+                                            </ion-label> 
+                                        </div>
+                                    <!-- </ion-row> -->
+                                    
+                                    
+                                    
+                                    
+
+                                    <!-- <ion-label class="online" *ngIf="prod.TotalSubmittedFundingProfiles>0 && store.isLogin">
+                                        <span class="contents pointer" (click)="enablerDetails('enablers', prod, 'funding-profile-submissions', 'submissions')">
+                                            <a [href]="routePath('enablers', prod, 'funding-profile-submissions', 'submissions')" [class]="'clickEv pointer'" tabindex="-1">
+                                                <i class="data-point">{{store.getVal('my_investor_submissions')}}</i>
+                                                <span class="count text-center">{{prod.TotalSubmittedFundingProfiles }}</span>
+                                            </a>
+                                        </span>
+                                    </ion-label> -->
+                                    <!-- <ion-label class="online" *ngIf="prod.TotalSubmittedFundraiseNeeds>0 && store.isLogin">
+                                        <span class="contents pointer" (click)="enablerDetails('enablers', prod, 'fundraise-need-submissions', 'submissions')">
+                                            <a [href]="routePath('enablers', prod, 'fundraise-need-submissions', 'submissions')" [class]="'clickEv pointer'" tabindex="-1">
+                                                <i class="data-point">{{store.getVal('my_investee_submissions')}}</i>
+                                                <span class="count text-center">{{prod.TotalSubmittedFundraiseNeeds }}</span>
+                                            </a>
+                                        </span>
+                                    </ion-label> -->
+                                                                     
+                                                                       
+                                    <ion-label class="online" *ngIf="from =='profile'">
+                                        <span class="contents pointer" (click)="enablerDetails('enablers', prod, 'need', 'match-report')">
+                                            <a [href]="routePath('enablers', prod, 'need', 'match-report')" [class]="'clickEv pointer'" tabindex="-1">
+                                                <i class="btn-red-border" style="font-style: normal; display: block;">
+                                                {{store.getVal('see_enablers_criteria')}}</i>
+                                            </a>
+                                        </span>
+                                    </ion-label>
+                                    
+                                </div>
+                                <status-view *ngIf="from == 'admin'" [subtype]="subtype" [pageFrom]="pageFrom" [from]="from" [pageType]="pageType" [prod]="prod" [apiAction]="apiAction" [ActionType]="ActionType" [EnablerSlug]="EnablerSlug"></status-view>
+                            </div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row [class]="((prod.TotalFundingProfile>0 || prod.TotalFundraise>0) || (prod.TotalSubmittedFundraiseNeeds>0 && store.isLogin) || (prod.TotalSubmittedFundraiseNeeds>0 && store.isLogin) || (prod.TotalIntroductionRequested>0) || (from =='profile') || (((prod.IsFundingProfileSubmitted !='0' || prod.IsFundraiseNeedSubmitted !='0') && from =='profile') || prod.IsMyEnabler == 1) || (from == 'admin') )?'counts_row true btns_row_list':'counts_row'" *ngIf="(prod.IsOperative == 0 || prod.IsOperative == '0')">
+                    <ion-col>
+                        <ion-note class="errorTitle" style="padding: 10px 0px 0px;
+                        display: inline-block;" *ngIf="(prod.IsOperative == 0 || prod.IsOperative == '0')">{{store.getVal('investors_and_investees_cannot_be_added_when_page_is_inoperational')}}</ion-note>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-col>
+    </ion-row>
+</ion-grid>

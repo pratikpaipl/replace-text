@@ -1,0 +1,29 @@
+<ion-row class="search_blockss" >
+    <ion-col id="search_boxs" [ngClass]="isFocus && suggestionList.length > 0 ? 'opens' : ''">
+        <div class="searchbar">
+            <ion-searchbar searchIcon="location" autocomplete='off' [placeholder]="placeholder" [(ngModel)]="address" [class]="isFocus && suggestionList.length > 0?'searchbar-open':''" (ionInput)="firstInput($event,true)" (ionBlur)="unCheckFocus($event)" (ionFocus)="ionFocus($event)" (ionCancel)="hideSearch()" debounce="300" clearInput (ionClear)="addressChange($event)"> </ion-searchbar>
+        </div>
+        <div class="address-suggestion-box" [style.display]="isFocus && suggestionList.length > 0 ?'block':'none'" [style.z-index]="isFocus && suggestionList.length > 0 ?'111':'0'">
+            <!-- -- [style.top]="suggestionList.length ==0 ?'42px':'37px'" -->
+            <ion-list>
+                <ion-item *ngIf="isFocus && isShowLocal && (showCurrent != '0')">
+                    <ion-label (click)="currentLoc()"> {{store.getVal('current_location')}}</ion-label>
+                </ion-item>
+                <ion-item *ngFor="let item of suggestionList">
+                    <i class="fa fa-map-marker"></i>
+                    <ion-label class="pointer" (click)="suggestionClick(item)">{{item.description}}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="!isShowLocal && suggestionList.length == 0" style="text-align: center; --background:var(--ion-color-white) !important;">
+                    <ion-label style="color:#ccc !important; margin-left: 20px;">
+                        {{store.getVal('no_options')}}
+                    </ion-label>
+                </ion-item>
+                <ion-item *ngIf="isSearch" style="text-align: center; --background:var(--ion-color-white) !important;">
+                    <ion-label style="color:#ccc !important; margin-left: 20px;">
+                        {{store.getVal('searching')}}
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </div>
+    </ion-col>
+</ion-row>

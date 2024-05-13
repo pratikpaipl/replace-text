@@ -1,0 +1,41 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true">
+    <div class="page_wapper" *ngIf="PageOwnerDetail != undefined">
+        <div id="all_ui">
+            <ion-grid class="container">
+                <bread-crump showHome="1" [pageType]="from" [from]="'permission'" [pageLbl]="pageTitle" [DisplayName]="PageOwnerDetail.PageName" [PageSlug]="PageOwnerDetail.PageSlug"></bread-crump>
+                <ion-row class="forms_row">
+                    <ion-col class="forms_conponenl" size="12" *ngIf="PageOwnerDetail != undefined">
+                        <div id="myprofile" class="forms_block">
+                            <error-message isNameUn="true" styleD="left" [dataAction]="dataAction" [message]="loadMsg"></error-message>
+
+                            <div class="form-group checkbox_items1">
+                                <ion-item id="isDisclaimerUn">
+                                    <ion-label [class]="isDisclaimerUn?'labels errorTitle':'labels'">
+                                        {{store.getVal('disclaimer')}}</ion-label>
+                                    <ion-checkbox slot="start" [(ngModel)]="isDisclaimer"></ion-checkbox>
+                                </ion-item>
+                            </div>
+                            <div class="form-group flex-box-x">
+                                <img class="ion-img" alt="" src="{{ PageOwnerDetail.Logo != null ? PageOwnerDetail.Logo : 'assets/images/no-image-icon-5.jpg'}}" onerror="this.src='assets/images/no-image-icon-5.jpg'" />
+                                <ion-label class="labels" style="margin-left: 10px;"> {{PageOwnerDetail.PageName}}</ion-label>
+                            </div>
+                            <div class="form-group">
+                                <ion-label class="labels">{{store.getVal('from_email')}}</ion-label>
+                                <input spellcheck="false" autocomplete="off" type="email" maxlength="300" readonly="true" class="form-control" id="email1" [(ngModel)]="Email" [ngModelOptions]="{standalone: true}" (keyup.enter)="callAction('1','0')"/>
+                            </div>
+                            <div class="form-group">
+                                <ion-label [class]="isEmail?'labels errorTitle':'labels'">{{store.getVal('to_email')}} *</ion-label>
+                                <input spellcheck="false" autocomplete="off" type="email" maxlength="300" inputmode="email" class="form-control" id="email" [(ngModel)]="ToEmail" [ngModelOptions]="{standalone: true}" (keyup.enter)="callAction('1','0')"/>
+                                <ion-note tabindex="-1">{{store.getVal('cannot_be_same_as_from_email')}}</ion-note>
+                            </div>
+                            <bottom-btn styleD="center" (change)="callAction($event,'0')"></bottom-btn>
+                            <error-message isNameUn="true" styleD="left" [dataAction]="dataAction" [message]="loadMsgError"></error-message>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

@@ -1,0 +1,74 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true">
+    <div class="page_wapper">
+        <div id="all_ui">
+            <ion-grid class="container">
+                <bread-crump *ngIf="PageDetail != undefined" showHome="1" [pageType]="fromPage" [from]="'permission'" [pageLbl]="pageTitle" [DisplayName]="PageDetail.PageName" [PageSlug]="PageDetail.PageSlug"></bread-crump>
+                <ion-row class="forms_row" id="loadMsgError">
+                    <ion-col class="forms_conponenl" size="12">
+                        <div id="myprofile" class="forms_block" *ngIf="!isCheck">
+                            <error-message *ngIf="loadMsg !=''" isNameUn="true" styleD="left" [dataAction]="dataAction" [message]="loadMsg"></error-message>
+                            <error-message *ngIf="loadMsgError !=''" isNameUn="true" styleD="left" [dataAction]="dataAction" [message]="loadMsgError"></error-message>
+                            <div class="form-group">
+                                <ion-label [class]="isEmail?'labels errorTitle':'labels'">{{store.getVal('email')}} *
+                                </ion-label>
+                                <input spellcheck="false" autocomplete="off" type="email" inputmode="email" class="form-control" id="email" maxlength="300"[(ngModel)]="Email" [ngModelOptions]="{standalone: true}" (keyup.enter)="callAction('1','0')"/>
+                            </div>
+                            <bottom-btn styleD="center" [leftKey]="'next'" [leftBtn]="store.getVal('next')" (change)="callAction($event,'0')"></bottom-btn>
+
+                        </div>
+                        <div id="myprofile" *ngIf="isCheck">
+                            <div>
+                                <div id="all_ui">
+                                    <div id="top_card">
+                                        <ion-grid>
+                                            <error-message id="loadMsg" *ngIf="loadMsg !=''" isNameUn="true" styleD="left" [dataAction]="dataAction" [message]="loadMsg">
+                                            </error-message>
+                                            <error-message id="loadMsgError" *ngIf="loadMsgError !=''" isNameUn="true" styleD="left" [dataAction]="dataAction" [message]="loadMsgError"></error-message>
+                                            <ion-row class="main_rows mt-res" *ngIf="PageUserDetail !=undefined">
+                                                <ion-col class="main_cols auto-cols admin_right_panel">
+                                                    <item-card [prod]="PageUserDetail" subtype="permissions" type="permissions" [from]="'admin'" pageFrom="Top" (change)="clikCount($event)">
+                                                    </item-card>
+                                                </ion-col>
+                                            </ion-row>
+                                            <ion-row class="main_rows mt-res" *ngIf="PageUserDetail == undefined && Email !=''">
+                                                <ion-col class="main_cols auto-cols admin_right_panel">
+                                                    <div class="forms_block">
+                                                        <div>
+                                                            <div style="display: grid;">
+                                                                <ion-label id="card" style="font-weight: bold;">
+                                                                    {{store.getVal('add_permission_for')}}</ion-label>
+                                                                <ion-label>{{Email}}</ion-label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ion-col>
+                                            </ion-row>
+                                            <ion-row class="main_rows mt-res">
+                                                <ion-col class="main_cols auto-cols admin_right_panel">
+                                                    <div class="forms_block">
+                                                        <div>
+                                                            <div class="switchs_block">
+                                                                <ion-label style="font-weight: bold;">
+                                                                    {{store.getVal('admin')}}</ion-label>
+                                                                <ion-toggle [ngModelOptions]="{standalone: true}" [(ngModel)]="isAdmin" [disabled]="!Changeable" (ionChange)="changeAdminMain($event)">
+                                                                </ion-toggle>
+                                                            </div>
+                                                            <ion-note tabindex="-1">{{store.getVal('add_remove_other_admins_manage_permissions_for_user_accounts')}}</ion-note>
+                                                        </div>
+                                                    </div>
+                                                </ion-col>
+                                            </ion-row>                                           
+                                        </ion-grid>
+                                        <bottom-btn *ngIf="Changeable" styleD="center" (change)="callAction($event,'1')"></bottom-btn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

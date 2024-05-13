@@ -1,0 +1,365 @@
+.slider-arrow{
+    position: absolute;
+    top: calc(50% + 60px);
+    font-size: 25px;
+    z-index: 2;
+    cursor: pointer;
+}
+.slider-arrow.left{
+    left: -10px;
+}
+.slider-arrow.right{
+    right: -10px;
+}
+ion-slide{
+    padding: 12px;
+}
+.home-block .home-block-i-circle, .methodology-areasection .home-block-i-circle{
+    width: 85px;
+    height: 85px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #21252908;
+    border-radius: 50%;
+    border: none !important;
+}
+.swiper-container-autoheight, .swiper-container-autoheight .swiper-slide {
+    /* height: auto; */
+    height: 430px;
+}
+.FunderMarketplace{
+    border: 1px dashed var(--ion-color-logo-red);
+    padding: 5px;
+    border-radius: 10px;
+    position: relative;
+}
+.FunderMarketplace ion-grid ion-row{
+    margin-bottom: 10px;
+    // margin-top: 22px;
+}
+.FunderMarketplace ion-grid ion-row ion-col{
+    margin: 12px;
+    min-height: 110px;
+    align-items: center;
+    display: flex;
+}
+.FunderMarketplace ion-label{
+    font-weight: bold;
+    color: var(--ion-color-black);
+    padding: 10px;
+    display: inline-block;
+}
+.FunderMarketplace span{
+    padding: 5px;
+    display: block;
+}
+.FunderBackoffice{
+    border: 1px solid var(--ion-color-logo-red);
+    padding: 5px;
+    border-radius: 10px;
+}
+.FunderBackoffice ion-grid ion-row{
+    margin-bottom: 10px;
+    position: relative;
+}
+.pos-top-fx{
+    position: absolute;
+    text-align: center;
+    background: var(--ion-color-logo-red);
+    color: var(--ion-color-white);
+    border-radius: 100%;
+    padding: 10px;
+    top: 0;
+    font-size: 18px;
+    font-weight: bold;
+    /* height: 50px; */
+    width: 40px;
+    /* line-height: 22px; */
+    left: calc(40% + 5px);
+    border: 1px solid var(--ion-color-gray);
+    /* text-align: center; */
+    /* vertical-align: middle; */
+    /* display: flex;*/
+}
+.pos-left-fx{
+    position: absolute;
+    left: -18px;
+    background: var(--ion-color-logo-red);
+    color: var(--ion-color-white);
+    border-radius: 100%;
+    padding: 5px;
+    top: 18px;
+    font-size: 14px;
+    height: 24px;
+    width: 24px;
+    line-height: 14px;
+}
+.FunderBackoffice ion-grid ion-row ion-col{
+    margin: 5px;
+}
+.FunderBackoffice ion-label{
+    font-weight: bold;
+    color: var(--ion-color-logo-red);
+    padding: 10px;
+    display: inline-block;
+}
+
+.f-size-13{
+    font-size: 14px;
+}
+.f-size-13.pos-fix{
+    position: absolute;
+    top: -8px;
+    left: 0px;
+}
+.FunderBackoffice .configration{
+    background: var(--ion-color-black);
+    color: var(--ion-color-white);
+    padding: 10px;
+    border-radius: 10px;
+    white-space: normal;
+    max-width: 170px;
+    align-items: center;
+    display: flex;
+    min-height: 52px;
+    
+}
+.FunderBackoffice .configration.red{
+    background: var(--ion-color-logo-red);
+}
+.FunderBackoffice .just-center{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+.FunderBackoffice .just-center img{
+    width: 30px;
+    margin-right: 5px;
+}
+.FunderBackoffice .just-center img.w-40{
+    width: 40px;
+}
+.FunderBackoffice .just-center img.w-50{
+    width: 50px;
+}
+.FunderExtensions{
+    border: 1px dashed var(--ion-color-dark-green);
+    padding: 5px;
+    border-radius: 10px;
+    padding: 10px;
+    display: inline-block;
+    background: var(--ion-color-light-white);
+}
+.FunderExtensions ion-grid ion-row{
+    margin-bottom: 10px;
+    // margin-top: 22px;
+}
+.FunderExtensions ion-grid ion-row ion-col{
+    margin: 10px;
+    min-height: 110px;
+    align-items: center;
+    display: flex;
+}
+.FunderExtensions ion-label{
+    font-weight: bold;
+    color: var(--ion-color-dark-green);
+    padding: 10px;
+    display: inline-block;
+}
+.FunderExtensions span{
+    padding: 20px;
+    display: block;
+}
+.padding-bottom {
+    padding-bottom: 35px;
+}
+.col-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.heading h2 {
+    padding-top: 16px;
+    margin-bottom: 18px;
+    font-size: 40px;
+    font-family: 'Helvetica' !important;
+    position: relative;
+}
+.tield-title{
+    color: var(--ion-color-logo-red);
+    font-size: 30px;
+}
+.methodology-box h3 {
+    justify-content: space-around;
+    display: flex;
+    margin: 0px;
+}
+.methodology-box.slide h3 {
+    padding: 40px 0 25px 0;
+    justify-content: space-around;
+    display: flex;
+    margin: 0px;
+}
+.methodology-areasection .heading h2::after{
+    left: 47%;
+    margin: 0px 0;
+}
+
+.heading h2::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 5px;
+    background: #f00;
+    left: 0;
+    position: absolute;
+    margin-top: 10px !important;
+}
+.htwork.sec{
+    margin-left: 10px;
+}
+.margin-top {
+    margin-top: 30px !important;
+    margin-bottom: 10px;
+}
+.methodology-box {
+    padding: 0.6rem;
+    border-radius: 12px;
+    height: 100%;
+    border: 1px solid #E9E9EA;
+    transition: all 0.5s;
+    // box-shadow: 1px 1px 24px -2px rgba(209, 209, 209, 0.5);
+    // -webkit-box-shadow: 1px 1px 24px -2px rgba(209, 209, 209, 0.5);
+    border: 1px solid var(--ion-color-logo-red);
+}
+
+.methodology-box div{
+    border: 0.5px solid gray !important;
+    height: 100%;
+}
+.methodology-box ion-item{
+    box-shadow:none !important
+}
+.methodology-box ion-item ion-label{
+    white-space: normal;
+    font-size: 15px;
+}
+
+.methodology-box p{
+    color: var(--ion-color-black);
+    font-size: 18px !important;
+    padding: 5px;
+}
+
+.section-white {
+    background-color: var(--ion-color-white)!important;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+@media (max-width: 992px) {
+    
+    .header {
+        height: 90px;
+    }
+    .FunderMarketplace ion-grid ion-row ion-col{
+        margin: 10px;
+        min-height: 90px;
+    }
+    .FunderExtensions ion-grid ion-row ion-col{
+        min-height: 90px;
+    }
+}
+@media  (max-width: 830px){
+    .heading h2 {
+        font-size: 28px;
+    }
+}
+@media (max-width:768px) {
+    .FunderBackoffice .just-center img.w-50 {
+        width: 40px;
+    }
+    .FunderBackoffice .just-center img.w-40 {
+        width: 30px;
+    }
+        .slider-arrow{
+            top: calc(50% + 50px);
+        }
+    .methodology-areasection .heading h2:after {
+            left: 40.5%;
+        }    
+}
+@media  (max-width:480px)  {
+    .FunderBackoffice{
+        padding: 5px;
+    }
+    .FunderBackoffice .configration{
+        max-width: 140px;
+        font-size: 13px;
+        padding: 5px;
+    }
+    .FunderExtensions{       
+        padding: 0px;
+    }
+    .FunderMarketplace{
+        padding: 0px;
+    }
+   
+}
+@media (max-width:360px)  {
+    .swiper-container-autoheight, .swiper-container-autoheight .swiper-slide {
+        height: 450px;
+    }
+}
+
+.overflow-hidden {
+    overflow: hidden
+}
+.text-center {
+    text-align: center !important
+}
+img {
+    display: block;
+    max-width: 100%;
+    width: 60px;
+    padding: 5px;
+}
+p {
+    font-family: 'Helvetica',;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.5;
+    text-wrap: pretty
+}
+
+p:before,
+p:after {
+    content: "";
+    display: table
+}
+
+p:before {
+    margin-bottom: calc(-.15em * 1.5)
+}
+
+p:after {
+    margin-top: -.255em
+}
+
+a {
+    text-decoration: none;
+    color: var(--ion-color-blue)
+}
+
+a:focus {
+    outline: none
+}
+
+a:focus,
+a:hover {
+    text-decoration: underline;
+    text-underline-offset: .15em;
+    text-decoration-thickness: .08em
+}

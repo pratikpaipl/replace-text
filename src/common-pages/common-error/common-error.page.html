@@ -1,0 +1,5 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerActionAdmin($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <error-view *ngIf="isError" [dataAction]="dataAction" [message]="loadMsg" actionFrom="error"></error-view>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

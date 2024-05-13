@@ -1,0 +1,23 @@
+<div class="top-div">
+    <btn-title [pageLbl]="store.getVal('funding_profile_submissions')" [pageType]="pageType" [permissions]="permissions">
+    </btn-title>
+    <div class="downloads navigation_compo" *ngIf="allTotal != undefined && allTotal > 0">
+        <i class="fas fa-download pointer" (click)="download($event)"></i>
+    </div>
+</div>
+<div id="serch_component">
+    <app-search-bar isShow="false" fromPage="admin" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)">
+    </app-search-bar>
+</div>
+<refresher (change)="callPullRefresh($event)"></refresher>
+<div *ngIf="selItem != undefined" class="datachips_boxs">
+    <data-chip  [isUser]="true" [isEnabler]="true" [selItem]="selItem" [type]="pageType" (change)="removeFilter($event)"></data-chip>
+</div>
+<div class="forms_conponenl">
+    <div>
+        <div class="items_counts">
+            <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+        </div>
+        <funding-profile-items *ngIf="pageType == 'funding-profiles'" apiEnd="funding_profile/my_fp_submitted_at_enablers_list" [pageType]="pageType" [type]="pageType" from="profile" pageFrom="funding-profile-submissions"  apiAction="funding_profile_enabler" [EnablerSlug]="(selItem != undefined && selItem.itemData.EnablerSlug != undefined)?selItem.itemData.EnablerSlug:EnablerSlug" [FP_EnablerSlug]="''" [updateTime]="updateTime" (change)="updateCount($event)"></funding-profile-items>
+    </div>
+</div>

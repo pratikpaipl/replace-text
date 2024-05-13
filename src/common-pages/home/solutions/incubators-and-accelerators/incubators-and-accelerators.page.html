@@ -1,0 +1,42 @@
+<web-page-header></web-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <seo-hidden-tag [head]="store.getVal('website_key_105')" [description]="store.getVal('website_key_106')"></seo-hidden-tag>
+    <div class="section section-white overflow-hidden" style="padding-top:0px;">
+        <section class="padding-bottom b2bmarket" id="three">
+            <div class="container-fluid methodology-areasection">
+                <div class="container container-lg">
+                    <div class="row fadeInUp">
+                        <div class="col-12">
+                            <div class="heading text-center" data-aos="fade-down">
+                                <h2>{{store.getVal('website_key_82')}}</h2>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 margin-top">
+                            <div class="methodology-box" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                                <img id="app-ui" src="../../../assets/images/solutions/img3.png" class="img-fluid" style="padding: 30px 0px;"/>
+                                <div style="display: flex;align-items: center;">
+                                    <div [style.padding]="store.IsWebView?'30px':'0px'">
+                                        <p class="b2b-desc"><i class="fa-solid fa-circle-check"></i>{{store.getVal('website_key_104')}}</p>
+                                        <p class="b2b-desc"><i class="fa-solid fa-circle-check"></i>{{store.getVal('website_key_83')}}</p>
+                                        
+                                        <div style="text-align: left;padding: 2rem;">
+                                            <a class="btn btn-lg btn-round btn-primary htwork clickEv" href="/contact" (click)="openPage('/contact')">{{store.getVal('website_key_26')}}</a>
+                                        </div>
+
+                                    </div>
+                                    <img id="web-ui" class="img-fluid solution-img" src="../../../assets/images/solutions/img3.png"/>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /..our mission -->
+        </section>
+        <page-contact [msg]="store.getVal('website_key_155')" btn="website_key_156"></page-contact>
+    </div>
+    <web-page-footer></web-page-footer>
+</ion-content>

@@ -1,0 +1,44 @@
+name: Replace Text and Create Branch
+
+on:
+  push:
+    branches:
+      - design-update # Change this to your main branch name
+
+jobs:
+  replace-text:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      # Add this step to add an exception for the workspace directory
+      - name: Add exception for workspace directory
+        run: git config --global --add safe.directory /github/workspace
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Create new branch
+        run: git checkout -b text-replace-test
+      
+      - name: Replace text
+        run: |
+          find . -type f -name '*.txt' -exec sed -i 's/A_text/A_text-A/g' {} +
+          # Replace old-text with your specific text and new-text with the text you want to replace it with
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "pratikpa.aipl@gmail.com"
+          git config --local user.name "Pratik Pagada"
+          git add .
+          git commit -m "Replace specific text"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.5.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: text-replace-test

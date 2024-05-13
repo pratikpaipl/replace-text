@@ -1,0 +1,202 @@
+ion-card-title {
+	background: var(--ion-color-black);
+	border-radius: 10px 10px 0 0;
+	padding: 15px 20px;
+	color: var(--ion-color-white);
+	font-size: 16px;
+	margin-right: 0;
+	width: 100% !important;
+}
+.declaimer{
+	align-items: center;
+    display: flex;
+	
+}
+.declaimer.val{
+	align-items: center;
+	padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+	-webkit-line-clamp: 3;
+    overflow: hidden;
+	display: -webkit-box;
+    letter-spacing: .3px !important;
+    -webkit-box-orient: vertical;
+}
+.tittlediv{
+	display: flex;
+}
+.tittlediv ion-label.linkv{
+	color: var(--ion-color-blue);
+    cursor: pointer;
+    margin-left: 5px !important;
+}
+.declaimer i{
+	color: var(--ion-color-black);
+	margin-right: 10px;
+}
+.main_grid {
+	padding: 0px !important;
+}
+.m-part{
+	margin: 10px 0px;
+}
+.forms_block ion-grid ion-row ion-col{
+	padding: 10px !important
+}
+#forms_card_configs #myprofile {
+	border-radius: 0px 0px 10px 10px !important;
+}
+#forms_card_configs .switchs_block {
+	justify-content: space-between;
+	margin: 0px;
+}
+#forms_card_configs .switchs_block ion-label {
+	margin: 0px !important;
+    display: block;
+    font-family: 'Helvetica-Bold' !important;
+}
+.form-group span.error:empty {
+	display: none !important;
+}
+
+#forms_card_configs .switchs_block.mt {
+	margin-top: 8px !important;
+}
+
+#forms_card_configs .m-part.alert {
+	height: 100% !important;
+}
+#forms_card_configs .m-part.alert #myprofile {
+	height: calc(100% - 90px);
+}
+.currency-item{
+	flex: 0 0 300px;
+	max-width: 300px !important;
+	width: 300px !important;
+}
+.act-submission .switchs_block{
+	justify-content: initial !important;
+    width: auto !important;
+}
+
+.accordion {
+	width: 100%;
+	margin: auto;
+	background: var(--ion-color-black);
+	border-radius: 4px;
+	margin-top: 5px;
+}
+.accordion:first-child {	
+	margin-top: 0px;
+}
+ion-label.mt{
+	margin-top: 20px;
+	display: block;
+	font-weight: bold;
+} 
+.forms_conponenl ion-label{
+	margin: 0 !important;
+}
+.acord-row .acord-col{
+	flex: 0 0 calc(50% - 10px) !important;
+	max-width: calc(50% - 10px) !important;
+	width: calc(50% - 10px) !important;
+	margin: 5px;
+}
+.ext-raise-space{
+	margin-top: 34px !important;
+}
+
+  .accordion .menu {
+	position: relative;
+	padding:15px;
+	color: var(--ion-color-white);
+	border-bottom: 1px solid #ccc;
+	transition: all 0.4s ease;
+  }
+  
+  .accordion main:last-child .menu {
+	border-bottom: 0;
+  }
+  
+  .accordion main i {
+	position: absolute;
+	// top: 1.2rem;
+	// left: 1rem;
+	color: var(--ion-color-white);
+	transition: all 0.4s ease;
+  }
+  
+  .accordion .main i.fa-chevron-down {
+	// right: 1rem;
+	left: 10px;
+	transform: rotate(-90deg);
+  }
+  .accordion .main i.fa-eye {
+	right: 1rem;
+	left: auto;
+	position: absolute;
+	// transform: rotate(-90deg);
+  }
+  
+  .accordion .main.active i.fa-chevron-down {
+	transform: rotate(0deg);
+  }
+  
+  .submenu .form-group{
+	margin-bottom: 0px;
+  }
+  .submenu .switchs_block{
+	margin-top: 10px;
+	justify-content: end;
+  }
+  .submenu {
+	  // overflow: hidden;
+	  // padding: 0px 20px;
+	  background: var(--ion-color-white);
+	  font-size: 14px;
+	  transition: height 0.4s ease;
+	  box-shadow: 0 0 4px;
+	  border-radius: 0px 0px 5px 5px;
+	}
+	.submenu ion-grid{
+		padding: 10px;
+	}
+  @media (max-width: 992px){
+	.acord-row .acord-col{
+		flex: 0 0  100% !important;
+		max-width: 100% !important;
+		width: 100% !important;
+		margin: 0px;
+	}
+	ion-col.acord-col:nth-child(2) {
+		margin-top: 10px !important;
+	}
+	.ext-raise-space{
+		margin-top: initial !important;
+	}
+}
+@media (max-width: 768px)
+{
+	#forms_card_configs ion-col,.currency-item {
+		flex: 0 0 100% !important;
+		max-width: 100% !important;
+		width: 100% !important;
+	}
+	.act-submission .switchs_block{
+		justify-content: space-between !important;
+		width: 100% !important;
+	}
+	
+	#forms_card_configs .m-part.alert {
+		height: auto !important;
+	}
+	#forms_card_configs .m-part.alert #myprofile {
+		height: auto !important;
+	}
+	.form-group {
+		padding: 0px !important;
+		min-height: auto !important;
+	}
+}

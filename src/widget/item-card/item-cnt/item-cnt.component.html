@@ -1,0 +1,26 @@
+<div class="filter_count_list" style="flex-wrap: wrap;">
+    <ion-label class="products" *ngIf="prod.TotalAlerts >0">
+        <span [class]="dClass">
+      <a [class]="'clickEv pointer'" tabindex="-1">{{ pageType =='alert'?store.getVal('match_with_search_alerts'):store.getVal('search_alerts')}}</a>
+      <span class="count">{{ prod.TotalAlerts }}</span>
+        </span>
+    </ion-label>
+    <ion-label class="products" *ngIf="prod.TotalInterested >0">
+        <span [class]="dClass">
+      <a [class]="'clickEv pointer'" tabindex="-1">{{store.getVal('interested')}}</a>
+      <span class="count">{{ prod.TotalInterested }}</span>
+        </span>
+    </ion-label>
+    <ion-label class="products" *ngIf=" prod.TotalUniqueEmails > 0">
+        <span [class]="dClass">
+      <a [class]="'clickEv pointer'" tabindex="-1">{{store.getVal('unique_emails')}}</a>
+      <span class="count">{{ prod.TotalUniqueEmails }}</span>
+        </span>
+    </ion-label>
+    <ion-label class="products" *ngIf="prod.TotalSources > 0 && showSource != '0'">
+        <span [class]="dClass">
+      <a [class]="'clickEv pointer'" tabindex="-1">{{store.getVal('sources')}}</a>
+      <span class="count">{{ prod.TotalSources }}</span>
+        </span>
+    </ion-label>
+</div>

@@ -1,0 +1,764 @@
+<!-- Item Cards-->
+<!-- Matching FN and Matching FP Widgets -->
+<!-- {{type}} {{pageFrom}} -->
+<ion-row *ngIf="(type != 'permissions' && !((type =='fundraise-needs-submitted' || type == 'enablers' || type=='matching-enablers' ||  type=='funding-profiles-submitted' || type == 'fundraise-view' || type=='matching-enablers' || type == 'enabler-view'|| type =='funding-profile-view' || (type =='funding-profiles' && store.appType =='admin') || (type =='fundraise' && store.appType =='admin') || pageFrom =='funding-profile-submissions' || from =='profile') && type !='matched-fundraise-needs' && type !='matching-funding-profiles')  || type =='plans_and_pricing')" [class]="isMain?'cardlist permissions_crd main-card investor-investee-item-card':'cardlist permissions_crd investor-investee-item-card'" [style.background-color]="(type == 'enablers' || type=='matching-enablers') && from == 'admin'?'transparent':'var(--ion-color-white)'">
+    <ion-col class="cardlist_content_block" style="padding: 0px;">
+        <div [class]="type=='impact-funding-resources'?'cardlist_content_box':'cardlist_content_box1'" style="padding: 0px;">
+            <ion-row>
+                <ion-col class="cardlist_content_block">
+                    
+                    <div class="cardlist_content_box funding_profile_title widget-item-card" *ngIf="type =='matched-fundraise-needs' || type =='matching-funding-profiles' || type == 'full-report'">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="''" [itemTitle]="getTitle()" [address]="address" [Name]="Name" [Slug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug : prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [ProfileSlug]="prod.FP_EnablerSlug" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:FPEnablerSlug" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :FNEnablerSlug" [FundraiseSlug]="prod.FN_EnablerSlug" [EnablerSlug]="prod.EnablerSlug !=undefined?prod.EnablerSlug:EnablerSlug!=undefined?EnablerSlug:''" [ActionType]="ActionType" [apiAction]="apiAction" hideAction="0" (change)="callFilter($event)"></prod-title>
+                        <div>
+                            <ion-row style="text-align: center;">
+                                <ion-col>
+                                    <div *ngIf="prod.LastIntroduceDate != undefined" [class]="'l-date'" style="background-color: transparent !important;">
+                                        <ion-label class="sell-lbl last-introduce-date">
+                                            <i class="fa-regular fa-handshake"></i>{{this.store.getVal('last_introduce_date')}}&nbsp;{{prod.LastIntroduceDate | date:'dd MMM yyyy hh:mm a':'UTC'}}&nbsp;{{this.store.getVal('utc')}}
+                                        </ion-label>
+                                    </div>
+                                    <div *ngIf="prod.LastIntroduceDate == undefined && store.appType =='admin'" [class]="'l-date'" style="background-color: transparent !important;">
+                                        <ion-label style="letter-spacing: 0.7px;" [class]="((prod.FPExpressedInterestKey =='yes' || prod.FNExpressedInterestKey == 'yes') || (prod.FPReactionValueKey =='yes' || prod.FNReactionValueKey == 'yes'))?'patch-btn active pointer':'patch-btn disable'" (click)="((prod.FPExpressedInterestKey =='yes' || prod.FNExpressedInterestKey == 'yes') || (prod.FPReactionValueKey =='yes' || prod.FNReactionValueKey == 'yes'))?callIntroduce(type =='matched-fundraise-needs'?'funding_profile_fundraise':'fundraise_funding_profile'):null">{{store.getVal('make_introduction')}}</ion-label>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+
+                            <ion-row>
+                                <ion-col *ngIf="(store.appType =='admin')" >
+                                    <div class="w-type-title left" [style.justify-content]="'center'">
+                                        <span style="font-weight: bold;font-size: 16px;display: inline-flex; align-items: center;">
+                                            <div class="pointer" (click)="Matching(prod)">
+                                                <a class="match-per clickEv" [href]="matchingPath(prod)"  tabindex="-1">
+                                                    <span><i [class]="'fa-money-bill-transfer fa-solid'" style="margin-right: 15px;"></i>{{store.getVal('investor')}}</span>
+                                                    <span><i class="fa-infinity fa-solid"style="padding-right: 15px;"></i>{{prod.FPPercentage}}%</span>
+                                                </a>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </ion-col>
+                                <ion-col *ngIf="((store.appType =='front' && prod.IsMyFundingProfile == 1))" >
+                                    <div class="w-type-title left" [style.justify-content]="'center'">
+                                        <span style="font-weight: bold;font-size: 16px;display: inline-flex; align-items: center;">
+                                            <div class="pointer" (click)="Matching(prod)">
+                                                <a class="match-per clickEv" [href]="matchingPath(prod)"  tabindex="-1">
+                                                    <span style="font-weight: bold;">{{prod.FPPercentage}}% {{store.getVal('matching_score')}}</span>                                                    
+                                                </a>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </ion-col>
+                                <ion-col *ngIf="(store.appType =='admin')" >
+                                    <div class="w-type-title right" [style.justify-content]="'center'">
+                                        <span style="font-weight: bold;font-size: 16px;display: inline-flex; align-items: center;">
+                                            <div class="pointer" (click)="Matching(prod)">
+                                                <a class="match-per clickEv" [href]="matchingPath(prod)" tabindex="-1">
+                                                    <span>
+                                                        <i [class]="'fa-rocket fa-solid'" style="margin-right: 15px;"></i>{{store.getVal('investee')}}
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa-infinity fa-solid"style="padding-right: 15px;"></i>{{prod.FNPercentage}}%
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </ion-col>
+                                <ion-col *ngIf="((store.appType =='front' && prod.IsMyFundraise == 1))" >
+                                    <div class="w-type-title right" [style.justify-content]="'center'">
+                                        <span style="font-weight: bold;font-size: 16px;display: inline-flex; align-items: center;">
+                                            <div class="pointer" (click)="Matching(prod)">
+                                                <a class="match-per clickEv" [href]="matchingPath(prod)" tabindex="-1">
+                                                    <span style="font-weight: bold;">{{prod.FNPercentage}}% {{store.getVal('matching_score')}}</span>
+                                                </a>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+
+                            <ion-row>
+                                <ion-col>
+                                    <div style="padding: 0px 6px 0px 0px;display: grid;">
+                                        <span [class]="(prod.IsMyFundingProfile == 1)?'btm-padding selected widget-title':'btm-padding widget-title'" *ngIf="(store.appType =='front')">
+                                            <i [class]="'fa-money-bill-transfer fa-solid'" style="margin-right: 5px;"></i>{{store.getVal(prod.IsMyFundingProfile == 1?'my_investor_profile':'matching_investor')}}</span>
+                                        <span class="btm-padding featured" *ngIf="store.appType =='front' && prod.FPIsFeatured != undefined && (prod.FPIsFeatured == 1 || prod.FPIsFeatured == true)">
+                                            <i class="fas fa-award" [style.margin-right]="'5px'"></i>{{store.getVal('featured')}}
+                                        </span>
+                                        <span class="btm-padding">
+                                            <a class="w-cpname pointer clickEv font-15" [href]="routePath(false,'matching-funding-profiles','profile-form')" (click)="pageFrom != 'Top'?itemDetails(false,'matching-funding-profiles','profile-form'):null" [style.color]="'var(--ion-color-blue) !important'" tabindex="-1">
+                                                <span>
+                                                    <img *ngIf="prod.FPLogo != undefined && prod.FPLogo != ''" alt="" class="item-logo-img" [src]="prod.FPLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>{{(prod.ProfileName != undefined?prod.ProfileName:prod.FPProfileName)}}
+                                                </span>
+                                            </a>
+                                        </span>
+                                        <span class="btm-padding featured" *ngIf="store.appType =='admin' && prod.FPIsFeatured != undefined && (prod.FPIsFeatured == 1 || prod.FPIsFeatured == true)">
+                                            <i class="fas fa-award" [style.margin-right]="'5px'"></i>{{store.getVal('featured')}}
+                                        </span>
+                                        <span class="btm-padding">{{(prod.FPContactName != undefined?prod.FPContactName:prod.ContactName)}}</span>
+                                        <span class="btm-padding">{{prod.TicketSizePerFunding}}</span>
+                                    </div>
+                                </ion-col>
+                                <ion-col >
+                                    <div style="padding: 0px 6px 0px 0px;display: grid;">
+                                        <span [class]="(prod.IsMyFundraise == 1)?'btm-padding selected widget-title':'btm-padding widget-title'" *ngIf="store.appType =='front'">
+                                            <i [class]="'fa-rocket fa-solid'" style="margin-right: 5px;"></i>{{store.getVal(prod.IsMyFundraise == 1?'my_investment_raise':'matching_investee')}}</span>
+                                        <span class="btm-padding featured" *ngIf="store.appType =='front' && prod.FNIsFeatured != undefined && (prod.FNIsFeatured == 1 || prod.FNIsFeatured == true)">
+                                            <i class="fas fa-award" [style.margin-right]="'5px'"></i>{{store.getVal('featured')}}
+                                        </span>
+                                        <span class="btm-padding">
+                                            <a class="w-cpname pointer clickEv font-15" [href]="routePath(false,'matched-fundraise-needs','fundraise-form')" (click)="pageFrom != 'Top'?itemDetails(false,'matched-fundraise-needs','fundraise-form'):null" [style.color]="'var(--ion-color-blue) !important'" tabindex="-1">
+                                             <span><img *ngIf="prod.FNLogo != undefined && prod.FNLogo != ''" alt="" class="item-logo-img" [src]="prod.FNLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>{{(prod.CompanyName != undefined?prod.CompanyName:prod.FNCompanyName)}}</span>
+                                            </a>
+                                        </span>
+                                        <span class="btm-padding featured" *ngIf="store.appType =='admin' && prod.FNIsFeatured != undefined && (prod.FNIsFeatured == 1 || prod.FNIsFeatured == true)">
+                                            <i class="fas fa-award" [style.margin-right]="'5px'"></i>{{store.getVal('featured')}}
+                                        </span>
+                                        <span class="btm-padding">{{(prod.FNContactName != undefined?prod.FNContactName:prod.ContactName)}}</span>
+                                        <span class="btm-padding">{{prod.TotalRaise}}</span>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                        <div *ngIf="(ImpactThemesAndAreas != undefined && ImpactThemesAndAreas.length > 0) || (ESG != undefined && ESG.length>0) || (GenderLensJson != undefined && GenderLensJson.length>0) || sdgList.length>0 || (prod.FundingType != undefined && prod.FundingType !='');then with_matching_data else without_matching_data"></div>
+                        
+                        <ion-row style="padding:0px 6px 15px 6px;align-items: center;    justify-content: center;">
+                            <ion-col [class]="'col-6'" *ngIf="((store.appType =='admin' || (store.appType =='front' && prod.IsMyFundingProfile ==1)) && prod.LastIntroduceDate == undefined || (prod.FPExpressedInterestKey !=undefined || prod.FPReactionValueKey !=undefined))" style="margin-right: 5px;">
+                                <div *ngIf="(store.appType =='admin' || (store.appType =='front' && prod.IsMyFundingProfile ==1)) && prod.LastIntroduceDate == undefined || (prod.FPExpressedInterestKey !=undefined || prod.FPReactionValueKey !=undefined)">
+                                    <app-yes-no-neutral-switch [isView]="prod.LastIntroduceDate == undefined || (prod.FPExpressedInterestKey !=undefined || prod.FPReactionValueKey !=undefined)" [isSelected]="(prod.FPExpressedInterestKey || prod.FPReactionValueKey)?(prod.FPExpressedInterestKey || prod.FPReactionValueKey):'remove'" [isDisabled]="prod.LastIntroduceDate != undefined" (selectionChanged)="onSelectionChanged($event,'funding_profile')"></app-yes-no-neutral-switch>
+                                  </div>
+                            </ion-col>
+                            <ion-col  *ngIf="((store.appType =='admin' || (store.appType =='front' && prod.IsMyFundraise ==1)) && (prod.LastIntroduceDate == undefined || (prod.FNExpressedInterestKey !=undefined || prod.FNReactionValueKey != undefined)))"  [class]="'col-6'" style="margin-left: 5px;">
+                                <div *ngIf="(store.appType =='admin' || (store.appType =='front' && prod.IsMyFundraise ==1)) && (prod.LastIntroduceDate == undefined || (prod.FNExpressedInterestKey !=undefined || prod.FNReactionValueKey != undefined))">
+                                    <app-yes-no-neutral-switch [isView]="prod.LastIntroduceDate == undefined || (prod.FNExpressedInterestKey !=undefined || prod.FNReactionValueKey != undefined)" [isSelected]="(prod.FNExpressedInterestKey || prod.FNReactionValueKey)?(prod.FNExpressedInterestKey || prod.FNReactionValueKey):'remove'" [isDisabled]="prod.LastIntroduceDate != undefined"(selectionChanged)="onSelectionChanged($event,'fundraise')"></app-yes-no-neutral-switch>
+                                  </div>
+                            </ion-col>                           
+                        </ion-row>
+                        <ion-row style="padding:0px 6px 10px 6px;align-items: center;    justify-content: center;" *ngIf="store.appType !='admin'">
+                            <ion-col [class]="'col-6'" *ngIf="((prod.PitchRequestEnable == 0 && (prod.IsMyFundingProfile == 1 || prod.IsMyFundraise == 1)) || (prod.PitchRequestEnable == 1 && prod.IsMyFundingProfile == 1 &&(prod.PitchRequestStatus != undefined && prod.PitchRequestStatus !='' && prod.PitchRequestStatus!='approved' && prod.PitchRequestStatus!='blank')) || (prod.PitchRequestEnable == 1 && prod.IsMyFundingProfile == 1 &&(prod.PitchRequestStatus==undefined || prod.PitchRequestStatus =='' || prod.PitchRequestStatus=='approved' || prod.PitchRequestStatus == 'blank')))" [style.margin-right]="(prod.PitchRequestEnable == 0 && (prod.IsMyFundingProfile == 1 || prod.IsMyFundraise == 1))?'0px':'5px'">
+                                <ion-label *ngIf="prod.PitchRequestEnable == 0 && (prod.IsMyFundingProfile == 1 || prod.IsMyFundraise == 1)" class="patch-btn no-pointer" style="cursor: not-allowed !important;display: inline-block;text-wrap: wrap;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+
+                                <ion-label *ngIf="prod.PitchRequestEnable == 1 && prod.IsMyFundingProfile == 1 &&(prod.PitchRequestStatus != undefined && prod.PitchRequestStatus !='' && prod.PitchRequestStatus!='approved' && prod.PitchRequestStatus!='blank')" [class]="prod.PitchRequestStatus=='rejected'?'patch-btn inaccessible':'patch-btn pitch-status'"  style="display: inline-block;"><i [class]="prod.PitchRequestStatus=='rejected'?'fa-regular fa-eye-slash':prod.PitchRequestStatus=='requested'?'fa-solid fa-clock-rotate-left':'fa-regular fa-eye-slash'"></i>{{prod.PitchRequestStatus=='rejected'?store.getVal('pitch_inaccessible'):prod.PitchRequestStatus=='requested'?store.getVal('pitch_requested'):store.getScrenigStatus(store.PitchStatusResult,prod.PitchRequestStatus)}}</ion-label>
+                                
+                                <ion-label *ngIf="prod.PitchRequestEnable == 1 && prod.IsMyFundingProfile == 1 &&(prod.PitchRequestStatus==undefined || prod.PitchRequestStatus =='' || prod.PitchRequestStatus=='approved' || prod.PitchRequestStatus == 'blank') " [class]="prod.PitchRequestStatus=='approved'?'patch-btn view pointer':'patch-btn border pointer'" (click)="callRequest(prod,prod.PitchRequestStatus != undefined && prod.PitchRequestStatus != 'blank' && prod.PitchRequestStatus != '')" style="display: inline-block;"><i [class]="(prod.PitchRequestStatus == undefined || prod.PitchRequestStatus == '' || prod.PitchRequestStatus == 'blank')?'fa-regular fa-hand':'fa-solid fa-eye'"></i>{{store.getVal((prod.PitchRequestStatus == undefined || prod.PitchRequestStatus == '' || prod.PitchRequestStatus == 'blank')?'request_pitch':'view_pitch')}}</ion-label>
+                            </ion-col>
+                            <ion-col [class]="'col-6'" *ngIf="(prod.PitchRequestEnable == 1 && prod.IsMyFundraise == 1)">
+                                
+                                <!-- <ion-label *ngIf="prod.PitchRequestEnable == 0 && prod.IsMyFundraise == 1" class="patch-btn" style="cursor: not-allowed !important;display: inline-block;text-wrap: wrap;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label> -->
+                                                                
+                                <ion-label *ngIf="prod.PitchRequestEnable == 1 && prod.IsMyFundraise == 1" [class]="'patch-btn view pointer'" (click)="callRequest(prod,true)" style="display: inline-block;"><i [class]="'fa-solid fa-eye'"></i>{{store.getVal('view_pitch')}}</ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row style="padding:0px;padding-bottom: 10px;align-items: flex-end; justify-content: center;" *ngIf="store.appType =='admin'">
+                            <ion-col [class]="'col-6'" *ngIf="(((prod.PitchRequestEnable == 0) || (prod.PitchRequestEnable == 1)))">
+                                <ion-label *ngIf="prod.PitchRequestEnable == 0" class="patch-btn no-pointer" style="cursor: not-allowed !important;display: inline-block;text-wrap: wrap;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+                                
+                                <ion-label *ngIf="prod.PitchRequestEnable == 1" style="justify-content: center;align-items: center;display: flex;padding-bottom: 5px;font-size: 14px;">{{store.getVal('access_to_pitch')}}</ion-label>
+                                <ion-select *ngIf="prod.PitchRequestEnable == 1" interface="popover" style="display: inline-flex;min-width: 105px; " class="status" [(ngModel)]="prod.PitchRequestStatus" (ngModelChange)="changePitchStatus('fundraise','update_pitch_request',prod)">
+                                    <ion-select-option *ngFor="let e of store.PitchStatusResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option>
+                                </ion-select>
+                            </ion-col>
+                            <ion-col  [class]="'col-6'" *ngIf="((prod.PitchRequestEnable == 1))">
+                                <!-- <ion-label *ngIf="prod.PitchRequestEnable == 0" class="patch-btn no-pointer" style="cursor: not-allowed !important;display: inline-block;text-wrap: wrap;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label> -->
+                                <ion-label *ngIf="prod.PitchRequestEnable == 1" [class]="'patch-btn view pointer'" (click)="callRequest(prod,true)" style="display: inline-block;"><i [class]="'fa-solid fa-eye'"></i>{{store.getVal('view_pitch')}}</ion-label>
+                            </ion-col>
+                        </ion-row>
+                        
+                        <ion-row *ngIf="((prod.Teaser != undefined))" style="padding:0px;align-items: flex-end; justify-content: center;" >
+                            <ion-col  [class]="'col-6'" (click)="openTeaser()" >
+                                <a [href]="teaserPath()" class="view-teaser pointer clickEv" tabindex="-1" target="_blank">
+                                    <i [class]="'fa-solid fa-eye'"></i>{{store.getVal('view_teaser')}}
+                                </a>
+                            </ion-col>
+                        </ion-row>
+
+                    </div>
+                    <div class="cardlist_content_box" *ngIf="type =='funding-profiles' && store.appType =='front' && pageFrom !='funding-profile-submissions' && from !='profile'">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.ProfileName != undefined && prod?.ProfileName != ''?' | '+prod?.ProfileName :'')" [itemTitle]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.ProfileName != undefined && prod?.ProfileName != ''?' | '+prod?.ProfileName :'')" [address]="address" [Name]="Name" [Slug]="prod.ProfileSlug != undefined?prod.ProfileSlug : prod.FP_EnablerSlug" [ProfileSlug]="prod.FP_EnablerSlug" [EnablerSlug]="prod.EnablerSlug !=undefined?prod.EnablerSlug:EnablerSlug!=undefined?EnablerSlug:''" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [ActionType]="ActionType" [apiAction]="apiAction" hideAction="0" [IsProfile]="IsProfile" [IsSubmittedEnabler]="IsSubmittedEnabler" (change)="callFilter($event)"></prod-title>
+                        <ion-label class="sell-lbl brand_content" *ngIf="(prod.TicketSizePerFunding != undefined && prod.TicketSizePerFunding != '') || prod.FundingStage != undefined || prod.FundingType != undefined">
+                            <div class="card_title">
+                                <span class="pointer item-card-second-row"><label *ngIf="prod.TicketSizePerFunding != undefined && prod.TicketSizePerFunding != ''">{{store.getVal('ticket_size')}}&nbsp;{{prod.TicketSizePerFunding}}&nbsp;</label><label *ngIf="prod.FundingStage != undefined">{{store.getVal('at')}}&nbsp;{{prod.FundingStage}},&nbsp;</label><label *ngIf="prod.FundingType != undefined">{{store.getVal('investing_in')}}&nbsp;{{prod.FundingType}}</label></span>
+
+                                <!-- <span class="pointer" (click)="filterItem('proidertype',prod)">{{prod.FundingProviderType}}</span>&nbsp;<span class="pointer" (click)="filterItem('ticketsize',prod)">{{prod.TicketSizePerFunding}}</span> -->
+                            </div>
+                        </ion-label>
+                        <ion-label class="sell-lbl brand_content" *ngIf="prod.ContactName != undefined || prod.ProfileName != undefined">
+                            <h3>
+                                <ng-container *ngTemplateOutlet="contactView context:{type:'profile'}"></ng-container>
+                            </h3>
+                        </ion-label>
+
+                        <div class="card_classifides">
+                            <div class="card_classification" *ngIf="prod.ImpactThemesAndAreasJson != undefined && prod.ImpactThemesAndAreasJson != ''">
+                                <app-classification [prod]="prod" [ImpactThemesAndAreas]="ImpactThemesAndAreas" [towLevel]="true" [title]="store.getVal('impact_themes_and_areas')" [dataType]="'impacttheme'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification GenderLensJson" *ngIf="prod.GenderLensJson != undefined && prod.GenderLensJson != ''">
+                                <app-classification [prod]="prod" [ImpactThemesAndAreas]="GenderLensJson"  [title]="store.getVal('gender_lens')" [dataType]="'genderlens'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification" *ngIf="prod.EsgJson != undefined && prod.EsgJson != ''">
+                                <app-classification [prod]="prod" [ImpactThemesAndAreas]="ESG" [towLevel]="true" [title]="store.getVal('esg')" [dataType]="'esg'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification" *ngIf="prod.SdgsJson != undefined && prod.SdgsJson != ''">
+                                <label-right-img *ngIf="prod.SdgsJson !=undefined" [Slug]="prod.EnablerSlug" [prod]="prod" [dataType]="'sdgs'" [subtype]="'enablers'" [pageFrom]="pageFrom" [from]="from" [openFront]="openFront" [Click]="true"></label-right-img>
+                            </div>
+                            <ng-container *ngTemplateOutlet="seeMore context:{type:type}"></ng-container>
+                        </div>
+
+                        <div *ngIf="(prod.ReactionValue != undefined || prod.TotalMatchingFundraiseNeeds != undefined ||prod.TotalSuggestedEnabler>0 ||prod.TotalExpressedInterest>0 || prod.TotalReceivedInterest>0 || (from != 'front'&& pageFrom !='profile' && prod.IsActive !=undefined) || prod.IsMyFundingProfile == 1 || prod.MyMatch ==1)" [style.border-top]="'1px solid var(--ion-color-light-gray)'" [class]="(prod.ReactionValue != undefined || prod.TotalExpressedInterest>0 || prod.TotalReceivedInterest>0 || (from != 'front'&& pageFrom !='profile' && prod.IsActive !=undefined) )?'cardlist_filter_content fundraise_count_div':'cardlist_filter_content fundraise_count_div p-0'">
+                            <funding-profile-count [prod]="prod" [pageType]="type" [subtype]="'enablers'" [from]="from" [pageFrom]="pageFrom" [openFront]="openFront" [FP_EnablerSlug]="prod.FP_EnablerSlug" [apiAction]="apiAction" [ActionType]="ActionType" [hideAction]="hideAction" (change)="callAction($event)"></funding-profile-count>
+                        </div>
+                    </div>
+                    <div class="cardlist_content_box" *ngIf="type =='fundraise-needs' && store.appType =='front' && pageFrom !='fundraise-need-submissions' && from !='profile'">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.CompanyName != undefined && prod?.CompanyName != ''?' | '+prod?.CompanyName :'')"[itemTitle]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.CompanyName != undefined && prod?.CompanyName != ''?' | '+prod?.CompanyName :'')" [address]="address" [Name]="Name" [Slug]="prod.FundraiseSlug != undefined?prod.FundraiseSlug : prod.FN_EnablerSlug" [FundraiseSlug]="prod.FN_EnablerSlug" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [ActionType]="ActionType" [apiAction]="apiAction" hideAction="0" [IsProfile]="IsProfile" [IsSubmittedEnabler]="IsSubmittedEnabler"></prod-title>
+                        <ion-label class="sell-lbl brand_content" *ngIf="(prod.TotalRaise != undefined && prod.TotalRaise != '' )||(prod.FundingStage != undefined && prod.FundingStage != '' ) ">
+                            <div class="card_title">
+                                <span class="pointer item-card-second-row">
+                                    {{prod.TotalRaise}}<label *ngIf="prod.FundingStage != undefined">&nbsp;{{prod.FundingStage}}</label>&nbsp;{{this.store.getVal('by')}}&nbsp;{{prod.RaiseEndDate | date : 'dd MMM yyyy'}}
+                                </span>
+                            </div>
+                        </ion-label>
+                        <ion-label class="sell-lbl brand_content" [style.margin-bottom]="pageFrom == 'Top'?'12px !important':'0px !important'" *ngIf="prod.ContactName != undefined || prod.CompanyName != undefined">
+                            <h3>
+                                <ng-container *ngTemplateOutlet="contactView context:{type:'need'}"></ng-container>
+                            </h3>
+                        </ion-label>
+                        <div class="card_classifides">
+                            <div class="card_classification" *ngIf="prod.ImpactThemesAndAreasJson != undefined && prod.ImpactThemesAndAreasJson != ''">
+                                <app-classification [ImpactThemesAndAreas]="ImpactThemesAndAreas" [towLevel]="true" [prod]="prod" [title]="store.getVal('impact_themes_and_areas')" [dataType]="'impacttheme'" [pageFrom]="pageFrom" [Saperator]="',,'"  [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification GenderLensJson" *ngIf="prod.GenderLensJson != undefined && prod.GenderLensJson != ''">                               
+                                <app-classification  [ImpactThemesAndAreas]="GenderLensJson" [towLevel]="false" [prod]="prod" [title]="store.getVal('gender_lens')" [dataType]="'genderlens'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification" *ngIf="prod.EsgJson != undefined && prod.EsgJson != ''">
+                                <app-classification [prod]="prod" [ImpactThemesAndAreas]="ESG" [towLevel]="true" [title]="store.getVal('esg')" [dataType]="'esg'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification" *ngIf="prod.SdgsJson != undefined && prod.SdgsJson != ''">
+                                <label-right-img *ngIf="prod.SdgsJson !=undefined" [Slug]="prod.EnablerSlug" [prod]="prod" [dataType]="'sdgs'" [subtype]="''" [pageFrom]="pageFrom" [from]="from" [openFront]="openFront" [Click]="true"></label-right-img>
+                            </div>
+                            <ng-container *ngTemplateOutlet="seeMore context:{type:type}"></ng-container>
+                        </div>
+                        <div *ngIf="(prod.TotalMatchingFundingProfiles != undefined || prod.TotalSuggestedEnabler > 0 || prod.TotalExpressedInterest > 0 || prod.TotalReceivedInterest > 0 || (prod.IsMyFundraise == 1 && pageFrom !='fundraise-need-submissions') || (prod.Teaser != undefined && prod.Teaser != '') || prod.MyMatch ==1 )" [style.border-top]="'1px solid var(--ion-color-light-gray)'" [class]="'cardlist_filter_content fundraise_count_div'">
+                            <fundraise-count [prod]="prod" [pageType]="type" [subtype]="'enablers'" [from]="from" [pageFrom]="pageFrom" [openFront]="openFront" [FN_EnablerSlug]="prod.FN_EnablerSlug" [apiAction]="apiAction" [ActionType]="ActionType" [hideAction]="hideAction" (change)="callAction($event)"></fundraise-count>
+                        </div>
+                    </div>
+                 
+                    <div [class]="prod.EnablerID == selectedEnabler?'cardlist_content_box funding_profile_title highlited_plan':'cardlist_content_box funding_profile_title'" *ngIf="type == 'plans_and_pricing'">
+                        <div style="justify-content: center; display: flex; padding:12px;" *ngIf="pageFrom != 'details'">
+                            <ion-label class="plan" style="background-color: var(--ion-color-black); display: block;">{{prod.PlanName}}</ion-label>
+                        </div>
+                        <div style="justify-content: center; display: flex; padding:0px 12px 12px 12px;" *ngIf="pageFrom != 'details'">
+                            <ion-label *ngIf="!prod.IsActive" class="select_plan pointer" (click)="selectPlan(prod)">{{store.getVal('select')}}</ion-label>
+                            
+                            <ion-label *ngIf="prod.IsActive" class="last-introduce-date">
+                                <span><i class="fa-solid fa-check"></i>{{store.getVal('current_activated')}}</span>
+                            </ion-label>
+                        </div>
+                        <ion-accordion-group *ngIf="prod.PlanDescriptionDup != undefined && prod.PlanDescriptionDup.length>0"  [multiple]="true" [value]="['planoffer']">
+                            <ion-accordion value="planoffer">
+                              <ion-item slot="header" color="light">
+                                <ion-label>{{store.getVal('plan_offer')}}</ion-label>
+                              </ion-item>
+                              <div class="ion-padding" slot="content">
+                                  <ul>
+                                      <li class="custom-li-icon" *ngFor="let item of prod.PlanDescriptionDup">{{item.PlanDescription}}</li>
+                                  </ul>
+                              </div>
+                            </ion-accordion>
+
+                            <ion-accordion value="features" *ngIf="prod.PlanFeaturesDescriptionDup != undefined && prod.PlanFeaturesDescriptionDup.length>0">
+                                <ion-item slot="header" color="light">
+                                  <ion-label>{{store.getVal('features')}}</ion-label>
+                                </ion-item>
+                                <div class="ion-padding" slot="content">
+                                  <div *ngFor="let item of prod.PlanFeaturesDescriptionDup">
+                                      <ion-label>{{store.getVal(item.ParentKey)}}</ion-label>
+                                      <ul>
+                                          <li class="custom-li-icon" *ngFor="let sub of item.FeaturesSubData">{{sub.PlanDescription}}</li>
+                                      </ul>
+                                  </div>
+                                </div>
+                            </ion-accordion>
+                            </ion-accordion-group>
+                    </div>
+                    <div class="cardlist_content_box impact-funding" *ngIf="type =='impact-funding-resources'">
+                        <div>
+                            <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="prod.Title" [itemTitle]="getTitle()" [Name]="prod.Title" [Slug]="prod.ImpactFundingResourcesSlug" [ActionType]="ActionType" [apiAction]="apiAction" hideAction="0" (change)="callFilter($event)"></prod-title>
+                            <div>
+                               <ion-label class="sell-lbl brand_content">
+                                    <span style="color: var(--ion-color-black) !important;">
+                                        <h3><a [class]="'clickEv no-pointer'" [innerHtml]="nl2br(prod.ShortDescription)" tabindex="-1"></a></h3>
+                                    </span>
+                                </ion-label>
+                                <ion-label *ngIf="prod.Website" class="sell-lbl brand_content">
+                                <a href="{{prod.Website}}" class="impact-funding-link" target="_blank"><i class="fa fa-external-link" style="margin-right: 10px;" tabindex="-1"></i>{{prod.Website}}</a></ion-label>
+                                <div *ngIf="prod.Tags">
+                                    <h2 style="margin: initial;">
+                                        <ion-chip class="tags" *ngFor="let item of getTags(prod.Tags)">{{item}} </ion-chip>
+                                    </h2>
+                                </div>
+                                <div class="vertical-view">
+                                    <h3>
+                                        <ion-label  *ngIf="prod.StartDate !=undefined" class="sell-lbl brand_content"><span>{{store.getVal('start_date')}}</span>{{prod.StartDate != undefined?(prod.StartDate | date : 'dd MMM yyyy'):''}}</ion-label>
+                                        <ion-label  *ngIf="prod.EndDate !=undefined" class="sell-lbl brand_content">
+                                            <span>{{store.getVal('end_date')}}</span>{{ prod.EndDate != undefined ? (prod.EndDate | date : 'dd MMM yyyy'):''}}
+                                        </ion-label>
+                                        <ion-label *ngIf="prod.FundingAmount !=undefined" class="sell-lbl brand_content">
+                                            <span>{{store.getVal('funding_amount')}}</span>{{prod.FundingAmount}}
+                                        </ion-label>
+                                        <ion-label *ngIf="prod.FundingResourceType !=undefined" class="sell-lbl brand_content" style="display: flex;align-items: center;">
+                                            <span>{{store.getVal('funding_resource_type')}}</span><h2 style="margin: initial;font-size: 14px;">{{prod.FundingResourceType}}</h2>
+                                        </ion-label>
+                                        <ion-label *ngIf="prod.FundingProvider !=undefined" class="sell-lbl brand_content" style="display: flex;align-items: center;">
+                                        <span>{{store.getVal('impact_funding_provider')}}</span><h2 style="margin: initial;font-size: 14px;">{{prod.FundingProvider}}</h2>
+                                        </ion-label>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-col>
+</ion-row>
+<!-- Matching FN and Matching FP Widgets -->
+<ion-row [class]="isMain?'cardlist permissions_crd main-card investor-investee-item-card':'cardlist permissions_crd investor-investee-item-card'"  *ngIf="((type =='fundraise-needs-submitted' || type == 'enablers' || type=='matching-enablers' ||  type=='funding-profiles-submitted' || type == 'fundraise-view' || type=='matching-enablers' || type == 'enabler-view'|| type =='funding-profile-view' || (type =='funding-profiles' && store.appType =='admin') || (type =='fundraise' && store.appType =='admin') || pageFrom =='funding-profile-submissions' || from =='profile') && type !='matched-fundraise-needs' && type !='matching-funding-profiles')">
+   
+    <ion-col class="cardlist_content_block" style="padding: 0px;">
+        <div class="cardlist_content_box1" style="padding: 0px;" *ngIf="type == 'funding-profiles-submitted' || type == 'fundraise-needs-submitted'">
+            <ion-row >
+                <ion-col class="cardlist_content_block">
+                    <div class="cardlist_content_box" *ngIf="type == 'funding-profiles-submitted'">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.ProfileName != undefined && prod?.ProfileName != ''?' | '+prod?.ProfileName :'')" [itemTitle]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.ProfileName != undefined && prod?.ProfileName != ''?' | '+prod?.ProfileName :'')" [address]="address" [Name]="Name" [ProfileSlug]="prod.ProfileSlug" [EnablerSlug]="prod.EnablerSlug !=undefined?prod.EnablerSlug:EnablerSlug!=undefined?EnablerSlug:''" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [ActionType]="ActionType" [apiAction]="apiAction"></prod-title>
+                        <ion-label class="sell-lbl brand_content" *ngIf="(prod.TicketSizePerFunding != undefined && prod.TicketSizePerFunding != '') || prod.FundingStage != undefined || prod.FundingType != undefined">
+                            <div class="card_title">
+                                <span class="pointer item-card-second-row"><label *ngIf="prod.TicketSizePerFunding != undefined && prod.TicketSizePerFunding != ''">{{store.getVal('ticket_size')}}&nbsp;{{prod.TicketSizePerFunding}}&nbsp;</label><label *ngIf="prod.FundingStage != undefined">{{store.getVal('at')}}&nbsp;{{prod.FundingStage}},&nbsp;</label><label *ngIf="prod.FundingType != undefined">{{store.getVal('investing_in')}}&nbsp;{{prod.FundingType}}</label></span>
+                            </div>
+                        </ion-label>
+                        <ion-label class="sell-lbl brand_content" [style.margin-bottom]="pageFrom == 'Top'?'12px !important':'0px !important'" *ngIf="prod.ContactName != undefined || prod.ProfileName != undefined">
+                            <h3>
+                                <ng-container *ngTemplateOutlet="contactView context:{type:'profile'}"></ng-container>
+                            </h3>
+                        </ion-label>
+                        <div *ngIf="(prod.ReactionValue != undefined || prod.TotalMatchingFundraiseNeeds != undefined ||prod.TotalSuggestedEnabler>0 ||prod.TotalExpressedInterest>0 || prod.TotalReceivedInterest>0 || (from != 'front'&& pageFrom !='profile' && prod.IsActive !=undefined) || prod.IsMyFundingProfile == 1)" [style.border-top]="'1px solid var(--ion-color-light-gray)'" [class]="(prod.ReactionValue != undefined || prod.TotalExpressedInterest>0 || prod.TotalReceivedInterest>0 || (from != 'front'&& pageFrom !='profile' && prod.IsActive !=undefined) )?'cardlist_filter_content fundraise_count_div':'cardlist_filter_content fundraise_count_div p-0'">
+                            <funding-profile-count [prod]="prod" [pageType]="type" [subtype]="'enablers'" [from]="from" [pageFrom]="pageFrom" [openFront]="openFront" [FP_EnablerSlug]="prod.FP_EnablerSlug" [apiAction]="apiAction" [ActionType]="ActionType" [hideAction]="hideAction" (change)="callAction($event)"></funding-profile-count>
+                        </div>
+                    </div>
+                    <div class="cardlist_content_box" *ngIf="type == 'fundraise-needs-submitted'">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.CompanyName != undefined && prod?.CompanyName != ''?' | '+prod?.CompanyName :'')" [itemTitle]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.CompanyName != undefined && prod?.CompanyName != ''?' | '+prod?.CompanyName :'')" [address]="address" [Name]="Name" [ProfileSlug]="prod.ProfileSlug" [EnablerSlug]="prod.EnablerSlug !=undefined?prod.EnablerSlug:EnablerSlug!=undefined?EnablerSlug:''" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [ActionType]="ActionType" [apiAction]="apiAction"></prod-title>
+                        <ion-label class="sell-lbl brand_content">
+                            <div class="card_title">
+                                <span class="pointer item-card-second-row">
+                                    {{prod.TotalRaise}}<label *ngIf="prod.FundingStage != undefined">&nbsp;{{prod.FundingStage}}</label>&nbsp;{{this.store.getVal('by')}}&nbsp;{{prod.RaiseEndDate | date : 'dd MMM yyyy'}}
+                                </span>
+                            </div>
+                        </ion-label>
+                        <ion-label class="sell-lbl brand_content" [style.margin-bottom]="pageFrom == 'Top'?'12px !important':'0px !important'" *ngIf="prod.ContactName != undefined">
+                            <h3>
+                                <ng-container *ngTemplateOutlet="contactView context:{type:'need'}"></ng-container>
+                               
+                            </h3>
+                        </ion-label>
+                        <div [style.border-top]="'1px solid var(--ion-color-light-gray)'" [class]="'cardlist_filter_content fundraise_count_div'">
+                            <fundraise-count [prod]="prod" [pageType]="type" [subtype]="'enablers'" [from]="from" [pageFrom]="pageFrom" [openFront]="openFront" [FN_EnablerSlug]="prod.FN_EnablerSlug" [apiAction]="apiAction" [ActionType]="ActionType" [hideAction]="hideAction" (change)="callAction($event)"></fundraise-count>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="cardlist_content_box" style="padding: 0px;" *ngIf="(type == 'enablers' || type == 'enabler-view') && (pageFrom == 'list' || pageFrom == 'Top'|| pageFrom == 'details')">
+            <div *ngIf="prod.EnablerCoverPhoto != null && prod.EnablerCoverPhoto!='' && pageFrom == 'Top'" class="cover-photo">
+                <img [longdesc]="prod.EnablerCoverPhoto" alt="" src="{{ prod.EnablerCoverPhoto }}" />
+            </div>
+          
+            <div *ngIf="extraTitle">
+                <ion-row style="border-bottom: 1px solid var(--ion-color-light-gray);">
+                    <ion-col class="cardlist_content_block">
+                        <div class="cardlist_content_box ">                            
+                            <prod-title [pageType]="prod.ProfileSlug!=undefined?'funding-profiles':'fundraise'" [isAddForm]="isAddForm" [extraMenu]="extraMenu" from="profile" [openFront]="openFront" pageFrom="profile" [subType]="subtype" [prod]="cutomData(prod.ProfileSlug!=undefined?'profile':'fundraise')" [title]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+' | '+(prod?.ProfileName != undefined && prod?.ProfileName != ''?prod?.ProfileName :prod.CompanyName)" [itemTitle]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+' | '+(prod?.ProfileName != undefined && prod?.ProfileName != ''?prod?.ProfileName :prod.CompanyName)" [Slug]="prod.ProfileSlug != undefined?prod.ProfileSlug : prod.FundraiseSlug" [ActionType]="ActionType" [apiAction]="apiAction" [extraTitle]="extraTitle" hideAction="1"></prod-title>
+                        </div>
+                    </ion-col>
+                </ion-row>               
+            </div>
+            <ion-row>
+                <ion-col class="cardlist_images_box">
+                    <div class="card_img" [ngStyle]="{'height': prod.Website != undefined && prod.Website != ''?'76%':'100%'}">
+                        <div>
+                            <img [alt]="prod.EnablerName +' '+prod.ShortDescription" [class]="pageFrom != 'Top'?'ion-img pointer':'ion-img no-pointer'" (click)="openEnabler()" src="{{ prod.EnablerLogo != null ? prod.EnablerLogo!=''?prod.EnablerLogo:'assets/images/no-image-icon-5.jpg' : 'assets/images/no-image-icon-5.jpg' }}" onerror="this.src='assets/images/no-image-icon-5.jpg'" />
+                        </div>
+                    </div>
+                    <div class="site_anchor" *ngIf="prod.Website != undefined && prod.Website != ''">
+                        <a href="{{prod.Website}}" target="_blank" tabindex="-1"><i class="fa fa-external-link"></i></a>
+                    </div>
+                </ion-col>
+                <ion-col class="cardlist_content_block" [style.border-radius]="pageFrom =='Top' && prod.EnablerCoverPhoto != null && prod.EnablerCoverPhoto!=''?'0px 10px 0px 10px':'0px'" [style.background]="pageFrom =='Top' && prod.EnablerCoverPhoto != null && prod.EnablerCoverPhoto!=''?'white':'transparent'">
+                    <div class="cardlist_content_box">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="prod.EnablerName" [itemTitle]="prod.EnablerName" [address]="address" [Name]="Name" [EnablerSlug]="EnablerSlug" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [ActionType]="ActionType" [apiAction]="apiAction" (change)="callFilter($event)"></prod-title>
+                        <ion-label class="sell-lbl brand_content" *ngIf="prod.FormattedAddress != undefined && prod.FormattedAddress != ''">
+                            <span>
+                                <i [class]="'fas fa-map-marker-alt'"></i> <a *ngIf="prod.AddressUrl != undefined" [href]="prod.AddressUrl" target="_blank" tabindex="-1">{{prod.FormattedAddress}}</a>{{prod.AddressUrl == undefined ?prod.FormattedAddress:''}} 
+                            </span>
+                        </ion-label>
+                        <ion-label class="sell-lbl brand_content" style="-webkit-line-clamp: 9 !important;">
+                            <span>
+                                <h3><a [href]="enablerPath()" [class]="pageFrom != 'Top'?'clickEv pointer three-line':'clickEv no-pointer'" (click)="openEnabler()" [innerHtml]="nl2br(prod.ShortDescription)" tabindex="-1"></a></h3>
+                            </span>
+                        </ion-label>
+                    </div>
+                    <div id="web-ui" *ngIf="!isAddForm" [style.border-top]="(prod.IsMyEnabler != undefined && prod.IsMyEnabler == '1') || (prod.TotalMatched>0 || prod.TotalFundraise > 0 || prod.TotalFundingProfile > 0 || prod.TotalSubmittedFundingProfiles > 0 || prod.TotalSubmittedFundraiseNeeds > 0 || from == 'admin' || from == 'profile' || (((prod.FPSubmissionAccept != 0 && store.appType =='front') ||  store.appType =='admin') &&  store.checkPermission(prod,'submit_funding_profile') || ((prod.FNSubmissionAccept != 0 && store.appType =='front') ||  store.appType =='admin') && store.checkPermission(prod,'submit_fundraise_need')))?'1px solid var(--ion-color-itemcard-border)':'none'" [class]="( prod.IsMyEnabler != undefined && prod.IsMyEnabler == 1) || (prod.TotalMatched>0 ||prod.TotalFundraise > 0 || prod.TotalFundingProfile > 0 || prod.TotalSubmittedFundingProfiles > 0 || prod.TotalSubmittedFundraiseNeeds > 0|| from == 'admin' ||from == 'profile' || (((prod.FPSubmissionAccept != 0 && store.appType =='front') ||  store.appType =='admin') &&  store.checkPermission(prod,'submit_funding_profile') || ((prod.FNSubmissionAccept != 0 && store.appType =='front')||  store.appType =='admin') && store.checkPermission(prod,'submit_fundraise_need')))?'cardlist_filter_content':'cardlist_filter_content p-0'">
+                        <enabler-count [prod]="prod" [pageType]="type" [subtype]="'enablers'" [from]="from" [pageFrom]="pageFrom" [openFront]="openFront" [EnablerSlug]="EnablerSlug" [ProfileSlug]="ProfileSlug" [FundraiseSlug]="FundraiseSlug" [FPEnablerSlug]="" [apiAction]="apiAction" [ActionType]="ActionType" [hideAction]="hideAction" [isAddForm]="isAddForm" [extraMenu]="extraMenu" (change)="callAction($event)"></enabler-count>
+                    </div>
+                </ion-col>
+                <ion-col id="app-ui" *ngIf="!isAddForm" [style.border-top]="(prod.IsMyEnabler != undefined && prod.IsMyEnabler == '1') || ( prod.TotalMatched>0 || prod.TotalFundraise > 0 || prod.TotalFundingProfile > 0 || prod.TotalSubmittedFundingProfiles > 0 || prod.TotalSubmittedFundraiseNeeds > 0 || from == 'admin' ||from == 'profile'|| (((prod.FPSubmissionAccept != 0 && store.appType =='front') ||  store.appType =='admin') &&  store.checkPermission(prod,'submit_funding_profile') || ((prod.FNSubmissionAccept != 0 && store.appType =='front')||  store.appType =='admin') && store.checkPermission(prod,'submit_fundraise_need')))?'1px solid var(--ion-color-itemcard-border)':'none'" [class]="(prod.IsMyEnabler != undefined && prod.IsMyEnabler == '1') || (prod.TotalMatched>0 ||prod.TotalFundraise > 0 || prod.TotalFundingProfile > 0 || prod.TotalSubmittedFundingProfiles > 0 || prod.TotalSubmittedFundraiseNeeds > 0|| from == 'admin' ||from == 'profile'|| (((prod.FPSubmissionAccept != 0 && store.appType =='front') ||  store.appType =='admin') &&  store.checkPermission(prod,'submit_funding_profile') || ((prod.FNSubmissionAccept != 0 && store.appType =='front')||  store.appType =='admin') && store.checkPermission(prod,'submit_fundraise_need')))?'cardlist_filter_content':'cardlist_filter_content p-0'">
+                    <enabler-count [prod]="prod" [pageType]="type" [subtype]="'enablers'" [from]="from" [pageFrom]="pageFrom" [openFront]="openFront" [EnablerSlug]="EnablerSlug" [ProfileSlug]="ProfileSlug" [FundraiseSlug]="FundraiseSlug" [FPEnablerSlug]="" [apiAction]="apiAction" [ActionType]="ActionType" [hideAction]="hideAction" [isAddForm]="isAddForm" (change)="callAction($event)"></enabler-count>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="cardlist_content_box1" style="padding: 0px;" *ngIf="(type == 'enabler-view' ) && from == 'admin' && (pageFrom == 'details')">
+            <ion-row [style.background]="(type == 'enabler-view')?'var(--ion-color-white)':'#e9e9e9a8'" style="border-radius: 10px;">
+                <ion-col class="cardlist_content_block">
+                    <div class="cardlist_content_box">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="prod.EnablerName" [itemTitle]="prod.EnablerName" [address]="address" [Name]="Name" [ActionType]="ActionType" [EnablerSlug]="prod.EnablerSlug !=undefined?prod.EnablerSlug:EnablerSlug!=undefined?EnablerSlug:''" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [apiAction]="apiAction"></prod-title>
+                    </div>
+                    <div [style.border-top]="(prod.TotalExpressedInterest > 0 || prod.TotalReceivedInterest>0)?'1px solid var(--ion-color-light-gray)':'none'" [class]="(prod.TotalExpressedInterest > 0 || prod.TotalReceivedInterest>0)?'cardlist_filter_content':'cardlist_filter_content p-0'">
+                        <div class="filter_count_list">
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('matching_fundraise_needs')}}
+                                    <span class="count">{{prod.TotalMatchingFundingProfiles}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('expressed_interest')}}
+                                    <span class="count">{{prod.TotalExpressedInterest}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('received_interest')}}
+                                    <span class="count">{{prod.TotalReceivedInterest}}</span>
+                                </span>
+                            </ion-label>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row style="background: white;border-radius: 10px;" *ngFor="let item of FundraiseData">
+                <ion-col class="cardlist_content_block">
+                    <div class="cardlist_content_box2">
+                        <prod-title [pageType]="'fundraise'" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="item" [title]="(item?.ReferenceCode != undefined && item?.ReferenceCode != ''?item?.ReferenceCode :'') + (item?.CompanyName != undefined && item?.CompanyName != ''?' | '+item?.CompanyName :'')+ (item?.ProfileName != undefined && item?.ProfileName != ''?' | '+item?.ProfileName :'')+(item?.CountryName != undefined && item?.CountryName != ''?' | '+ item?.CountryName:'')" [itemTitle]="(item?.ReferenceCode != undefined && item?.ReferenceCode != ''?item?.ReferenceCode :'') + (item?.CompanyName != undefined && item?.CompanyName != ''?' | '+item?.CompanyName :'')+ (item?.ProfileName != undefined && item?.ProfileName != ''?' | '+item?.ProfileName :'')+(item?.CountryName != undefined && item?.CountryName != ''?' | '+ item?.CountryName:'')" [address]="''" [Name]="Name" [EnablerSlug]="''" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [ActionType]="ActionType" [apiAction]="apiAction"></prod-title>
+                        <ion-label class="sell-lbl brand_content" [style.margin-bottom]="pageFrom == 'Top'?'12px !important':'0px !important'" *ngIf="prod.FirstName != undefined">
+                            <h3>
+                                <ng-container *ngTemplateOutlet="contactView context:{type:'user'}"></ng-container>
+                                
+                            </h3>
+                        </ion-label>
+                    </div>
+                    <div class="cardlist_filter_content btn_view" [style.border-top]="'1px solid var(--ion-color-light-gray)'">
+                        <div class="filter_count_list">
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('matching_funding_profiles')}}
+                                    <span class="count">{{store.format(undefined,item?.TotalMatchingFundingProfiles)}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('total_expressed_interest')}}
+                                    <span class="count">{{item?.TotalExpressedInterest}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('total_received_interest')}}
+                                    <span class="count">{{item?.TotalReceivedInterest}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('received_interest')}} <span class="count">
+                                        <drop-down from="status" [itemList]="store.valueList" [enable]="(!store.IsSystemAdmin)" [preSlected]="'0'" [slected]="'0'" customClass="show-drop" (change)="selectStatus($event)" [pageType]="type"></drop-down>
+                                    </span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('expressed_interest')}} <span class="count">
+                                        <drop-down from="status" [itemList]="store.valueList"
+                                            [enable]="!store.IsSystemAdmin" [preSlected]="'1'" [slected]="'1'"
+                                            customClass="show-drop" (change)="selectStatus($event)" [pageType]="type">
+                                        </drop-down>
+                                    </span>
+                                </span>
+                            </ion-label>
+                        </div>
+                        <ion-button class="btn-match" (click)="openMatching(item,true)">{{store.getVal('see_matching_parameters')}}</ion-button>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="cardlist_content_box1" style="padding: 0px;" *ngIf="(((type == 'fundraise-needs') && store.appType !='admin') || type == 'fundraise-view' || ((type == 'funding-profiles' || type == 'funding-profile-view') && pageFrom!='Top') ) && from == 'admin' && (pageFrom == 'details' || pageFrom=='Top')">
+            <ion-row [style.background]="pageFrom!='Top'?'#e9e9e9a8':'var(--ion-color-white)00'"
+                style="border-radius: 10px;">
+                <ion-col class="cardlist_content_block">
+                    <div class="cardlist_content_box">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode :'') + (prod?.CompanyName != undefined && prod?.CompanyName != ''? ' | '+prod?.CompanyName :'') + (prod?.ProfileName != undefined && prod?.ProfileName != ''?' | '+prod?.ProfileName :'')" [itemTitle]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode :'') + (prod?.CompanyName != undefined && prod?.CompanyName != ''? ' | '+prod?.CompanyName :'') + (prod?.ProfileName != undefined && prod?.ProfileName != ''?' | '+prod?.ProfileName :'')" [address]="''" [Name]="Name" [EnablerSlug]="''" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [ActionType]="ActionType" [apiAction]="apiAction"></prod-title>
+                        <ion-label class="sell-lbl brand_content" [style.margin-bottom]="pageFrom == 'Top'?'12px !important':'0px !important'" *ngIf="prod.ContactName != undefined">
+                            <h3>
+                                <ng-container *ngTemplateOutlet="contactView context:{type:'contact'}"></ng-container>
+                                                               
+                            </h3>
+                        </ion-label>
+
+                    </div>
+                    <div class="cardlist_filter_content btn_view" [style.border-top]="'1px solid var(--ion-color-light-gray)'">
+                        <div class="filter_count_list">
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal(prod.TotalEnablers>1?'enablers':'enablers')}}
+                                    <span class="count">{{store.format(undefined,prod.TotalEnablers)}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('matching_fundraise_profiles')}}
+                                    <span class="count">{{prod.TotalMatchingFundingProfiles}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('expressed_interest')}}
+                                    <span class="count">{{prod.TotalExpressedInterest}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('received_interest')}}
+                                    <span class="count">{{prod.TotalReceivedInterest}}</span>
+                                </span>
+                            </ion-label>
+                            <status-view *ngIf="from == 'admin' && pageFrom=='Top'" [subtype]="subtype" [pageFrom]="pageFrom" [from]="from" [pageType]="type" [prod]="prod" [apiAction]="apiAction" [ActionType]="ActionType" [ProfileSlug]="prod.ProfileSlug" [FundraiseSlug]="prod.FundraiseSlug"></status-view>
+                        </div>
+                        <ion-button *ngIf="pageFrom!='Top'" class="btn-match" (click)="openMatching(prod,false)">{{store.getVal('see_matching_parameters')}}</ion-button>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row class="sub_item_card" *ngFor="let item of EnablerData">
+                <ion-col class="cardlist_content_block">
+                    <div class="cardlist_content_box">
+                        <prod-title [pageType]="'enablers'" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="item" [title]="item?.EnablerName" [itemTitle]="item?.EnablerName" [address]="address" [BrandIDs]="''" [Name]="item?.EnablerName" [BrandSlug]="''" [ActionType]="ActionType" [apiAction]="apiAction" (change)="callFilter($event)"></prod-title>
+                    </div>
+                    <div class="cardlist_filter_content btn_view" [style.border-top]="'1px solid var(--ion-color-light-gray)'">
+                        <div class="filter_count_list">
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('matching_funding_profiles')}}
+                                    <span class="count">{{store.format(undefined,item.TotalMatchingFundingProfiles)}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('total_expressed_interest')}}
+                                    <span class="count">{{item.TotalExpressedInterest}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('total_received_interest')}}<span
+                                        class="count">{{item.TotalReceivedInterest}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('received_interest')}} 
+                                    <span class="count">
+                                        <drop-down from="status" [itemList]="store.valueList" [enable]="!store.IsSystemAdmin" [preSlected]="'1'" [slected]="'1'" customClass="show-drop" (change)="selectStatus($event)" pageType="label"></drop-down>
+                                    </span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="sell-lbl brand_content">
+                                <span class="contents no-pointer">
+                                    {{store.getVal('expressed_interest')}} 
+                                    <span class="count">
+                                        <drop-down from="status" [itemList]="store.valueList" [enable]="!store.IsSystemAdmin" [preSlected]="'0'" [slected]="'0'" customClass="show-drop" (change)="selectStatus($event)" pageType="label"></drop-down>
+                                    </span>
+                                </span>
+                            </ion-label>
+                        </div>
+                        <ion-button class="btn-match" (click)="openMatching(item,true)">{{store.getVal('see_matching_parameters')}}</ion-button>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="cardlist_content_box1" style="padding: 0px;" *ngIf="type == 'funding-profiles' || type == 'funding-profile'">
+            <ion-row>
+                <ion-col class="cardlist_content_block">
+                    <div class="cardlist_content_box">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.ProfileName != undefined && prod?.ProfileName != ''?' | '+prod?.ProfileName :'')" [itemTitle]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.ProfileName != undefined && prod?.ProfileName != ''?' | '+prod?.ProfileName :'')" [address]="address" [Name]="Name" [Slug]="prod.ProfileSlug != undefined?prod.ProfileSlug : prod.FP_EnablerSlug" [ProfileSlug]="prod.FP_EnablerSlug" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [ActionType]="ActionType" [apiAction]="apiAction" hideAction="0"  [IsProfile]="IsProfile" [IsSubmittedEnabler]="IsSubmittedEnabler"></prod-title>
+                        <ion-label class="sell-lbl brand_content" *ngIf="(prod.TicketSizePerFunding != undefined && prod.TicketSizePerFunding != '') || prod.FundingStage != undefined || prod.FundingType != undefined">
+                            <div class="card_title">
+                                <span class="pointer item-card-second-row"><label *ngIf="prod.TicketSizePerFunding != undefined && prod.TicketSizePerFunding != ''">{{store.getVal('ticket_size')}}&nbsp;{{prod.TicketSizePerFunding}}&nbsp;</label><label *ngIf="prod.FundingStage != undefined">{{store.getVal('at')}}&nbsp;{{prod.FundingStage}},&nbsp;</label><label *ngIf="prod.FundingType != undefined">{{store.getVal('investing_in')}}&nbsp;{{prod.FundingType}}</label></span>
+
+                                <!-- <span class="pointer" (click)="filterItem('proidertype',prod)">{{prod.FundingProviderType}}</span>&nbsp;<span class="pointer" (click)="filterItem('ticketsize',prod)">{{prod.TicketSizePerFunding}}</span> -->
+                            </div>
+                        </ion-label>
+                        <ion-label class="sell-lbl brand_content" [style.margin-bottom]="pageFrom == 'Top'?'12px !important':'0px !important'" *ngIf="prod.ContactName != undefined">
+                            <h3>
+                                <ng-container *ngTemplateOutlet="contactView context:{type:'both'}"></ng-container>
+                               
+                            </h3>
+                        </ion-label>
+                        <!-- <ion-label class="sell-lbl brand_content" *ngIf="((prod.FundingStage != undefined && prod.FundingStage != '' ) || (prod.FundingType != undefined && prod.FundingType != '' ))">
+                            <div class="card_title">
+                                <span class="pointer" *ngIf="(prod.FundingStage != undefined && prod.FundingStage != '' )" (click)="filterItem('fundingstage',prod)">{{prod.FundingStage}}{{(prod.FundingStage != undefined && prod.FundingStage != '' )?' ':''}}</span>{{store.getVal('in')}}&nbsp;<span class="pointer" (click)="filterItem('fundingtype',prod)">{{prod.FundingType}}</span>
+                            </div>
+                        </ion-label> -->
+                        
+                        <div class="card_classifides">
+                            <div class="card_classification" *ngIf="prod.ImpactThemesAndAreasJson != undefined && prod.ImpactThemesAndAreasJson != ''">
+                                <app-classification [prod]="prod" [title]="store.getVal('impact_themes_and_areas')" [dataType]="'impacttheme'" [pageFrom]="pageFrom" [ImpactThemesAndAreas]="ImpactThemesAndAreas" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification GenderLensJson" *ngIf="prod.GenderLensJson != undefined && prod.GenderLensJson != ''">
+                                <app-classification [prod]="prod" [title]="store.getVal('gender_lens')" [dataType]="'genderlens'" [pageFrom]="pageFrom"  [ImpactThemesAndAreas]="GenderLensJson" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification><!-- (change)="callFilter($event)"-->
+                            </div>
+                            <div class="card_classification" *ngIf="prod.EsgJson != undefined && prod.EsgJson != ''">
+                                <app-classification [prod]="prod" [ImpactThemesAndAreas]="ESG" [towLevel]="true" [title]="store.getVal('esg')" [dataType]="'esg'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification" *ngIf="prod.SdgsJson != undefined && prod.SdgsJson != ''">
+                                <label-right-img *ngIf="prod.SdgsJson !=undefined" [Slug]="prod.EnablerSlug" [prod]="prod" [dataType]="'sdgs'" [subtype]="'enablers'" [pageFrom]="pageFrom" [from]="from" [openFront]="openFront" [Click]="true"></label-right-img><!-- (change)="callFilter($event)"-->
+                            </div>
+                            <ng-container *ngTemplateOutlet="seeMore context:{type:type}"></ng-container>
+                        </div>
+                        <div *ngIf="(prod.ReactionValue != undefined || prod.TotalMatchingFundraiseNeeds != undefined || prod.TotalSuggestedEnabler>0 || prod.TotalExpressedInterest>0 || prod.TotalReceivedInterest>0|| (from != 'front' && prod.IsActive !=undefined))" [style.border-top]="'1px solid var(--ion-color-light-gray)'" [class]="'cardlist_filter_content fundraise_count_div'">
+                            <funding-profile-count [prod]="prod" [pageType]="type" [subtype]="'enablers'" [from]="from" [pageFrom]="pageFrom" [openFront]="openFront" [FP_EnablerSlug]="prod.FP_EnablerSlug" [apiAction]="apiAction" [ActionType]="ActionType" [hideAction]="hideAction" (change)="callAction($event)"></funding-profile-count>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="cardlist_content_box1" style="padding: 0px;" *ngIf="type =='fundraise' || type =='fundraise-needs'">
+            <ion-row>
+                <ion-col class="cardlist_content_block">
+                    <div class="cardlist_content_box">
+                        <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.CompanyName != undefined && prod?.CompanyName != ''?' | '+prod?.CompanyName :'')" [itemTitle]="(prod?.ReferenceCode != undefined && prod?.ReferenceCode != ''?prod?.ReferenceCode:'')+(prod?.CompanyName != undefined && prod?.CompanyName != ''?' | '+prod?.CompanyName :'')" [address]="address" [Name]="Name" [Slug]="prod.FundraiseSlug != undefined?prod.FundraiseSlug : prod.FN_EnablerSlug" [FundraiseSlug]="prod.FN_EnablerSlug" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [ActionType]="ActionType" [apiAction]="apiAction" hideAction="0" [IsProfile]="IsProfile" [IsSubmittedEnabler]="IsSubmittedEnabler"></prod-title>
+                        <ion-label class="sell-lbl brand_content" *ngIf="(prod.ParentFundingType != undefined && prod.ParentFundingType != '' )|| (prod.TotalRaise != undefined && prod.TotalRaise != '' )||(prod.FundingStage != undefined && prod.FundingStage != '' ) ">
+                            <div class="card_title">
+                                <!-- <span class="pointer" (click)="filterItem('findingtype',prod)">{{prod.FundingType}}</span>&nbsp;<span class="pointer" (click)="filterItem('totalraise',prod)">{{prod.TotalRaise}}</span>&nbsp;{{this.store.getVal('at')}}&nbsp;<span class="pointer" (click)="filterItem('fundingstage',prod)">{{prod.FundingStage}} {{this.store.getVal('stage')}}</span> -->
+                                <span class="pointer item-card-second-row">
+                                    {{prod.TotalRaise}}<label *ngIf="prod.FundingStage != undefined">&nbsp;{{prod.FundingStage}}</label>&nbsp;{{this.store.getVal('by')}}&nbsp;{{prod.RaiseEndDate | date : 'dd MMM yyyy'}}
+                                </span>
+                            </div>
+                        </ion-label>
+                        <ion-label class="sell-lbl brand_content" [style.margin-bottom]="pageFrom == 'Top'?'12px !important':'0px !important'" *ngIf="prod.ContactName != undefined || prod.CompanyName != undefined">
+                            <h3>
+                                <ng-container *ngTemplateOutlet="contactView context:{type:'need'}"></ng-container>
+                            </h3>
+                        </ion-label>
+                        <div class="card_classifides">
+                            <div class="card_classification" *ngIf="prod.ImpactThemesAndAreasJson != undefined && prod.ImpactThemesAndAreasJson != ''">
+                                <app-classification [prod]="prod" [title]="store.getVal('impact_themes_and_areas')" [dataType]="'impacttheme'" [pageFrom]="pageFrom" [ImpactThemesAndAreas]="ImpactThemesAndAreas" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification GenderLensJson" *ngIf="prod.GenderLensJson != undefined && prod.GenderLensJson != ''">
+                                <app-classification [prod]="prod" [title]="store.getVal('gender_lens')" [dataType]="'genderlens'" [pageFrom]="pageFrom" [ImpactThemesAndAreas]="GenderLensJson" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification> <!-- (change)="callFilter($event)"-->
+                            </div>
+                            <div class="card_classification" *ngIf="prod.EsgJson != undefined && prod.EsgJson != ''">
+                                <app-classification [prod]="prod" [ImpactThemesAndAreas]="ESG" [towLevel]="true" [title]="store.getVal('esg')" [dataType]="'esg'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                            </div>
+                            <div class="card_classification" *ngIf="prod.SdgsJson != undefined && prod.SdgsJson != ''">
+                                <label-right-img *ngIf="prod.SdgsJson !=undefined" [Slug]="prod.EnablerSlug" [prod]="prod" [dataType]="'sdgs'" [subtype]="'enablers'" [pageFrom]="pageFrom" [from]="from" [openFront]="openFront" [Click]="true"></label-right-img> <!-- (change)="callFilter($event)"-->
+                            </div>
+                            <ng-container *ngTemplateOutlet="seeMore context:{type:type}"></ng-container>
+                        </div>
+
+                        <div *ngIf="(prod.ReactionValue != undefined || prod.ReactionValue != undefined || prod.TotalMatchingFundingProfiles != undefined || prod.TotalSuggestedEnabler>0 ||prod.TotalExpressedInterest>0 || prod.TotalReceivedInterest>0 || (from != 'front'  && prod.IsActive !=undefined) || (prod.IsMyFundraise == 1 && pageFrom !='fundraise-need-submissions') ||(prod.Teaser != undefined && prod.Teaser != '') )" [style.border-top]="'1px solid var(--ion-color-light-gray)'" [class]="'cardlist_filter_content fundraise_count_div'">
+                            <fundraise-count [prod]="prod" [pageType]="type" [subtype]="'enablers'" [from]="from" [pageFrom]="pageFrom" [openFront]="openFront" [FN_EnablerSlug]="prod.FN_EnablerSlug" [apiAction]="apiAction" [ActionType]="ActionType" [hideAction]="hideAction" (change)="callAction($event)"></fundraise-count>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-col>
+</ion-row>
+<ion-row class="cardlist permissions_crd" *ngIf="type == 'permissions'">
+    <ion-col class="cardlist_images_box permission-ionc-content">
+        <div class="card_img">
+            <i class="ion-img far fa-user-circle"></i>
+        </div>
+    </ion-col>
+    <ion-col class="cardlist_content_block">
+        <div class="cardlist_content_box">
+            <prod-title [pageType]="type" [isAddForm]="isAddForm" [extraMenu]="extraMenu" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [subType]="subtype" [prod]="prod" [title]="prod.Email" [itemTitle]="prod.Email" [isAdd]="isDetails" [Name]="Name" [EnablerSlug]="EnablerSlug" [ActionType]="ActionType" [apiAction]="apiAction"></prod-title>
+            <ion-label class="sell-lbl brand_content" *ngIf="prod.UserName != undefined && prod.UserName !=''">
+                <span>{{prod.UserName}}</span>
+            </ion-label>
+        </div>
+        <div id="web-ui" class="cardlist_filter_content" style="border-top: 1px solid var(--ion-color-light-gray);">
+            <permission-count [prod]="prod" [pageType]="type" [subtype]="type" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [apiAction]="apiAction" (change)="callAction($event)"></permission-count>
+        </div>
+    </ion-col>
+    <ion-col id="app-ui" class="cardlist_filter_content" style="border-top: 1px solid var(--ion-color-light-gray);">
+        <permission-count [prod]="prod" [pageType]="type" [subtype]="type" [pageFrom]="pageFrom" [openFront]="openFront" [apiAction]="apiAction" (change)="callAction($event)"></permission-count>
+    </ion-col>
+</ion-row>
+
+<ng-template #seeMore let-type="type">
+    <!-- <div class="see_more">
+        <ion-label class="see_more" (click)="openPageAction(type)">{{store.getVal('see_more')}}</ion-label>
+    </div> -->
+</ng-template>
+<ng-template #contactView let-type="type">
+   
+    <div style="display: flex; align-items: center;">
+        <b>{{this.store.getVal('contact')}}&nbsp;</b>
+        <img *ngIf="prod.Logo != undefined && prod.Logo != ''" alt="" class="item-logo-img" [src]="prod.Logo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+        <span class="card_content" *ngIf="type == 'profile' || type == 'need' || type == 'both'">{{(prod?.ProfileName != undefined && prod?.ProfileName != ''?prod?.ProfileName + ' | ' :'')}}{{(prod?.CompanyName != undefined && prod?.CompanyName != ''?prod?.CompanyName + ' | ' :'')}}{{prod.ContactName}}</span>
+        <span class="card_content" *ngIf="type == 'contact'">{{prod.ContactName}}</span>
+        <span class="card_content" *ngIf="type == 'user'">{{prod.FirstName}} {{prod.LastName}}</span>
+        <span class="card_content" *ngIf="prod.Email !=undefined">&nbsp;|&nbsp;</span>
+        <a class="card_content" *ngIf="prod.Email !=undefined" href="mailto:{{prod.Email}}" tabindex="-1">{{prod.Email}}</a>
+    </div>
+
+</ng-template>
+
+<!-- Item Cards-->
+
+<ng-template #with_matching_data>
+    <div class="match-data-div">
+        <div class="full-match-data" style="padding: 10px 0px; font-size: 20px;">
+            <i class="fa-infinity fa-solid" aria-hidden="true"></i>
+        </div>
+        <div class="ful-fnding-type" *ngIf="prod.FundingType != undefined && prod.FundingType !=''">
+            <span>{{prod.FundingType}} {{store.getVal('investment_type')}}</span>
+        </div>
+        <div [class]="'full-match-data'">        
+            <div *ngIf="ImpactThemesAndAreas != undefined && ImpactThemesAndAreas.length > 0">
+                <app-classification [prod]="prod" [ImpactThemesAndAreas]="ImpactThemesAndAreas" [towLevel]="true" [title]="store.getVal('impact_themes_and_areas')" [dataType]="'impacttheme'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+            </div>
+            <div *ngIf="ESG != undefined && ESG.length>0">
+                <app-classification [prod]="prod" [ImpactThemesAndAreas]="ESG" [towLevel]="true" [title]="store.getVal('esg')" [dataType]="'esg'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+            </div>
+            <div *ngIf="GenderLensJson != undefined && GenderLensJson.length>0">
+                <app-classification [prod]="prod" [ImpactThemesAndAreas]="GenderLensJson"  [title]="store.getVal('gender_lens')" [dataType]="'genderlens'" [pageFrom]="pageFrom" [seeMore]="seeMore" (change)="changeViewTag($event)"></app-classification>
+                
+            </div>
+            <div *ngIf="sdgList.length>0">
+                <div class="card_classification">
+                    <label-right-img [SdgList]="sdgList" [Slug]="prod.EnablerSlug" [prod]="prod" [dataType]="'sdgs'" [subtype]="'enablers'" [pageFrom]="pageFrom" [from]="from" [openFront]="openFront" [allDisplay]="true" [Click]="true"></label-right-img>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #without_matching_data>
+    <div class="match-data-div">
+        <div class="full-match-data" style="padding: 10px 0px; font-size: 20px;">
+            <i class="fa-infinity fa-solid" aria-hidden="true"></i>
+        </div>
+        <div class="ful-fnding-type" *ngIf="prod.FNFundingType != undefined && prod.FNFundingType !=''">
+            <span>{{prod.FNFundingType}} {{store.getVal('investment_type')}}</span>
+        </div>
+        <div class="ful-fnding-type" style="text-align: center; padding-top: 0;">
+            <span>{{store.getVal('all_data_matching')}}</span>
+        </div>
+    </div>
+</ng-template>

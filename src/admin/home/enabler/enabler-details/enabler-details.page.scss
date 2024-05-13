@@ -1,0 +1,137 @@
+.Overview_block {
+    display: flex;
+    padding: 30px 0px;
+    margin: 0px -15px;
+    padding-top: 25px !important;
+}
+
+.forms_block {
+    padding-left: 20px;
+}
+
+
+
+.card_list {
+    padding: 0px 0px 30px 0px;
+}
+
+.page_wapper {
+    padding: 0px !important;
+    background: white;
+}
+
+.filter_nav.permission {
+    // margin: 0px -10px !important;
+    display: flex;
+}
+
+.saperator-border {
+    border-top: 1px solid var(--ion-color-light-gray);
+}
+
+.content_info {
+    position: relative;
+    padding: 30px 30px 20px 30px;
+}
+
+.Overview-box .content_info ion-label a {
+    color: var(--ion-color-dark-gray) !important;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    text-decoration: none !important;
+    outline: none !important;
+}
+
+.Overview-box .content_info ion-label a .icons {
+    position: relative;
+    height: 34px;
+    width: 34px;
+    display: block;
+    font-size: 13px;
+    color: var(--ion-color-black);
+    font-weight: 400;
+    border: 1px solid var(--ion-color-black);
+    text-align: center;
+    line-height: 34px;
+    border-radius: 50%;
+    flex: 0 0 34px;
+    padding: 0px !important;
+    margin-right: 13px;
+}
+
+.content.times span ion-label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--ion-color-dark-gray) !important;
+}
+
+.content.times span ion-label span.name {
+    width: 98px;
+    display: inline-flex;
+}
+
+.IsAllVegan {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-top: 10px;
+    color: var(--ion-color-dark-green) !important;
+    font-size: 14px;
+}
+
+.IsAllVegan ion-img {
+    margin-right: 5px;
+    width: 16px;
+}
+
+#serch_component {
+    padding-top: 0px;
+}
+
+.navigation_compo {
+    padding-right: 20px;
+}
+
+@media (max-width: 768px) {
+   
+    .left_filter_panel {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    .right_filter_panel {
+        margin-top: 10px !important;
+    }
+    .counts_filter_block {
+        padding: 5px 0 0 0 !important;
+    }
+    .filter_nav.permission {        
+        display: flex;
+    }
+    .filter_nav .add_buttons:nth-child(2) {
+        display: inline-flex;
+        margin-top: 5px;
+    }
+    .content_info {
+        padding: 10px 15px 20px 10px;
+    }
+    .Overview_block {
+        padding: 11px 0px !important;
+    }
+    .content.times span ion-label span.name {
+        width: auto;
+        display: inline-flex;
+    }
+    .transfer_ownership {
+        // background: var(--ion-color-back) !important;
+        // margin-top: 5px !important;
+    }
+    .counts_filter_block .left_filter_panel {
+        padding: 0px;
+        padding-right: 10px !important;
+        flex: 0 0 90px;
+        max-width: 90px;
+    }
+    .downloads {
+        padding-right: 20px;
+    }
+}

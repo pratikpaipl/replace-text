@@ -1,0 +1,13 @@
+<ion-grid class="container">
+  <ion-row class="serch_row">
+    <ion-col class="address_search-col">
+      <div class="address_search-block">
+        <div id="search_boxs" class="page_search">
+          <form autocomplete="off" style="width: 100%;">
+            <ion-searchbar searchIcon="search" autocomplete="off" type="text" inputmode="text" [placeholder]="this.store.getVal('search')" [(ngModel)]="keyword" ng-reflect-model="" (keyup.enter)="onEnter($event)" (ionCancel)="hideSearch($event)" clearInput (ionClear)="clearSearch($event)"[ngModelOptions]="{standalone: true}"></ion-searchbar>
+          </form>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

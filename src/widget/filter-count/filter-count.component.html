@@ -1,0 +1,4 @@
+<div class="open_filter_button">
+                                
+  <ion-label class="filters_button pointer" (click)="openFilterView()"><i class="fas fa-filter"></i><span>{{store.getVal('filter')}}</span><span *ngIf="filteCnt != undefined && filteCnt > 0 && (store.getVal('filter') != undefined)">&nbsp;(</span><span class="cnt" *ngIf="filteCnt != undefined && filteCnt > 0 && (store.getVal('filter') != undefined)">{{filteCnt}}</span><span *ngIf="filteCnt != undefined && filteCnt > 0 && (store.getVal('filter') != undefined)">)</span></ion-label>
+</div>

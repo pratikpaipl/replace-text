@@ -1,0 +1,10 @@
+<div class="card_right_panels" [class]="(pageType =='matched-fundraise-needs' && FundraiseList.length !=0) ?'card_right_panels grid':'card_right_panels'">
+    <item-card *ngFor="let item of FundraiseList" [isAddForm]="false" [isMain]="false" [prod]="item" [subtype]="type" [extraMenu]="extraMenu" [type]="pageType" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [Name]="" [EnablerSlug]="item.EnablerSlug" [FPEnablerSlug]="FP_EnablerSlug" [FN_EnablerSlug]="item.FN_EnablerSlug" [ActionType]="ActionType" [apiAction]="apiAction" [IsProfile]="IsProfile" [IsSubmittedEnabler]="IsSubmittedEnabler" (change)="callAction($event)">
+    </item-card>
+    <app-empty-list *ngIf="FundraiseList.length==0 && isShowMsg" [msg]="store.searchMsg" type="{{ pageType }}">
+    </app-empty-list>
+    <app-page-end *ngIf="FundraiseList.length !=0 && FundraiseList.length == FundraiseTotal" type="{{ pageType }}">
+    </app-page-end>
+    <infinite-scroll [items]="FundraiseList" [itemTotal]="FundraiseTotal" (change)="doInfinitePage($event)">
+    </infinite-scroll>
+</div>

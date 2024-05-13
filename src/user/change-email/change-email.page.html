@@ -1,0 +1,22 @@
+<btn-title [pageLbl]="store.getVal(pageType.replace('-','_'))" [pageType]="pageType" [permissions]="permissions">
+</btn-title>
+<div class="forms_conponenl">
+    <ion-grid id="myprofile" class="container forms_block">
+        <ion-row class="forms_body">
+            <error-message isNameUn="true" styleD="left" [dataAction]="dataAction" [message]="loadMsg">
+            </error-message>
+            <ion-col size="12">
+                <div class="form-group">
+                    <ion-label [class]="(email =='' || !this.store.regEmail.test(email) )&& emailErr !=''?'labels errorMsg':'labels'">{{store.getVal('current_email')}} *</ion-label>
+                    <input spellcheck="false" autocomplete="off"  type="email" class="form-control" minlength="5" maxlength="300" disabled="true" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" (keyup.enter)="callAction('1')"/>
+                </div>
+                <div class="form-group">
+                    <ion-label [class]="(nemail =='' || !this.store.regEmail.test(nemail) )&& nEmailErr !=''?'labels errorMsg':'labels'">{{store.getVal('new_email')}} *</ion-label>
+                    <input spellcheck="false" autocomplete="off"  type="email" class="form-control" minlength="5" maxlength="300" [(ngModel)]="nemail" [ngModelOptions]="{standalone: true}" (keyup.enter)="callAction('1')"/>
+                    <ion-note tabindex="-1">{{store.getVal('new_email_note')}}</ion-note>
+                </div>
+                <bottom-btn styleD="center" [leftKey]="'submit'" [leftBtn]="store.getVal('submit')" (change)="callAction($event)"></bottom-btn>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>

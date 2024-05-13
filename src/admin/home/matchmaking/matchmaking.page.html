@@ -1,0 +1,123 @@
+<btn-title [pageLbl]="this.store.getVal('matchmaking')" [from]="'admin'" [pageType]="pageType" [permissions]="[]"></btn-title>
+<ion-grid class="container1" style="padding-top: 0px !important;">
+    <ion-row class="forms_row">
+        <ion-col class="right_panel">
+            <div class="forms_conponenl" id="authforms">
+                <ion-grid id="myprofile" class="forms_block" style="overflow: visible !important;">
+                    <ion-row class="forms_headers">
+                        <ion-col size="12">
+                            <app-tabs [segments]="segments" styleD="flex" customClass="" [selectedSegment]="pageType" from="details" (change)="onClickSegment($event)"> </app-tabs>
+                        </ion-col>
+                    </ion-row>
+                    <div *ngIf="pageType == 'matchmaking'" style="padding: 10px;">
+                        <error-message id="topRow" *ngIf="loadMsg != undefined" [isNameUn]="'false'" [fromClass]="'m-0-5'" styleD="left" [dataAction]="[]" [message]="loadMsg"></error-message>
+                        <ion-row class="main_rows forms_block1">
+                            <ion-col class="main_cols auto-cols col-1">
+                                <div class="csv-view-box" [style.border-color]="InvestorsFileInValid?'var(--ion-color-logo-red)':'#ced4e1'">
+                                    <div style="display: grid;">
+                                        <ion-label>{{store.getVal('upload_investor_data')}}</ion-label>
+                                        <ion-note style="margin-top: 10px;" [class]="InvestorsFileInValid?'errorTitle':''" tabindex="-1">{{store.getVal('one_csv_of_maximum_size_upto_five_mb')}}</ion-note>
+                                        <ion-note *ngIf="InvestorsFile != undefined" class="deleteCsvFile" style="margin-top: 10px;" tabindex="-1">{{InvestorsFile.name}} <i class="fas fa-trash" (click)="onDeleteFile('InvestorsFile')"></i></ion-note>
+                                    </div>
+                                    <div>
+                                        <div class="uploadButton" id="uploadButton">
+                                            <input class="uploadButton-input" id="InvestorsFile" type="file" accept=".csv" (change)="changeListener($event,'InvestorsFile')"/>
+                                            <label [class]="InvestorsFileInValid?'uploadButton-button errorTitle':'uploadButton-button'" for="InvestorsFile">
+                                                <i class="fa-solid fa-file-arrow-up"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ion-col>
+                            <ion-col class="main_cols auto-cols col-2">
+                                <div class="csv-view-box" [style.border-color]="InvesteesFileInValid?'var(--ion-color-logo-red)':'#ced4e1'">
+                                    <div style="display: grid;">
+                                        <ion-label>{{store.getVal('upload_investee_data')}}</ion-label>
+                                        <ion-note style="margin-top: 10px;" [class]="InvesteesFileInValid?'errorTitle':''" tabindex="-1">{{store.getVal('one_csv_of_maximum_size_upto_five_mb')}}</ion-note>
+                                        <ion-note *ngIf="InvesteesFile != undefined" class="deleteCsvFile" style="margin-top: 10px;" tabindex="-1">{{InvesteesFile.name}} <i class="fas fa-trash" (click)="onDeleteFile('InvesteesFile')"></i></ion-note>
+                                    </div>
+                                    <div>
+                                        <div class="uploadButton" id="uploadButton">
+                                            <input class="uploadButton-input" id="InvesteesFile" type="file" accept=".csv" (change)="changeListener($event,'InvesteesFile')"/>
+                                            <label [class]="InvesteesFileInValid?'uploadButton-button errorTitle':'uploadButton-button'" for="InvesteesFile">
+                                                <i class="fa-solid fa-file-arrow-up"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ion-col>
+                            <ion-col size="12" class="main_cols auto-cols" style="padding-top: 15px;text-align: center;">
+                                <ion-button class="btn-red" (click)="validateFiles()">{{store.getVal('upload_and_validate')}}</ion-button>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="main_rows forms_block1" style="margin: 15px 0px;" *ngIf="SummaryResponse != undefined">
+                            <ion-col class="forms_conponenl" size="12">
+                                <div>
+                                    <ion-label style="font-weight: bold;padding: 0px 0px 15px 0px;display: block;">{{store.getVal('validation_result_title')}} {{summaryTime}}<i class="fas fa-trash" id="deleteImg" (click)="onDraft()" style="margin-left: 5px;cursor: pointer;padding: 5px;"></i></ion-label>
+                                    <ngx-datatable #matchmaking id="web-ui"  class="material expandable" [columnMode]="'force'" [rows]="rowsMatchMaking" [columns]="columnsMatchMaking" [footerHeight]="50" [scrollbarH]="true" [rowHeight]="getRowHeight" [summaryRow]="false" [summaryPosition]="'bottom'" [messages]="{emptyMessage:  store.getMsg(store.searchMsg), totalMessage: store.getVal('total')}" [loadingIndicator]="false" [externalPaging]="true" [count]="rowsMatchMaking.length">                                        
+                                        <ngx-datatable-column [headerClass]="column.color" [cellClass]="''" *ngFor="let column of columnsMatchMaking; let i = index;" [name]="column.name !=''?store.getVal(column.name):column.name" [prop]="column.prop" [resizeable]="column.resisable" [sortable]="column.sortable" [width]="column.width">{{column.name}}<ng-template let-column="column" ngx-datatable-header-template>
+                                            <span>{{column.name}}</span>
+                                        </ng-template>
+                                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                            <div [class]="'action-arrow'" *ngIf="column.prop =='name'">{{store.getVal(row.name)}}</div>
+                                            <div [class]="'action-arrow'" *ngIf="column.prop !='' && column.prop !='name'">{{row[column.prop]}}</div>
+                                            <div [class]="'action-arrow'" *ngIf="column.prop ==''">
+                                                <span *ngIf="row.DataIssuesCount > 0" class="pointer" (click)="downloadInValidResult(row.name,row.SummaryID)" style="color:var(--ion-color-blue)">{{store.getVal('download')}}</span>
+                                                <span  *ngIf="row.DataIssuesCount == 0">{{row.TotalCount ==0?'':store.getVal('all_records_are_valid')}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                                <item-tbl id="app-ui" *ngFor="let item of rowsMatchMaking;let i=index" [extraMenu]="false" [isMain]="false" [prod]="item" [columnsWithCheckbox]="columnsMatchMaking" [subtype]="pageType" [type]="pageType" [Name]="''" [itemTitle]="store.getVal(item.name)" [hideAction]="1"  (change)="callAction($event,i)"></item-tbl>
+                                <div style="padding: 15px 0px 0px 0px;display: block;">
+                                    <ion-note class="errorTitle" tabindex="-1">{{store.getVal('matchmaking_note')}}</ion-note>
+                                    <!--{{store.getVal('pay')}} {{currency}} {{amount}} -->
+                                   
+                                    <div *ngIf="SummaryResponse != undefined" style="margin-top: 15px;display: flex;justify-content: center;">
+                                       
+                                        <ion-button class="btn-red" [disabled]="isEnabled == '1'" (click)="runMatchMaking()">{{store.getVal('run_matchmaking')}}</ion-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-col>
+                        </ion-row>
+                        <ion-label style="padding: 15px 10px;display: block;" [innerHtml]="store.nl2br(store.getVal('matchmaking_info'))"></ion-label>
+                    </div>
+                    <div *ngIf="pageType=='activity-log'">
+                        <div style="display: contents;">
+                            <ion-note class="errorTitle" style="font-weight: bold;padding:15px;display: block;" tabindex="-1">{{store.getVal('matchmaking_note')}}</ion-note>
+                            <ngx-datatable #matchmaking id="web-ui" class="material expandable" [columnMode]="'force'" [rows]="rowsActivityLog" [columns]="columnsActivityLog" [footerHeight]="50" [scrollbarH]="true" [rowHeight]="getRowHeight" [summaryRow]="false" [summaryPosition]="'bottom'" [messages]="{emptyMessage: store.getMsg(store.searchMsg), totalMessage: store.getVal('total')}" [loadingIndicator]="false" [externalPaging]="true" [count]="activityPage.totalElements" [offset]="activityPage.pageNumber" [limit]="activityPage.size" (page)="setPage(false,$event)">
+                                <ngx-datatable-column [headerClass]="column.color" [cellClass]="''" *ngFor="let column of columnsActivityLog; let i = index;" [name]="column.name !=''?store.nl2br(store.getVal(column.name)):''" [prop]="column.prop" [resizeable]="column.resisable" [sortable]="column.sortable" [frozenLeft]="column.frozenLeft" [width]="column.width">
+                                    <ng-template let-column="column" ngx-datatable-header-template>
+                                        <span>{{column.name}}</span>
+                                    </ng-template>
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <div [class]="'action-arrow'"><span>{{column.isDate?(value | date:('dd MMM yyyy hh:mm a'):'UTC'):value}}</span></div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column [name]="store.getVal('action')" [sortable]="false" [width]="80" [headerClass]="'matched'" [resisable]="false">
+                                    <ng-template let-column="column" ngx-datatable-header-template>
+                                        <span>{{ column.name }}</span>
+                                    </ng-template>
+                                    <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-cell-template>
+                                        <act-menu [from]="'admin'" [pageFrom]="'list'" [pageType]="pageType" [subType]="''" [prod]="row" [title]="''" [Name]="''" [ActionType]="''"></act-menu>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                            <item-tbl id="app-ui" *ngFor="let item of rowsActivityLog;let i=index" [extraMenu]="true" [isMain]="false" [prod]="item" [columnsWithCheckbox]="columnsActivityLog" [subtype]="pageType" [type]="pageType" [Name]="" [itemTitle]="store.getVal('activity_log')+' '+store.getVal('for')+' '+item.SummaryID" [hideAction]="0"  (change)="callAction($event,i)"></item-tbl>
+                        </div>
+                    </div>
+                    <div *ngIf="pageType=='data-format-rules'">
+                        <ion-row class="counts_filter_block main_rows mt-res">
+                            <ion-col class="main_cols auto-cols">
+                                <div *ngFor="let item of formateRules" style="padding: 15px;">
+                                    <a [href]="item.ref" style="color: #2A54B7;" target="_blank" tabindex="-1"><i [class]="item.icon" style="margin-right: 10px;"></i>{{store.getVal(item.label)}}</a>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                </ion-grid>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>

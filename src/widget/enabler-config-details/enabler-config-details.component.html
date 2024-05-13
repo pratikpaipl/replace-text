@@ -1,0 +1,165 @@
+<ion-row class="enabler-config-row" *ngIf="enablerData != undefined">
+    <ion-col>
+        <div class="m-part">
+            <ion-card-title>{{store.getVal('criteria_for_funding_profiles')}}</ion-card-title>
+            <div class="forms_block radius">
+                <div *ngIf="FPImpactThemesAndAreas != undefined && FPImpactThemesAndAreas.length >0">
+                    <ion-label class="title">{{store.getVal('impact_themes_and_areas')}}{{enablerData.ImpactThemesAndAreasTotal != undefined?store.dispCount(enablerData.FNTotalSelectedImpactThemesAndAreas,enablerData.ImpactThemesAndAreasTotal):''}}</ion-label>
+                    <div class="two-level" *ngFor="let item of FPImpactThemesAndAreas; let i = index" (click)="moveToEnabler('impact_themes_and_areas',FPImpactThemesAndAreas)">
+                        <span class="two-leve-data">{{item.ParentReferenceName}}{{item.TotalImpactThemesAndAreas != undefined?store.dispCount(item.TotalSelectedImpactThemesAndAreas,item.TotalImpactThemesAndAreas):''}}</span>
+                        <ion-label class="impact-themes-content element_title_link pointer" style="padding-left: 15px;"> {{item.ReferenceName}}</ion-label>
+                    </div>
+                </div>
+                <div *ngIf="FPSdgs != undefined && FPSdgs.length>0">
+                    <ion-label class="title">{{store.getVal('sdgs')}}{{enablerData.SdgsTotal != undefined?store.dispCount(FPSdgs.length,enablerData.SdgsTotal):''}}</ion-label>
+                    <label-right-img *ngIf="FNSdgs !=undefined" [Slug]="enablerData.EnablerSlug" [prod]="enablerData" [dataType]="'sdgs'" [SdgList]="FPSdgs" [subtype]="'enablers'" [pageFrom]="'details'" [from]="'admin'" [Click]="true" (change)="moveToEnabler('sdgs',FPSdgs)"></label-right-img>
+                </div>
+
+                <div *ngIf="FPEsg != undefined && FPEsg.length >0">
+
+                    <ion-label class="title">{{store.getVal('esg')}}{{enablerData.EsgTotal != undefined?store.dispCount(enablerData.FNTotalSelectedEsg,enablerData.EsgTotal):''}}</ion-label>
+
+                    <div class="two-level" *ngFor="let item of FPEsg; let i = index"  (click)="moveToEnabler('esg',FPEsg)">
+                        <span class="two-leve-data">{{item.ParentReferenceName}}{{item.TotalEsg != undefined?store.dispCount(item.TotalSelectedEsg,item.TotalEsg):''}}</span>
+                        <ion-label class="impact-themes-content element_title_link pointer" style="padding-left: 15px;"> {{item.ReferenceName}}</ion-label>
+                    </div>
+                </div>
+                <div *ngIf="enablerData.FPGenderLens != undefined && enablerData.FPGenderLens != ''">
+                    <ion-label class="title">{{store.getVal('gender_lens')}}{{enablerData.GenderLensTotal != undefined?store.dispCount(enablerData.FPGenderLensTotal,enablerData.GenderLensTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FPGenderLens}}</ion-label>
+                </div>
+
+                <div *ngIf="FPFundingType != undefined && FPFundingType.length >0">
+                    <ion-label class="title">{{store.getVal('funding_type')}}{{enablerData.FundingTypeTotal != undefined?store.dispCount(enablerData.FPTotalSelectedFundingType,enablerData.FundingTypeTotal):''}}</ion-label>
+                    <div class="two-level" *ngFor="let item of FPFundingType; let i = index">
+                        <span class="two-leve-data">{{item.ParentReferenceName}}{{item.TotalFundingType != undefined?store.dispCount(item.TotalSelectedFundingType,item.TotalFundingType):''}}</span>
+                        <ion-label class="impact-themes-content element_title_link pointer" style="padding-left: 15px;"> {{item.ReferenceName}}</ion-label>
+                    </div>
+                </div>
+
+                <div *ngIf="enablerData.FPFundingStage != undefined && enablerData.FPFundingStage != ''">
+                    <ion-label class="title">{{store.getVal('funding_stage')}}{{enablerData.InvestmentStageTotal != undefined?store.dispCount(enablerData.FPFundingStageTotal,enablerData.InvestmentStageTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FPFundingStage}}</ion-label>
+                </div>
+                <div *ngIf="enablerData.FPMinimumTotalRaiseAmount != undefined && enablerData.FPMinimumTotalRaiseAmount != ''">
+                    <ion-label class="title">{{store.getVal('raise_amount')}}</ion-label>
+                    <ion-label class="content">{{enablerData.CurrencyCode}} {{store.format(undefined,enablerData.FPMinimumTotalRaiseAmount)}} - {{store.format(undefined,enablerData.FPMaximumTotalRaiseAmount)}}</ion-label>
+                </div>
+                <div *ngIf="enablerData.FPMinimumTicketSizePerFunding != undefined && enablerData.FPMinimumTicketSizePerFunding != ''">
+                    <ion-label class="title">{{store.getVal('ticket_size_per_investment')}}</ion-label>
+                    <ion-label class="content">{{enablerData.CurrencyCode}} {{store.format(undefined,enablerData.FPMinimumTicketSizePerFunding)}} - {{store.format(undefined,enablerData.FPMaximumTicketSizePerFunding)}}</ion-label>
+                </div>
+            
+                <div *ngIf="enablerData.FPCumulativeRevenue != undefined && enablerData.FPCumulativeRevenue != ''">
+                    <ion-label class="title">{{store.getVal('cumulative_revenue_last_two_years_till_date_in_eur')}}</ion-label>
+                    <ion-label class="content">{{enablerData.CurrencyCode}} {{store.format(undefined,enablerData.FPCumulativeRevenue)}}</ion-label>
+                </div>
+                
+                <div *ngIf="enablerData.FPFundingProviderType != undefined && enablerData.FPFundingProviderType != ''">
+                    <ion-label class="title">{{store.getVal('funding_profile_type')}}{{enablerData.InvestorTypeTotal != undefined?store.dispCount(enablerData.FPFundingProviderTypeTotal,enablerData.InvestorTypeTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FPFundingProviderType}}</ion-label>
+                </div>
+
+
+                <div *ngIf="enablerData.FPIndustriesSectors != undefined && enablerData.FPIndustriesSectors != ''">
+                    <ion-label class="title">{{store.getVal('industries_sectors')}}{{enablerData.IndustriesSectorsTotal != undefined?store.dispCount(enablerData.FPIndustriesSectorsTotal,enablerData.IndustriesSectorsTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FPIndustriesSectors}}</ion-label>
+                </div>
+
+                
+                <div *ngIf="enablerData.FPCountriesOfIncorporation != undefined && enablerData.FPCountriesOfIncorporation != ''">
+                    <ion-label class="title">{{store.getVal('country_of_incorporation')}}{{enablerData.CountriesTotal != undefined?store.dispCount(enablerData.FPCountriesOfIncorporationTotal,enablerData.CountriesTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FPCountriesOfIncorporation}}</ion-label>
+                </div>
+
+        
+                <div *ngIf="enablerData.FPCountriesOfDomicileNationality != undefined && enablerData.FPCountriesOfDomicileNationality != ''">
+                    <ion-label class="title">{{store.getVal('countries_of_domicile_nationality')}}{{enablerData.CountriesTotal != undefined?store.dispCount(enablerData.FPCountriesOfDomicileNationalityTotal,enablerData.CountriesTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FPCountriesOfDomicileNationality}}</ion-label>
+                </div>                                          
+            
+            </div>
+        </div>
+    </ion-col>
+
+    <ion-col>
+        <div class="m-part">
+            <ion-card-title>{{store.getVal('criteria_for_fundraise_needs')}}</ion-card-title>
+            <div class="forms_block radius">
+                <div *ngIf="FNImpactThemesAndAreas != undefined && FNImpactThemesAndAreas.length >0">
+                    <ion-label class="title">{{store.getVal('impact_themes_and_areas')}}{{enablerData.ImpactThemesAndAreasTotal != undefined?store.dispCount(enablerData.FNTotalSelectedImpactThemesAndAreas,enablerData.ImpactThemesAndAreasTotal):''}}</ion-label>
+                    <div class="two-level" *ngFor="let item of FNImpactThemesAndAreas; let i = index" (click)="moveToEnabler('impact_themes_and_areas',FNImpactThemesAndAreas)">
+                        <span class="two-leve-data">{{item.ParentReferenceName}}{{item.TotalImpactThemesAndAreas != undefined?store.dispCount(item.TotalSelectedImpactThemesAndAreas,item.TotalImpactThemesAndAreas):''}}</span>
+                        <ion-label class="impact-themes-content element_title_link pointer" style="padding-left: 15px;"> {{item.ReferenceName}}</ion-label>
+                    </div>
+                </div>
+
+                <div *ngIf="FNSdgs != undefined && FNSdgs.length>0">
+                    <ion-label class="title">{{store.getVal('sdgs')}}{{enablerData.SdgsTotal != undefined?store.dispCount(FNSdgs.length,enablerData.SdgsTotal):''}}</ion-label>
+                     <label-right-img *ngIf="FNSdgs !=undefined" [Slug]="enablerData.EnablerSlug" [prod]="enablerData" [dataType]="'sdgs'" [SdgList]="FNSdgs" [subtype]="'enablers'" [pageFrom]="'details'" [from]="'admin'" [Click]="true" (change)="moveToEnabler('sdgs',FNSdgs)"></label-right-img>
+                </div>
+
+                <div *ngIf="FNEsg != undefined && FNEsg.length >0">
+                    <ion-label class="title">{{store.getVal('esg')}}{{enablerData.EsgTotal != undefined?store.dispCount(enablerData.FNTotalSelectedEsg,enablerData.EsgTotal):''}}</ion-label>
+                    <div class="two-level" *ngFor="let item of FNEsg; let i = index" (click)="moveToEnabler('esg',FNEsg)">
+                        <span class="two-leve-data">{{item.ParentReferenceName}}{{item.TotalEsg != undefined?store.dispCount(item.TotalSelectedEsg,item.TotalEsg):''}}</span>
+                        <ion-label class="impact-themes-content element_title_link pointer" style="padding-left: 15px;"> {{item.ReferenceName}}</ion-label>
+                    </div>
+                </div>
+                
+                <div *ngIf="enablerData.FNGenderLens != undefined && enablerData.FNGenderLens != ''">
+                    <ion-label class="title">{{store.getVal('gender_lens')}}{{enablerData.GenderLensTotal != undefined?store.dispCount(enablerData.FNGenderLensTotal,enablerData.GenderLensTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FNGenderLens}}</ion-label>
+                </div>
+
+                <div *ngIf="FNFundingType != undefined && FNFundingType.length >0">
+                    <ion-label class="title">{{store.getVal('funding_type')}}{{enablerData.FundingTypeTotal != undefined?store.dispCount(enablerData.FNTotalSelectedFundingType,enablerData.FundingTypeTotal):''}}</ion-label>
+                    <div class="two-level" *ngFor="let item of FNFundingType; let i = index">
+                        <span class="two-leve-data">{{item.ParentReferenceName}}{{item.TotalFundingType != undefined?store.dispCount(item.TotalSelectedFundingType,item.TotalFundingType):''}}</span>
+                        <ion-label class="impact-themes-content element_title_link pointer" style="padding-left: 15px;"> {{item.ReferenceName}}</ion-label>
+                    </div>
+                </div>
+
+
+                <div *ngIf="enablerData.FNFundingStage != undefined && enablerData.FNFundingStage != ''">
+                    <ion-label class="title">{{store.getVal('funding_stage')}}{{enablerData.InvestmentStageTotal != undefined?store.dispCount(enablerData.FNFundingStageTotal,enablerData.InvestmentStageTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FNFundingStage}}</ion-label>
+                </div>
+                <div *ngIf="enablerData.FNMinRaiseAmount != undefined && enablerData.FNMinRaiseAmount != ''">
+                    <ion-label class="title">{{store.getVal('raise_amount')}}</ion-label>
+                    <ion-label class="content">{{enablerData.CurrencyCode}}  {{store.format(undefined,enablerData.FNMinRaiseAmount)}} - {{store.format(undefined,enablerData.FNMaxRaiseAmount)}}</ion-label>
+                </div>
+
+                <div *ngIf="enablerData.FNMinticket != undefined && enablerData.FNMinticket != '' && enablerData.FNMaxticket != undefined && enablerData.FNMaxticket != ''">
+                    <ion-label class="title">{{store.getVal('minimum_ticket_size_per_funding_provider_eur')}}</ion-label>
+                    <ion-label class="content">{{enablerData.CurrencyCode}} {{store.format(undefined,enablerData.FNMinticket)}} - {{store.format(undefined,enablerData.FNMaxticket)}}</ion-label>
+                </div>
+                <div *ngIf="enablerData.FNCumulativeRevenue != undefined && enablerData.FNCumulativeRevenue != ''">
+                    <ion-label class="title">{{store.getVal('cumulative_revenue_last_two_years_till_date_in_eur')}}</ion-label>
+                    <ion-label class="content">{{enablerData.CurrencyCode}} {{store.format(undefined,enablerData.FNCumulativeRevenue)}}</ion-label>
+                </div>
+                <div *ngIf="enablerData.FNFundingProviderType != undefined && enablerData.FNFundingProviderType != ''">
+                    <ion-label class="title">{{store.getVal('funding_provider_type')}}{{enablerData.InvestorTypeTotal != undefined?store.dispCount(enablerData.FNFundingProviderTypeTotal,enablerData.InvestorTypeTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FNFundingProviderType}}</ion-label>
+                </div>
+                <div *ngIf="enablerData.FNIndustriesSectors != undefined && enablerData.FNIndustriesSectors != ''">
+                    <ion-label class="title">{{store.getVal('industries_sectors')}}{{enablerData.IndustriesSectorsTotal != undefined?store.dispCount(enablerData.FNIndustriesSectorsTotal,enablerData.IndustriesSectorsTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FNIndustriesSectors}}</ion-label>
+                </div>
+
+                <div *ngIf="enablerData.FNCountriesOfIncorporation != undefined && enablerData.FNCountriesOfIncorporation != ''">
+                    <ion-label class="title">{{store.getVal('country_of_incorporation')}}{{enablerData.CountriesTotal != undefined?store.dispCount(enablerData.FNCountriesOfIncorporationTotal,enablerData.CountriesTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FNCountriesOfIncorporation}}</ion-label>
+                </div>           
+
+                <div *ngIf="enablerData.FNCountriesOfDomicileNationality != undefined && enablerData.FNCountriesOfDomicileNationality != ''">
+                    <ion-label class="title">{{store.getVal('countries_of_domicile_nationality')}}{{enablerData.CountriesTotal != undefined?store.dispCount(enablerData.FNCountriesOfDomicileNationalityTotal,enablerData.CountriesTotal):''}}</ion-label>
+                    <ion-label class="content">{{enablerData.FNCountriesOfDomicileNationality}}</ion-label>
+                </div>
+
+               
+
+            </div>
+        </div>
+    </ion-col>
+</ion-row>

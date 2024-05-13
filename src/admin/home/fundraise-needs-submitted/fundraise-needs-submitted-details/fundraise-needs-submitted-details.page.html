@@ -1,0 +1,104 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true">
+    <div class="page_wapper" *ngIf="FundraiseData != undefined">
+        <div id="all_ui">
+            <div id="top_card">
+                <ion-grid class="container">
+                    <refresher (change)="callPullRefresh($event)"></refresher>
+                    <bread-crump showHome="1" [pageType]="'fundraise-needs-submitted'" [pageLbl]="FundraiseData.CompanyName">
+                    </bread-crump>
+                    <ion-row class="main_rows mt-res">
+                        <ion-col class="main_cols auto-cols admin_right_panel">
+                            <item-card [prod]="FundraiseData" [isAddForm]="false" [isMain]="false" [subtype]="type" apiAction="fundraise" [type]="type" [from]="'admin'" pageFrom="Top" (change)="clikCount($event)"></item-card>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+    </div>
+    <!-- <div id="serch_component" class="top_card_bottom" *ngIf="FundraiseData != undefined && pageType !='fundraise-form' && pageType !='settings'">
+        <app-search-bar [isShow]="false" fromPage="home" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)"></app-search-bar>
+    </div> -->
+    <div id="tabblings" *ngIf="FundraiseData != undefined">
+        <ion-grid class="container">
+            <ion-row>
+                <ion-col style="padding: 0px">
+                    <app-tabs [segments]="segments" customClass="admin_details" [selectedSegment]="pageType" from='details' (change)="onClickSegment($event)"> </app-tabs>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div id="tabs_contents" *ngIf="FundraiseData != undefined ">
+        <ion-grid class="container">
+            <fundraise-need-details-view *ngIf="pageType =='fundraise-form'" [FundraiseData]="FundraiseData" [ImpactThemesAndAreas]="ImpactThemesAndAreas" [FundingType]="FundingType" [Esg]="Esg" [Sdgs]="Sdgs"></fundraise-need-details-view>            
+            <ion-row class="counts_filter_block" *ngIf="pageType !='fundraise-form' && pageType !='settings'">
+                <ion-col *ngIf="allTotal>0" class="with-chip">
+                    <div class="btn-group pull-right">
+                        <ion-radio-group class="drop-list" [(ngModel)]="displayMode">
+                            <ion-item>
+                                <ion-label><i class="fa-brands fa-microsoft"></i><span>{{store.getVal('card_view')}}</span></ion-label>
+                                <ion-radio [value]="1"></ion-radio>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label><i class="fa-solid fa-list-ul"></i><span>{{store.getVal('list_view')}}</span></ion-label>
+                                <ion-radio [value]="2"></ion-radio>
+                            </ion-item>
+                        </ion-radio-group>
+                    </div>
+                </ion-col>
+                <ion-col id="web-ui" class="left_filter_panel">
+                    <div class="counts_searchbox">
+                        <div *ngIf="selItem != undefined" style="margin-left: 10px;">
+                            <data-chip  [isFilterType]="true"  [selItem]="selItem" type="pageType" (change)="removeFilter($event)"></data-chip>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col class="right_filter_panel" *ngIf="pageType != 'permissions'">
+                    <div class="filter_nav">
+                        <div class="downloads navigation_compo" *ngIf="allTotal>0 && store.checkPermissionObj(permissionsList,'download_all',true)">
+                            <i class="fas fa-download pointer" (click)="download($event)"></i>
+                        </div>
+                        <div class="add_buttons transfer " *ngIf="store.checkPermission(FundraiseData,'send_matchmaking_report')" (click)="sendMatchmakingReport()">
+                            <ion-label style="cursor: pointer;">{{this.store.getVal('send_result_to_submitter')}}</ion-label>
+                        </div>
+                        <div class="drop_box">
+                            <drop-down from="sort" [itemList]="store.sortItemList" [preSlected]="sort" [slected]="sort" [isSort]="true" (change)="selectSort($event)"></drop-down>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col class="right_filter_panel" *ngIf="pageType == 'permissions'">
+                    <div class="filter_nav permission">
+                        <div class="add_buttons transfer" (click)="onAction('0')" *ngIf="store.checkPermissionObj(permissionsList,'transfer_ownership')">
+                            <ion-label style="cursor: pointer;">{{this.store.getVal('transfer_ownership')}}</ion-label>
+                        </div>
+                        <div class="add_buttons" (click)="onAction('1')" *ngIf="store.checkPermissionObj(permissionsList,'add_page_user')">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            <ion-label style="cursor: pointer;">{{this.store.getVal('add')}}</ion-label>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row  class="serch_row" >
+                <ion-col class="address_search-col search-width">
+                    <div id="serch_component" class="top_card_bottom" *ngIf="FundraiseData != undefined && pageType !='fundraise-form' && pageType !='settings'">
+                        <app-search-bar [isShow]="false" fromPage="home" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)"></app-search-bar>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="pageType !='fundraise-form'">
+                <div id="app-ui" *ngIf="selItem != undefined" style="margin: 10px 0px 5px 0px;">
+                    <data-chip [isFilterType]="true" [selItem]="selItem" type="pageType" (change)="removeFilter($event)"></data-chip>
+                </div>
+                <ion-col size="12" style="padding: 0px;">
+                    <div *ngIf="allTotal>0" style="display: flex;align-items: center;" class="note-padding">
+                        <app-count [id]="displayMode == 1?'web-ui':'app-ui'" [pageType]="pageType" [allTotal]="allTotal" style="margin-right: 10px;" class="count_boxs navigation_compo"></app-count>
+                        <ion-label *ngIf="pageType != 'settings'" class="filterCriteriaNote">{{store.getVal('result_filter_criteria_note')}}</ion-label>
+                    </div>
+                    <funding-profiles-match-report-items *ngIf="pageType == 'funding-profile-match-report'" [pageType]="pageType" from="admin" [pageFrom]="'details'" [FN_EnablerSlug]="FundraiseData.FN_EnablerSlug" apiEnd="fundraise/valid_funding_profile_report_admin" apiAction="fundraise_funding_profile" [updateTime]="updateTime" [FilterType]="FilterType" [displayMode]="displayMode" (change)="updateCount($event)"></funding-profiles-match-report-items>
+                    <setting-items *ngIf="pageType == 'settings'" apiEnd="fundraise/setting_list" [pageType]="pageType" [type]="'fundraise'" from="admin" openFront="1" pageFrom="details" [FN_EnablerSlug]="FundraiseData.FN_EnablerSlug" [EnablerSlug]="FundraiseData.EnablerSlug"></setting-items>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

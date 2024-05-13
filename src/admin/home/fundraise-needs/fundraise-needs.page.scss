@@ -1,0 +1,13 @@
+#serch_component {
+    background: transparent;
+    padding: 0px;
+}
+
+@media (max-width: 640px){
+    .counts_filter_block .left_filter_panel {
+        padding: 0px;
+        padding-left: 10px !important;
+        flex: 0 0 200px;
+        max-width: 200px;
+    }
+}

@@ -1,0 +1,114 @@
+ion-card-title {
+    background: var(--ion-color-black);
+    border-radius: 10px 10px 0px 0px;
+    padding: 10px 0px 10px 15px;
+    color: var(--ion-color-white);
+    font-size: 16px;
+}
+
+.forms_block {
+    overflow: inherit;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+.flex-box-x ion-label:empty {
+	margin: 0px !important;
+	display: none;
+}
+.dark-bg {
+    background: var(--ion-color-light-white);
+    --background: var(--ion-color-light-white);
+}
+
+.flex-box-x {
+    margin: 0px 0px 0px;
+}
+
+.cnt {
+    color: var(--ion-color-black);
+    text-align: end;
+    display: block;
+    padding-top: 7px;
+}
+.title-row {
+    font-size: 17px;
+}
+
+ion-item {
+    --padding-start: 0px;
+    align-items: flex-start;
+    background: var(--ion-color-white);
+    --background: var(--ion-color-white);
+    --inner-border-width: 0 0 0px 0;
+    display: inline-block;
+    --background-focused: transparent;
+}
+
+ion-item ion-label {
+    white-space: normal;
+}
+
+ion-checkbox {
+    opacity: 1;
+    cursor: pointer;
+    top: auto;
+    left: auto;
+    margin-right: 10px;
+    margin-top: 12px;
+    border-radius: 0px !important;
+    --border-radius: 4px !important;
+    --background-checked: var(--ion-color-logo-red) !important;
+    --border-color-checked: var(--ion-color-logo-red) !important;
+}
+.form-group.switch_compo {
+	margin-bottom: 7px !important;
+}
+
+.m-part.alert ion-grid {
+    padding: 0px;
+}
+
+.m-part.alert ion-col {
+    flex: 0 0 50%;
+    width: 50%;
+}
+
+.address_col ion-col {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+}
+
+// .cover .prod_img {
+//     max-width: 100%;
+//     max-height: 100%; 
+// }
+
+#FundingProfileConfirmation {
+    background: transparent;
+    --background: transparent;
+}
+
+.image-div {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-photo {
+    width: 200px;
+    float: left;
+    margin: 0px 10px 0px 0px;
+}
+
+.cover-photo {
+    width: 200px;
+    margin: 0px 10px 0px 0px;
+}
+
+@media (max-width: 768px) {
+    .m-part.alert ion-col {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+}

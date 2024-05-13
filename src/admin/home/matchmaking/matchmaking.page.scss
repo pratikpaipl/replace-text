@@ -1,0 +1,81 @@
+.ngx-datatable span {
+    white-space: normal;
+}
+.admin_right_panel .container1{
+    padding-top: 0px!important;
+}
+.forms_block1 {
+    position: relative!important;
+    background: var(--ion-color-white)!important;
+    border-radius: 11px!important;
+    box-shadow: 0 0 4px #0000001a!important;
+    padding: 20px;
+    overflow: visible;
+}
+
+.csv-view-box {
+    border-radius: 5px;
+    transition: .3s;
+    margin: 0;
+    color: #1b2032;
+    font-size: 16px;
+    border: 2px dashed #ced4e1;
+    overflow: hidden;
+    position: relative;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+ion-note{
+    color: gray;
+    font-size: 13px;
+}
+
+.col-1{
+    flex: 0 0 calc(50% - 10px);   
+    width: calc(50% - 10px);
+    margin-right: 10px;
+   
+}
+.col-2{
+    flex: 0 0 calc(50% - 10px);
+    width: calc(50% - 10px);
+    margin-left: 10px;
+}
+.uploadButton{
+    margin-bottom: initial;
+}
+.uploadButton .uploadButton-button{
+    height: initial !important;
+    width: initial !important;
+}
+.uploadButton .uploadButton-button i{
+    margin-bottom: initial;
+    font-size: 30px;
+}
+ion-button.btn-red{
+    height: auto;
+}
+
+.deleteCsvFile i.fa-trash {
+    color: var(--ion-color-logo-red);
+    cursor: pointer;
+}
+
+@media (max-width: 768px) 
+{
+    .col-1,.col-2{
+        flex: 0 0 100%;
+        width: 100%;
+        margin-left: initial;
+        margin-right: initial;
+    }
+    .col-2{
+        margin-top:15px
+    }
+    ion-button.btn-red{
+      font-size: 13px !important;
+    }
+}
+

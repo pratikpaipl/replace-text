@@ -1,0 +1,42 @@
+<ion-header #header>
+    <ion-toolbar>
+            <div class="fixed">
+                <div class="header">
+                    <div class="container container-lg flex-container flex-container-row flex-items-center">
+                        <button btnicononly="menu" type="button" aria-label="Navigation menu" class="btn btn-round d-sm-none btn-icon drop-in-2"><material-icon class="icon material-icons notranslate" translate="no" aria-hidden="true" (click)="openMenu()">menu</material-icon></button>
+                        <a class="flex0 clickEv" [href]="'/home'" (click)="openPage('/home')">
+                            <img  src="../../../../assets/images/logos/Funder-F.png" alt="B2B" class="logo drop-in-2">
+                        </a>
+                        <div class="flex1"></div>
+                        <div class="m-l-md m-t-xxs d-none d-md-block flex0" style="margin-right: 10px;">
+                            <div class="flex-container flex-container-row flex-items-center drop-in-2">
+                                <button btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right" tabindex="0" role="button" id="side-button-Product" (click)="openPopover($event,'Product','side-button-Product')">{{store.getVal('website_key_37')}}<material-icon class="icon material-icons notranslate" translate="no" aria-hidden="true">arrow_drop_down</material-icon></button>
+                                <button btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right" tabindex="0" role="button" id="side-button-Solutions" (click)="openPopover($event,'Solutions','side-button-Solutions')">{{store.getVal('website_key_38')}} <material-icon class="icon material-icons notranslate" translate="no" aria-hidden="true">arrow_drop_down</material-icon></button>                                   
+                                <button btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right" tabindex="0" role="button"id="side-button-Company" (click)="openPopover($event,'Company','side-button-Company')">{{store.getVal('website_key_39')}}<material-icon class="icon material-icons notranslate" translate="no" aria-hidden="true">arrow_drop_down</material-icon></button>     
+                            </div>
+                        </div>
+                        <div class="flex0 inline-sm drop-in-2">
+                            <a *ngIf="!isLogin" class="btn btn-round btn-outline login clickEv" href="/auth#login" (click)="openPage('/auth#login')">{{store.getVal('website_key_40')}}</a>
+                            <a *ngIf="!isLogin" class="btn btn-round btn-outline btn-primary d-none d-xs-inline-block clickEv" href="'/auth#signup" style="margin-left: 10px;" (click)="openPage('/auth#signup')">{{store.getVal('website_key_41')}}</a>
+                            <button *ngIf="isLogin" type="button" class="btn btn-transparent flex0 clickable" tabindex="0" role="button" (click)="openProfile()">
+                                <div class="users_icons" style="display: flex;align-items: center;">
+                                    <i class="far fa-user-circle" style="margin-right: 5px;font-size: 30px;"></i><span id="web-ui" style="font-size: 17px;" *ngIf="userData != undefined">{{userData.FirstName}}{{userData.LastName !=undefined?' '+userData.LastName:'' }}</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation d-none d-sm-block d-md-none">
+                    <div class="container container-lg flex-container flex-container-row flex-items-center">
+                        <button btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right drop-in-2" tabindex="0" role="button"id="side-button-Product2" (click)="openPopover($event,'Product','side-button-Product')">{{store.getVal('website_key_37')}}<material-icon class="icon material-icons notranslate" translate="no" aria-hidden="true">arrow_drop_down</material-icon></button>
+                        <button btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right drop-in-2" tabindex="0" role="button" id="side-button-Solutions2" (click)="openPopover($event,'Solutions','side-button-Solutions')"> {{store.getVal('website_key_38')}} <material-icon class="icon material-icons notranslate" translate="no" aria-hidden="true">arrow_drop_down</material-icon></button>
+                        <button btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right drop-in-2" tabindex="0" role="button"id="side-button-Company2" (click)="openPopover($event,'Company','side-button-Company')"> {{store.getVal('website_key_39')}} <material-icon class="icon material-icons notranslate" translate="no" aria-hidden="true">arrow_drop_down</material-icon></button>
+                    </div>
+                </div>
+            </div>
+            <div class="spacer drop-in-2">
+                <div class="header"></div>
+                <div class="navigation d-none d-sm-block d-md-none"></div>
+            </div>
+    </ion-toolbar>
+</ion-header>

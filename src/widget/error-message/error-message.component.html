@@ -1,0 +1,7 @@
+<ion-row [class]="isNameUn&&message !=''?fromClass:''" [style.text-align]="styleD">
+      <ion-col style="padding: 0px;padding-left: 5px;">
+            <div style="display: flex;">
+                  <span [class]="isNameUn&&message !=''?'errorMsg':''" [ngClass]='activePage' [ngStyle]="{'color':isMessage=='true'?'var(--ion-color-black)':'var(--ion-color-logo-red)'}" [innerHtml]="store.getHtmlWithBypassedSecurity(message)"></span>
+            </div>
+      </ion-col>
+</ion-row>

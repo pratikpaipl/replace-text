@@ -1,0 +1,5 @@
+<div [class]="'card_right_panels grid'" style="padding: 12px;">
+    <item-card *ngFor="let item of rowsMobile;let i=index" [selectedEnabler]="SelectEnabler" [isMain]="false" [extraMenu]="false" [itemTitle]="item.PlanName" [isMain]="false" [prod]="item" [subtype]="type" [type]="pageType" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [Name]="" [ActionType]="ActionType" [apiAction]="apiAction" (change)="callAction($event,i)"></item-card>
+</div>
+<app-empty-list *ngIf="isShowMsg" [msg]="store.searchMsg" type="{{ pageType }}"></app-empty-list>
+<app-page-end *ngIf="rowsMobile.length !=0 && rowsMobile.length == EnablerTotal" type="{{ pageType }}"></app-page-end>

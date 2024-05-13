@@ -1,0 +1,93 @@
+ion-grid{
+    padding: 0px;
+}
+ion-grid,ion-row,ion-col{
+    margin: 0px !important;
+}
+
+ion-checkbox {
+    --border-radius: 4px !important;
+    --size: 18px;
+}
+
+ion-checkbox.checkbox-checked {
+    --checkmark-color: var(--ion-color-logo-red);
+    --background-checked: var(--ion-color-logo-red);
+    --border-color-checked: var(--ion-color-logo-red);
+    // --background-checked: var(--ion-color-dark-green);
+    // --border-color-checked: var(--ion-color-dark-green);
+}
+.f-col{
+    flex: 0 0 26px;
+    align-items: center;
+    display: flex;
+    padding: 0px 10px;
+}
+.child .f-col{
+    padding-left: 0px !important;
+}
+ion-item {
+    margin: 0px !important;
+    --min-height: 35px;
+    display: flex;
+    align-items: center;
+    border-bottom: 0px solid var(--ion-color-light-gray);
+    --inner-border-width: 0px !important;
+    --padding-start: 0px;
+    background: var(--ion-color-white);
+    --background: var(--ion-color-white);
+    --background-focused: transparent;
+}
+.lblview{
+    font-size: 14px;
+    font-weight: 400;
+    white-space: normal;
+    // margin-bottom: 6px !important;
+    letter-spacing: 0.3px;
+    margin: 0px !important;
+}
+// .parent ion-grid ion-row ion-col div i{
+//     padding-left: 10px;
+// }
+// .child ion-grid ion-row ion-col div i{
+//     padding-left: 0px;
+// }
+.itm-lbl {
+    font-size: 15px;
+    font-weight: 500;
+    white-space: normal;
+}
+
+
+.tree-cnt {
+    font-weight: bold;
+    color: var(--ion-color-logo-red) !important;
+}
+
+ion-icon.searchbar-search-icon {
+    width: 0px;
+    display: none;
+}
+
+// ion-item ion-label {
+//     margin: 0px !important;
+// }
+
+ion-item ion-checkbox {
+    margin: 0px !important;
+    margin-right: 10px !important;
+}
+
+.child {
+    margin-left: 38px !important
+}
+
+.fa {
+    color: var(--ion-color-black);
+}
+
+@media (max-width: 768px) {
+    .child {
+        margin-left: 35px !important
+    }
+}

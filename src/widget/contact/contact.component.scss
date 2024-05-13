@@ -1,0 +1,182 @@
+ion-title {
+  text-transform: capitalize;
+}
+.ion-img{
+  width: 50px;
+}
+.title-ds{
+  text-align: start;
+  align-items: center;
+  display: flex;
+  padding: 10px 10px 0px 10px;
+  margin-bottom: 0px;
+}
+.f-lbl{
+  text-wrap: nowrap;
+  margin-right: 5px;
+}
+.title-ds a{
+  text-decoration: none;
+  color: var(--ion-color-blue);
+  text-align: left;
+    display: block;
+}
+.title-ds:last-child{  
+  padding-bottom: 10px;
+}
+.extra-view{
+  // display: flex;
+  background: white;
+  border: 1px solid var(--ion-color-light-gray);
+  border-radius: 10px;
+  // padding: 10px;
+  align-items: center;
+}
+.form-group.extra-view:empty {
+  display: none;
+}
+.page_wapper{
+  min-height: 570px;
+}
+.button_box{
+  justify-content: center;
+  display: flex;
+}
+.wrap {
+  position: relative;
+  // display: inline-block;
+}
+.wrap span {
+  position: absolute;
+  bottom: 5px;
+  right: 0px;
+  }
+.counter{
+  background-color: var(--ion-color-dark-green);
+  color: var(--ion-color-white);
+  font-size: 10px;
+  padding: 2px 5px;
+  line-height: 12px;
+  height: 14px;
+  text-align: center;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  font-weight: 400;
+}
+
+.contact_forms .form-group span.errorMsg {
+  color: var(--ion-color-red);
+  padding-top: 5px;
+  line-height: 14px;
+  font-size: 14px !important;
+  display: block;
+  padding-left: 17px;
+}
+
+.contact_forms .form-control.error {
+  border: 1px solid var(--ion-color-red);
+}
+
+// .formbold-input-file {
+//   margin: 15px 0px;
+//   flex-wrap: wrap;
+//   display: inline-flex;
+// }
+ion-chip{
+  background-color: var(--ion-color-gray-96);
+  cursor: auto;
+  font-size: 17px;
+  padding: 10px;
+  height: auto;
+  border-radius: 40px;
+}
+label.formbold-input-label {
+  align-items: center !important;
+  display: inline-flex;
+  white-space: nowrap;
+}
+.chkboxs_items{
+  display: flex;
+}
+ion-item{
+  width: auto;
+  display: block;
+  border: 1px solid var(--ion-color-light-gray);
+  border-radius: 10px;
+  --border-width: 0px;
+  --background-focused: transparent;
+}
+input#upload {
+  margin-left: 5px;
+}
+
+.attach_file_box {
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+  padding-left: 1px;
+}
+
+.attach_file_box ion-label {
+	font-size: 17px;
+  display: flex;
+  margin: 0px !important;
+  align-items: center;
+  cursor: pointer;
+}
+.attach_file_box ion-label i {
+	font-size: 17px;
+	margin-right: 5px;
+	display: block;
+}
+.attach_file_box input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.attach_file_box .remove_sele {display: none;}
+.attach_file_box.selected .remove_sele {display: block;}
+.form-group ion-note {
+	display: block !important;
+	width: 100%;
+	margin-top: 2px !important;
+  margin-bottom: 5px;
+}
+
+.attach_file_box.selected .file_name {
+	padding: 0px 7px 0px 15px;
+	display: block;
+	font-size: 15px;
+	color: var(--ion-color-light-trolley-gray);
+}
+.remove_sele {
+	position: relative;
+	z-index: 4;
+}
+.remove_sele i{
+	margin: 0px !important;
+}
+.form-group.chkboxs_items ion-item ion-label {
+  font-size: 14px !important;
+  white-space: normal;
+  color: var(--ion-color-black);
+}
+i#deletePdf {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: var(--ion-color-logo-red);
+}
+@media (max-width: 830px){
+  ion-chip {
+      display: block;
+  }
+}

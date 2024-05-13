@@ -1,0 +1,205 @@
+ion-col {
+    padding: 0px;
+}
+.impact-funding-resources .forms_block div{
+    margin-top: 30px;
+}
+.impact-funding-resources .forms_block div:first-child{
+    margin-top: 0px;
+}
+.left_filter_panel {
+	padding: 0px 15px !important;
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+.title {
+	font-weight: bold;
+	font-size: 16px;
+	margin: 0;
+	display: block;
+	margin-bottom: 15px;
+}
+.Overview_block {
+    display: flex;
+    padding: 30px 0px;
+    margin: 0px -15px;
+}
+
+
+
+.card_list {
+    padding: 0px 0px 30px 0px;
+}
+
+.page_wapper {
+    padding: 0px !important;
+    background: white;
+}
+
+.filter_nav {
+    margin: 0px !important
+}
+
+.regions {
+    display: flex;
+    padding: 15px 0 0 12px;
+}
+
+.regions ion-label:last-child span {
+    display: none;
+}
+
+.spacing {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--ion-color-light-gray);
+}
+
+.delivery_content:last-child .spacing {
+    border-bottom: none;
+}
+
+.issued span.count::after {
+    content: ",";
+}
+
+.issued span.count:last-child::after {
+    display: none;
+}
+
+.forms_block {
+    padding: 10px 20px;
+}
+
+.forms_block ion-label.title {
+    position: relative;
+    color: var(--ion-color-black);
+    display: block;
+    font-size: 18px !important;
+    margin: 10px 0 4px 0;
+    letter-spacing: 0.3px;
+}
+.forms_block ion-label.title {
+	position: relative;
+	color: var(--ion-color-black);
+	display: block;
+	font-size: 15px !important;
+	margin: 10px 0 5px 0;
+	letter-spacing: 0.5px;
+}
+
+.forms_block ion-label.content{
+    // padding-left: 15px;
+    display: block;
+}
+.forms_block ion-label.content,
+.forms_block ion-label.content a {
+    position: relative;
+    color: var(--ion-color-dark-gray) !important;
+    margin-bottom: 10px;
+    // display: block;
+    text-decoration: auto;
+}
+
+.forms_block ion-label.content a i {
+    color: var(--ion-color-logo-red);
+    margin-left: 10px;
+}
+
+.content_info {
+    position: relative;
+    padding: 30px 30px 20px 30px;
+}
+
+.forms_block .content_info ion-label a {
+    color: var(--ion-color-dark-gray) !important;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    text-decoration: none !important;
+    outline: none !important;
+}
+
+.forms_block .content_info ion-label a .icons {
+    position: relative;
+    height: 34px;
+    width: 34px;
+    display: block;
+    font-size: 13px;
+    color: var(--ion-color-black);
+    font-weight: 400;
+    border: 1px solid var(--ion-color-black);
+    text-align: center;
+    line-height: 34px;
+    border-radius: 50%;
+    flex: 0 0 34px;
+    padding: 0px !important;
+    margin-right: 13px;
+}
+
+.content.times span ion-label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--ion-color-dark-gray) !important;
+}
+
+.content.times span ion-label span.name {
+    width: 98px;
+    display: inline-flex;
+}
+
+.IsAllVegan {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-top: 10px;
+    color: var(--ion-color-dark-green) !important;
+    font-size: 14px;
+}
+
+.IsAllVegan ion-img {
+    margin-right: 5px;
+    width: 16px;
+}
+
+#serch_component {
+    padding-top: 0px;
+}
+
+
+@media (max-width: 768px) {
+ 
+    .forms_block ion-label.title {
+        margin: 11px 0 10px 0;
+    }
+
+    .content_info {
+        padding: 10px 15px 20px 10px;
+    }
+    .Overview_block {
+        padding: 11px 0px;
+    }
+    .content.times span ion-label span.name {
+        width: auto;
+        display: inline-flex;
+    }
+
+    .forms_block ion-label.title {
+        font-size: 15px !important;
+        margin: 10px 0 5px 0;
+        letter-spacing: 0.5px;
+    }
+    .left_filter_panel {
+        padding: 0px 10px !important;
+        padding-bottom: 10px;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 640px)
+{
+    .left_filter_panel {
+        padding: 0px !important;
+        padding-bottom: 15px !important;
+    }
+}

@@ -1,0 +1,128 @@
+.Overview_block {
+    display: flex;
+    padding:  0px;
+    margin: 0px -15px;
+    padding-top: 15px!important;    
+}
+.Overview_block:last-child {    
+    padding-top: 0px !important
+}
+
+.forms_block {
+    padding: 10px 20px;
+}
+
+.card_list {
+    padding: 0px 0px 30px 0px;
+}
+
+.page_wapper {
+    padding: 0px !important;
+    background: white;
+}
+
+.filter_nav.permission {
+    // margin: 0px -10px !important;
+    display: flex;
+}
+
+.content_info {
+    position: relative;
+    padding: 30px 30px 20px 30px;
+}
+
+.Overview-box .content_info ion-label a {
+    color: var(--ion-color-dark-gray) !important;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    text-decoration: none !important;
+    outline: none !important;
+}
+
+.Overview-box .content_info ion-label a .icons {
+    position: relative;
+    height: 34px;
+    width: 34px;
+    display: block;
+    font-size: 13px;
+    color: var(--ion-color-black);
+    font-weight: 400;
+    border: 1px solid var(--ion-color-black);
+    text-align: center;
+    line-height: 34px;
+    border-radius: 50%;
+    flex: 0 0 34px;
+    padding: 0px !important;
+    margin-right: 13px;
+}
+
+.content.times span ion-label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--ion-color-dark-gray) !important;
+}
+
+.content.times span ion-label span.name {
+    width: 98px;
+    display: inline-flex;
+}
+
+.IsAllVegan {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-top: 10px;
+    color: var(--ion-color-dark-green) !important;
+    font-size: 14px;
+}
+
+.IsAllVegan ion-img {
+    margin-right: 5px;
+    width: 16px;
+}
+
+#serch_component {
+    // padding: 20px;
+    padding-top: 0px;
+}
+
+@media (max-width: 768px) {
+   
+    .filter_nav.permission {
+        display: block;
+    }
+    .filter_nav .add_buttons:nth-child(2) {
+        display: inline-flex;
+        margin-top: 5px;
+    }
+    .content_info {
+        padding: 10px 15px 20px 10px;
+    }
+    .Overview_block {
+        padding: 11px 0px !important;
+    }
+    .content.times span ion-label span.name {
+        width: auto;
+        display: inline-flex;
+    }
+}
+ion-row.enabler-config-row ion-col:first-child{
+    margin-right: 8px;
+}
+ion-row.enabler-config-row ion-col:last-child{
+    margin-left: 8px;
+}
+.enabler-config-row ion-card-title{
+    margin-right: auto;
+}
+@media (max-width: 830px) {
+    ion-row.enabler-config-row ion-col{
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
+        margin: auto !important;
+    }
+}
+.forms_block {
+    padding: 10px 20px;
+}

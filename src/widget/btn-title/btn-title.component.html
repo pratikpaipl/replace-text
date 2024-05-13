@@ -1,0 +1,22 @@
+<ion-grid id="page_titles">
+    <ion-row class="admin_right_panel_box" style="align-items: center;">
+        <ion-col class="top-div">
+            <ion-label class="page_label"><h1 style="margin: initial;">{{pageLbl}}</h1></ion-label>
+            <div class="downloads navigation_compo" *ngIf="store.checkPermissionObj(permissions,'download_all') && allTotal != undefined && allTotal > 0">
+                <i class="fas fa-download pointer" (click)="download()"></i>
+            </div>
+        </ion-col>
+        <ion-col class="form_add_btn"  *ngIf="store.checkPermissionObj(permissions,'add')">
+            <div class="add_buttons" (click)="onAction()">
+              <i class="fa-solid fa-circle-plus"></i>
+              <ion-label style="cursor: pointer;">{{this.store.getVal('add')}}</ion-label>
+            </div>
+          </ion-col>
+        <ion-col class="form_add_btn" style="margin-left: 10px;"  *ngIf="store.checkPermissionObj(permissions,'import_shop_location')">
+            <div class="add_buttons" (click)="onImport()"> <!--*ngIf="store.checkPermissionObj(permissions,'import')"-->
+              <ion-icon name="cloud-download"></ion-icon>
+              <ion-label style="cursor: pointer;">{{this.store.getVal('import')}}</ion-label>
+            </div>
+          </ion-col>          
+    </ion-row>
+</ion-grid>

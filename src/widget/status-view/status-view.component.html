@@ -1,0 +1,96 @@
+<div class="filter_count_list admin_list" [ngStyle]="{display: elementClass?'block':'flex'}">
+    <div class="main-div" >
+        <div class="sub-div">
+            <div class="contect-padding">
+                <ion-label>{{store.getVal('active_status')}}</ion-label>
+                <ion-select interface="popover" class="status" *ngIf="(store.checkPermission(prod,'active') || store.appType =='front') && (prod.EnablerValid == 1 || prod.EnablerValid =='1' || (prod.EnablerValid == undefined  && pageType =='enablers'))" [(ngModel)]="prod.IsActive" (ngModelChange)="changeStatus('IsActive',prod.IsActive)" tabindex="-1">
+                    <ion-select-option *ngFor="let e of store.ActiveStatusResult" [value]="e.val">
+                        {{e.lbl}}
+                    </ion-select-option>
+                </ion-select>
+                <span *ngIf="(!store.checkPermission(prod,'active')  && store.appType !='front') || (prod.EnablerValid == 0 || prod.EnablerValid =='0' )">{{store.getScrenigStatus(store.ActiveStatusResult,prod.IsActive)}}</span>
+            </div>
+            <div class="contect-padding" *ngIf="pageType == 'fundraise-needs-submitted' || pageType == 'funding-profiles-submitted' || store.appType =='front'">
+                <ion-label>{{store.getVal('submitter_confirmation')}}</ion-label>
+                <span>{{store.getScrenigStatus(store.SubmitterConfirmationResult,prod.IsEmailVerified)}}</span>
+            </div>
+            <div class="contect-padding">
+                <ion-label>{{(pageType == 'fundraise-needs-submitted' || pageType == 'funding-profiles-submitted' || store.appType =='front')?store.getVal('enablers_confirmation'):store.getVal('data_status')}} </ion-label>
+                <ion-select interface="popover" class="status" *ngIf="store.checkPermission(prod,'data_status')&& (prod.EnablerValid == 1 || prod.EnablerValid =='1' || (prod.EnablerValid == undefined  && pageType =='enablers'))" [disabled]="(pageType == 'fundraise-needs-submitted' || pageType == 'funding-profiles-submitted') && prod.IsEmailVerified == '0'?true:false"  [(ngModel)]="prod.DataStatus" (ngModelChange)="changeStatus('DataStatus',prod.DataStatus,(pageType == 'fundraise-needs-submitted' || pageType == 'funding-profiles-submitted'))" tabindex="-1">
+                    <ion-select-option *ngFor="let e of store.DataStatusResult" [value]="e.val">
+                        {{e.lbl}}
+                    </ion-select-option>
+                </ion-select>        
+                <span *ngIf="!store.checkPermission(prod,'data_status')|| (prod.EnablerValid == 0 || prod.EnablerValid =='0')">{{store.getScrenigStatus(store.DataStatusResult,''+prod.DataStatus)}}</span>
+            </div>
+            <div class="contect-padding" *ngIf="pageType == 'fundraise-needs-submitted' || pageType =='fundraise-needs' || pageType =='fundraise' || pageType == 'funding-profiles-submitted' || pageType =='funding-profiles'|| pageType =='funding-profile' ">
+                <ion-label>{{store.getVal('screening_status')}}</ion-label><span *ngIf="prod.ScreeningStatusName != undefined">{{prod.ScreeningStatusName}}</span>
+            </div>
+            <div class="contect-padding" *ngIf="store.appType =='admin'">
+                <ion-label>{{store.getVal('system_status')}}</ion-label>
+                <ion-select interface="popover" class="status" *ngIf="store.checkPermission(prod,'enable')" [(ngModel)]="prod.IsEnable" (ngModelChange)="changeStatus('IsEnable',prod.IsEnable)" tabindex="-1">
+                    <ion-select-option *ngFor="let e of store.EnableStatusResult" [value]="e.val">
+                        {{e.lbl}}
+                    </ion-select-option>
+                </ion-select>
+                <span *ngIf="!store.checkPermission(prod,'enable')">{{store.getScrenigStatus(store.EnableStatusResult,prod.IsEnable)}}</span>
+            </div>
+            <div class="contect-padding" *ngIf="store.appType =='admin' && pageType =='enablers'">
+                <ion-label>{{store.getVal('publish')}}</ion-label>
+                <ion-select interface="popover" class="status" *ngIf="store.checkPermission(prod,'publish')" [(ngModel)]="prod.IsPublish" (ngModelChange)="changeStatus('IsPublish',prod.IsPublish)" tabindex="-1">
+                    <ion-select-option *ngFor="let e of store.PublishStatusResult" [value]="e.val">
+                        {{e.lbl}}
+                    </ion-select-option>
+                </ion-select>
+                <span *ngIf="!store.checkPermission(prod,'publish')">{{store.getScrenigStatus(store.PublishStatusResult,prod.IsPublish)}}</span>
+            </div>
+            <div class="contect-padding" *ngIf="store.appType =='admin' && ((pageType =='enablers') || (pageType == 'funding-profiles-submitted') || (pageType == 'fundraise-needs-submitted'))">
+                <ion-label>{{store.getVal('featured')}}</ion-label>
+                <ion-select interface="popover" class="status" *ngIf="store.checkPermission(prod,'featured')" [(ngModel)]="prod.IsFeatured" (ngModelChange)="changeStatus('IsFeatured',prod.IsFeatured)" tabindex="-1">
+                    <ion-select-option *ngFor="let e of store.PublishStatusResult" [value]="e.val">
+                        {{e.lbl}}
+                    </ion-select-option>
+                </ion-select>
+                <span *ngIf="!store.checkPermission(prod,'featured')">{{store.getScrenigStatus(store.PublishStatusResult,prod.IsFeatured)}}</span>
+            </div>
+            <div class="contect-padding" *ngIf="prod.PitchSubmitted != undefined">
+                <ion-label>{{store.getVal('pitch_submitted')}}</ion-label>
+                <span>{{prod.PitchSubmitted}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="main-div" style="margin-top: 10px; margin-bottom: 10px;" *ngIf="store.appType =='admin'">
+        <div class="sub-div" *ngIf="(pageType=='enablers' || pageType=='enabler')">
+            <div class="contect-padding" *ngIf="prod.TotalFree !=undefined">
+                <ion-label>{{store.getVal('total_free')}}</ion-label>
+                <span>{{prod.TotalFree}}</span>
+            </div>
+            <div class="contect-padding" *ngIf="prod.TotalPaid !=undefined">
+                <ion-label>{{store.getVal('total_paid')}}</ion-label>
+                <span>{{prod.TotalPaid}}</span>
+            </div>
+    
+            <div class="contect-padding" *ngIf="prod.IsPaid != undefined">
+                <ion-label>{{store.getVal('payment_status')}}</ion-label>
+                <span>{{prod.IsPaid}}</span>
+            </div>
+            <div class="contect-padding" *ngIf="store.appType =='admin' && (pageType=='enablers' || pageType=='enabler')">
+                <ion-label>{{store.getVal('plan')}}</ion-label>
+                <span class="pointer">
+                    <a class="clickEv pointer" style="color: var(--ion-color-black);text-decoration: none;" [href]="planPath(prod)" (click)="openToPlan(prod)" tabindex="-1">
+                        <span class="count text-center" [style.color]="prod.ActivePlanName !=undefined?'var(--ion-color-blue)!important':'var(--ion-color-logo-red)!important'">{{prod.ActivePlanName !=undefined?prod.ActivePlanName:store.getVal('select_subscriptions_plan')}}</span>
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div class="right-chip-div" *ngIf="store.appType =='admin'">
+            <ion-label class="round-chip-box">
+                <span class="contents pointer public-view" (click)="store.openFrontPath(pageType,prod)">
+                    <a [href]="store.openFPath(pageType,prod)" [class]="'clickEv pointer'" tabindex="-1"><i class="fa fa-eye"></i>{{this.store.getVal('front_page_url')}}</a>
+                </span>
+            </ion-label>
+        </div>
+    </div>
+    
+
+</div>

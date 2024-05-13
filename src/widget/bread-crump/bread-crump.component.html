@@ -1,0 +1,23 @@
+  <ion-breadcrumbs  tabindex="-1">
+    <h1 style="margin: 0px !important;line-height:normal !important">
+    <ion-breadcrumb *ngIf="showHome != '0' && from !='contact'" [class]="'clickEv pointer'" [href]="store.explorePath()" (click)="store.Explore()" tabindex="-1">{{store.appType=='admin'? store.getVal('dashboard') :store.getVal('explore')}}<ion-icon slot="separator" src="assets/icon/ios-arrow-forward.svg"></ion-icon></ion-breadcrumb>
+    </h1>
+    <h1 style="margin: 0px !important;line-height:normal !important">
+    <ion-breadcrumb *ngIf="breadCrumpData !=undefined && breadCrumpData.list.length > 0 && fHide" [class]="!skipLogin?'clickEv no-pointer':'clickEv pointer'" [href]="openPageListPath(breadCrumpData.list[0].PageType)" [disabled]="!skipLogin" (click)="openPageList(breadCrumpData.list[0].PageType)" tabindex="-1">{{store.getVal(breadCrumpData.list[0].PageType=='enablers'?'enablers':breadCrumpData.list[0].extraType != undefined?breadCrumpData.list[0].extraType:breadCrumpData.list[0].PageType)}}<ion-icon slot="separator" src="assets/icon/ios-arrow-forward.svg"></ion-icon></ion-breadcrumb>
+  </h1>
+  <h1 style="margin: 0px !important;line-height:normal !important">
+    <ion-breadcrumb *ngIf="breadCrumpData !=undefined&& breadCrumpData.list.length>0 && breadCrumpData.list[0].PageName.length> 0 " [class]="!skipLogin?'clickEv no-pointer':'clickEv pointer'" [disabled]="!skipLogin"  [href]="openDetailsPath(breadCrumpData.list[0].PageType,breadCrumpData.list[0].PageSlug,breadCrumpData.list[0].action,breadCrumpData.list[0].extraPath)" (click)="openDetails(breadCrumpData.list[0].PageType,breadCrumpData.list[0].PageSlug,breadCrumpData.list[0].action,breadCrumpData.list[0].extraPath)" tabindex="-1">{{breadCrumpData.list[0].PageName}}<ion-icon slot="separator" src="assets/icon/ios-arrow-forward.svg"></ion-icon></ion-breadcrumb>
+  </h1>
+  <!-- <h1 style="margin: 0px !important;line-height:normal !important"> -->
+    <ion-breadcrumb *ngIf="breadCrumpData !=undefined&& breadCrumpData.list.length>1" [class]="!skipLogin?'clickEv no-pointer':'clickEv pointer'" [disabled]="!skipLogin"  [href]="openDetailsPath(breadCrumpData.list[0].PageType,breadCrumpData.list[1].PageSlug,breadCrumpData.list[1].action,breadCrumpData.list[1].extraPath)" (click)="openDetails(breadCrumpData.list[0].PageType,breadCrumpData.list[1].PageSlug,breadCrumpData.list[1].action,breadCrumpData.list[1].extraPath)" tabindex="-1">{{store.getVal(breadCrumpData.list[1].PageType=='enablers'?'enablers':breadCrumpData.list[1].extraType != undefined?breadCrumpData.list[1].extraType:breadCrumpData.list[1].PageType)}}<ion-icon slot="separator" src="assets/icon/ios-arrow-forward.svg"></ion-icon></ion-breadcrumb>
+    <ion-breadcrumb *ngIf="breadCrumpData !=undefined && breadCrumpData.list.length>1"> {{breadCrumpData.list[1].PageName}}</ion-breadcrumb>
+<!-- </h1> -->
+<h1 style="margin: 0px !important;line-height:normal !important">
+    <ion-breadcrumb *ngIf="breadCrumpData ==undefined && (((pageType != 'enablers' || store.appType =='admin') && from !='contact') ||(pageType == 'enablers' && from == 'user'))" [class]="'clickEv pointer'" [href]="openPageListPath(pageType)" (click)="openPageList(pageType)" tabindex="-1">{{extraType != undefined? store.getVal((pageType == 'enablers' && from == 'user')?'user_enablers':extraType): (pageType =='enablers' ? store.getVal('enablers') :pageType =='import-files' ? store.getVal('import_files') :pageType =='funding-profile' ? store.getVal('funding_profile'):pageType =='funding-profiles-submitted' ? store.getVal('funding_profiles_submitted') :pageType =='fundraise-needs-submitted' ? store.getVal('fundraise_needs_submitted'):pageType =='fundraise'?store.getVal('fundraise-need'):pageType =='full-report' ? store.getVal('full_report'): store.getVal(pageType))}}<ion-icon slot="separator" src="assets/icon/ios-arrow-forward.svg"></ion-icon></ion-breadcrumb>
+</h1>
+    <ion-breadcrumb  *ngIf="breadCrumpData ==undefined && DisplayName !='' && DisplayName != undefined" [class]="'clickEv pointer'" [href]="openPagePath(pageType)" (click)="openPage(pageType)" tabindex="-1"><ion-icon slot="separator" src="assets/icon/ios-arrow-forward.svg"></ion-icon> {{DisplayName.replace('-',' ')}}</ion-breadcrumb>
+    
+    <ion-breadcrumb *ngIf="breadCrumpData != undefined && DisplayName!= undefined && DisplayName !=''" tabindex="-1">{{DisplayName}}</ion-breadcrumb>
+    <ion-breadcrumb *ngIf="breadCrumpData ==undefined" [style.--color-active]="from =='contact'?'var(--ion-color-balck)':'var(--ion-color-logo-red)'" [style.font-size]="from =='contact'?'20px':'15px'" tabindex="-1">{{pageLbl}}</ion-breadcrumb>
+  </ion-breadcrumbs>
+<!-- </h1> -->

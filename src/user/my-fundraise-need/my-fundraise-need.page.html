@@ -1,0 +1,15 @@
+<btn-title [pageLbl]="store.getVal('my_fundraise_needs')" [pageType]="pageType" [permissions]="permissions" [from]="'profile'" [allTotal]="allTotal" [sort]="'recent'">
+</btn-title>
+
+<div class="forms_conponenl">
+    <div class="container">
+        <refresher (change)="callPullRefresh($event)"></refresher>
+        <div id="serch_component">
+            <app-search-bar isShow="false" fromPage="admin" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)"></app-search-bar>
+        </div>
+        <div class="items_counts">
+            <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+        </div>
+        <fundraise-items *ngIf="pageType == 'fundraise'" apiEnd="fundraise/my_fn_list" [pageType]="pageType" [type]="pageType" from="profile" pageFrom="profile" openFront="1" apiAction="fundraise" [extraMenu]="false" [FundraiseSlug]="''" [updateTime]="updateTime" (change)="updateCount($event)"></fundraise-items>
+    </div>
+</div>

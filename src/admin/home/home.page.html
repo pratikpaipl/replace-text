@@ -1,0 +1,35 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="true" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)" overflow-scroll=”false”>
+    <div class="admin-page_wapper">
+        <div id="all_ui">
+            <ion-grid class="p-0">
+                <ion-row id="slide_bars_panel" class="ion-justify-content-end">
+                    <ion-col class="admin_left_panel">
+                        <div class="left_navigation">
+                            <app-tabs [segments]="segments" styleD="block !important" color="var(--ion-color-white)" backColor="var(--ion-color-dark-green)" indHeight="0px" [selectedSegment]="pageType" from="admin" (change)="onClickSegment($event)"></app-tabs>
+                        </div>
+                    </ion-col>
+                    <ion-col class="admin_right_panel" [ngSwitch]="pageType">
+                        <dashboard *ngSwitchCase="'dashboard'"></dashboard>
+                        <im-files *ngSwitchCase="'import-files'"></im-files>
+                        <enabler *ngSwitchCase="'enablers'" [updateTime]="updateTime" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined" (change)="click($event)"></enabler>
+                        <full-report *ngSwitchCase="'full-report'" [updateTime]="updateTime" [pageType]="pageType" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined"></full-report>
+                        <subscripions *ngSwitchCase="'subscripions'" [updateTime]="updateTime" [pageType]="pageType" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined"></subscripions>
+                        
+                        <matchmaking *ngSwitchCase="['matchmaking', 'activity-log', 'data-format-rules'].includes(pageType) ? pageType : !pageType" [updateTime]="updateTime" [pageType]="pageType" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined"></matchmaking>
+                        <users *ngSwitchCase="'users'" [updateTime]="updateTime" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined"></users>
+                        <funding-profile *ngSwitchCase="'funding-profiles'" [updateTime]="updateTime" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined"></funding-profile>
+                        <fundraise-needs *ngSwitchCase="'fundraise-needs'" [updateTime]="updateTime" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined"></fundraise-needs>
+                        <fundraise-needs-submitted *ngSwitchCase="'fundraise-needs-submitted'" [updateTime]="updateTime" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined"></fundraise-needs-submitted>
+                        <funding-profiles-submitted *ngSwitchCase="'funding-profiles-submitted'" [updateTime]="updateTime" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined"></funding-profiles-submitted>
+                        <summary *ngSwitchCase="'summary'" [updateTime]="updateTime" [NavigatePage]="NavigatePage"></summary>
+                        <fundraise-match-report pageTitle="funding_profile_match_report" *ngSwitchCase="'funding-profile-match-report'" [updateTime]="updateTime" [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined" (change)="click($event)"></fundraise-match-report>                        
+                        <funding-profile-match-report pageTitle="fundraise_need_match_report" *ngSwitchCase="'fundraise-need-match-report'" [updateTime]="updateTime" (change)="click($event)"></funding-profile-match-report>
+                        <reference-data-setting *ngSwitchCase="'reference-data'" [updateTime]="updateTime"></reference-data-setting>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

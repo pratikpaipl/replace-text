@@ -1,0 +1,39 @@
+<ngx-datatable #Users *ngIf="rows.length>0"  id="web-ui" class="material expandable" [columnMode]="'force'" [rows]="rows" [columns]="columnsWithCheckbox" [footerHeight]="50" [scrollbarH]="true" [rowHeight]="getRowHeight" [summaryRow]="false" [summaryPosition]="'bottom'" [messages]="{emptyMessage: store.getMsg(store.searchMsg), totalMessage: 'Total'}" [loadingIndicator]="false" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)="setPage(false,$event)">
+    <ngx-datatable-column [headerClass]="column.color" [cellClass]="''" *ngFor="let column of columnsWithCheckbox; let i = index;" [name]="store.nl2br(store.getVal(column.name))" [prop]="column.prop" [resizeable]="column.resisable" [sortable]="column.sortable" [frozenLeft]="column.frozenLeft" [width]="column.width">
+        <ng-template let-column="column" ngx-datatable-header-template>
+            <span [class]="''"innerHtml="{{ column.name}}"></span>
+        </ng-template>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+            <!-- {{column.prop}} -->
+            <div [class]="column.showExp && value !=''?' action-arrow':''">
+                <i *ngIf="column.showExp && value !='' " [class.datatable-icon-right]="!row.expanded" [class.datatable-icon-down]="row.expanded" (click)="toggleExpandRow(row,rowIndex)"></i>
+                <span container="body" [adaptivePosition]="false" (click)="(!column.isMail && column.click && value !='0')?onClick(row,column.route,column.FilterType,column.isProfile):null" [style.cursor]="column.click && value !='0'?'pointer':'auto'" [style.color]="(column.click && value !='0')?'blue':''">
+                    <div [style.display]="column.name == 'enabler'?'flex':'initial'" [style.align-items]="column.name == 'enabler'?'flex-start':'initial'">
+                        <img alt="" *ngIf="column.route == 'enablers'" [src]="row.EnablerLogo" onerror="src='assets/images/no-image-icon-5.jpg'" />
+                        <i *ngIf="column.isIndicat && (row.IsOperative == 0 || row.EnablerValid == 0)" class="fa fa-ban" aria-hidden="true"></i>
+                        <a *ngIf="column.isMail" class="expand-data"style="color: blue;" href="mailto:{{value}}" tabindex="-1">{{value}}</a>
+                        <a *ngIf="column.click && value !='0' && !column.isMail" [class]="row.IsFeatured==1 && column.icon ?'clickEv Featured':'clickEv'" style="color: blue;text-decoration:none" [href]="routePath(row,column.route,column.FilterType,column.isProfile)" tabindex="-1"><i [class]="column.icon" style="margin-right: 5px;" *ngIf="column.icon != undefined"></i>{{value}}</a>
+                        <span *ngIf="column.name == ''"> <ion-label [class]="row.PlanStatus=='plan_active'?'select_plan pointer cancel':'select_plan pointer'" (click)="selectPlan(row)">{{store.getVal(row.PlanStatus=='plan_active'?'cancel':'select')}}</ion-label></span>
+                        <!-- {{column.splitProps}} -->
+                        <span *ngIf="column.isDate && isInclude('CreatedTs',column)" [innerHtml]="getDateWithName(row,column)">
+                        </span>
+                        <span *ngIf="column.isDate && isInclude('FromDate',column)" style="white-space: normal;">{{getDate(row,column)}}</span>
+                        <span *ngIf="!column.isDrop && !column.isDate && !column.isMail&& !(column.click && value !='0')" [class]="!column.showExp?'expand-data':''" innerHtml="{{(column.prop == 'PlanPrice' && value != undefined && value != '')?((row.CurrencyCode != undefined?row.CurrencyCode:'')+' '+value):value}}"></span>
+                        <div *ngIf="column.isDrop">
+                            <div *ngIf="column.prop == 'PlanStatus'">
+                                <i *ngIf="row[column.prop] =='plan_active'" style="color: var(--ion-color-dark-green);" class="fa-solid fa-circle-check"></i>
+                                <i *ngIf="row[column.prop] =='plan_cancelled'" style="color: var(--ion-color-logo-red);" class="fa-regular fa-rectangle-xmark"></i>
+                                <i *ngIf="row[column.prop] =='plan_expired'" style="color: var(--ion-color-yelloShade);" class="fa-solid fa-triangle-exclamation"></i>
+                                <span style="padding-left: 10px;">{{store.getScrenigStatus(store.PlanStatusResult,''+row[column.prop])}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>
+<item-tbl id="app-ui" *ngFor="let item of rowsMobile;let i=index" [columnsWithCheckbox]="columnsWithCheckbox" [extraMenu]="false" [itemTitle]="item.ContactName" [isMain]="false" [prod]="item" [subtype]="type" [type]="pageType" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [Name]="" [ActionType]="ActionType" [apiAction]="apiAction" (change)="callAction($event,i)"></item-tbl>
+<app-empty-list *ngIf="isShowMsg" [msg]="store.searchMsg" type="{{ pageType }}"></app-empty-list>
+<app-page-end id="app-ui" *ngIf="rowsMobile.length !=0 && rowsMobile.length == EnablerTotal" type="{{ pageType }}"></app-page-end>
+<infinite-scroll id="app-ui" [items]="rowsMobile" [itemTotal]="EnablerTotal" (change)="doInfinitePage($event)"></infinite-scroll>

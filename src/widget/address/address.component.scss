@@ -1,0 +1,141 @@
+.search_blockss {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: normal !important;
+    margin: 0px;
+}
+
+#search_boxs {
+    flex: 100% !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0px;
+}
+
+.search_blockss #search_boxs .searchbar {
+    display: flex !important;
+    padding: 0px !important;
+    box-shadow: none !important;
+    box-shadow: none;
+    background: var(--ion-color-white) !important;
+    border-radius: 10px !important;
+}
+
+.search_blockss #search_boxs.opens .searchbar {
+    border-radius: 8px 8px 0 0 !important;
+    border-bottom: none;
+}
+
+.searchbar ion-img {
+    padding: 0px !important;
+    width: 18px !important;
+    cursor: pointer;
+    margin-right: 5px
+}
+
+.searchbar i {
+    color: var(--ion-color-black);
+    line-height: 38px;
+    font-size: 16px;
+    margin-right: 5px
+}
+
+.search_blockss #search_boxs .address-suggestion-box {
+    border-radius: 0px 0px 8px 8px !important;
+	padding: 0px !important;
+	// width: calc(100% - 30px ) !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	// left: 15px;
+	position: absolute;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+
+.address-suggestion-box ion-list {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border: 1px solid var(--ion-color-light-gray) !important;
+}
+
+.address-suggestion-box ion-list ion-item {
+    --background: var(--ion-color-white) !important;
+    background: var(--ion-color-white) !important;
+    color: var(--ion-color-black);
+    --padding-start: 0;
+    --padding-end: 0;
+    padding: 0;
+    --min-height: auto !important;
+}
+
+.address-suggestion-box ion-list ion-item:last-child {
+    --inner-border-width: 0px !important
+}
+
+.address-suggestion-box ion-list ion-item i {
+    color: #666666;
+    font-size: 16px;
+    padding: 10px 10px 10px 15px;
+}
+
+.address-suggestion-box ion-list ion-item ion-label {
+    background-color: var(--ion-color-white) !important;
+    color: var(--ion-color-black) !important;
+    margin: 0px !important;
+    white-space: normal !important;
+    font-size: 16px !important;
+}
+
+ion-item {
+    align-items: baseline;
+}
+
+input.searchbar-input {
+    background: transparent !important;
+    ;
+    border-radius: 10px;
+    padding-inline-start: 45px;
+    padding-inline-end: 35px;
+    height: 47px;
+}
+
+ion-searchbar {
+    --background: transparent !important;
+    background: transparent;
+    --border-radius: 0px !important;
+    --box-shadow: none !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    color: var(--ion-color-black);
+    --placeholder-color: grey !important;
+    --placeholder-font-style: normal !important;
+    --placeholder-font-weight: 400 !important;
+    --placeholder-opacity: 1 !important;
+    --font-style: normal !important;
+    font-style: normal !important;
+    min-height: 49px !important;
+}
+
+.searchbar-input{
+    padding-right: 35px !important;
+    border-radius: 10px !important;
+}
+
+@media (max-width: 480px) {
+    .searchbar ion-img {
+        margin-right: 3px;
+        width: 16px !important;
+    }
+    .searchbar ion-input {
+        padding: 3px 0px 3px 3px !important;
+    }
+    .select_kms {
+        flex: 0 0 130px;
+        max-width: 130px;
+        margin: 15px 0px 12px 0px;
+        padding: 0;
+    }
+}

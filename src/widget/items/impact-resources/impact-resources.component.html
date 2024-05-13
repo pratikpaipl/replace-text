@@ -1,0 +1,10 @@
+<div class="card_right_panels" [class]="'card_right_panels'">
+    <item-card *ngFor="let item of DataList" [isAddForm]="false" [isMain]="false" [prod]="item" [subtype]="type" [extraMenu]="false" [type]="pageType" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [byName]="item.Title" [Name]="item.Title" [apiAction]="apiAction" (change)="callAction($event)">
+    </item-card>
+    <app-empty-list *ngIf="DataList.length==0 && isShowMsg" [msg]="store.searchMsg" type="{{ pageType }}">
+    </app-empty-list>
+    <app-page-end *ngIf="DataList.length !=0 && DataList.length == DataTotal" type="{{ pageType }}">
+    </app-page-end>
+    <infinite-scroll [items]="DataList" [itemTotal]="DataTotal" (change)="doInfinitePage($event)">
+    </infinite-scroll>
+</div>

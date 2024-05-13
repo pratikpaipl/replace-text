@@ -1,0 +1,27 @@
+ion-row.enabler-config-row ion-col:first-child{
+    margin-right: 8px;
+}
+ion-row.enabler-config-row ion-col:last-child{
+    margin-left: 8px;
+}
+
+ion-label.title {
+    position: relative;
+    display: block;
+    font-weight: 700;
+    font-size: 17px!important;
+    padding: 15px 0 8px;
+    letter-spacing: .5px;
+}
+
+.enabler-config-row ion-card-title{
+    margin-right: auto;
+}
+@media (max-width: 830px) {
+    ion-row.enabler-config-row ion-col{
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
+        margin: auto !important;
+    }
+}

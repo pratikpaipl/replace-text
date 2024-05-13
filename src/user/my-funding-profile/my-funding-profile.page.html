@@ -1,0 +1,15 @@
+<btn-title [pageLbl]="store.getVal('my_funding_profiles')" [pageType]="pageType" [permissions]="permissions" [from]="'profile'" [allTotal]="allTotal" [sort]="'recent'"></btn-title>
+
+<div class="forms_conponenl">
+    <div class="container">
+        <refresher (change)="callPullRefresh($event)"></refresher>
+        <div id="serch_component">
+            <app-search-bar isShow="false" fromPage="admin" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)">
+            </app-search-bar>
+        </div>
+        <div class="items_counts">
+            <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+        </div>
+        <funding-profile-items *ngIf="pageType == 'funding-profiles'" apiEnd="funding_profile/my_fp_list" [pageType]="pageType" [type]="pageType" from="profile" pageFrom="profile" apiAction="funding_profile" [EnablerSlug]="''" [FP_EnablerSlug]="''" [updateTime]="updateTime" [extraMenu]="false"  (change)="updateCount($event)"></funding-profile-items>
+    </div>
+</div>

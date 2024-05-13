@@ -1,0 +1,18 @@
+.searchbar {
+    padding: 0px 10px !important;
+}
+
+ion-searchbar {
+    --background: var(--ion-color-transparent);
+    --color: var(--ion-color-black);
+    --box-shadow: 0px;
+    padding: 0px;
+    --icon-color: var(--ion-color-black);
+    --cancel-button-color: var(--ion-color-light-trolley-gray);
+    border: 1px solid var(--ion-color-logo-red);
+    border-radius: 60px !important;
+    --border-radius: 60px !important;
+}
+#search_boxs {
+    width:100% !important
+}

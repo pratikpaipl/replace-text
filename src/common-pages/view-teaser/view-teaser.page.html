@@ -1,0 +1,23 @@
+<page-header-back [pageTitle]="displayName != undefined?displayName:store.getVal('view_teaser')" (change)="store.headerAction($event)"></page-header-back>
+<ion-content #content>
+  <div class="page_wapper" style="padding-top: 15px !important">
+      <div id="all_ui">
+          <ion-grid class="container">
+            <ion-row class="forms_row" id="topRow" *ngIf="itemData != undefined">
+                <ion-col class="forms_conponenl" style="text-align: center;">
+                    <item-card [prod]="itemData" [isMain]="false" [subtype]="type" [EnablerSlug]="itemData.EnablerSlug" [FPEnablerSlug]="itemData.FPEnablerSlug" [FNEnablerSlug]="itemData.FNEnablerSlug" [type]="type" [apiAction]="type" [isAddForm]="true" [from]="store.appType == 'admin'?'admin':'user'" pageFrom="Top"></item-card>
+                </ion-col>
+            </ion-row>
+              <ion-row class="forms_row">
+                  <ion-col class="forms_conponenl">
+                    <div id="myprofile" class="forms_block" style="padding: 0px !important;">
+                        <pdf-viewer *ngIf="itemData != undefined && itemData.TeaserFileData != undefined" [src]="itemData.TeaserFileData" [fit-to-page]="true" [zoom-scale]="'page-width'" class="viewer"></pdf-viewer>
+                        <ion-label style="justify-content: center;display: flex;padding: 20px;" *ngIf="itemData == undefined">{{notfound}}</ion-label>
+                      </div>
+                  </ion-col>
+              </ion-row>
+          </ion-grid>
+      </div>
+  </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

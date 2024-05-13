@@ -1,0 +1,11 @@
+<ion-row class="cardlist" *ngIf="message != undefined">
+  <ion-col style="text-align: center;">
+    <ion-grid style="padding:0px;">
+      <ion-row >
+        <ion-col class="p-0">
+          <span [ngClass]='activePage' [ngStyle]="{'color':isMessage=='true'?'var(--ion-color-black)':'var(--ion-color-logo-red)'}" [innerHtml]="message"></span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-col>
+</ion-row>

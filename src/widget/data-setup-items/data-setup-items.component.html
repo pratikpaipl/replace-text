@@ -1,0 +1,45 @@
+<div class="datalist_forms_card">
+    <ion-row class="main_rows mt-res">
+        <ion-col class="main_cols auto-cols admin_right_panel">
+            <div class="m-part" *ngIf="addImpactThemes">
+                <ion-card-title>{{store.getVal('add_impact_themes_and_areas')}}</ion-card-title>
+                <div class="forms_block radius" style="overflow: unset;">
+                    <div class="form-group">
+                        <!--
+                            <ion-label [class]="IsImpactThemeAreaUn?'labels errorTitle':'labels'">{{store.getVal('select_or_add_impact_themes')}} *</ion-label>
+                            <ng-select #ImpactThemeArea class="form-control" [items]="ImpactThemeArealist" [addButtonPosition]="'top'" id="impact_theme_list" bindLabel="ReferenceName" bindValue="ReferenceName" [(ngModel)]="selectedImpactTheme" dropdownPosition="bottom" [addTag]="true" [addTag]="addNewTags" addTagText="Add" [inputAttrs]="{maxlength: '295'}" (focus)="onFocusSelect(ImpactThemeArea)" (ngModelChange)="onChangeImpactTheme($event)"></ng-select>-->
+
+                        <custom-select id="impact_theme_list"  [selectTitle]="'select_or_add_impact_themes'" modalName="selectedImpactTheme" [modal]="selectedImpactTheme" [list]="ImpactThemeArealist" listName="ImpactThemeArealist" bindLabel="ReferenceName" bindValue="ReferenceKey" [isValidate]="true" [isError]="IsImpactThemeAreaUn"  [isNewTag]="true" (change)=customSelect($event)></custom-select>
+
+                    </div>
+                    <div class="area_section" *ngIf="selectedImpactTheme != undefined && selectedImpactTheme != ''">
+                        <div class="action-add">
+                            <ion-label [class]="IsImpactAreaUn?'labels errorTitle':'labels'">{{store.getVal('areas')}}</ion-label>
+                            <div class="add_buttons">
+                                <i class="fa-solid fa-circle-plus" (click)="addToList()"></i>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngFor="let item of ImpactAreaList; let i = index">
+                            <div style="display: flex;">
+                                <input spellcheck="false" autocomplete="off" type="text" class="form-control input_group" minlength="1" maxlength="295" [(ngModel)]="item.ReferenceName" readonly="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngFor="let item of NewImpactAreaList; let i = index">
+                            <div style="width: 80%;display: flex;">
+                                <div  style="width: 100%;">
+                                    <input spellcheck="false" autocomplete="off" type="text" [class]="item.error?'red-border form-control ':'form-control'" minlength="1" maxlength="295" [(ngModel)]="item.ImpactThemeName" (change)="valuechange($event,item,i)"/>
+                                    <ion-note class="errorTitle" *ngIf="item.isAdded" tabindex="-1">Already added</ion-note>
+                                </div>
+                                <div class="add_buttons">
+                                    <i class="fa-solid fa-circle-minus"  (click)="removeToList(i)"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <error-message [isNameUn]="'false'" [fromClass]="'m-0-5'" styleD="left" [dataAction]="[]" [message]="loadMsg"></error-message>
+                    </div>
+                </div>
+            </div>
+            <bottom-btn styleD="center " isReset="1" [rightBtn]="store.getVal('reset')" [rightKey]="'reset'" [leftBtn]="store.getVal('save')" [leftKey]="'save'" (change)="submit($event)"></bottom-btn>
+        </ion-col>
+    </ion-row>
+</div>

@@ -1,0 +1,20 @@
+.container {
+    background: white;
+}
+
+ion-title{
+    text-transform: capitalize;
+}
+#myprofile.forms_block{
+    padding: 20px !important;
+}
+
+.form-group {
+    margin-bottom: 0px !important;
+}
+@media(max-width:640px)
+{
+    #myprofile.forms_block{
+        padding: 15px !important;
+    }
+}

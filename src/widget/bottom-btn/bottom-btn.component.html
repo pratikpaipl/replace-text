@@ -1,0 +1,11 @@
+<ion-row class="mt button_box" [style.justify-content]="justify" [style.direction]="direction">
+    <ion-col size="auto" *ngIf="(isBack == '2')" class="back-opt">
+        <ion-button class="btn-red-border" (click)="actionCall(2)">{{backBtn}}</ion-button>
+    </ion-col>
+    <ion-col size="auto" >
+        <ion-button class="btn-red" (click)="actionCall(1)">{{leftBtn}}</ion-button>
+    </ion-col>
+    <ion-col size="auto"  *ngIf="(isShow == '1')" [class]="(isBack == '2')?'last':''">
+        <ion-button class="btn-red-border" (click)="actionCall(0)"> {{rightBtn}}</ion-button>
+    </ion-col>
+</ion-row>

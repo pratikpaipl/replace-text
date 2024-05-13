@@ -1,0 +1,18 @@
+#serch_component {
+    background: transparent;
+    padding: 0px;
+    // padding-top: 5px;
+}
+
+@media (max-width: 768px) {
+    .left_filter_panel {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    .right_filter_panel {
+        margin-top: 10px !important;
+    }
+    .counts_filter_block {
+        padding: 5px 0 0 0 !important;
+    }
+}

@@ -1,0 +1,23 @@
+<div *ngFor="let item of TreeData" [class]="item.isParent?'parent':item.showFirst?'parent':'child'">
+    <ion-grid>
+        <ion-row>
+            <ion-col style="margin:auto;text-align:center; flex: 0 0 26px;"  class="f-col">
+                <div *ngIf="item.Children?.length" (click)="toggleChildren(item)">
+                    <i [class]="(item.visible)?'fa fa-chevron-circle-up':'fa fa-chevron-circle-down'" style="font-size: 17px; cursor: pointer;"></i>
+                </div>
+            </ion-col>
+            <ion-col [style.max-width]="item.Children != undefined?'calc(100% - 26px)':'100%'" style="padding: 0px;padding-bottom: 5px;">
+                <ion-item style="padding:0" (click)="checkboxClick(item)"> <!-- -->
+                    <ion-label class="lblview" style="margin: auto !important;line-height: normal !important;"> {{item.ReferenceKey =='select_all'?store.getVal(item.checked?'unselect_all':item.ReferenceKey):item.Region}} 
+                        <span [class]="getCnt(item.Children,item.isParent)>0?'tree-cnt':''" *ngIf="item.isParent">({{getCnt(item.Children,item.isParent)}} / {{getAllCnt(item.Children,item.isParent)}})</span>
+                        <span [class]="getCnt(item.Children,item.isParent)>0?'tree-cnt':''" *ngIf="item.isParent == undefined && item.Children?.length">({{getCnt(item.Children,item.isParent)}} / {{item.cnt !=undefined?item.cnt:item.Children?.length}})</span>
+                    </ion-label>
+                    <ion-checkbox slot="start" style="margin-right: 15px" [checked]="item.checked" [(ngModel)]="item.checked" ></ion-checkbox>
+                </ion-item>
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
+
+    <tree-view [TreeData]="item.Children" *ngIf="item.visible" [hasCheckbox]="hasCheckbox" (change)="onChangeCheck($event)"></tree-view>
+</div>

@@ -1,0 +1,21 @@
+<div class="action-menu-div">
+    <ion-grid>
+        <ion-row *ngFor="let item of ActionMenu">
+            <ion-col>
+                <ion-label [ngClass]='"pointer"' (click)="actionTrigger(item.FunctionName,item.TextKey,item.PageType)">
+                    <!-- <i class="fas fa-share-alt"></i> -->
+                    {{item.DisplayName}}
+                </ion-label>
+            </ion-col>
+        </ion-row>
+        <!-- <div class="menu-divider"></div>
+        <ion-row *ngIf="ActionMenu.length>0">
+            <ion-col>
+                <ion-label [ngClass]='"pointer"' >
+                    <i class="fas fa-close"></i>
+                    Cancel
+                </ion-label>
+            </ion-col>
+        </ion-row> -->
+    </ion-grid>
+</div>

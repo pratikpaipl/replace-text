@@ -1,0 +1,18 @@
+<div *ngIf="ImpactThemesAndAreas != undefined && ImpactThemesAndAreas.length>0">
+    <div class="classified_boxs new">
+        <ion-label *ngFor="let item of ImpactThemesAndAreas | slice: 0:moreItem">
+            <span [class]="!checkShowMore(item)?'type-lbl '+dataType:'type-lbl full-content '+dataType">
+                <ion-text *ngIf="!checkShowMore(item)">
+                    <b *ngIf="item != undefined && getLbl(item,'ParentReferenceName').length>0">{{getLbl(item,'ParentReferenceName') != undefined?'('+getLbl(item,'ParentReferenceName')+') ':''}}</b>{{trimString(getLbl(item,'ReferenceName'),49)}}
+                </ion-text>
+                <ion-text *ngIf="checkShowMore(item)">
+                    <b *ngIf="item != undefined && getLbl(item,'ParentReferenceName').length>0">{{getLbl(item,'ParentReferenceName') != undefined?'('+getLbl(item,'ParentReferenceName')+') ':''}}</b>{{getLbl(item,'ReferenceName')}}
+                </ion-text>
+                <i *ngIf="((getLbl(item,'ReferenceName').length + (getLbl(item,'ParentReferenceName').length))+3 > 49)" [class]="'arrow-icon '+dataType" [class.datatable-icon-right]="!checkShowMore(item)" [class.datatable-icon-down]="checkShowMore(item)" (click)="clickMoreAction(item,'impact-theme')"></i>
+            </span>
+        </ion-label>
+        <!-- <ion-label *ngIf="ImpactThemesAndAreas.length > checkCnt" [class]="moreItem==checkCnt?'more_info pointer':'less_info pointer'"  (click)="viewMore()">
+            <span [class]="'type-lbl '+dataType" style="width: initial;">{{store.getVal(moreItem==checkCnt?'see_more':'less')}}</span>
+        </ion-label> -->
+    </div>
+</div>

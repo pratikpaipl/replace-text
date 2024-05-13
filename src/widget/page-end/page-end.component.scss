@@ -1,0 +1,16 @@
+.Reached_end {
+    color         : var(--ion-color-back);
+    margin        : 5px;
+    font-size     : var(--ion-font-fourteen) !important;
+    display       : block;
+    letter-spacing: 0.3px;
+    padding-top   : 0px !important;
+}
+
+@media (max-width: 768px) {
+    .Reached_end {
+        margin        : 3px;
+        font-size     : var(--ion-font-fifteen) !important;
+        letter-spacing: 0.2px;
+    }
+}

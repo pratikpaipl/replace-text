@@ -1,0 +1,12 @@
+ion-toolbar {
+    background: var(--ion-color-white);
+    --background: var(--ion-color-white);
+    --min-height: auto;
+    padding: 5px;
+}
+ion-title{
+    text-align: center;
+    color: var(--ion-color-light-trolley-gray);
+    font-size: 14px;
+    padding: 5px;
+}

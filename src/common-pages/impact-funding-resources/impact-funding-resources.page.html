@@ -1,0 +1,34 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content [scrollEvents]="true">
+  <!-- <seo-hidden-tag head="Funder for Investment advisors, professional fundraisers" description="Improve relevance of introductions or deal making by pre-matching investors with each investment opportunity.Personalise your services."></seo-hidden-tag>
+  -->
+  <div class="page_wapper">
+    <div id="all_ui">
+      <ion-grid class="container">
+        <ion-row class="forms_row">
+          <ion-col class="right_panel">
+            <div class="form-group">
+              <ion-note class="contact-notes" [ngStyle]="{'color':isMessage?'var(--ion-color-black)':'var(--ion-color-logo-red)'}" [innerHtml]="store.getVal('funding_resources_contact')" tabindex="-1"></ion-note>
+
+              <div style="margin-bottom: -12px;margin-left: -5px;">
+                <btn-title [pageLbl]="store.getVal(pageType)" [pageType]="pageType" [permissions]="[]"></btn-title>
+              </div>
+              <refresher (change)="callPullRefresh($event)"></refresher>
+              <!-- <app-empty-list [msg]="store.getVal('funding_resources_contact')" type="{{ pageType }}"> </app-empty-list> -->
+             
+              <div id="serch_component" style="padding-top: 10px;">
+                  <app-search-bar [isShow]="true" fromPage="home" [pageType]="pageType" [keyword]="keyword" (change)="callFilter($event)"></app-search-bar>
+              </div>
+              <ion-label *ngIf="allTotal>0" class="note-padding filterCriteriaNote">{{store.getVal('result_filter_criteria_note')}}</ion-label>
+              <div class="items_counts" *ngIf="allTotal>0">
+                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+              </div>
+              <impact-resources [pageType]="pageType" pageFrom="pre-login" apiEnd="user/impact_funding_resources_list" [type]="pageType" [apiAction]="pageType" [updateTime]="updateTime" (change)="updateCount($event)"></impact-resources>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

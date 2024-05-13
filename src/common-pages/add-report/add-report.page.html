@@ -1,0 +1,45 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="true" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="addPage" [scrollEvents]="true">
+    <div class="page_wapper" id="topRow">
+        <div id="all_ui">
+            <ion-grid class="container" id="MainView" *ngIf="isView">
+                <error-message [isNameUn]="'false'" [fromClass]="'m-0-5'" styleD="left" [dataAction]="dataAction" [message]="loadMsg"></error-message>
+
+                <div style="width: 100%;">
+
+                    <ion-row class="forms_row">
+                        <ion-col class="forms_conponenl">
+                            <div class="m-part alert">
+                                <div id="Source" class="forms_block" style="border-radius:10px">
+                                    <ion-grid>
+                                        <ion-row>
+                                            <ion-col>
+                                                <div class="form-group">
+                                                    <ion-label [class]="isProvider?'labels errorTitle':'labels'">
+                                                        {{store.getVal('source_or_affiliations')}} *</ion-label>
+                                                    <ng-select class="form-control" [items]="source_list" id="source_list" bindLabel="SourceName" bindValue="EnablerID" [(ngModel)]="selectedEnablers" dropdownPosition="bottom">
+                                                    </ng-select>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col>
+                                                <div class="form-group">
+                                                    <ion-label [class]="isEmail?'labels errorTitle':'labels'">{{store.getVal('email')}} *
+                                                    </ion-label>
+                                                    <input spellcheck="false" autocomplete="off" type="text" class="form-control" id="Email" minlength="1" maxlength="300" [(ngModel)]="AEmail" (keyup.enter)="callAction('1')"/>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <bottom-btn styleD="center" justify="center" [leftKey]="'submit'" [leftBtn]="store.getVal('submit')" (change)="callAction($event)" isShow="0">
+                    </bottom-btn>
+                </div>
+
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

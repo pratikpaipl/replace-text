@@ -1,0 +1,483 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="true" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="addPage" [scrollEvents]="true">
+  <div class="page_wapper" id="topRow">
+        <div id="all_ui">
+            <ion-grid class="container" id="MainView" *ngIf="isView">
+                <bread-crump *ngIf="breadCrumpData !=undefined && breadCrumpData.list.length > 0" [showHome]="1" [breadCrumpData]="breadCrumpData" [skipLogin]="true" [from]="isUser?'user':from" [fHide]="enablerData == undefined" [pageLbl]="titleCopy" extraType="investees"></bread-crump>
+                <bread-crump *ngIf="breadCrumpData ==undefined" [showHome]="1" [skipLogin]="true" [from]="isUser?'user':from" [pageType]="type=='my_edit'?'fundraise-need-submissions':store.appType =='admin' && type=='edit' && page =='list'?'fundraise-needs-submitted':'fundraise-needs'" [pageLbl]="titleCopy" extraType="investees"></bread-crump>
+                <ion-row class="forms_row" *ngIf="enablerData != undefined">
+                    <ion-col class="forms_conponenl" style="text-align: center;">
+                        <item-card-enabler [prod]="enablerData" [isMain]="false" [subtype]="'enablers'" [EnablerSlug]="enablerData.EnablerSlug" [FPEnablerSlug]="" [type]="'enablers'" [apiAction]="'enablers'" [isAddForm]="true" [from]="store.appType == 'admin'?'admin':'user'" pageFrom="list" (change)="clikCount($event)"></item-card-enabler>
+                    </ion-col>
+                </ion-row>
+                <error-message [isNameUn]="'false'" [fromClass]="'m-0-5'" styleD="left" [dataAction]="dataAction" [message]="loadMsg"></error-message>
+                <!-- <div id="accordion" class="accordion" style="margin-bottom: 10px;margin-top: 0px;">
+                    <div class="main" [class.active]="desclaimerShow">
+                        <div class="submenu" style="border-radius: 5px;box-shadow: 0 0 4px #0000001a!important;" #impacttheme>
+                            <ion-grid *ngIf="desclaimerShow">
+                                <ion-row class="acord-row">
+                                    <ion-col size="12" style="padding: 4px 8px;">
+                                        <ion-item id="IsDisclaimer">
+                                            <ion-label [class]="IsDisclaimerUn?'labels errorTitle':'labels'">{{store.getVal('investee_disclaimer_confirm')}} *</ion-label>
+
+                                            <ion-checkbox #IsDisclaimerM class="condtional_check" slot="start" [(ngModel)]="IsDisclaimer"></ion-checkbox>
+                                        </ion-item>
+                                      
+                                        <div class="check-more-action">
+                                            <ion-label [class]="'labels'" [innerHtml]="store.nl2br(disclaimer)"></ion-label>
+                                            <div>
+                                                <ion-label class="linkv" (click)="openDesModal('disclaimer','investee_disclaimer')">{{store.getVal('view_more')}}</ion-label>
+                                            </div>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </div>
+                    </div>
+                </div>
+                <div id="accordion" class="accordion" style="margin-bottom: 10px;margin-top: 0px;">
+                    <div class="main" [class.active]="confidentialityShow">
+                        <div class="submenu" style="border-radius: 5px;box-shadow: 0 0 4px #0000001a!important;" #impacttheme>
+                            <ion-grid *ngIf="confidentialityShow">
+                                <ion-row class="acord-row">
+                                    <ion-col  size="12" style="padding: 4px 8px;">
+                                        <ion-item id="IsConfidentiality">
+                                            <ion-label [class]="IsConfidentialityUn?'labels errorTitle':'labels'">{{store.getVal('investee_confidentiality_confirm')}} *</ion-label>
+                                            <ion-checkbox class="condtional_check" slot="start" [(ngModel)]="IsConfidentiality"></ion-checkbox>
+                                        </ion-item>
+                                        <div class="check-more-action">
+                                            <ion-label [class]="'labels'" [innerHtml]="store.nl2br(confidentiality)"></ion-label>
+                                            <div>
+                                                <ion-label class="linkv" (click)="openDesModal('confidentiality','investee_confidentiality')">{{store.getVal('view_more')}}</ion-label>
+                                            </div>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div style="width: 100%;">
+                    <ion-row class="forms_row"  *ngIf="ReferenceCode != undefined">
+                        <ion-col class="forms_conponenl">                           
+                             <div class="m-part alert">
+                                <div id="Source" style="position: relative !important; background: var(--ion-color-white) !important; border-radius: 11px !important; box-shadow: 0 0 4px #0000001a!important;padding: 20px;">
+                                    <ion-label *ngIf="ReferenceCode != undefined" [class]="'labels'">{{store.getVal('reference_number')}}&nbsp;<span style="color: var(--ion-color-blue);">{{ReferenceCode}}</span></ion-label>
+                                </div>
+                                
+                            </div> 
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div id="topRow" style="display: flex; margin-bottom: 10px;">
+                    <i class="fa-infinity fa-solid" style="margin-right: 10px;"></i>
+                    <ion-label class="labels disclaimer_txt" [innerHTML]="store.getVal('data_field_is_used_for_matchmaking')"></ion-label>
+                </div>
+                <ion-row class="forms_row"  id="secondStp">
+                    <ion-col class="forms_conponenl">
+                        <div class="m-part alert">
+                            <ion-card-title>{{store.getVal('contact')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="auto" class="min-col-33">
+                                            <div class="form-group">
+                                                <ion-label [class]="isFname?'labels errorTitle':'labels'">{{store.getVal('first_name')}} *</ion-label>
+                                                <input spellcheck="false"  autocomplete="off" type="text" class="form-control" id="FirstName" minlength="1" maxlength="50" [disabled]="(isUser ?true:false)" [(ngModel)]="AFirstName" (keyup.enter)="callAction('1',2,false)" tabindex="1"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-33">
+                                            <div class="form-group">
+                                                <ion-label class="labels">{{store.getVal('last_name')}}</ion-label>
+                                                <input spellcheck="false"  autocomplete="off" type="text" class="form-control" id="LastName" minlength="1" maxlength="50" [disabled]="(isUser ?true:false)" [(ngModel)]="ALastName" (keyup.enter)="callAction('1',2,false)" tabindex="1"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-33">
+                                            <div class="form-group">
+                                                <ion-label [class]="isEmail?'labels errorTitle':'labels'">{{store.getVal('email')}} *</ion-label>
+                                                <input spellcheck="false" autocomplete="off" [disabled]="(isUser ?true:false)" type="text" class="form-control" minlength="1" maxlength="300" [(ngModel)]="Email" (keyup.enter)="callAction('1',2,false)" tabindex="1"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div *ngIf="!store.isLogin" class="form-group">
+                                                <ion-label [class]="isCompanyName?'labels errorTitle':'labels'">{{store.getVal('company_name')}} *</ion-label>
+                                                <input #CompanyNameM spellcheck="false" class="form-control" id="CompanyName" minlength="1" maxlength="200" autofocus [(ngModel)]="CompanyName" (keyup.enter)="callAction('1',1,true)" tabindex="1"/>
+                                            </div>
+                                            <div class="form-group" *ngIf="store.isLogin">
+                                                <custom-select selectTitle="company_name" #CompanyUn id="CompanyUn" modalName="selectedCompany" [modal]="selectedCompany" listName="CompanyList" [list]="CompanyList"  bindLabel="CompanyDisplayName" bindValue="CompanyID" [isError]="isCompanyUn" [isValidate]="!isNewCompany&&store.isLogin" [isCreate]="false"  [isNewTag]="true" (change)=customSelect($event)></custom-select>
+                                                <ion-note [innerHtml]="store.getVal('please_contact_us_change_company')" tabindex="-1"></ion-note>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <custom-select id="Country" icon="fa-solid fa-infinity" selectTitle="country_of_incorporation" modalName="selectedCountry" [modal]="selectedCountry" listName="incorporation_country_list" [list]="incorporation_country_list" bindLabel="CountryName"  [disabled]="!isNewCompany && store.isLogin" bindValue="CountryID" [isError]="isCountry" (change)="customSelect($event)"></custom-select>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="12">
+                                            <div class="form-group">
+                                                <text-area maxlength="500" id="ShortDescription" title="short_description" [checkVar]="isShortDescription" [isCheck]="true" [(ngModel)]="ShortDescription"></text-area>                                                
+                                            </div>
+                                        </ion-col>
+
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+                        <div class="m-part alert">
+                            <ion-card-title>{{store.getVal('impact_objectives')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <custom-tree-view-select *ngIf="isTreePrepare"  id="impact_themes_areas_list" icon="fa-solid fa-infinity" [isTreePrepare]="isTreePrepare"  selectTitle="impact_themes_and_areas" from="impact themes and areas" [type]="type=='clone'?type:undefined" ChildList="ImpactThemesAreas" SubChildList="ImpactThemesAreas" [respObj]="respObj" firstKey="ReferenceKey" secondKey="ReferenceKey" thirdKey="ReferenceKey" firstLabel="ReferenceName" secondLabel="ReferenceName" thirdLabel="ReferenceName" selectedComponentLabel="selectedImpactTheme" ComponentKey="selectedImpactTheme" [preSelected]="selectedImpactTheme" [list]="ImpactThemesAreasListTemp" [isValidate]="true" [isError]="IsImpactTheme" (change)="changeTreeData($event)"></custom-tree-view-select>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <text-area maxlength="1000" id="ImpactSustainabilityStatement" title="impact_sustainability_statement" [checkVar]="isImpactStatement" [isCheck]="true" [(ngModel)]="ImpactSustainabilityStatement"></text-area>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-33">
+                                            <div class="form-group">
+                                            <custom-select id="sdg_list" icon="fa-solid fa-infinity" selectTitle="sdgs" modalName="selectedSDGs" [modal]="selectedSDGs" listName="sdg_list" [disabled]="sdg_list.length == 0"  [list]="sdg_list" bindLabel="ReferenceName" bindValue="ReferenceKey" linkLabel="un_sdgs" linkNote="https://www.un.org/sustainabledevelopment/sustainable-development-goals/" [isNote]="true" [isError]="sdg_list.length != 0 && isSDG" [isValidate]="false" [multiple]="true" [isLogo]="true" labelLogo="SdgLogo" (change)=customSelect($event)></custom-select>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-33">
+                                            <div class="form-group">
+                                                <custom-tree-view-select *ngIf="isTreePrepare"  id="esg_list" icon="fa-solid fa-infinity" [isTreePrepare]="isTreePrepare" [disabled]="EsgListTemp.length == 0" selectTitle="esg" from="esg" [type]="type=='clone'?type:undefined" ChildList="ESG" SubChildList="ESG" [respObj]="respObj" firstKey="ReferenceKey" secondKey="ReferenceKey" thirdKey="ReferenceKey" firstLabel="ReferenceName" secondLabel="ReferenceName" thirdLabel="ReferenceName" selectedComponentLabel="selectedEsg" ComponentKey="selectedEsg" [preSelected]="selectedEsg" [list]="EsgListTemp" [isValidate]="false" [isError]="EsgListTemp.length != 0 && IsEsg" (change)="changeTreeData($event)"></custom-tree-view-select>
+                                            </div>
+                                        </ion-col>    
+                                        <ion-col size="auto" class="min-col-33">
+                                            <div class="form-group">
+                                            <custom-select id="gender_lens_list" icon="fa-solid fa-infinity" selectTitle="gender_lens" [disabled]="gender_lens_list.length == 0" modalName="selectedGenderLens" [modal]="selectedGenderLens" listName="gender_lens_list" [list]="gender_lens_list" bindLabel="ReferenceName" bindValue="ReferenceKey" linkLabel="pri_gender_lens_investing" linkNote="https://thegiin.org/gender-lens-investing-initiative" [isNote]="true" [isError]="false" [isValidate]="false" [multiple]="true" (change)=customSelect($event)></custom-select>
+                                            </div>
+                                        </ion-col>
+ 
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+                        <div class="m-part alert">
+                            <ion-card-title>{{store.getVal('fundraise_need')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block">
+                                <ion-grid>
+                                    <ion-row>
+                                    <!--  investment type -->
+                                        <ion-col  class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <custom-select id="FundingType" icon="fa-solid fa-infinity" selectTitle="funding_type" modalName="selectedFundingTypeAndFundRaiseType" [modal]="selectedFundingTypeAndFundRaiseType" listName="FundingTypeAndFundRaiseTypeList" [list]="FundingTypeAndFundRaiseTypeList" bindLabel="ReferenceName" bindValue="ReferenceKey" [isError]="IsFundingTypeAndFundRaiseType" [multiple]="false" (change)=customSelect($event)></custom-select>
+                                            </div>
+                                        </ion-col>                                      
+                                     <!--  currency -->
+                                        <ion-col  class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <custom-select id="EnablerCurrency" selectTitle="currency" [disabled]="selectedEnabler != undefined"  modalName="selectedEnablerCurrency" [modal]="selectedEnablerCurrency" listName="currency_list" [list]="currency_list" bindLabel="CurrencyName" bindValue="CurrencyID" [isValidate]="true" [isError]="IsEnablerCurrency"(change)=customSelect($event)></custom-select>
+                                            </div>
+                                        </ion-col>
+                                    <!--  raise amount -->
+                                        <ion-col class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <ion-label [class]="IsFNMinTotalRaiseAmountUn?'labels errorTitle':'labels'">{{store.getVal ('min_raise_amount_eur')}} *</ion-label>
+                                                <div class="form-control">
+                                                    <span [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                    <number-input maxlength="14" id="FNMinTotalRaiseAmount" [(ngModel)]="FNMinTotalRaiseAmount" (change)="updateInput($event,'IsFNMinTotalRaiseAmountUn')"></number-input>
+                                                </div>
+                                            </div>
+                                            
+                                            <ng-container *ngTemplateOutlet="noteTemplate; context:{cls:IsFNMinTotalRaiseAmountUn?'errorTitle':'', check:(minimum_raise_amount != undefined && minimum_raise_amount != ''),defMinAmt:minimum_raise_amount, defMaxAmt:maximum_raise_amount, lbl:store.getVal('between')}"></ng-container>
+                                            <span class="error">{{(FNMinTotalRaiseAmountError)?FNMinTotalRaiseAmountError:''}}</span>
+                                        </ion-col>
+                                        <ion-col class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <ion-label [class]="IsFNMaxTotalRaiseAmountUn?'labels errorTitle':'labels'">{{store.getVal('max_raise_amount_eur')}} *</ion-label>
+                                                <div class="form-control">
+                                                    <span [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                    <number-input maxlength="14" id="FNMaxTotalRaiseAmount" [(ngModel)]="FNMaxTotalRaiseAmount" (change)="updateInput($event,'IsFNMaxTotalRaiseAmountUn')"></number-input>
+                                                </div>
+                                            </div>
+                                            <ng-container *ngTemplateOutlet="noteTemplate; context:{cls:IsFNMaxTotalRaiseAmountUn?'errorTitle':'', check:(maximum_raise_amount != undefined && maximum_raise_amount != ''),defMinAmt:minimum_raise_amount, defMaxAmt:maximum_raise_amount, lbl:store.getVal('between')}"></ng-container>
+                                        </ion-col>
+                                     <!--  raise date -->
+                                        <ion-col class="min-col-25 max-col-25">
+                                            <div class="form-group" id="open-modal">
+                                                <ion-label [class]="isRaiseStartDate?'labels errorTitle':'labels'">{{store.getVal('raise_start_date')}} *</ion-label>
+                                                <input type="text" readonly autoComplete="off" class="form-control" [bsConfig]="bsConfig" #dp="bsDatepicker" id="raiseStartDate" style="padding: 10px !important; height: 45px;" bsDatepicker [minDate]="startMinDate" [(bsValue)]="raiseStartDate" [maxDate]="startMaxDate" value="{{ raiseStartDate | date:'dd MMM yyyy' }}" (bsValueChange)="changeMonth(dp,1)" tabindex="1"/>
+                                            </div> 
+                                        </ion-col>
+                                        <ion-col class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <ion-label [class]="isRaiseEndDate?'labels errorTitle':'labels'">{{store.getVal('raise_end_date')}} * </ion-label>
+                                                <input type="text" readonly autoComplete="off" class="form-control" [bsConfig]="bsConfig" #dp="bsDatepicker" id="raiseEndDate" style="padding: 10px !important; height: 45px;" bsDatepicker [minDate]="endMinDate" [maxDate]="endMaxDate" value="{{ raiseEndDate | date:'dd MMM yyyy' }}" [(bsValue)]="raiseEndDate" (bsValueChange)="changeMonth(dp,2)" tabindex="1"/>
+                                                <ion-note *ngIf="isRaiseEndDate && checkDate()" class="errorTitle" tabindex="-1">{{store.getVal('raise_end_date_error_msg')}}</ion-note>
+                                            </div>
+                                        </ion-col>
+                                     <!--  ticket size -->
+                                        <ion-col class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <ion-label [class]="IsFNMinimumTicketSizePerFundingUn?'labels errorTitle':'labels'"> {{store.getVal ('minimum_ticket_size_per_investor_usd')}} *</ion-label>
+                                                <div class="form-control">
+                                                    <span [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                    <number-input maxlength="14" id="FNMinimumTicketSizePerFunding" [(ngModel)]="FNMinimumTicketSizePerFunding" (change)="updateInput($event,'IsFNMinimumTicketSizePerFundingUn')"></number-input>
+                                                </div>
+                                                <ng-container *ngTemplateOutlet="noteTemplate; context:{cls:IsFNMinimumTicketSizePerFundingUn?'errorTitle':'', check:(DefFPMinimumTicketSizePerFunding != undefined && DefFPMinimumTicketSizePerFunding != ''),defMinAmt:DefFPMinimumTicketSizePerFunding, defMaxAmt:DefFPMaximumTicketSizePerFunding, lbl:store.getVal('between')}"></ng-container>
+                                                <span class="error">{{(FNMinimumTicketSizePerFundingError)?FNMinimumTicketSizePerFundingError:''}}</span>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <ion-label [class]="IsFNMaximumTicketSizePerFundingUn?'labels errorTitle':'labels'">{{store.getVal ('maximum_ticket_size_per_investor_usd')}} *</ion-label>
+                                                <div class="form-control">
+                                                    <span [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                    <number-input maxlength="14" id="FNMaximumTicketSizePerFunding" [(ngModel)]="FNMaximumTicketSizePerFunding" (change)="updateInput($event,'IsFNMaximumTicketSizePerFundingUn')"></number-input>
+                                                </div>
+                                                <ng-container *ngTemplateOutlet="noteTemplate; context:{cls:IsFNMaximumTicketSizePerFundingUn?'errorTitle':'', check:(DefFPMaximumTicketSizePerFunding != undefined && DefFPMaximumTicketSizePerFunding != ''),defMinAmt:DefFPMinimumTicketSizePerFunding, defMaxAmt:DefFPMaximumTicketSizePerFunding, lbl:store.getVal('between')}"></ng-container>
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                                <div class="more-lbl-cls">
+                                        <ion-button class="pointer" (click)="(showRaise = !showRaise)"><i [class]="showRaise?'fa-solid fa-angles-up':'fa-solid fa-angles-down'" style="margin-right: 10px;"></i>{{store.getVal(showRaise?'form_less':'form_more')}}</ion-button>
+                                </div>
+                                <ion-grid *ngIf="showRaise">
+                                    <ion-row>
+                                     <!--  investment stage -->
+                                        <ion-col size="auto" class="min-col-25 max-col-25">
+                                                <div class="form-group">
+                                                    <custom-select id="FundingStage" icon="fa-solid fa-infinity"  selectTitle="funding_stage" modalName="selectedFundingStage" [disabled]="funding_stage_list.length == 0" [modal]="selectedFundingStage" listName="funding_stage_list" [list]="funding_stage_list" bindLabel="ReferenceName" bindValue="ReferenceKey" [isValidate]="false" [multiple]="false" (change)=customSelect($event)></custom-select>
+                                                </div>
+                                        </ion-col>
+                                     <!--  cumulative_revenue -->
+                                        <ion-col size="auto" class="min-col-25 max-col-25">
+                                                <div class="form-group">
+                                                    <ion-label [class]="isRevenueUsd?'labels errorTitle':'labels'"><i style="margin-right: 5px;" class="fa-solid fa-infinity"></i>{{store.getVal('revenue_last_two_years_till_date_in_eur')}}</ion-label>
+                                                    <div class="form-control">
+                                                        <span [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                        <number-input id="CumulativeRevenue" [(ngModel)]="CumulativeRevenue" (change)="updateInput($event,'isRevenueUsd')"></number-input>
+                                                    </div>
+                                                    <ng-container *ngTemplateOutlet="noteTemplate; context:{cls:isRevenueUsd?'errorTitle':'', check:true,defMinAmt:DefFPMinCumulativeRevenue, defMaxAmt:DefFPMaxCumulativeRevenue, lbl:store.getVal('between'),extLbl:' '+store.getVal('investment_raise_leave_blank_if_pre_revenue')}"></ng-container>
+                                                    <span>{{(RevenueUsdError)?RevenueUsdError:''}}</span>
+                                                </div>
+                                        </ion-col>  
+                                     <!--  investor type -->
+                                        <ion-col size="auto" class="min-col-25 max-col-25">
+                                                <div class="form-group">
+                                                    <custom-select id="FundingProviderType" icon="fa-solid fa-infinity" selectTitle="funding_provider_type" modalName="selectedFundingProviderType" [modal]="selectedFundingProviderType" [multiple]="true" listName="funding_provider_type_list" [list]="funding_provider_type_list" bindLabel="ReferenceName" bindValue="ReferenceKey" [isError]="false" [isValidate]="false" (change)="customSelect($event)"></custom-select>
+                                                </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-25 max-col-25">
+                                                <div class="form-group">
+                                                    <custom-tree-view-select *ngIf="isTreePrepare" [isTreePrepare]="isTreePrepare" icon="fa-solid fa-infinity" [isCountry]="true" [disabled]="DomicileNationalityCountryListTemp.length == 0" [respObj]="respObj" selectTitle="countries_of_domicile_nationality" from="fundingtype and fundraisetype" [type]="type=='clone'?type:undefined" firstKey="ReferenceKeyRegion" secondKey="SubRegionKey" thirdKey="CountryKey" firstLabel="Region" secondLabel="SubRegionName" thirdLabel="CountryName" ChildList="SubRegionJson" ChildList="SubRegionJson" SubChildList="CountryJson" selectedComponentLabel="selectedCountriesOfDomicileNationality" ComponentKey="selectedCountriesOfDomicileNationality" [preSelected]="selectedCountriesOfDomicileNationality" [list]="DomicileNationalityCountryListTemp" [isValidate]="false" (change)="changeTreeData($event)"></custom-tree-view-select>
+                                                </div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="additionalDatas">
+                                <ng-container *ngTemplateOutlet="dataAcItemHead; context: {isView:'additionalDatas',action:additionalDatas,title:'company_profile',validate:false,show:(( RegistrationNumber != undefined && RegistrationNumber.length>0 ) || ( CompanyNotRegisterd != undefined && CompanyNotRegisterd.length>0 ) || (selectedIndustriesSectors != undefined && selectedIndustriesSectors.length>0 ) || ( Website != undefined && Website.length>0 ) || (InvesteeFile != undefined || InvesteeLogoURl != undefined)|| (fileName != undefined || fileUrl != undefined)|| (fileNameTeaser != undefined || fileUrlTeaser != undefined))}"></ng-container>
+                                <div class="submenu" [style.height]="additionalDatas ? 'auto' : '0'" [style.overflow]="additionalDatas ? 'visible' : 'hidden'" [style.padding-bottom]="additionalDatas ? '10px' : '0px'"#impacttheme>
+                                    <ion-grid *ngIf="additionalDatas">
+                                        <ion-row>
+                                            <ion-col size="auto" class="min-col-33 max-col-33" style="padding: 4px 8px;">
+                                                <div class="form-group">
+                                                    <ion-label [class]="isRNumber?'labels errorTitle':'labels'">{{store.getVal('registration_number')}}</ion-label>
+                                                    <input spellcheck="false" class="form-control" id="RegistrationNumber" [disabled]="((!isNewCompany&&store.isLogin) || CompanyNotRegisterd)" minlength="1" maxlength="100" [(ngModel)]="RegistrationNumber" (keyup.enter)="callAction('1',1,true)" tabindex="1"/>
+                                                    <ion-item style="background: transparent;--background: transparent;">
+                                                        <ion-label [class]="'labels'" style="font-size: 13px !important">{{store.getVal('company_is_not_registered')}}</ion-label>
+                                                        <ion-checkbox slot="start" [(ngModel)]="CompanyNotRegisterd" [disabled]="(!isNewCompany&&store.isLogin)" (ngModelChange)="changeIsRegister($event)"></ion-checkbox>
+                                                    </ion-item>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col size="auto" class="min-col-33 max-col-33"style="padding: 4px 8px;">
+                                                <div class="form-group">
+                                                    <ion-label [class]="isCopmanyRegistryRecord?'labels errorTitle':'labels'">{{store.getVal('company_registry_record')}}</ion-label>
+                                                    <input spellcheck="false" class="form-control" id="CompanyRegistryRecord" [disabled]="((!isNewCompany&&store.isLogin) || CompanyNotRegisterd)" minlength="1" maxlength="2000" [(ngModel)]="CompanyRegistryRecord" (keyup.enter)="callAction('1',1,true)" tabindex="1"/>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col size="auto" class="min-col-33 max-col-33"style="padding: 4px 8px;">
+                                                <div class="form-group">
+                                                    <custom-select selectTitle="industries_sectors" modalName="selectedIndustriesSectors" [disabled]="industries_sectors_list.length == 0" [modal]="selectedIndustriesSectors" id="IndustriesSectors" icon="fa-solid fa-infinity" listName="industries_sectors_list" [list]="industries_sectors_list" bindLabel="ReferenceName" bindValue="ReferenceKey" [isError]="isIndustries" [multiple]="true" [isValidate]="false" (change)=customSelect($event)></custom-select>
+                                                </div>
+                                            </ion-col>                                     
+                                            <ion-col size="auto" class="min-col-33 max-col-33" style="padding: 4px 8px;">
+                                                <div class="form-group">
+                                                    <ion-label [class]="Website.trim() !=''&&!this.store.regWeb.test(Website) ?'labels errorTitle':'labels'">{{store.getVal('website')}}</ion-label>
+                                                    <input spellcheck="false" autocomplete="off" type="text" class="form-control" id="Website" minlength="1" maxlength="2000" [(ngModel)]="Website" (keyup.enter)="callAction('1',2,false)" tabindex="1"/>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col size="auto" class="max-col-33" style="padding: 4px 8px;">
+                                                <div class="form-group upload_boxs">
+                                                    <ion-label [class]="isInvesteeLogoUn|| isLogoSizeExclude?'labels errorTitle':'labels'">{{store.getVal('logo')}}</ion-label>
+                                                    <div class="uploadButton" id="uploadButton">
+                                                        <input class="uploadButton-input" id="upload" type="file" accept="image/*" (change)="changeListener($event,'logo')"/>
+                                                        <label *ngIf="InvesteeFile == undefined && InvesteeLogoURl == undefined" class="uploadButton-button" for="upload" tabindex="1">
+                                                            <i class="fas fa-images" style="font-size: 25px;"></i>
+                                                            {{store.getVal('upload_image')}}
+                                                        </label>
+                                                        <div *ngIf="InvesteeFile != undefined || InvesteeLogoURl != undefined" class="uploadButton-button" for="upload" tabindex="1">
+                                                            <div *ngIf="InvesteeFile != undefined">
+                                                                <img class="prod_img" alt="" [src]="InvesteeLogoSrc"/>
+                                                            </div>
+                                                            <div *ngIf="InvesteeLogoURl != undefined">
+                                                                <img class="prod_img" alt="" src="{{ InvesteeLogoURl != null ? InvesteeLogoURl : 'assets/images/no-image-icon-5.jpg'}}" onerror="src='assets/images/no-image-icon-5.jpg'" />
+                                                            </div>
+                                                            <i id="deleteImg" class="fas fa-trash" style="font-size: 25px;" (click)="onDeleteFile('logo')"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div style="display: grid;">
+                                                        <ion-note [class]="isLogoSizeExclude && sizeLogoExcludeErr != ''?'italic-font errorTitle bold':'italic-font'" tabindex="-1">{{store.getVal('maximum_size_upto_five_mb')}}</ion-note>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col size="auto" class="max-col-33"style="padding: 4px 8px;">
+                                                <div class="form-group upload_boxs" id="docFile">
+                                                    <ion-label [class]="isSizeExclude?'labels errorTitle':'labels'">{{store.getVal('pitch_document')}}</ion-label>
+                                                    <div *ngIf="fileUrl == undefined" class="uploadButton doc-field" style="position: relative;width: fit-content;margin-bottom: 0px;" tabindex="1">
+                                                        <input class="uploadButton-input" id="pitchUpload" *ngIf="fileName == undefined || fileName == ''" type="file" accept=".pdf" (change)="changeListener($event)"  tabindex="-1"/>
+                                                        <label class="uploadButton-button" for="pitchUpload"><i *ngIf="fileName == undefined || fileName == ''" [class]="'fa fa-file'" style="font-size: 25px"></i>{{ fileName != ''?fileName:store.getVal('select_excel_csv_file_drop_file_here')}}</label>
+                                                        <i class="fas fa-trash" id="deletePdf" *ngIf="pdfFile != undefined" (click)="onDeletePdf()"></i>
+                                                    </div>
+                                                    <div *ngIf="fileUrl != undefined" class="uploadButton doc-field" style="position: relative;width: fit-content;margin-bottom: 0px;">
+                                                        <label class="uploadButton-button" for="pitchUpload"><i [class]="'fa fa-file'" style="font-size: 25px"></i>{{ fileUrl != ''?fileUrl:store.getVal('select_excel_csv_file_drop_file_here')}}</label>
+                                                        <i class="fas fa-trash" id="deletePdf" (click)="onDeletePdf()"></i>
+                                                    </div>
+                                                    <div style="display: grid;">
+                                                        <ion-note [class]="isSizeExclude && sizeExcludeErr != ''?'italic-font errorTitle bold':'italic-font'" tabindex="-1">{{store.getVal('only_one_pdf_of_maximum_size_upto_10_mb')}}</ion-note>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col size="auto" class="max-col-33"style="padding: 4px 8px;">
+                                                <div class="form-group upload_boxs" id="teaserFile">
+                                                    <ion-label [class]="isSizeExcludeTeaser?'labels errorTitle':'labels'">{{store.getVal('investment_teaser')}}</ion-label>
+                                                    <div *ngIf="fileUrlTeaser == undefined" class="uploadButton doc-field" style="position: relative;width: fit-content;margin-bottom: 0px;" tabindex="1">
+                                                        <input class="uploadButton-input" id="teaserUpload" *ngIf="fileNameTeaser == undefined || fileNameTeaser == ''" type="file" accept=".pdf" (change)="changeListener($event,'teaser')"  tabindex="-1"/>
+                                                        <label class="uploadButton-button" for="teaserUpload"><i *ngIf="fileNameTeaser == undefined || fileNameTeaser == ''" [class]="'fa fa-file'" style="font-size: 25px"></i>{{ fileNameTeaser != ''?fileNameTeaser:store.getVal('select_excel_csv_file_drop_file_here')}}</label>
+                                                        <i class="fas fa-trash" id="deleteTeaser" *ngIf="teaserFile != undefined" (click)="onDeleteTeaser()"></i>
+                                                    </div>
+                                                    <div *ngIf="fileUrlTeaser != undefined" class="uploadButton doc-field" style="position: relative;width: fit-content;margin-bottom: 0px;">
+                                                        <label class="uploadButton-button" for="teaserUpload"><i [class]="'fa fa-file'" style="font-size: 25px"></i>{{ fileUrlTeaser != ''?fileUrlTeaser:store.getVal('select_excel_csv_file_drop_file_here')}}</label>
+                                                        <i class="fas fa-trash" id="deleteTeaser" (click)="onDeleteTeaser()"></i>
+                                                    </div>
+                                                    <div style="display: grid;">
+                                                        <ion-note [class]="sizeExcludeErrTeaser && sizeExcludeErrTeaser != ''?'italic-font errorTitle bold':'italic-font'" tabindex="-1">{{store.getVal('only_one_pdf_of_maximum_size_upto_10_mb')}}</ion-note>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion" style="margin-top: 10px;" >
+                            <div class="main" [class.active]="representingFor">
+                                <ng-container *ngTemplateOutlet="dataAcItemHead; context: {isView:'representingFor',action:representingFor,title:'representing_for',validate:false,show:(( RepresentingForEmail != undefined && RepresentingForEmail.length>0 ) || ( RepresentingForFirstName != undefined && RepresentingForFirstName.length > 0)|| ( RepresentingForLastName != undefined && RepresentingForLastName.length > 0))}"></ng-container>
+                                <div class="submenu" [style.height]="representingFor ? 'auto' : '0'" [style.overflow]="representingFor ? 'visible' : 'hidden'" [style.padding-bottom]="representingFor ? '10px' : '0px'"#impacttheme>
+                                <ion-note style="margin: 10px;display: inline-block;margin-bottom: 0px;" tabindex="-1">{{store.getVal('representing_for_email_hint')}}</ion-note>
+                                <ion-grid *ngIf="representingFor">
+                                    <ion-row class="acord-row" >
+                                        <ion-col size="auto" class="min-col-33" style="padding: 4px 8px;">
+                                            <div class="form-group">
+                                                <ion-label [class]="IsRepresentingForEmail?'labels errorTitle':'labels'">{{store.getVal('email')}}</ion-label>
+                                                <input spellcheck="false" id="RepresentingForEmail" autocomplete="off" type="text" class="form-control" minlength="1" maxlength="300" [(ngModel)]="RepresentingForEmail" (keyup.enter)="callAction('1',2,false)" tabindex="1"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-33" style="padding: 4px 8px;">
+                                            <div class="form-group">
+                                                <ion-label [class]="'labels'">{{store.getVal('first_name')}}</ion-label>
+                                                <input spellcheck="false" autocomplete="off" type="text" class="form-control" id="RepresentingForFirstName" minlength="1" maxlength="50" [(ngModel)]="RepresentingForFirstName" (keyup.enter)="callAction('1',2,false)" tabindex="1"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-33" style="padding: 4px 8px;">
+                                                <div class="form-group">
+                                                    <ion-label class="labels">{{store.getVal('last_name')}}</ion-label>
+                                                    <input spellcheck="false" autocomplete="off" type="text" class="form-control" id="RepresentingForLastName" minlength="1" maxlength="50" [(ngModel)]="RepresentingForLastName" (keyup.enter)="callAction('1',2,false)" tabindex="1"/>
+                                                </div>
+                                        </ion-col>                                       
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-part alert"  style="margin-top: 10px;" *ngIf="store.appType == 'admin' && type != 'edit_fn'">
+                            <ion-card-title>{{store.getVal('for_internal_use')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block radius">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="auto" class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <ion-label [class]="'labels'">{{store.getVal('sources')}}</ion-label>
+                                                <input autocomplete="off" type="text" class="form-control" id="SourceOrReferral" minlength="1" maxlength="500" [(ngModel)]="SourceOrReferral" (keyup.enter)="callAction('1',0)" tabindex="1"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <ion-label [class]="'labels'">{{store.getVal('internal_reference_number')}}</ion-label>
+                                                <input spellcheck="false" autocomplete="off" type="text" class="form-control" id="InternalReferenceNumber" minlength="1" maxlength="50" [(ngModel)]="InternalReferenceNumber" (keyup.enter)="callAction('1',0)" tabindex="1"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <custom-select id="Tags" selectTitle="tags" modalName="selectedTags" [modal]="selectedTags" listName="TagList" [list]="TagList" bindLabel="ReferenceName" bindValue="ReferenceKey" [isError]="false" [isValidate]="false" [multiple]="true" [isNewTag]="true" (change)=customSelect($event)></custom-select>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col size="auto" class="min-col-25 max-col-25">
+                                            <div class="form-group">
+                                                <custom-select selectTitle="screening_status" modalName="ScreeningStatus" [modal]="ScreeningStatus" listName="screening_status_list" [list]="screening_status_list" bindLabel="ReferenceName" bindValue="ReferenceKey" [isError]="false" [isValidate]="false" [multiple]="false" [isNewTag]="true" (change)=customSelect($event)></custom-select>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col *ngIf="PLATFORMID" style="flex: 0 0 100% !important;">
+                                            <div class="form-group">
+                                                <text-area maxlength="2000" id="InternalNotes" title="internal_notes" [(ngModel)]="InternalNotes"></text-area>
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+                        <act-switch *ngIf="!isUser" [IsActive]="IsActive" [IsEnable]="IsEnable" [IsFeatured]="IsFeatured" [DataStatus]="store.appType == 'admin' && !isUser && PLATFORMID?DataStatus:undefined" (change)="statusSwitch($event)"></act-switch>
+                        <div id="TermsPrivacy" class="form-group custom_chk" style="display: flex;
+                        align-items: center;margin-top: 20px; margin-bottom: 10px !important;">
+                            <ion-checkbox slot="start" [(ngModel)]="ConfirmAuthorised"></ion-checkbox>
+                            <ion-label [class]="ConfirmAuthorisedUn?'labels errorTitle':'labels'" style="margin-bottom: 0px;">{{store.getVal('by_submitting_this_form_i_agree_to')}} <a href="https://pi2.life/terms-conditions/" target="_blank">{{store.getVal('terms_conditions')}}</a> {{store.getVal('and')}} <a  href="https://pi2.life/privacy-policy/" target="_blank">{{store.getVal('privacy_policy_lbl')}}</a></ion-label>
+                        </div>
+
+                        <div *ngIf="enablerData != undefined" class="form-group checkbox_items" style="margin-bottom: 10px !important;margin-top: 10px;">
+                            <ion-item id="ConfirmInvestee" >
+                                <ion-label [class]="ConfirmInvesteeUn?'labels errorTitle':'labels'">{{store.getVal('confirmation1_text')}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="ConfirmInvestee"></ion-checkbox>
+                            </ion-item>
+                        </div>
+                        
+
+                        <div *ngIf="enablerData != undefined" class="form-group custom_chk" style="display: flex;
+                        align-items: center;margin-bottom: 20px !important;">
+                            <ion-checkbox slot="start" [(ngModel)]="IsConfidentialityDisclaimer" ></ion-checkbox>
+                            <ion-label [class]="IsConfidentialityDisclaimerUn?'labels errorTitle':'labels'" style="margin-bottom: 0px !important;" >{{store.getVal('by_submitting_this_form_i_agree_to')}} {{store.getVal('investee')}} <a (click)="openDesModal('disclaimer','investee_disclaimer')">{{store.getVal('disclaimer_title')}}</a> and  <a (click)="openDesModal('confidentiality','investee_confidentiality')">{{store.getVal('confidentiality_title')}}</a>&nbsp;{{store.getVal('agreement_of')}}&nbsp;<b>{{enablerData !=undefined? enablerData.EnablerName:''}}</b></ion-label>
+                        </div>
+                        <bottom-btn styleD="center" [leftKey]="selectedEnabler == undefined?'next':'submit'" [rightKey]="'cancel'" [backKey]="'back'" [leftBtn]="store.getVal(selectedEnabler == undefined?'next':'submit')" [backBtn]="store.getVal('back')" [rightBtn]="store.getVal('cancel')" (change)="callAction($event,2,false)" isShow="1"></bottom-btn>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>
+
+<ng-template #noteTemplate let-cls="cls" let-check="check" let-lbl="lbl" let-extLbl="extLbl" let-defMinAmt="defMinAmt" let-defMaxAmt="defMaxAmt">
+    <ion-note *ngIf="check" [class]="'italic-font '+cls" tabindex="-1">{{lbl}} {{store.format(undefined,defMinAmt)}}{{defMaxAmt !=''?' - '+store.format(undefined,defMaxAmt):''}} {{extLbl}}</ion-note>
+</ng-template>
+<ng-template #dataAcItemHead let-isView="isView" let-action="action" let-title="title" let-validate="validate" let-show="show" let-type="type" let-from="from">
+    <div class="menu" >
+        <div class="m-title-cls" style="justify-content: space-between;" (click)="viewSH(isView)" >
+            <div style="display: flex;align-items: center;" >
+                <i [class]="action?'fa-solid fa-caret-down f-size':'fa-solid fa-caret-right f-size'"></i>
+                {{store.getVal(title)}} {{validate?'*':''}}
+                <i *ngIf="show && type == undefined" class="fa-solid fa-eye"></i>
+            </div>
+            <!-- <ion-label *ngIf="type != undefined" class="linkv" (click)="openDesModal(type,from)"><i class="fa-solid fa-expand"></i></ion-label> -->
+        </div>
+    </div>
+</ng-template>

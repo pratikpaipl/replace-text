@@ -1,0 +1,140 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="true" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="addPage" [scrollEvents]="true">
+    <div class="page_wapper" style="display: block;">
+        <div id="all_ui" style="display: block;">
+            <div id="top_card" *ngIf="mItem.length > 0">
+                <ion-grid class="container">
+                    <refresher (change)="callPullRefresh($event)"></refresher>
+                    <ion-row class="align-items">
+                        <ion-col size="12">
+                            <bread-crump showHome="1" [pageType]="pageType" pageLbl="{{extea+pageTitle}}" [from]="from"></bread-crump>
+                            <div style="display: flex; padding: 5px 5px 15px 0px;">
+                                <i class="fa-infinity fa-solid" style="margin-right: 10px;color: var(--ion-color-logo-red);"></i>
+                                <ion-label class="labels disclaimer_txt" [innerHTML]="store.getVal('data_field_is_used_for_matchmaking')"></ion-label>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="main_rows mt-res">
+                        <ion-col class="main_cols auto-cols admin_right_panel">
+                            <div class="extra-spacing" style="display: block;">
+                                <prod-title [pageType]="'full-report'" [from]="from" openFront="0" [itemTitle]="itemTitle" [pageFrom]="from" subType="" [prod]="enabler" [Name]="enabler.EnablerName" [EnablerSlug]="enabler.EnablerSlug"[FP_EnablerSlug]="enabler.FP_EnablerSlug != undefined?enabler.FP_EnablerSlug:''" [FN_EnablerSlug]="enabler.FN_EnablerSlug != undefined?enabler.FN_EnablerSlug :''" ActionType="" apiAction=""></prod-title>
+                            </div>
+                            <table class="full_report_details">
+                                <thead>
+                                    <tr class="ext-head-title">
+                                        <th class="tbl-title"></th>
+                                        <th colspan=1 class="tbl-title"><i [class]="'fa-money-bill-transfer fa-solid'" style="margin-right: 5px;"></i>{{store.getVal(columTitle1)}}</th>
+                                        <th colspan=1 class="tbl-title"><i [class]="'fa-rocket fa-solid'" style="margin-right: 5px;"></i>{{store.getVal(columTitle2)}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div *ngFor="let item of mItem" style="display: contents;">
+                                        <tr *ngIf="item.title != undefined && item.title != ''">
+                                            <td [class]="item.class">{{store.getVal(item.title)}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr *ngFor="let d of item.data; let i = index" [class]="d.extraClss">
+                                            <td *ngIf="d.hide == undefined" [class]="d.extraClss">
+                                                <i *ngIf="d.licon != undefined" style="margin-right: 5px;" [class]="d.licon"></i>
+                                                <span innerHtml="{{store.getVal(d.title)}}{{store.dispMatchCnt(d,d.matchCount)}}"></span>
+                                            </td>
+                                            <td colspan=2 *ngIf="d.isIntroduce" [style.padding]="enabler.LastIntroduceDate != undefined?'15px 12px':'8px'">
+                                                <span *ngIf="enabler.LastIntroduceDate != undefined" style="color: var(--ion-color-dark-green);"><i class="fa-regular fa-handshake"></i>{{store.getVal('last_introduce_date')}}&nbsp;{{enabler.LastIntroduceDate | date:'dd MMM yyyy hh:mm a':'UTC'}}&nbsp;{{this.store.getVal('utc')}}</span>
+                                                <ion-label *ngIf="enabler.LastIntroduceDate == undefined && store.appType =='admin'" style="margin: 5px; display: inline-block;" [class]="(itemData['funding_profile'].ReactionValue =='yes' || itemData['fundraise'].ReactionValue == 'yes')?'patch-btn active pointer':'patch-btn disable'" (click)="(itemData['funding_profile'].ReactionValue =='yes' || itemData['fundraise'].ReactionValue == 'yes')?callIntroduce(((itemData['funding_profile'].IsMyFundingProfile ==1 && itemData['fundraise'].IsMyFundraise ==1)?'funding_profile_fundraise':(itemData['funding_profile'].IsMyFundingProfile ==1 && itemData['fundraise'].IsMyFundraise ==0)?'funding_profile_fundraise':(itemData['funding_profile'].IsMyFundingProfile ==0 && itemData['fundraise'].IsMyFundraise ==1)?'fundraise_funding_profile':'funding_profile_fundraise')):null">{{store.getVal('make_introduction')}}</ion-label>
+                                            </td>
+                                            <td *ngIf="d.hide == undefined && !d.isIntroduce" [class]="d.extraClss" [style.padding-left]="'5px'">
+                                                <div *ngIf="d.isMail" style="display: inline-flex;">
+                                                    <div>
+                                                        <a [style.color]="d.isMail?'var(--ion-color-blue)!important':'inherit'" href="mailto:{{d.profile}}" tabindex="-1">{{d.profile}}</a>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!d.isMail && !d.isPitch"> <!--style="display: inline-flex;"-->
+                                                   
+                                                    <div *ngIf="!d.isMail && (d.showDrop == undefined ||d.showDrop == 0)" [class]="d.FPLogo !=undefined?'v-aligh-in-block':''">
+                                                        <a *ngIf="(d.click && d.profile != '0')" [style.color]="(d.click && d.profile != '0') ?d.FPIsFeatured?'var(--ion-color-dark-green)' :'var(--ion-color-blue)':'var(--ion-color-gray)'" class="clickEv" [href]="routePathFull('profile',itemData['funding_profile'],'profile',d.FilterType,d.pLink)" [style.cursor]="(d.click && d.profile != '0') ?'pointer':'auto'" (click)="(d.click && d.profile != '0')?openReport('profile','funding_profile','profile',d.FilterType,d.pLink):null" tabindex="-1">
+                                                            <i *ngIf="d.showPUser != undefined && d.showPUser" class="far fa-user-circle"></i>
+                                                            <i *ngIf="d.ipicon != undefined" [class]="d.ipicon"></i>
+                                                            <span [innerHtml]="sanitizer.bypassSecurityTrustHtml(d.profile)"></span>
+                                                        </a>
+                                                        <img alt="" class="item-logo-img" *ngIf="(d.FPLogo != undefined && d.FPLogo != '')" [src]="d.FPLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                                                        <span *ngIf="!d.click || d.profile == '0'" [innerHtml]="sanitizer.bypassSecurityTrustHtml(d.profile)"></span>
+                                                    </div>
+                                                    <ion-select interface="popover" *ngIf="!d.isMail && d.showDrop" class="status" [disabled]="enabler.LastIntroduceDate != undefined" [(ngModel)]="d.profile" (ngModelChange)="changeStatus('funding_profile','update_reaction','interest',d.profile)" tabindex="-1">
+                                                        <ion-select-option *ngFor="let e of store.InterestResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option>
+                                                    </ion-select>
+                                                </div>
+                                               
+                                                <div *ngIf="d.isPitch" style="display: inline-flex;">
+                                                    <span>
+                                                        <ion-label *ngIf="itemData['fundraise'].PitchRequestEnable == 0 && (itemData['funding_profile'].IsMyFundingProfile == 1 || store.appType =='admin')" class="patch-btn no-pointer" style="cursor: not-allowed !important;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+                                                        <div *ngIf="store.appType != 'admin'">
+                                                            <ion-label *ngIf="itemData['fundraise'].PitchRequestEnable == 1 && itemData['funding_profile'].IsMyFundingProfile == 1 &&(itemData['fundraise'].PitchRequestStatus != undefined && itemData['fundraise'].PitchRequestStatus !='' && itemData['fundraise'].PitchRequestStatus!='approved' && itemData['fundraise'].PitchRequestStatus!='blank')" [class]="itemData['fundraise'].PitchRequestStatus=='rejected'?'patch-btn inaccessible':'patch-btn pitch-status'"><i [class]="itemData['fundraise'].PitchRequestStatus=='rejected'?'fa-regular fa-eye-slash':itemData['fundraise'].PitchRequestStatus=='requested'?'fa-solid fa-clock-rotate-left':'fa-regular fa-eye-slash'"></i>{{itemData['fundraise'].PitchRequestStatus=='rejected'?store.getVal('pitch_inaccessible'):itemData['fundraise'].PitchRequestStatus=='requested'?store.getVal('pitch_requested'):store.getScrenigStatus(store.PitchStatusResult,itemData['fundraise'].PitchRequestStatus)}}</ion-label>
+                                
+                                                            <ion-label *ngIf="itemData['fundraise'].PitchRequestEnable == 1 && itemData['funding_profile'].IsMyFundingProfile == 1 && (itemData['fundraise'].PitchRequestStatus==undefined || itemData['fundraise'].PitchRequestStatus =='' || itemData['fundraise'].PitchRequestStatus=='approved' || itemData['fundraise'].PitchRequestStatus == 'blank') " [class]="itemData['fundraise'].PitchRequestStatus=='approved'?'patch-btn view pointer':'patch-btn border pointer'" (click)="callRequest(itemData['fundraise'],itemData['fundraise'].PitchRequestStatus != undefined && itemData['fundraise'].PitchRequestStatus != 'blank' && itemData['fundraise'].PitchRequestStatus != '')"><i [class]="(itemData['fundraise'].PitchRequestStatus == undefined || itemData['fundraise'].PitchRequestStatus == '' || itemData['fundraise'].PitchRequestStatus == 'blank')?'fa-regular fa-hand':'fa-solid fa-eye'"></i>{{store.getVal((itemData['fundraise'].PitchRequestStatus == undefined || itemData['fundraise'].PitchRequestStatus == '' || itemData['fundraise'].PitchRequestStatus == 'blank')?'request_pitch':'view_pitch')}}</ion-label>
+                                                        </div>
+                                                        <ion-select interface="popover" *ngIf="itemData['fundraise'].PitchRequestEnable == 1 && store.appType =='admin'" class="status" [(ngModel)]="itemData['fundraise'].PitchRequestStatus" (ngModelChange)="changePitchStatus('fundraise','update_pitch_request',itemData['fundraise'])">
+                                                            <ion-select-option *ngFor="let e of store.PitchStatusResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option>
+                                                        </ion-select>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="d.hide == undefined&& !d.isIntroduce" [class]="d.extraClss" [style.padding-left]="'5px'">
+                                                <div *ngIf="d.isMail"  style="display: inline-flex;"><div><a [style.color]="d.isMail?'var(--ion-color-blue) !important':'inherit'" href="mailto:{{d.need}}" tabindex="-1">{{d.need}}</a></div></div>
+                                                <div *ngIf="!d.isMail && !d.isPitch" [class]="d.FNLogo !=undefined?'v-aligh-in-block':''"> <!--style="display: inline-flex;"-->
+                                                    
+                                                    <div *ngIf="!d.isMail && (d.showNDrop == undefined || d.showNDrop == 0)"  [style.color]="(d.click && d.need != '0') ?'var(--ion-color-blue)':'var(--ion-color-gray)'">
+                                                        <a *ngIf="(d.click && d.need != '0')" [style.color]="(d.click && d.need != '0') ?d.FNIsFeatured?'var(--ion-color-dark-green)':'var(--ion-color-blue)':'var(--ion-color-gray)'" class="clickEv" [href]="routePathFull('fundraise',itemData['fundraise'],'fundraise',d.FilterType,d.nLink)" [style.cursor]="(d.click && d.need != '0') ?'pointer':'auto'"  (click)="(d.click && d.need != '0')?openReport('fundraise','fundraise','fundraise',d.FilterType,d.nLink):null" tabindex="-1">
+                                                            <i *ngIf="d.showNUser != undefined && d.showNUser" class="far fa-user-circle"></i>
+                                                            <i *ngIf="d.iricon != undefined" [class]="d.iricon"></i>
+                                                            
+                                                            <span [innerHtml]="sanitizer.bypassSecurityTrustHtml(d.need)"></span>
+                                                        </a>
+                                                        <img alt="" class="item-logo-img" *ngIf="(d.FNLogo != undefined && d.FNLogo != '')" [src]="d.FNLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                                                        <span *ngIf="!d.click || d.need == '0'" [innerHtml]="sanitizer.bypassSecurityTrustHtml(d.need)"></span>
+                                                    </div>
+                                                    <ion-select interface="popover"  *ngIf="!d.isMail && d.showNDrop == 1" class="status" [(ngModel)]="d.need" [disabled]="enabler.LastIntroduceDate != undefined" (ngModelChange)="changeStatus('fundraise','update_reaction','interest',d.need)" tabindex="-1">
+                                                        <ion-select-option *ngFor="let e of store.InterestResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option>
+                                                      </ion-select>
+                                                </div>
+                                                <div *ngIf="d.isPitch" style="display: inline-flex;margin-top: 10px;">
+                                                    <span>
+                                                        <ion-label *ngIf="itemData['fundraise'].PitchRequestEnable == 0 && (itemData['fundraise'].IsMyFundraise == 1 || store.appType =='admin')" class="patch-btn" style="cursor: not-allowed !important;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+                                                        <ion-label *ngIf="itemData['fundraise'].PitchRequestEnable == 1 && (itemData['fundraise'].IsMyFundraise == 1 || store.appType =='admin')" [class]="'patch-btn view pointer'" (click)="callRequest(itemData['fundraise'],true)"><i [class]="'fa-solid fa-eye'"></i>{{store.getVal('view_pitch')}}</ion-label>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                    <div *ngFor="let item of mItem2" style="display: contents;">
+                                        <tr *ngIf="item.title != undefined && item.title != ''">
+                                            <td colspan="3" [class]="item.class"> {{store.getVal(item.title)}}</td>
+                                        </tr>
+                                        <tr *ngFor="let d of item.data;let i = index" [class]="d.class">
+                                            <td [style.padding-left]="d.class != undefined?'10px':'10px'" [style.font-weight]="d.class != undefined?'bold':'normal'" [attr.colspan]=d.isFacilator?3:1>
+                                                <div style="display: flex; align-items: center;color: var(--ion-color-black) !important;" (click)="d.EnablerClick != undefined && d.EnablerClick ==1? openEnabler(d.Slug):null">
+                                                    
+                                                    <a style="text-decoration: auto;" class="clickEv pointer" *ngIf="d.EnablerClick != undefined && d.EnablerClick ==1" [href]="enablerPath(d.Slug)" tabindex="-1"> <img *ngIf="d.img != undefined && d.img !=''" style="width: 30px; margin-right: 5px;" [alt]="d.img != undefined && d.img !=''?d.title:''" [src]="d.img" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                                                        {{d.isFacilator?d.title:store.getVal(d.title)}}</a>
+                                                    <span class="clickEv no-pointer" *ngIf="(d.EnablerClick == undefined || d.EnablerClick ==0)"><img *ngIf="d.img != undefined && d.img !=''" style="width: 30px; margin-right: 5px;" [alt]="d.img != undefined && d.img !=''?d.title:''" [src]="d.img" onerror="src='assets/images/no-image-icon-5.jpg'"/> {{d.isFacilator?d.title:store.getVal(d.title)}}</span>
+                                                   
+                                                </div>
+                                            </td>
+                                            <td *ngIf="!d.isFacilator" [attr.colspan]= '1'>                                               
+                                                <div [innerHtml]="sanitizer.bypassSecurityTrustHtml(d.profile)"></div>
+                                            </td>
+                                            <td *ngIf="!d.isFacilator">
+                                                <div [innerHtml]="sanitizer.bypassSecurityTrustHtml(d.need)"></div>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

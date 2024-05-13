@@ -1,0 +1,35 @@
+<ion-footer #footer>
+    
+    <ion-toolbar [myScrollVanish]="!store.IsWebView?contentID:''" [style.--min-height]="store.IsWebView?'0px':'55px'" height="55px">
+        <div class="footer_panels"></div>
+        <div id="footer_menu">
+            <div  (click)="openPage('enablers')">
+                <i class="select-menu fa-solid fa-vector-square"></i>
+                <ion-label class="white"> {{store.getVal('enablers')}}</ion-label>
+            </div>
+    
+            <div  *ngIf="store.appType == 'admin'" (click)="store.isLogin?openPage('funding-profiles-submitted'):undefined">
+                <i class="select-menu fa-money-bill-transfer fa-solid"></i>
+                <ion-label  class="white">{{store.getVal('investors')}}</ion-label>
+            </div>
+            <div  *ngIf="store.appType == 'admin'" (click)="store.isLogin?openPage('fundraise-needs-submitted'):undefined">
+                <i class="select-menu fa-rocket fa-solid"></i>
+                <ion-label  class="white">{{store.getVal('investees')}}</ion-label>
+            </div>
+    
+            <div  *ngIf="store.appType == 'front'" (click)="openPage('investor/add')">
+                <i class="select-menu fa-solid fa-circle-plus"></i>
+                <ion-label  class="white">{{store.getVal('investor')}}</ion-label>
+            </div>
+            <div  *ngIf="store.appType == 'front'" (click)="openPage('investee/add')">
+                <i class="select-menu fa-solid fa-circle-plus"></i>
+                <ion-label  class="white">{{store.getVal('investee')}}</ion-label>
+            </div>
+            <div  (click)="store.isLogin||store.appType == 'front'?openPage('full-report'):undefined">
+                <i class="select-menu fa-infinity fa-solid"></i>
+                <ion-label  class="white">{{store.getVal('matchmaking')}}</ion-label>
+            </div>
+        </div>
+    </ion-toolbar>
+    
+</ion-footer>

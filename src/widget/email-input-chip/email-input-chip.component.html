@@ -1,0 +1,9 @@
+<div class="example-chip-list">
+  <ion-label class="errorMsg" *ngIf="emailErr != undefined && emailErr != ''">{{emailErr}}</ion-label>
+  <mat-chip-list #chipList>
+    <ion-chip *ngFor="let email of emails">
+      <span>{{email.UserEmail}}</span> <i (click)="remove(email)" class="fa-solid fa-circle-xmark"></i>      
+    </ion-chip>
+    <input [disabled]="!isInclude" placeholder="Type email" style="width: 100%; " [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"/>
+  </mat-chip-list>
+</div>

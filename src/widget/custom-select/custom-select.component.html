@@ -1,0 +1,59 @@
+<ion-label *ngIf="selectTitle !=undefined && selectTitle !=''" [class]="isError?'labels errorTitle':'labels'" [style.opacity]="disabled?'0.5':'1.0'" ><i *ngIf="icon != undefined" style="margin-right: 5px;" [class]="icon"></i>{{store.getVal(selectTitle)}}<span *ngIf="sTitle !=undefined">{{store.getVal(sTitle)}}</span><span *ngIf="multiple">{{store.selCount(modal,list)}}</span><span *ngIf="isValidate && placeholder == undefined">&nbsp;*</span></ion-label>
+<div class="alert alert-warning mb-2" *ngIf="limit != undefined && (modal.length == limit)&& select.focused">
+    <small>store.getVal('max_selection_reached')</small>
+</div>
+<ng-select #select [searchable]="true" [virtualScroll]="true" [class]="isError?isLogo?'red-border form-control logo':'red-border form-control':isLogo?list.length==0?'form-control logo dis-color':'form-control logo':list.length==0?'form-control dis-color':'form-control'" [groupBy]="groupBy" [multiple]="multiple" [items]="list" [clearable]="clearable" [virtualScroll]="true" [addButtonPosition]="'top'" [maxSelectedItems]="limit" [closeOnSelect]="!multiple" [bindLabel]="bindLabel" [(ngModel)]="modal" [bindValue]="bindValue" [dropdownPosition]="openPos" [disabled]="disabled" [notFoundText]="isNewTag?store.getVal('add_new_with_no_data'):store.getVal('no_items_found')" [addTag]="isNewTag?addNewTags:undefined" addTagText="Add New" [placeholder]="placeholder !=undefined?store.getVal(placeholder)+ (isValidate?' *':''):''" (change)="onSelectionChange($event,select)" (open)="onOpen(select)" [inputAttrs]="{maxLength: maxlength}" [tabindex]="disabled?'-1':'1'">
+    <ng-template ng-label-tmp let-item="item">
+        <label *ngIf="!isLogo && lblPatern ==undefined">
+         <span *ngIf="parentLabel !=undefined">{{parentName(item)}} > </span> {{displayName(item)}}
+        </label>
+        <label *ngIf="!isLogo && lblPatern !=undefined">{{displayPatern(item)}}</label>
+        <label *ngIf="isLogo" style="display: flex;align-items: center;">
+            <img alt="" onerror="this.src='assets/images/no-image-icon-5.jpg'" class="logo-size" [src]="logoName(item)" />
+            <span *ngIf="parentLabel !=undefined">{{parentName(item)}} > </span> {{displayName(item)}}
+        </label>
+    </ng-template>
+    <ng-template ng-header-tmp let-items="items" *ngIf="list.length > 0 || isCreate || isNewTag">
+        <div class="form-group has-feedback">
+            <input #filterInput  style="width: 100%;line-height: 20px;" type="text" [maxLength]="maxlength" id="inputValidation" [placeholder]="store.getVal('search')" (keyup)="filter($event,select)"/> <!--(keyup.arrowdown)="selectNext()"-->
+        </div>
+        <p #createNew style="padding-left: 16px;border-top: 1px solid rgba(0,0,0,0.12);" class="create-new" *ngIf="isCreate" (click)="CreateNew(select)" tabindex="1" >{{store.getVal('create_new')}}</p>
+        <div class="form-group has-feedback selectall" *ngIf="isAll(select)">
+            <input type="checkbox" id="title1" [checked]="checkAll" (click)="toggleCheckAll(select)" />
+            <div class="check-list">
+                <span *ngIf="multiple" class="checkmark"></span>
+                <label for="title1" [ngStyle]="{'color':checkAll?'var(--ion-color-dark-green)':'rgba(0,0,0,0.87)'}">{{chekTitle(select)}}</label>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template ng-optgroup-tmp let-item="item">
+        {{item.ParentReferenceName || 'Unnamed group'}}
+    </ng-template>
+    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of items | slice: 0:(limit !=undefined?limit:2)">
+            <span class="ng-value-label">{{displayName(item)}}</span>
+            <span class="ng-value-icon right" [style.cursor]="disabled?'not-allowed':'pointer'" (click)="disabled?null:clear(item)" aria-hidden="true" title="" tabindex="-1">×</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > (limit !=undefined?limit:2)">
+            <span class="ng-value-label">{{ items.length - (limit !=undefined?limit:2)}} {{store.getVal('more')}}</span>
+        </div>
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+        <input *ngIf="multiple && limit == undefined" id="item-{{ index }}" type="checkbox" [value]="item$.selected" [checked]="item$.selected" />
+        <input *ngIf="limit != undefined" id="item-{{ index }}" type="checkbox"  [disabled]="(modal.length == limit)" [value]="item$.selected" [checked]="item$.selected" />
+        <div class="check-list">
+            <span *ngIf="multiple" class="checkmark"></span>
+            <label *ngIf="!isLogo && lblPatern == undefined">
+                <span *ngIf="parentLabel !=undefined">{{parentName(item)}} > </span> {{displayName(item)}}
+            </label>
+            <label *ngIf="!isLogo && lblPatern !=undefined">{{displayPatern(item)}}</label>
+            <label *ngIf="isLogo" style="display: flex;align-items: center;">
+                <img alt="" onerror="this.src='assets/images/no-image-icon-5.jpg'" class="pannel-logo-size" [src]="logoName(item)" />
+
+                <span *ngIf="parentLabel !=undefined">{{parentName(item)}} > </span> {{displayName(item)}}
+            </label>
+        </div>
+    </ng-template>
+</ng-select>
+<ion-note *ngIf="isNote" style="display: block; width: 100%;" tabindex="-1"><a tabindex="-1" target="_blank" [href]="linkNote">{{store.getVal(linkLabel)}} <i class="fa fa-external-link"></i></a></ion-note>
+<ion-note class="new-lbl-msg" *ngIf="isNewTag"><i class="fa-solid fa-file-circle-plus"></i>{{store.getVal('add_new_hint')}}</ion-note>

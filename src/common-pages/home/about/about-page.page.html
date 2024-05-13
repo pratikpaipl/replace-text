@@ -1,0 +1,97 @@
+<web-page-header></web-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <seo-hidden-tag [head]="store.getVal('website_key_119')" [description]="store.getVal('website_key_120')"></seo-hidden-tag>
+    <div class="section section-white overflow-hidden" style="padding-top:0px;">
+        <section class="padding-bottom b2bmarket" id="three">
+            <div class="container-fluid methodology-areasection">
+                <div class="container container-lg">
+                    <div class="row">
+                        <div class="col-12 fadeInUp">
+                            <div class="heading text-center" data-aos="fade-down">
+                                <h2>{{store.getVal('website_key_22')}}</h2>
+                            </div>
+                        </div>                        
+                        <div class="col-12 margin-top fadeInUp">
+                            <div class="methodology-box" data-aos="fade-up" style=" box-shadow: none !important; padding: 0px; border: 0px;">
+                                <div class="container-fluid methodology-areasection">
+                                        <div class="row view-containar text-center">
+                                        <div class="margin-top">
+                                                <div data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                                                    <div class="home-block-i-circle" >
+                                                        
+                                                        <a style="display: inline-block;"  href="https://pi2.life/" target="_blank"><img [src]="'../../../assets/images/logos/pi2life_logo.png'" class="img-fluid about pi2" /></a>
+                                                    </div>
+                                                    <hr class="mt-4" />
+                                                    <p class="b2b-desc"><a style="color: var(--ion-color-blue);font-size: 18px !important;" href="https://pi2.life/" target="_blank">{{store.getVal('website_key_88')}}</a> {{store.getVal('website_key_87')}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row view-containar text-center">
+                                            <div class="margin-top">
+                                                <div data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                                                    <div class="home-block-i-circle" >
+                                                        <a style="display: inline-block;" href="/home"><img [src]="'../../../assets/images/logos/Funder-A.png'" class="img-fluid about funder" /></a>
+                                                        
+                                                    </div>
+                                                    <hr class="mt-4" />
+                                                    <p class="b2b-desc">{{store.getVal('website_key_89')}}</p>
+                                                    <hr class="mt-4" />
+                                                    
+                                                    <!-- <a target="_blank" href="/contact" class="button btn-primary my-4">{{store.getVal('website_key_100')}}</a> -->
+                                                    <ion-label (click)="openPage('/contact')">
+                                                        <a class="clickEv button btn-primary my-4" [href]="'/contact'">{{store.getVal('website_key_100')}}</a>
+                                                    </ion-label>
+                                                    <hr class="mt-4" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row view-containar">
+                                        <div class="margin-top">
+                                                <div data-aos="fade-up">
+                                                    <ion-grid>
+                                                        <ion-row>
+                                                            <ion-col class="profile-img-col">
+                                                                <div class="home-block-i-circle" style="width: 90px;">
+                                                                    <a style="display: inline-block;" href="https://www.linkedin.com/in/dhaneshkothari/" target="_blank"><img [src]="'../../../assets/images/logos/ceo.png'" class="img-fluid" /></a>
+                                                                    
+                                                                </div>
+                                                                <div class="profile-respons">
+                                                                    <p class="b2b-desc">
+                                                                        <a class="bold f-18" style="display: inline-block;" href="https://www.linkedin.com/in/dhaneshkothari/" target="_blank">{{store.getVal('website_key_90')}}</a></p>
+                                                                    <p class="b2b-desc" style="margin-top: 5px;">{{store.getVal('website_key_91')}} <a class="linked-profile" href="https://www.linkedin.com/in/dhaneshkothari/"><i class="fab fa-linkedin-in"></i></a> </p>
+                                                                </div>
+                                                            </ion-col>
+                                                            <ion-col class="profile-details-col">
+                                                                <div class="profile-respons hide" style="margin-bottom: 5px;">
+                                                                    <p class="b2b-desc">
+                                                                        <a class="bold f-18" style="display: inline-block;" href="https://www.linkedin.com/in/dhaneshkothari/" target="_blank">{{store.getVal('website_key_90')}}</a>
+                                                                    </p>
+                                                                    <p class="b2b-desc" style="margin-top: 5px;">{{store.getVal('website_key_91')}} <a class="linked-profile" style="display: inline-block;" href="https://www.linkedin.com/in/dhaneshkothari/" target="_blank"><i class="fab fa-linkedin-in"></i></a> </p>
+                                                                </div>
+                                                                <p class="b2b-desc">{{store.getVal('website_key_92')}}</p>
+                                                            </ion-col>
+                                                        </ion-row>
+                                                    </ion-grid>                                                    
+                                                    <hr class="mt-4" />
+                                                    <p class="b2b-desc">{{store.getVal('website_key_93')}}</p>
+                                                    <p class="b2b-desc" style="margin-top: 15px;">{{store.getVal('website_key_94')}}</p>
+                                                    <p class="b2b-desc" style="margin-top: 15px;">{{store.getVal('website_key_95')}}</p>
+                                                    <p class="b2b-desc" style="margin-top: 15px;">{{store.getVal('website_key_96')}}</p>
+                                                    <p class="b2b-desc" style="margin-top: 15px;">{{store.getVal('website_key_97')}}</p>
+                                                    <hr class="mt-4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /..our mission -->
+        </section>
+    </div>
+    <web-page-footer></web-page-footer>
+</ion-content>

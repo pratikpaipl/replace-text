@@ -1,0 +1,828 @@
+<ion-grid *ngIf="isView">
+    <ion-row class="forms_row">
+        <ion-col class="forms_conponenl">
+            <div *ngIf="loadMsg != undefined && loadMsg != ''" style="margin:15px 0px 15px 5px;">
+                <error-message [isNameUn]="'false'" [fromClass]="'m-0-5'" styleD="left" [dataAction]="[]" [message]="loadMsg"></error-message>
+            </div>
+            <div class="m-part alert" *ngIf="EnablerSlug != undefined && EnablerSlug != ''" style="margin-top: 0px !important;">
+                <div id="myprofile" class="forms_block" style="padding: 10px 20px 10px 20px;">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size="12">
+                                <div [innerHTML]="store.getVal('configure_form_info_line_1')" style="padding-bottom: 20px;"></div>
+                                <div style="display: flex;">
+                                    <i class="fa-solid fa-hand-point-right" style="margin-right: 10px;"></i>
+                                    <div [innerHTML]="store.getVal('configure_form_info_line_2')" style="padding-bottom: 20px;"></div>
+                                </div>
+                                <div [innerHTML]="store.getVal('enabler_edit_warning')" style="color: var(--ion-color-logo-red)"></div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </div>
+            <div class="m-part alert">
+                <div class="forms_block" style="padding: 10px 20px 10px 20px;">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col class="currency-item">
+                                <div class="form-group">
+                                    <custom-select id="EnablerCurrency" selectTitle="currency" modalName="selectedEnablerCurrency" [disabled]="TotalFNFP>0" [modal]="selectedEnablerCurrency" listName="currency_list" [list]="currency_list" bindLabel="CurrencyName" bindValue="CurrencyID" [isValidate]="true" [isError]="IsEnablerCurrency" (change)=customSelect($event)></custom-select>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </div>
+            <ion-grid class="main_grid">
+                <ion-row>
+                    <ion-col class="act-submission">
+                        <div style="display: flex;justify-content: space-between;padding-bottom: 10px;flex-wrap: wrap;">
+                            <div class="switchs_block" style="margin: 5px 0px; ">
+                                <ion-label>{{store.getVal('accept_investor_profile_submissions')}}</ion-label>
+                                <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}" [(ngModel)]="FPSubmissionAccept" (ngModelChange)="clickSwitch('FPSubmissionAccept')"></ion-toggle>
+                            </div>
+                            <div class="switchs_block" style="margin: 5px 0px;">
+                                <ion-label>{{store.getVal('accept_investment_raise_submissions')}}</ion-label>
+                                <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}" [(ngModel)]="FNSubmissionAccept" (ngModelChange)="clickSwitch('FNSubmissionAccept')"></ion-toggle>
+                            </div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="impactthemeView">
+                                <ng-container *ngTemplateOutlet="dataAcItemHead; context: {isView:'impactthemeView',title:'impact_themes_and_areas',validate:(FNSubmissionAccept || FPSubmissionAccept),show:(selectedFNImpactTheme.length>0 || selectedFPImpactTheme.length>0)}"></ng-container>
+
+                                <div class="submenu" [style.height]="impactthemeView ? 'auto' : '0'" [style.overflow]="impactthemeView ? 'visible' : 'hidden'" #impacttheme>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-tree-view-select id="FPImpactThemeAndArea" icon="fa-solid fa-hand-point-right" selectTitle="investor_form" from="fp impact themes and areas" ChildList="ImpactThemesAreas" SubChildList="ImpactThemesAreas" [respObj]="respObj" firstKey="ReferenceKey" secondKey="ReferenceKey" thirdKey="ReferenceKey" firstLabel="ReferenceName" secondLabel="ReferenceName" thirdLabel="ReferenceName" selectedComponentLabel="selectedFPImpactTheme" ComponentKey="selectedFPImpactTheme" [preSelected]="selectedFPImpactTheme" [list]="FPImpactThemesAreasList" [isValidate]="FPSubmissionAccept" [disabled]="fp_impact_themes_and_areas_same_as" [isError]="IsFPImpactThemeUn &&FPSubmissionAccept" (change)="changeTreeData($event,fp_impact_themes_and_areas_same_as)"></custom-tree-view-select>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-tree-view-select id="FNImpactThemeAndArea" icon="fa-solid fa-hand-point-right" selectTitle="investee_form" from="fn impact themes and areas" ChildList="ImpactThemesAreas" SubChildList="ImpactThemesAreas" [respObj]="respObj" firstKey="ReferenceKey" secondKey="ReferenceKey" thirdKey="ReferenceKey" firstLabel="ReferenceName" secondLabel="ReferenceName" thirdLabel="ReferenceName" selectedComponentLabel="selectedFNImpactTheme" ComponentKey="selectedFNImpactTheme" [preSelected]="selectedFNImpactTheme" [list]="FNImpactThemesAreasList" [isValidate]="FNSubmissionAccept" [isError]="IsFNImpactThemeUn &&FNSubmissionAccept" (change)="changeTreeData($event,fp_impact_themes_and_areas_same_as)"></custom-tree-view-select>
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}" [(ngModel)]="fp_impact_themes_and_areas_same_as" (ionChange)="changeSwitch(fp_impact_themes_and_areas_same_as,'selectedFNImpactTheme','selectedFPImpactTheme','FPImpactThemesAreasList')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="sdgsView">
+                                <ng-container *ngTemplateOutlet="dataAcItemHead; context: {isView:'sdgsView',title:'sdg_esg',validate:(FNSubmissionAccept || FPSubmissionAccept),show:(selectedFNSdgs.length>0 || selectedFPSdgs.length>0 || selectedFNEsgEnvironment.length>0 || selectedFPEsgEnvironment.length>0 || selectedFNEsgSocial.length>0 || selectedFPEsgSocial.length>0 || selectedFNEsgGovernance.length>0 || selectedFPEsgGovernance.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="sdgsView ?'auto':'0'" [style.overflow]="sdgsView ? 'visible' : 'hidden'" #sdgs>
+                                    <ion-grid>
+                                        <ion-note id="requireAnyOne" style="margin-bottom: 8px;display: none;" [class]="IsRequiredAnyoneUn?'labels errorTitle':'labels'" tabindex="-1">{{store.getVal('required_any_one')}}</ion-note>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <ion-label [class]="'labels mt'" *ngIf="store.screenWidth>992">{{store.getVal('investor_form')}}</ion-label>
+                                                <div class="form-group mt">
+                                                    <custom-select id="FP_sdg_list" [icon]="store.screenWidth>992?'fa-solid fa-hand-point-right':undefined" [selectTitle]="store.screenWidth>992?'sdgs':'investor_form'" modalName="selectedFPSdgs" [modal]="selectedFPSdgs" [list]="FP_sdg_list" listName="FP_sdg_list" bindLabel="ReferenceName" bindValue="ReferenceKey" linkLabel="un_sdgs" linkNote="https://www.un.org/sustainabledevelopment/sustainable-development-goals/" [isNote]="false" [isValidate]="false" [isError]="IsFPSdgUn&&FPSubmissionAccept" [multiple]="true" (change)=customSelect($event) [disabled]="fp_sdgs_same_as"></custom-select>
+                                                    <!--FPSubmissionAccept-->
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <ion-label [class]="'labels mt'" class="display-block"><i *ngIf="store.screenWidth<992" class="fa-solid fa-hand-point-right" style="margin-right: 10px;"></i> {{store.getVal(store.screenWidth>992?'investee_form':'sdgs')}}</ion-label>
+                                                <div class="form-group mt">
+                                                    <custom-select id="FN_sdg_list" [icon]="store.screenWidth>992?'fa-solid fa-hand-point-right':undefined" [selectTitle]="store.screenWidth>992?'sdgs':'investee_form'" modalName="selectedFNSdgs" [modal]="selectedFNSdgs" listName="FN_sdg_list" [list]="FN_sdg_list" bindLabel="ReferenceName" bindValue="ReferenceKey" linkLabel="un_sdgs" linkNote="https://www.un.org/sustainabledevelopment/sustainable-development-goals/" [isValidate]="false" [isNote]="true" [isError]="IsFNSdgUn && FNSubmissionAccept" [multiple]="true" (change)=customSelect($event,fp_sdgs_same_as)></custom-select><!--FNSubmissionAccept-->
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}" [(ngModel)]="fp_sdgs_same_as" (ionChange)="changeSwitch(fp_sdgs_same_as,'selectedFNSdgs','selectedFPSdgs')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group mt">
+                                                    <custom-select id="FPEsgEnvironment" [icon]="store.screenWidth>992?'fa-solid fa-hand-point-right':undefined" [selectTitle]="store.screenWidth>992?'esg_environment':'investor_form'" modalName="selectedFPEsgEnvironment" [modal]="selectedFPEsgEnvironment" [list]="FPEsgEnvironmentList" listName="FPEsgEnvironmentList" bindLabel="ReferenceName" bindValue="ReferenceKey" [isValidate]="false" [isError]="IsFPEsgEnvironmentUn&&FPSubmissionAccept" [multiple]="true" [isNewTag]="true" (change)=customSelect($event) [disabled]="fp_esg_environment_same_as"></custom-select>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <ion-label [class]="'labels mt'" *ngIf="store.screenWidth<=992"><i
+                                                    class="fa-solid fa-hand-point-right" style="margin-right: 10px;"></i>{{store.getVal
+                                                    ('esg_environment')}}</ion-label>
+                                                <div class="form-group mt">
+                                                    <custom-select id="FNEsgEnvironment" [icon]="store.screenWidth>992?'fa-solid fa-hand-point-right':undefined" [selectTitle]="store.screenWidth>992?'esg_environment':'investee_form'" modalName="selectedFNEsgEnvironment" [modal]="selectedFNEsgEnvironment" [list]="FNEsgEnvironmentList" listName="FNEsgEnvironmentList" bindLabel="ReferenceName" bindValue="ReferenceKey" [isValidate]="false" [isError]="IsFNEsgEnvironmentUn&&FNSubmissionAccept" [multiple]="true" [isNewTag]="true" (change)=customSelect($event,fp_esg_environment_same_as)></custom-select>
+                                                <div class="switchs_block mt">
+                                                    <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                    <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}" [(ngModel)]="fp_esg_environment_same_as" (ionChange)="changeSwitch(fp_esg_environment_same_as,'selectedFNEsgEnvironment','selectedFPEsgEnvironment')"></ion-toggle>
+                                                </div>
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row class="acord-row">
+                                        <ion-col class="acord-col">
+                                            <div class="form-group mt">
+                                                <custom-select id="FPEsgSocial" [icon]="store.screenWidth>992?'fa-solid fa-hand-point-right':undefined" [selectTitle]="store.screenWidth>992?'esg_social':'investor_form'" modalName="selectedFPEsgSocial" [modal]="selectedFPEsgSocial" [list]="FPEsgSocialList" listName="FPEsgSocialList" bindLabel="ReferenceName" bindValue="ReferenceKey" [isValidate]="false" [isError]="IsFPEsgSocialUn&&FPSubmissionAccept" [multiple]="true" [isNewTag]="true" (change)=customSelect($event) [disabled]="fp_esg_social_same_as"></custom-select>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col class="acord-col">
+                                            <ion-label [class]="'labels mt'" *ngIf="store.screenWidth<=992">
+                                                <i class="fa-solid fa-hand-point-right" style="margin-right: 10px;"></i>{{store.getVal
+                                                    ('esg_social')}}</ion-label>
+                                                <div class="form-group mt">
+                                                    <custom-select id="FNEsgSocial" [icon]="store.screenWidth>992?'fa-solid fa-hand-point-right':undefined" [selectTitle]="store.screenWidth>992?'esg_social':'investee_form'" modalName="selectedFNEsgSocial" [modal]="selectedFNEsgSocial" [list]="FNEsgSocialList" listName="FNEsgSocialList" bindLabel="ReferenceName" bindValue="ReferenceKey" [isValidate]="false" [isError]="IsFNEsgSocialUn&&FNSubmissionAccept" [multiple]="true" [isNewTag]="true" (change)=customSelect($event,fp_esg_social_same_as)></custom-select>
+                                                <div class="switchs_block mt">
+                                                    <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                    <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}" [(ngModel)]="fp_esg_social_same_as" (ionChange)="changeSwitch(fp_esg_social_same_as,'selectedFNEsgSocial','selectedFPEsgSocial')"></ion-toggle>
+                                                </div>
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group mt">
+                                                    <custom-select id="FPEsgGovernance"
+                                                        [icon]="store.screenWidth>992?'fa-solid fa-hand-point-right':undefined"
+                                                        [selectTitle]="store.screenWidth>992?'esg_governance':'investor_form'"
+                                                        modalName="selectedFPEsgGovernance"
+                                                        [modal]="selectedFPEsgGovernance" [list]="FPEsgGovernanceList"
+                                                        listName="FPEsgGovernanceList" bindLabel="ReferenceName"
+                                                        bindValue="ReferenceKey" [isValidate]="false"
+                                                        [isError]="IsFPEsgGovernanceUn&&FPSubmissionAccept"
+                                                        [multiple]="true" [isNewTag]="true"
+                                                        (change)=customSelect($event)
+                                                        [disabled]="fp_esg_governance_same_as"></custom-select>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <ion-label [class]="'labels mt'" *ngIf="store.screenWidth<=992"><i
+                                                        class="fa-solid fa-hand-point-right"
+                                                        style="margin-right: 10px;"></i>{{store.getVal
+                                                    ('esg_governance')}}</ion-label>
+                                                <div class="form-group mt">
+                                                    <custom-select id="FNEsgGovernance"
+                                                        [icon]="store.screenWidth>992?'fa-solid fa-hand-point-right':undefined"
+                                                        [selectTitle]="store.screenWidth>992?'esg_governance':'investee_form'"
+                                                        modalName="selectedFNEsgGovernance"
+                                                        [modal]="selectedFNEsgGovernance" [list]="FNEsgGovernanceList"
+                                                        listName="FNEsgGovernanceList" bindLabel="ReferenceName"
+                                                        bindValue="ReferenceKey" [isValidate]="false"
+                                                        [isError]="IsFNEsgGovernanceUn&&FNSubmissionAccept"
+                                                        [multiple]="true" [isNewTag]="true"
+                                                        (change)=customSelect($event,fp_esg_governance_same_as)></custom-select>
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="fp_esg_governance_same_as"
+                                                            (ionChange)="changeSwitch(fp_esg_governance_same_as,'selectedFNEsgGovernance','selectedFPEsgGovernance')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="genLansView">
+                                <ng-container
+                                    *ngTemplateOutlet="dataAcItemHead; context: {isView:'genLansView',title:'gender_lens',show:(selectedFNGenderLens.length>0 || selectedFPGenderLens.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="genLansView ? 'auto' : '0'"
+                                    [style.overflow]="genLansView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-select id="FP_gender_lens_list" selectTitle="investor_form"
+                                                        modalName="selectedFPGenderLens" [modal]="selectedFPGenderLens"
+                                                        [list]="FP_gender_lens_list" listName="FP_gender_lens_list"
+                                                        bindLabel="ReferenceName" bindValue="ReferenceKey"
+                                                        linkLabel="pri_gender_lens_investing"
+                                                        linkNote="https://thegiin.org/gender-lens-investing-initiative"
+                                                        [isNote]="false" [isValidate]="false" [isError]="false"
+                                                        [multiple]="true" [disabled]="fp_gender_lens_same_as"
+                                                        (change)=customSelect($event)></custom-select>
+
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-select id="FN_gender_lens_list" selectTitle="investee_form"
+                                                        modalName="selectedFNGenderLens" [modal]="selectedFNGenderLens"
+                                                        [list]="FP_gender_lens_list" listName="FP_gender_lens_list"
+                                                        bindLabel="ReferenceName" bindValue="ReferenceKey"
+                                                        linkLabel="pri_gender_lens_investing"
+                                                        linkNote="https://thegiin.org/gender-lens-investing-initiative"
+                                                        [isNote]="true" [isValidate]="false" [isError]="false"
+                                                        [multiple]="true"
+                                                        (change)=customSelect($event,fp_gender_lens_same_as)></custom-select>
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="fp_gender_lens_same_as"
+                                                            (ionChange)="changeSwitch(fp_gender_lens_same_as,'selectedFNGenderLens','selectedFPGenderLens')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="investTypeView">
+                                <ng-container
+                                    *ngTemplateOutlet="dataAcItemHead; context: {isView:'investTypeView',title:'funding_type',validate:(FNSubmissionAccept || FPSubmissionAccept),show:(selectedFNFundingType.length>0 || selectedFPFundingType.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="investTypeView ? 'auto' : '0'"
+                                    [style.overflow]="investTypeView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-tree-view-select id="FPFundingType"
+                                                        icon="fa-solid fa-hand-point-right" selectTitle="investor_form"
+                                                        from="funding type" ChildList="SubType" SubChildList="SubType"
+                                                        [respObj]="respObj" firstKey="ReferenceKey"
+                                                        secondKey="ReferenceKey" thirdKey="ReferenceKey"
+                                                        firstLabel="ReferenceName" secondLabel="ReferenceName"
+                                                        thirdLabel="ReferenceName"
+                                                        selectedComponentLabel="selectedFPFundingType"
+                                                        ComponentKey="selectedFPFundingType"
+                                                        [preSelected]="selectedFPFundingType" [list]="FPFundingTypeList"
+                                                        [isValidate]="FPSubmissionAccept"
+                                                        [disabled]="fp_funding_type_same_as"
+                                                        [isError]="IsFPFundingTypeUn &&FPSubmissionAccept"
+                                                        (change)="changeTreeData($event,fp_funding_type_same_as)"></custom-tree-view-select>
+
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-tree-view-select id="FNFundingType"
+                                                        icon="fa-solid fa-hand-point-right" selectTitle="investee_form"
+                                                        from="funding type" ChildList="SubType" SubChildList="SubType"
+                                                        [respObj]="respObj" firstKey="ReferenceKey"
+                                                        secondKey="ReferenceKey" thirdKey="ReferenceKey"
+                                                        firstLabel="ReferenceName" secondLabel="ReferenceName"
+                                                        thirdLabel="ReferenceName"
+                                                        selectedComponentLabel="selectedFNFundingType"
+                                                        ComponentKey="selectedFNFundingType"
+                                                        [preSelected]="selectedFNFundingType" [list]="FNFundingTypeList"
+                                                        [isValidate]="FNSubmissionAccept"
+                                                        [isError]="IsFNFundingTypeUn &&FNSubmissionAccept"
+                                                        (change)="changeTreeData($event,fp_funding_type_same_as)"></custom-tree-view-select>
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="fp_funding_type_same_as"
+                                                            (ionChange)="changeSwitch(fp_funding_type_same_as,'selectedFNFundingType','selectedFPFundingType','FPFundingTypeList')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="investStageView">
+                                <ng-container
+                                    *ngTemplateOutlet="dataAcItemHead; context: {isView:'investStageView',title:'funding_stage',show:(selectedFNFundingStage.length>0 || selectedFPFundingStage.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="investStageView ? 'auto' : '0'"
+                                    [style.overflow]="investStageView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-select id="FPFundingStage" selectTitle="investor_form"
+                                                        modalName="selectedFPFundingStage"
+                                                        [modal]="selectedFPFundingStage" [list]="funding_stage_list"
+                                                        listName="funding_stage_list" bindLabel="ReferenceName"
+                                                        bindValue="ReferenceKey" [isValidate]="false" [isError]="false"
+                                                        [multiple]="true" [isNewTag]="true"
+                                                        (change)=customSelect($event)
+                                                        [disabled]="fp_funding_stage_same_as"></custom-select>
+
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-select id="FNFundingStage" selectTitle="investee_form"
+                                                        modalName="selectedFNFundingStage"
+                                                        [modal]="selectedFNFundingStage" [list]="funding_stage_list"
+                                                        listName="funding_stage_list" bindLabel="ReferenceName"
+                                                        bindValue="ReferenceKey" [isValidate]="false" [isError]="false"
+                                                        [multiple]="true" [isNewTag]="true"
+                                                        (change)=customSelect($event,fp_funding_stage_same_as)></custom-select>
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="fp_funding_stage_same_as"
+                                                            (ionChange)="changeSwitch(fp_funding_stage_same_as,'selectedFNFundingStage','selectedFPFundingStage')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="raiseAmtView">
+                                <ng-container
+                                    *ngTemplateOutlet="dataAcItemHead; context: {isView:'raiseAmtView',title:'raise_amount',validate:(FNSubmissionAccept || FPSubmissionAccept),show:(MinRaiseAmount.length>0 || MaxRaiseAmount.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="raiseAmtView ? 'auto' : '0'"
+                                    [style.overflow]="raiseAmtView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <ion-label
+                                                        [class]="((IsFPMinTotalRaiseAmountUn || IsFPMaxTotalRaiseAmountUn))?'labels errorTitle':'labels'">{{store.getVal
+                                                        ('investor_form')}}</ion-label>
+                                                    <ion-row>
+                                                        <ion-col class="acord-col">
+                                                            <div>
+                                                                <ion-label
+                                                                    [class]="IsFPMinTotalRaiseAmountUn?'labels errorTitle':'labels'">{{store.getVal
+                                                                    ('min')}}<span
+                                                                        *ngIf="FPSubmissionAccept">*</span></ion-label>
+                                                                <div class="form-control">
+                                                                    <span [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                                    <number-input maxlength="14"
+                                                                        id="FPMinTotalRaiseAmount"
+                                                                        [(ngModel)]="FPMinTotalRaiseAmount"
+                                                                        (change)="updateInput($event,'IsFPMinTotalRaiseAmountUn')"></number-input>
+                                                                </div>
+                                                                <ion-note [class]="IsFPMinTotalRaiseAmountUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined,DefaultMaximumAmount)}}</ion-note>
+                                                            </div>
+                                                        </ion-col>
+                                                        <ion-col class="acord-col">
+                                                            <div>
+                                                                <ion-label
+                                                                    [class]="IsFPMaxTotalRaiseAmountUn?'labels errorTitle':'labels'">{{store.getVal
+                                                                    ('max')}} <span
+                                                                        *ngIf="FPSubmissionAccept">*</span></ion-label>
+                                                                <div class="form-control">
+                                                                    <span
+                                                                        [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                                    <number-input maxlength="14"
+                                                                        id="FPMaxTotalRaiseAmount"
+                                                                        [(ngModel)]="FPMaxTotalRaiseAmount"
+                                                                        (change)="updateInput($event,'IsFPMaxTotalRaiseAmountUn')"></number-input>
+                                                                </div>
+                                                                <ion-note [class]="IsFPMaxTotalRaiseAmountUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined, DefaultMaximumAmount)}}</ion-note>
+                                                            </div>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                    <span *ngIf="FPMinTotalRaiseAmountError !=''"
+                                                        class="error">{{(FPMinTotalRaiseAmountError)?FPMinTotalRaiseAmountError:''}}</span>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <ion-label
+                                                        [class]="IsMinRaiseAmountUn?'labels errorTitle':'labels'">{{store.getVal
+                                                        ('investee_form')}}</ion-label>
+                                                    <ion-row>
+                                                        <ion-col class="acord-col">
+                                                            <div>
+                                                                <ion-label
+                                                                    [class]="IsMinRaiseAmountUn?'labels errorTitle':'labels'">{{store.getVal('min')}}<span
+                                                                        *ngIf="FNSubmissionAccept">*</span></ion-label>
+                                                                <div class="form-control">
+                                                                    <span
+                                                                        [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                                    <number-input spellcheck="false" id="MinRaiseAmount"
+                                                                        inputmode="numeric" maxlength="14"
+                                                                        [(ngModel)]="MinRaiseAmount"
+                                                                        (change)="updateInput($event,'IsMinRaiseAmountUn')"></number-input>
+                                                                </div>
+                                                                <ion-note [class]="IsMinRaiseAmountUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined, DefaultMaximumAmount)}}</ion-note>
+                                                            </div>
+                                                        </ion-col>
+                                                        <ion-col class="acord-col">
+                                                            <div>
+                                                                <ion-label
+                                                                    [class]="IsMaxRaiseAmountUn?'labels errorTitle':'labels'">{{store.getVal('max')}}<span
+                                                                        *ngIf="FNSubmissionAccept">*</span></ion-label>
+                                                                <div class="form-control">
+                                                                    <span
+                                                                        [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                                    <number-input id="MaxRaiseAmount" maxlength="14" [(ngModel)]="MaxRaiseAmount" (change)="updateInput($event,'IsMaxRaiseAmountUn')"></number-input>
+                                                                </div>
+                                                                <ion-note [class]="IsMaxRaiseAmountUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined, DefaultMaximumAmount)}}</ion-note>
+                                                            </div>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                    <span class="error"
+                                                        *ngIf="MinRaiseError != undefined && MinRaiseError !=''">{{(MinRaiseError)?MinRaiseError:''}}</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="minTicketSizeView">
+                                <ng-container
+                                    *ngTemplateOutlet="dataAcItemHead; context: {isView:'minTicketSizeView',title:'minimum_ticket_size_per_funding_provider_eur',validate:(FNSubmissionAccept || FPSubmissionAccept),show:(FNMinimumTicketSizePerFunding.length>0 || FNMaximumTicketSizePerFunding.length>0 || FPMinimumTicketSizePerFunding.length>0 || FPMaximumTicketSizePerFunding.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="minTicketSizeView ? 'auto' : '0'"
+                                    [style.overflow]="minTicketSizeView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <ion-label
+                                                        [class]="(IsFPMinimumTicketSizePerFundingUn || IsFPMaximumTicketSizePerFundingUn)?'labels errorTitle':'labels'">{{store.getVal
+                                                        ('investor_form')}}</ion-label>
+                                                    <ion-row>
+                                                        <ion-col class="acord-col">
+                                                            <div>
+                                                                <ion-label
+                                                                    [class]="IsFPMinimumTicketSizePerFundingUn?'labels errorTitle':'labels'">
+                                                                    {{store.getVal ('min')}} <span
+                                                                        *ngIf="FPSubmissionAccept">*</span></ion-label>
+                                                                <div class="form-control">
+                                                                    <span
+                                                                        [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                                    <number-input maxlength="14"
+                                                                        id="FPMinimumTicketSizePerFunding"
+                                                                        [(ngModel)]="FPMinimumTicketSizePerFunding"
+                                                                        (change)="updateInput($event,'IsFPMinimumTicketSizePerFundingUn')"></number-input>
+                                                                </div>
+                                                                <ion-note [class]="IsFPMinimumTicketSizePerFundingUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined, DefaultMaximumAmount)}}</ion-note>
+                                                            </div>
+                                                        </ion-col>
+                                                        <ion-col class="acord-col">
+                                                            <div>
+                                                                <ion-label
+                                                                    [class]="IsFPMaximumTicketSizePerFundingUn?'labels errorTitle':'labels'">{{store.getVal
+                                                                    ('max')}}<span
+                                                                        *ngIf="FPSubmissionAccept">*</span></ion-label>
+                                                                <div class="form-control">
+                                                                    <span
+                                                                        [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                                    <number-input min="1"
+                                                                        id="FPMaximumTicketSizePerFunding"
+                                                                        [(ngModel)]="FPMaximumTicketSizePerFunding"
+                                                                        (change)="updateInput($event,'IsFPMaximumTicketSizePerFundingUn')"></number-input>
+                                                                </div>
+                                                                <ion-note [class]="IsFPMaximumTicketSizePerFundingUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined, DefaultMaximumAmount)}}</ion-note>
+                                                            </div>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                    <span *ngIf="FPMinimumTicketSizePerFundingError !=''"
+                                                        class="error">{{(FPMinimumTicketSizePerFundingError)?FPMinimumTicketSizePerFundingError:''}}</span>
+
+                                                </div>
+                                            </ion-col>
+                                            
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <ion-label
+                                                        [class]="(IsFNMinimumTicketSizePerFundingUn || IsFNMaximumTicketSizePerFundingUn)?'labels errorTitle':'labels'">{{store.getVal
+                                                        ('investee_form')}}</ion-label>
+                                                    <ion-row>
+                                                        <ion-col class="acord-col">
+                                                            <div>
+                                                                <ion-label
+                                                                    [class]="IsFNMinimumTicketSizePerFundingUn?'labels errorTitle':'labels'">
+                                                                    {{store.getVal ('min')}} <span
+                                                                        *ngIf="FNSubmissionAccept">*</span></ion-label>
+                                                                <div class="form-control">
+                                                                    <span
+                                                                        [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                                    <number-input maxlength="14"
+                                                                        id="FNMinimumTicketSizePerFunding"
+                                                                        [(ngModel)]="FNMinimumTicketSizePerFunding"
+                                                                        (change)="updateInput($event,'IsFNMinimumTicketSizePerFundingUn')"></number-input>
+                                                                </div>
+                                                                <ion-note [class]="IsFNMinimumTicketSizePerFundingUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined,DefaultMaximumAmount)}}</ion-note>
+                                                            </div>
+                                                        </ion-col>
+                                                        <ion-col class="acord-col">
+                                                            <div>
+                                                                <ion-label [class]="IsFNMaximumTicketSizePerFundingUn?'labels errorTitle':'labels'">{{store.getVal('max')}}<span *ngIf="FNSubmissionAccept">*</span></ion-label>
+                                                                <div class="form-control">
+                                                                    <span [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+<number-input min="1" id="FNMaximumTicketSizePerFunding" [(ngModel)]="FNMaximumTicketSizePerFunding" (change)="updateInput($event,'IsFNMaximumTicketSizePerFundingUn')"></number-input>
+                                                                </div>
+                                                                <ion-note [class]="IsFNMaximumTicketSizePerFundingUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined,DefaultMaximumAmount)}}</ion-note>
+                                                            </div>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                    <span *ngIf="FNMinimumTicketSizePerFundingError !=''"
+                                                        class="error">{{(FNMinimumTicketSizePerFundingError)?FNMinimumTicketSizePerFundingError:''}}</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="cumRevView">
+                                <ng-container
+                                    *ngTemplateOutlet="dataAcItemHead; context: {isView:'cumRevView',title:'cumulative_revenue_last_two_years_till_date_in_eur',show:(FNCumulativeRevenue.length>0 || FPCumulativeRevenue.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="cumRevView ? 'auto' : '0'"
+                                    [style.overflow]="cumRevView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <ion-label
+                                                        [class]="IsFPCumulativeRevenueUn?'labels errorTitle':'labels'">{{store.getVal
+                                                        ('investor_form')}}</ion-label>
+                                                    <div class="form-control">
+                                                        <span
+                                                            [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                        <number-input maxlength="14" id="FPCumulativeRevenue"
+                                                            [(ngModel)]="FPCumulativeRevenue"
+                                                            (change)="updateInput($event,'IsFPCumulativeRevenueUn')"></number-input>
+                                                    </div>
+                                                    <ion-note [class]="IsFPCumulativeRevenueUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined, DefaultMaximumAmount)}}</ion-note>
+                                                    <span
+                                                        class="error">{{(FPCumulativeRevenueError)?FPCumulativeRevenueError:''}}</span>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <ion-label
+                                                        [class]="IsFNCumulativeRevenueUn?'labels errorTitle':'labels'">{{store.getVal
+                                                        ('investee_form')}}</ion-label>
+                                                    <div class="form-control">
+                                                        <span
+                                                            [class]="selectedEnablerCurrency == undefined?'space-right errorTitle':'space-right'">{{store.getCurrency(selectedEnablerCurrency,currency_list)}}</span>
+                                                        <number-input maxlength="14" id="FNCumulativeRevenue"
+                                                            [(ngModel)]="FNCumulativeRevenue"
+                                                            (change)="updateInput($event,'IsFNCumulativeRevenueUn')"></number-input>
+                                                    </div>
+                                                    <ion-note [class]="IsFNCumulativeRevenueUn?'errorTitle':''" tabindex="-1">{{store.getVal('between')}} {{store.format(undefined, DefaultMinimumAmount)}} - {{store.format(undefined, DefaultMaximumAmount)}}</ion-note>
+                                                    <span
+                                                        class="error">{{(FNCumulativeRevenueError)?FNCumulativeRevenueError:''}}</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="investorTypeView">
+                                <ng-container
+                                    *ngTemplateOutlet="dataAcItemHead; context: {isView:'investorTypeView',title:'funding_provider_type',validate:(FNSubmissionAccept || FPSubmissionAccept),show:(selectedFNFundingProviderType.length>0 || selectedFPFundingProviderType.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="investorTypeView ? 'auto' : '0'"
+                                    [style.overflow]="investorTypeView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-select id="FPFundingProviderType"
+                                                        selectTitle="investor_form"
+                                                        modalName="selectedFPFundingProviderType"
+                                                        [modal]="selectedFPFundingProviderType"
+                                                        [list]="FPFundingProviderTypeList"
+                                                        listName="FPFundingProviderTypeList" bindLabel="ReferenceName"
+                                                        bindValue="ReferenceKey" [isValidate]="FPSubmissionAccept"
+                                                        [isError]="IsFPFundingProviderTypeUn&&FPSubmissionAccept"
+                                                        [multiple]="true" [isNewTag]="true"
+                                                        (change)=customSelect($event)
+                                                        [disabled]="fp_funding_provider_type_same_as"></custom-select>
+
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-select id="FNFundingProviderType"
+                                                        selectTitle="investee_form"
+                                                        modalName="selectedFNFundingProviderType"
+                                                        [modal]="selectedFNFundingProviderType"
+                                                        [list]="FNFundingProviderTypeList"
+                                                        listName="FNFundingProviderTypeList" bindLabel="ReferenceName"
+                                                        bindValue="ReferenceKey" [isValidate]="FNSubmissionAccept"
+                                                        [isError]="IsFNFundingProviderTypeUn&& FNSubmissionAccept"
+                                                        [multiple]="true" [isNewTag]="true"
+                                                        (change)=customSelect($event,fp_funding_provider_type_same_as)></custom-select>
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="fp_funding_provider_type_same_as"
+                                                            (ionChange)="changeSwitch(fp_funding_provider_type_same_as,'selectedFNFundingProviderType','selectedFPFundingProviderType')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="induSectorView">
+                                <ng-container
+                                    *ngTemplateOutlet="dataAcItemHead; context: {isView:'induSectorView',title:'industries_sectors',show:(selectedFNIndustrySectors.length>0 || selectedFPIndustrySectors.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="induSectorView ? 'auto' : '0'"
+                                    [style.overflow]="induSectorView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-select id="FPIndustriesSectors" selectTitle="investor_form"
+                                                        modalName="selectedFPIndustrySectors"
+                                                        [modal]="selectedFPIndustrySectors"
+                                                        [list]="FPIndustriesSectorsList"
+                                                        listName="FPIndustriesSectorsList" bindLabel="ReferenceName"
+                                                        bindValue="ReferenceKey" [isValidate]="false" [isError]="false"
+                                                        [multiple]="true" [isNewTag]="true"
+                                                        (change)=customSelect($event)
+                                                        [disabled]="fp_industries_sectors_same_as"></custom-select>
+
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-select id="FNIndustriesSectors" selectTitle="investee_form"
+                                                        modalName="selectedFNIndustrySectors"
+                                                        [modal]="selectedFNIndustrySectors"
+                                                        [list]="FNIndustriesSectorsList"
+                                                        listName="FNIndustriesSectorsList" bindLabel="ReferenceName"
+                                                        bindValue="ReferenceKey" [isValidate]="false" [isError]="false"
+                                                        [multiple]="true" [isNewTag]="true"
+                                                        (change)=customSelect($event,fp_industries_sectors_same_as)></custom-select>
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="fp_industries_sectors_same_as"
+                                                            (ionChange)="changeSwitch(fp_industries_sectors_same_as,'selectedFNIndustrySectors','selectedFPIndustrySectors')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="investeeCompCountryView">
+                                <ng-container *ngTemplateOutlet="dataAcItemHead; context: {isView:'investeeCompCountryView',title:'countries_of_incorporation',validate:(FNSubmissionAccept || FPSubmissionAccept),show:(selectedFNCountriesOfIncorporation.length>0 || selectedFPCountriesOfIncorporation.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="investeeCompCountryView ? 'auto' : '0'" [style.overflow]="investeeCompCountryView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-tree-view-select id="FPCountriesOfIncorporation"
+                                                        [isCountry]="true" selectTitle="investor_form"
+                                                        from="Incorporation Country" firstKey="ReferenceKeyRegion"
+                                                        secondKey="SubRegionKey" thirdKey="CountryKey"
+                                                        firstLabel="Region" secondLabel="SubRegionName"
+                                                        thirdLabel="CountryName" ChildList="SubRegionJson"
+                                                        ChildList="SubRegionJson" SubChildList="CountryJson"
+                                                        selectedComponentLabel="selectedFPCountriesOfIncorporation"
+                                                        ComponentKey="selectedFPCountriesOfIncorporation"
+                                                        [preSelected]="selectedFPCountriesOfIncorporation"
+                                                        [respObj]="respObj" [list]="FPIncorporationCountryList"
+                                                        [isValidate]="FPSubmissionAccept"
+                                                        [disabled]="fp_countries_of_incorporation_same_as"
+                                                        [isError]="IsFPCountriesOfIncorporationUn &&FPSubmissionAccept"
+                                                        (change)="changeTreeData($event,fp_countries_of_incorporation_same_as)"></custom-tree-view-select>
+
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-tree-view-select id="FNCountriesOfIncorporation"
+                                                        [isCountry]="true" selectTitle="investee_form"
+                                                        from="Incorporation Country" firstKey="ReferenceKeyRegion"
+                                                        secondKey="SubRegionKey" thirdKey="CountryKey"
+                                                        firstLabel="Region" secondLabel="SubRegionName"
+                                                        thirdLabel="CountryName" ChildList="SubRegionJson"
+                                                        ChildList="SubRegionJson" SubChildList="CountryJson"
+                                                        selectedComponentLabel="selectedFNCountriesOfIncorporation"
+                                                        ComponentKey="selectedFNCountriesOfIncorporation"
+                                                        [preSelected]="selectedFNCountriesOfIncorporation"
+                                                        [respObj]="respObj" [list]="FNIncorporationCountryList"
+                                                        [isValidate]="FNSubmissionAccept"
+                                                        [isError]="IsFNCountriesOfIncorporationUn &&FNSubmissionAccept"
+                                                        (change)="changeTreeData($event,fp_countries_of_incorporation_same_as)"></custom-tree-view-select>
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="fp_countries_of_incorporation_same_as"
+                                                            (ionChange)="changeSwitch(fp_countries_of_incorporation_same_as,'selectedFNCountriesOfIncorporation','selectedFPCountriesOfIncorporation','FPIncorporationCountryList')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="investorDomCountryView">
+                                <ng-container *ngTemplateOutlet="dataAcItemHead; context: {isView:'investorDomCountryView',title:'countries_of_domicile_nationality',show:(selectedFNCountriesOfDomicileNationality.length>0 || selectedFPCountriesOfDomicileNationality.length>0)}"></ng-container>
+                                <div class="submenu" [style.height]="investorDomCountryView ? 'auto' : '0'" [style.overflow]="investorDomCountryView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-tree-view-select id="FPCountriesOfDomicileNationality" [isCountry]="true" selectTitle="investor_form" from="Domicile nationality Country" firstKey="ReferenceKeyRegion" secondKey="SubRegionKey" thirdKey="CountryKey" firstLabel="Region" secondLabel="SubRegionName" thirdLabel="CountryName" ChildList="SubRegionJson" ChildList="SubRegionJson" SubChildList="CountryJson" selectedComponentLabel="selectedFPCountriesOfDomicileNationality" ComponentKey="selectedFPCountriesOfDomicileNationality" [preSelected]="selectedFPCountriesOfDomicileNationality" [respObj]="respObj" [list]="FPDomicileNationalityCountryList" [isValidate]="false" [disabled]="fp_countries_of_domicile_nationality_same_as" [isError]="false" (change)="changeTreeData($event,fp_countries_of_domicile_nationality_same_as)"></custom-tree-view-select>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="form-group">
+                                                    <custom-tree-view-select id="FNCountriesOfDomicileNationality" [isCountry]="true" selectTitle="investee_form" from="Domicile nationality Country" firstKey="ReferenceKeyRegion" secondKey="SubRegionKey" thirdKey="CountryKey" firstLabel="Region" secondLabel="SubRegionName" thirdLabel="CountryName" ChildList="SubRegionJson" ChildList="SubRegionJson" SubChildList="CountryJson" selectedComponentLabel="selectedFNCountriesOfDomicileNationality" ComponentKey="selectedFNCountriesOfDomicileNationality" [preSelected]="selectedFNCountriesOfDomicileNationality" [respObj]="respObj" [list]="FNDomicileNationalityCountryList" [isValidate]="false" [isError]="false" (change)="changeTreeData($event,fp_countries_of_domicile_nationality_same_as)"></custom-tree-view-select>
+                                                    <div class="switchs_block mt">
+                                                        <ion-label>{{store.getVal('same_as_fundraise_need')}}</ion-label>
+                                                        <ion-toggle tabindex="-1" [ngModelOptions]="{standalone: true}" [(ngModel)]="fp_countries_of_domicile_nationality_same_as" (ionChange)="changeSwitch(fp_countries_of_domicile_nationality_same_as,'selectedFNCountriesOfDomicileNationality','selectedFPCountriesOfDomicileNationality','FPDomicileNationalityCountryList')"></ion-toggle>
+                                                    </div>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="disclaimerView">
+                                <ng-container
+                                    *ngTemplateOutlet="dataAcItemHead; context: {isView:'disclaimerView',title:'disclaimer_title',show:true}"></ng-container>
+                                <div class="submenu" [style.height]="disclaimerView ? 'auto' : '0'"
+                                    [style.overflow]="disclaimerView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="tittlediv">
+                                                    <ion-label [class]="IsFPDisclaimerUn?'errorTitle labels':'labels'" style="margin-bottom: 3px !important;display: block;">{{store.getVal('investor_form')}}</ion-label>
+                                                    <ion-label *ngIf="type != undefined" class="linkv" (click)="openDesModal('investor_disclaimer','fp_disclaimer','investor_disclaimer_title_term')"><i class="fa-solid fa-expand"></i></ion-label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <ion-label class="form-control declaimer val pointer" [style.color]="(fp_disclaimer != undefined && fp_disclaimer !='')?'black':'gray'"(click)="openDesModal('investor_disclaimer','fp_disclaimer','investor_disclaimer_title_term')"><i class="fa-solid fa-file-circle-plus"></i><span [innerHtml]="store.nl2br(fp_disclaimer != undefined && fp_disclaimer !=''?fp_disclaimer:store.getVal('investor_disclaimer_title_term'))"></span></ion-label>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="tittlediv">
+                                                    <ion-label [class]="IsFNDisclaimerUn?'errorTitle labels':'labels'" style="margin-bottom: 3px !important;display: block;">{{store.getVal('investee_form')}}</ion-label>
+                                                    <ion-label *ngIf="type != undefined" class="linkv" (click)="openDesModal('investee_disclaimer','fn_disclaimer','investee_disclaimer_title_term')"><i class="fa-solid fa-expand"></i></ion-label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <ion-label class="form-control declaimer val pointer" [style.color]="(fn_disclaimer != undefined && fn_disclaimer !='')?'black':'gray'"(click)="openDesModal('investee_disclaimer','fn_disclaimer','investee_disclaimer_title_term')"><i class="fa-solid fa-file-circle-plus"></i><span [innerHtml]="store.nl2br(fn_disclaimer != undefined && fn_disclaimer !=''?fn_disclaimer:store.getVal('investee_disclaimer_title_term'))"></span></ion-label>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="accordion" class="accordion">
+                            <div class="main" [class.active]="confidentialityView">
+                                <ng-container *ngTemplateOutlet="dataAcItemHead; context: {isView:'confidentialityView',title:'confidentiality_title',show:true}"></ng-container>
+                                <div class="submenu" [style.height]="confidentialityView ? 'auto' : '0'"
+                                    [style.overflow]="confidentialityView ? 'visible' : 'hidden'" #esg>
+                                    <ion-grid>
+                                        <ion-row class="acord-row">
+                                            <ion-col class="acord-col">
+                                                <div class="tittlediv">
+                                                    <ion-label [class]="IsFPConfidentiality?'errorTitle labels':'labels'" style="margin-bottom: 3px !important;display: block;">{{store.getVal('investor_form')}}</ion-label>
+                                                    <ion-label *ngIf="type != undefined" class="linkv" (click)="openDesModal('investor_confidentiality','fp_confidentiality','investor_confidentiality_title_term')"><i class="fa-solid fa-expand"></i></ion-label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <ion-label class="form-control declaimer val pointer" [style.color]="(fp_confidentiality != undefined && fp_confidentiality !='')?'black':'gray'"(click)="openDesModal('investor_confidentiality','fp_confidentiality','investor_confidentiality_title_term')"><i class="fa-solid fa-file-circle-plus"></i><span [innerHtml]="store.nl2br(fp_confidentiality != undefined && fp_confidentiality !=''?fp_confidentiality:store.getVal('investor_confidentiality_title_term'))"></span></ion-label>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col class="acord-col">
+                                                <div class="tittlediv">
+                                                    <ion-label [class]="IsFNConfidentiality?'errorTitle labels':'labels'" style="margin-bottom: 3px !important;display: block;">{{store.getVal('investee_form')}}</ion-label>
+                                                    <ion-label *ngIf="type != undefined" class="linkv" (click)="openDesModal('investee_confidentiality','fn_confidentiality','investee_confidentiality_title_term')"><i class="fa-solid fa-expand"></i></ion-label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <ion-label class="form-control declaimer val pointer" [style.color]="(fn_confidentiality != undefined && fn_confidentiality !='')?'black':'gray'"(click)="openDesModal('investee_confidentiality','fn_confidentiality','investee_confidentiality_title_term')"><i class="fa-solid fa-file-circle-plus"></i><span [innerHtml]="store.nl2br(fn_confidentiality != undefined && fn_confidentiality !=''?fn_confidentiality:store.getVal('investee_confidentiality_title_term'))"></span></ion-label>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <bottom-btn styleD="center" isShow="0" leftBtn="Update" leftKey="update" (change)="submitForm($event)"></bottom-btn>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+<ng-template #dataAcItemHead let-isView="isView" let-title="title" let-validate="validate" let-show="show">
+    <div class="menu" (click)="viewSH(isView)">
+        <i class="fa fa-chevron-down"></i>
+        {{store.getVal(title)}} {{validate?'*':''}}
+        <i *ngIf="show" class="fa-solid fa-eye"></i>
+    </div>
+</ng-template>

@@ -1,0 +1,32 @@
+th {
+    background: var(--ion-color-black);
+    color: var(--ion-color-white);
+}
+ion-grid, ion-col, ion-row {
+	padding: 0px !important;
+}
+#app-ui table {
+    margin-bottom: 10px;
+}
+
+.top-div {
+    display: flex;
+}
+
+.downloads {
+    padding: 5px 0px 0px 10px;
+}
+
+@media (max-width: 480px) {
+    .mb-tbl table tr td:nth-child(1) {
+        word-break: break-word;
+        width: 35%;
+    }
+    .mb-tbl table tr td {
+        word-break: break-word;
+        width: 65%;
+    }
+    .mb-tbl table tr td:nth-child(2) {
+        word-break: break-all;
+    }
+}

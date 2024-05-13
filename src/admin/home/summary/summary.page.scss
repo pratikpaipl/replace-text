@@ -1,0 +1,29 @@
+
+#serch_component {
+    background: transparent;
+    padding: 0px;
+}
+
+
+h1{
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    font-size: 40px;
+}
+
+.overlay1{
+    padding: 15px;
+    margin:  10px -15px -15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-repeat: no-repeat;
+    height: calc(100vh - 113px);
+}
+@media (max-width: 830px) {
+    .overlay1{
+        height: calc(100vh - 180px);
+    }
+}

@@ -1,0 +1,82 @@
+<ion-app>
+    <ion-menu side="start" menuId="home" contentId="content1">
+        <ion-content>
+            <ion-list style="padding: 0px;">
+
+                <div *ngIf="isLogin">
+                    <ion-item *ngFor="let item of segments" class="list-item" (click)="item.key =='back-office'?undefined:ClickItem('admin',item.key)">
+                        <div style="padding-left: 0px; width: 100%;" [ngClass]='activePage'>
+                            <ion-label class="lbl-style-m" style="background: var(--ion-color-light-white);color: black !important;" *ngIf="item.title != undefined">{{item.title}}</ion-label>
+                            <ion-label [class]="'lbl-style-m '+item.key"><i *ngIf="item.icon != undefined && item.icon !=''" [class]="item.icon"></i>
+                                <a class="clickEv" *ngIf="item.key =='back-office' || item.key =='switch-to-marcket-place' ">{{item.label}}</a>
+                                <a class="clickEv" *ngIf="item.key !='back-office' && item.key !='switch-to-marcket-place'" [href]="getPath('admin',item.key)">{{item.label}}</a></ion-label>
+                        </div>
+                    </ion-item>
+                </div>
+
+                <div *ngIf="!isLogin">
+                    <ion-item class="list-item " (click)="ClickItem('admin','plans_and_pricing')">
+                        <ion-label class="lbl-style-m"><i class="fa-file-invoice fa-solid"></i>
+                            <a class="clickEv" [href]="getPath('admin','plans_and_pricing')">{{store.getVal('plans_and_pricing')}}</a></ion-label>
+                    </ion-item>
+                    <ion-item class="list-item"  (click)="ClickItem('auth','signup')">
+                        <ion-label class="lbl-style-m"><i class="fa-solid fa-user-plus"></i><a class="clickEv" [href]="getPath('auth','signup')">{{store.getVal('sign_up')}}</a></ion-label>
+                    </ion-item>
+                    <ion-item class="list-item " (click)="ClickItem('auth','login')">
+                        <ion-label class="lbl-style-m"><i class="fa-solid fa-chalkboard-user"></i>
+                            <a class="clickEv" [href]="getPath('auth','login')">{{store.getVal('log_in')}}</a></ion-label>
+                    </ion-item>
+                   
+                </div>
+                <!-- <div>
+                    <ion-item class="list-item">
+                        <ion-label class="lbl-style-m" [ngClass]='activePage' (click)="Contact()">
+                            <i [class]="'fa-regular fa-comment'"></i>{{store.getVal('contact_us')}}
+                        </ion-label>
+                    </ion-item>
+                </div>
+                <div *ngIf="isLogin">
+                    <ion-item class="list-item" (click)="logout()">
+                        <ion-label class="lbl-style-m"><i class="fa-solid fa-right-from-bracket"></i>{{store.getVal('log_out')}}</ion-label>
+                    </ion-item>
+                </div> -->
+
+                <ion-item class="list-item">
+                    <div class="social_icons">
+                        <a href="https://www.facebook.com/pi2Life" target="_blank">
+                            <ion-img src="assets/images/fb.png" alt=""></ion-img>
+                        </a>
+                        <a href="https://twitter.com/Pi2Life" target="_blank">
+                            <ion-img src="assets/images/twitter.png" alt=""></ion-img>
+                        </a>
+                        <a href="https://www.linkedin.com/company/pi2life/" target="_blank">
+                            <ion-img src="assets/images/linkdeen.png" alt=""></ion-img>
+                        </a>
+                        <a href="https://www.instagram.com/pi2life/" target="_blank">
+                            <ion-img src="assets/images/insta-w.png" alt=""></ion-img>
+                        </a>
+                    </div>
+                </ion-item>
+
+            </ion-list>
+
+        </ion-content>
+    </ion-menu>
+    <ion-menu side="end" menuId="profile" *ngIf="isLogin" contentId="content1">
+        <ion-content>
+            <ion-list style="padding: 0px;">
+                <div>
+                    <ion-item class="list-item headers" (click)="closeSub('profile')">
+                        <ion-label class="lbl-style-m sub_ele">{{store.getVal('back')}}</ion-label>
+                    </ion-item>
+                    <ion-item *ngFor="let item of segmentsProfile" class="list-item" (click)="ClickItem('user',item.key)">
+                        <ion-label class="lbl-style-m "><i *ngIf="item.icon != undefined" [class]="item.icon"></i><a class="clickEv" [href]="getPath('user',item.key)">{{item.label}}</a></ion-label>
+                    </ion-item>
+                </div>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="content1"></ion-router-outlet>
+    <app-loading style="z-index: 1111111;"></app-loading>
+
+</ion-app>

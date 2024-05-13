@@ -1,0 +1,18 @@
+<div class="top-div">
+    <btn-title [pageLbl]="this.store.getVal(pageTitle)" [pageType]="pageType" [permissions]="permissions"></btn-title>
+    <div class="downloads navigation_compo" *ngIf="allTotal != undefined && allTotal > 0">
+        <i class="fas fa-download pointer" (click)="download($event)"></i>
+    </div>
+</div>
+
+<ion-grid class="container1" [ngClass]="isShow?'mb-scroll':''" #content>
+    <refresher (change)="callPullRefresh($event)"></refresher>
+    <ion-row class="counts_filter_block">
+        <ion-col class="tab_contents details-page" style="padding-right: 0px;">
+            <div id="app-ui"  class="items_counts">
+                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+            </div>
+            <funding-profiles-match-report-items *ngIf="pageType != ''" [displayMode]="2"  [pageType]="pageType" from="profile" [pageFrom]="pageFrom" [FN_EnablerSlug]="FN_EnablerSlug" apiEnd="report/my_fp_match_report" [openFront]="openFront" apiAction="funding_profile_enabler" [updateTime]="updateTime" (change)="updateCount($event)"></funding-profiles-match-report-items>
+        </ion-col>
+    </ion-row>
+</ion-grid>

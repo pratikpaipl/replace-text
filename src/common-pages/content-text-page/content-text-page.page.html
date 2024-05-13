@@ -1,0 +1,28 @@
+<!-- <app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header> -->
+<page-header-back [pageTitle]="store.getVal(titleKey)+((type != 'form-configuration' && type != 'add' && type != 'edit' && type != 'edit_fp' && type != 'edit_fn' && type != 'add_fp' && type != 'add_fn' && type !='my_edit' && type != 'clone'  && type != 'investor'  && type != 'investee')?'('+type+')':'')" (change)="store.headerAction($event)"></page-header-back>
+<ion-content #content>
+  <div class="page_wapper" style="padding-top: 15px !important">
+      <div id="all_ui">
+          <ion-grid class="container">
+            <ion-row class="forms_row" id="topRow" *ngIf="enablerData != undefined">
+                <ion-col class="forms_conponenl" style="text-align: center;">
+                    <item-card-enabler [prod]="enablerData" [isMain]="false" [subtype]="'enablers'" [EnablerSlug]="enablerData.EnablerSlug" [FPEnablerSlug]="" [type]="'enablers'" [apiAction]="'enablers'" [isAddForm]="true" [from]="store.appType == 'admin'?'admin':'user'" pageFrom="list"></item-card-enabler>
+                </ion-col>
+            </ion-row>
+              <ion-row class="forms_row" *ngIf="isView">
+                  <ion-col class="forms_conponenl">
+                      <div id="myprofile" class="forms_block" style="padding: 20px !important;">
+                          <div class="form-group" style="margin-bottom: 0 !important;">
+                              <ion-label *ngIf="titleTerm != undefined && titleTerm !='' && type == 'form-configuration'">{{store.getVal(titleTerm)}}</ion-label>
+                              <text-area *ngIf="type == 'form-configuration' && fromVar != undefined" id="desclaimerContent" [(ngModel)]="fromVar"></text-area>
+                              <ion-label *ngIf="type != 'form-configuration'" [innerHtml]="store.nl2br(fromVar)" style="margin: 0px !important;"></ion-label>
+                              <bottom-btn *ngIf="type == 'form-configuration'" styleD="center" [leftKey]="'submit'" [rightKey]="'cancel'" [leftBtn]="store.getVal('submit')" screen="1" [rightBtn]="store.getVal('cancel')" (change)="callAction($event)" isShow="1"></bottom-btn>
+                          </div>
+                      </div>
+                  </ion-col>
+              </ion-row>
+          </ion-grid>
+      </div>
+  </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

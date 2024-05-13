@@ -1,0 +1,85 @@
+<div class="section section-black fadeInUp">
+  <div class="container container-lg">
+      <div>
+          <ion-grid>
+              <ion-row>
+                  <ion-col class="col-min-40">
+                      <a class="clickEv" href="/home" (click)="openPage('/home')">
+                          <img src="assets/images/logos/Funder-F.png" alt="Funder" class="logo">
+                      </a><br >
+                      <p style="color: white; font-size: 15px;">{{store.getVal('website_key_5')}}</p>
+                  </ion-col>
+                  <ion-col class="col-min-15" style="color: var(--ion-color-white);">
+                    <ion-label (click)="openPage('/about')">
+                        <a class="clickEv" href="/about">{{store.getVal('website_key_22')}}</a>
+                    </ion-label><br >
+                      <a href="https://pi2.life/terms-conditions/" target="_blank">{{store.getVal('website_key_23')}}</a> & <a href="https://pi2.life/privacy-policy/" target="_blank">{{store.getVal('website_key_24')}}</a><br >
+                      <ion-label (click)="openPage('/contact')">
+                          <a href="/contact">{{store.getVal('website_key_122')}}</a>
+                      </ion-label><br >
+                      <ion-label (click)="openPage('/faq')">
+                          <a href="/faq">{{store.getVal('website_key_25')}}</a>
+                      </ion-label>
+                  </ion-col>
+                  <ion-col class="col-min-15">
+                    <ion-label class="lbl-style-m" (click)="openPage('/how-it-works')">
+                        <a class="clickEv" href="/how-it-works">{{store.getVal('website_key_3')}}</a>
+                    </ion-label><br >
+                      <ion-label class="lbl-style-m" (click)="openPage('/features')">
+                        <a class="clickEv" href="/features">{{store.getVal('website_key_28')}}</a>
+                    </ion-label><br >
+                      <ion-label (click)="openPage('/plans-and-pricing')">
+                          <a class="clickEv" href="/plans-and-pricing" target="_blank">{{store.getVal('website_key_27')}}</a>
+                      </ion-label><br>
+                      <ion-label class="lbl-style-m" (click)="openPage('/partners')">
+                        <a class="clickEv" href="/partners">{{store.getVal('website_key_29')}}</a>
+                      </ion-label><br>
+                      <ion-label class="lbl-style-m">
+                        <a [href]="adminPath" target="_blank"><i class="fa-solid fa-shuffle" style="margin-right: 05px;"></i>{{store.getVal('website_key_157')}}</a>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col class="col-min-30">
+                    <ion-label (click)="openPage('/solutions/impact-investor-clubs')">
+                        <a class="clickEv" href="/solutions/impact-investor-clubs">{{store.getVal('website_key_30')}}</a>
+                    </ion-label><br >
+
+                    <ion-label (click)="openPage('/solutions/impact-and-sustainability-ecosystems')">
+                        <a class="clickEv" href="/solutions/impact-and-sustainability-ecosystems">{{store.getVal('website_key_31')}}</a>
+                    </ion-label><br >
+                    <ion-label (click)="openPage('/solutions/incubators-and-accelerators')">
+                        <a class="clickEv" href="/solutions/incubators-and-accelerators">{{store.getVal('website_key_32')}}</a>
+                    </ion-label><br >
+                    <ion-label (click)="openPage('/solutions/investment-advisors-and-fundraisers')">
+                        <a class="clickEv" href="/solutions/investment-advisors-and-fundraisers">{{store.getVal('website_key_33')}}</a>
+                    </ion-label>
+                    <ion-label (click)="openPage('/impact-funding-resources')">
+                        <a class="clickEv" href="/impact-funding-resources">{{store.getVal('website_key_34')}}</a>
+                    </ion-label><br >
+                    
+                  </ion-col>
+              </ion-row>
+              <ion-row style="align-items: center;">
+                  <ion-col class="col-min-40 order-2">
+                      <div class="column text-body-sm text-quiet" style="margin: 8px 0;font-size: 15px;">© {{year}} {{store.getVal('website_key_123')}}</div>
+                  </ion-col>
+                  <ion-col class="order-1">
+                      <ul class="social_icons">
+                          <li>
+                              <a href="https://www.facebook.com/pi2Life" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                          </li>
+                          <li>
+                              <a href="https://twitter.com/pi2Life" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                          </li>
+                          <li>
+                              <a href="https://www.linkedin.com/company/pi2life/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                          </li>
+                          <li>
+                              <a href="https://www.instagram.com/pi2life/" target="_blank"><i class="fab fa-instagram"></i></a>
+                          </li>
+                      </ul>
+                  </ion-col>
+              </ion-row>
+          </ion-grid>
+      </div>
+  </div>
+</div>

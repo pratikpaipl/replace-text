@@ -1,0 +1,69 @@
+<ngx-datatable #fundraiseSubmmit id="web-ui" *ngIf="rows.length>0" class="material expandable" columnMode="force" [rows]="rows" [columns]="columnsWithCheckbox" [footerHeight]="50" [scrollbarH]="true" [rowHeight]="getRowHeight" [summaryRow]="false" [summaryPosition]="'bottom'" [messages]="{emptyMessage: store.getMsg(store.searchMsg), totalMessage: 'Total'}" [loadingIndicator]="false" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)="setPage(false,$event)">
+    <ngx-datatable-column [headerClass]="column.isFaci?' enabler-head':column.isColor?' gray-head':''" [cellClass]="''" *ngFor="let column of columnsWithCheckbox; let i = index;" [name]="store.nl2br(store.getVal(column.name))" [prop]="column.prop" [resizeable]="column.resisable" [sortable]="column.sortable"  [frozenLeft]="column.frozenLeft" [width]="column.width">
+        <ng-template let-column="column" ngx-datatable-header-template>
+            <span [class]="''" innerHtml="{{ column.name }}"></span>
+        </ng-template>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex"  >
+            <div [class]="column.showExp && value !=''?' action-arrow':''">
+                <i *ngIf="column.showExp && value !=''" [class.datatable-icon-right]="!row.expanded" [class.datatable-icon-down]="row.expanded" (click)="toggleExpandRow(row,rowIndex)"></i>
+                <span container="body" [adaptivePosition]="false" [style.cursor]="column.click && value !='0'?'pointer':'auto'" [style.color]="(column.click && value !='0')?'blue':''">
+                    <div [style.display]="column.name == 'enabler_name'?'flex':'initial'" [style.align-items]="column.name == 'enabler_name'?'flex-start':'initial'">
+                    <img alt="" *ngIf="column.route == 'enablers'"  [src]="row.EnablerLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                     
+                     <span *ngIf="column.isStatus">{{store.getScrenigStatus(store.SubmitterConfirmationResult,value)}}</span>
+                    <a *ngIf="column.isMail" class="expand-data" style="color: blue;" href="mailto:{{value}}" tabindex="-1">{{value}}</a>                    
+                    <span *ngIf="column.isDate" innerHtml="{{ value | date: (column.isRise?'dd MMM yyyy' :'dd MMM yyyy hh:mm a'):'UTC'}}&nbsp;{{column.isRise?'':this.store.getVal('utc')}}"></span>
+                    <div *ngIf="column.click && value !='0'">
+                        <div (click)="(!column.isMail && column.click && value !='0')?onClick(row,column.route,column.FilterType):null">
+                            <i *ngIf="column.isIndicat && (row.IsOperative == 0 || row.EnablerValid == 0)" class="fa fa-ban" aria-hidden="true"></i>
+                            <a style="color: blue;text-decoration:none" [class]="row.IsFeatured==1 && column.icon ?'clickEv Featured':'clickEv'" [href]="routePath(row,column.route,column.FilterType)" tabindex="-1"><i [class]="value.includes('MIR-')?'fa-brands fa-space-awesome':column.icon" style="margin-right: 5px;" *ngIf="column.icon != undefined"></i>{{value}}</a>
+                        </div>
+                    </div>
+                    <span *ngIf="!column.isStatus && !column.isDrop && !column.isDate && !column.isMail && !(column.click && value !='0')" [class]="!column.showExp?'expand-data':''"><img alt="" class="item-logo-img" *ngIf="((column.prop =='CompanyName' ) && row.Logo != undefined && row.Logo != '')" [src]="row.Logo" onerror="src='assets/images/no-image-icon-5.jpg'"/><span innerHtml="{{value}}"></span></span>
+                    <div *ngIf="column.isDrop">
+                        <div *ngIf="column.prop == 'IsActive'">
+                            <ion-select interface="popover" class="status" *ngIf="store.checkPermission(row,'active')" [(ngModel)]="row[column.prop]" (ngModelChange)="changeStatus('active',column.prop,row[column.prop],row,rowIndex)" tabindex="-1">
+                                <ion-select-option *ngFor="let e of store.ActiveStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                            </ion-select>
+                            <span *ngIf="!store.checkPermission(row,'active')">{{store.getScrenigStatus(store.ActiveStatusResult,row[column.prop])}}</span>
+                        </div>
+                        <div *ngIf="column.prop == 'IsEnable'">
+                            <ion-select interface="popover" class="status" *ngIf="store.checkPermission(row,'enable')" [(ngModel)]="row[column.prop]" (ngModelChange)="changeStatus('enable',column.prop,row[column.prop],row,rowIndex)" tabindex="-1">
+                                <ion-select-option *ngFor="let e of store.EnableStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                            </ion-select>
+                            <span *ngIf="!store.checkPermission(row,'enable')">{{store.getScrenigStatus(store.EnableStatusResult,row[column.prop])}}</span>
+                        </div>
+                        <div *ngIf="column.prop == 'DataStatus'">
+                            <ion-select interface="popover" [disabled]="row.IsEmailVerified == '0'?true:false" *ngIf="store.checkPermission(row,'data_status')" class=" status" [(ngModel)]="row[column.prop]" (ngModelChange)="changeStatus('data_status',column.prop,row[column.prop],row,rowIndex,true)" tabindex="-1">
+                                <ion-select-option *ngFor="let e of store.DataStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                            </ion-select>
+                            <span *ngIf="!store.checkPermission(row,'data_status')">{{store.getScrenigStatus(store.DataStatusResult,''+row[column.prop])}}</span>
+                        </div>
+                        <div *ngIf="column.prop == 'ScreeningStatus'">
+                            <span *ngIf="row.ScreeningStatusName != undefined">{{row.ScreeningStatusName}}</span>
+                        </div>
+                        <div *ngIf="column.prop == 'IsFeatured'">
+                            <ion-select interface="popover" *ngIf="store.checkPermission(row,'featured')" class=" status" [(ngModel)]="row[column.prop]" (ngModelChange)="changeStatus('featured',column.prop,row[column.prop],row,rowIndex)" tabindex="-1">
+                                <ion-select-option *ngFor="let e of store.PublishStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                            </ion-select>
+                            <span *ngIf="!store.checkPermission(row,'featured')">{{store.getScrenigStatus(store.PublishStatusResult,row[column.prop])}}</span>
+                        </div>
+                    </div>
+                </div>
+                </span>
+            </div>
+        </ng-template>
+    </ngx-datatable-column>    
+    <ngx-datatable-column [name]="store.getVal('action')" [sortable]="false" [width]="90">
+        <ng-template let-column="column" ngx-datatable-header-template>
+            <span>{{ column.name }}</span>
+        </ng-template>
+        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-cell-template>
+            <act-menu [from]="from" [pageFrom]="pageFrom" [pageType]="pageType" [subType]="''" [prod]="row" [title]="''" [Name]="Name" [EnablerSlug]="EnablerSlug" [FN_EnablerSlug]="row.FN_EnablerSlug != undefined?row.FN_EnablerSlug:''" [FundraiseSlug]="row.FundraiseSlug != undefined?row.FundraiseSlug:''" [ActionType]="ActionType"></act-menu>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>
+<item-tbl id="app-ui" *ngFor="let item of rowsMobile;let i=index" [columnsWithCheckbox]="columnsWithCheckbox" [itemTitle]="getTitle(item)" [isMain]="false" [prod]="item" [subtype]="pageType" [type]="pageType" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [Name]="" [ProfileSlug]="ProfileSlug" [FN_EnablerSlug]="item.FN_EnablerSlug" [EnablerSlug]="EnablerSlug" [FNEnablerSlug]="item.FN_EnablerSlug" [ActionType]="ActionType" [apiAction]="apiAction" (change)="callAction($event,i)"></item-tbl>
+<app-empty-list *ngIf="isShowMsg" [msg]="store.searchMsg" type="{{ pageType }}"></app-empty-list>
+<app-page-end id="app-ui" *ngIf="rowsMobile.length !=0 && rowsMobile.length == EnablerTotal" type="{{ pageType }}"></app-page-end>
+<infinite-scroll id="app-ui" [items]="rowsMobile" [itemTotal]="EnablerTotal" (change)="doInfinitePage($event)"></infinite-scroll>

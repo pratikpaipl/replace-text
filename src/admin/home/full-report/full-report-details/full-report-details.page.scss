@@ -1,0 +1,209 @@
+.title-col {
+    background: var(--ion-color-black);
+    color: var(--ion-color-white) !important;
+}
+
+ion-grid,
+ion-col,
+ion-row {
+    padding: 0px !important;
+}
+ion-select{
+    min-width: 120px;
+}
+tr.ext-head,tr.ext-head-ref,tr.ext-head-title {
+    background: #EEE!important;
+    position: sticky;
+    top: 85px;
+    z-index: 99999;
+}
+
+tr.ext-head-ref {
+    background: var(--ion-color-white) !important;
+    top: 40px;
+}
+tr.ext-head-title {
+    background: var(--ion-color-white) !important;
+    top: -1px;
+}
+.extra-spacing{
+    padding: 0px 0px 10px 0px;
+}
+
+.ext-head {
+    font-weight: bold;
+    color: var(--ion-color-black) !important;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.ext-head div {
+    font-weight: bold;
+    color: var(--ion-color-black) !important;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+thead tr.first th, thead tr.first td {
+    position: sticky;
+    top: 0;
+    background: #eee;
+  }
+  
+  thead tr.second th, thead tr.second td {
+    position: sticky;
+    top: 17px;
+    background: #eee;
+  }
+
+div {
+    font-size: 12px;
+    color: var(--ion-color-gray);
+    align-items: center;
+    display: flex;
+    padding: 5px;
+    line-height: 15px;
+}
+.v-aligh-in-block{
+    display: inline-block;
+    vertical-align: middle;
+}
+div a{
+    text-decoration: auto;
+    font-size: 12px;
+    line-height: 15px;
+}
+.pitch-status {
+    background: transparent !important;
+    border:1px solid #18213c !important;
+    cursor: not-allowed;
+    color: #18213c !important;
+}
+
+.patch-btn i, .pitch-status i{
+    margin-right: 0px;
+}
+.admin_right_panel {
+    padding: 12px !important;
+    background: white !important;
+    border-radius: 10px;
+    box-shadow: 0 0px 4px var(--ion-color-gray);
+    margin-bottom: 30px;
+}
+
+tr.gray-back {
+    background: #80808063;
+}
+
+.tbl-title {
+    background: var(--ion-color-black);
+    padding: 10px 0 10px 15px;
+    color: var(--ion-color-white) !important;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+}
+table {
+    border-collapse: collapse;
+    width: 100% !important;
+}
+table tr th.tbl-title:nth-child(2){
+    background: var(--ion-color-txt-color) !important;
+    color: var(--ion-color-white) !important;
+}
+table tr th.tbl-title:nth-child(3) {
+    background: #f1f1f1f1 !important;
+    color: var(--ion-color-txt-color) !important;
+}
+
+table tr td {
+    min-width: 150px;
+    width: 20%;
+    // vertical-align: top;
+}
+table tr td span{
+    font-size: 12px;
+    line-height: 15px;
+}
+
+table tr:first-child {
+    vertical-align: middle !important;
+}
+
+table tr td:nth-child(2),
+table tr td:nth-child(3) {
+    width: 40%;
+}
+
+
+.downloads {
+    text-align: end;
+    padding: 10px 10px;
+}
+
+@media (max-width: 992px) {
+    .extra-spacing{
+        padding: 10px !important;
+    }
+}
+@media (max-width: 830px) {  
+    table tr td {
+        min-width: auto;
+        text-indent: initial !important;
+        width: 24%;
+        font-size: 11px;
+        line-height: 13px;
+    }
+    table tr td:nth-child(2),
+    table tr td:nth-child(3) {
+        word-break: break-word;
+        width: 38%;
+    }
+    div {
+        font-size: 11px;
+        padding: 2px;
+        line-height: 13px;
+    }
+    .ext-head div {
+        font-size: 15px;
+        line-height: 17px;
+    }
+    .tbl-title {
+        display: revert;
+        font-size:15px;
+        line-height: 17px;
+        padding: 16px;
+    }
+    
+    td#app-ui {
+        border-radius: 0px;
+    }
+    .patch-btn{
+        // padding: 2px 2px 2px 5px !important;
+        white-space: normal;
+        display: flex;
+        align-items: center;
+        font-size: 11px;
+        line-height: 13px;
+        text-align: left;
+    }
+    .patch-btn.view {
+        display: initial !important;
+        padding: 6px 10px !important;
+    }
+    .fixTableHead table tr {
+        display: block;
+        box-shadow: 0 0 4px rgba(32, 33, 36, 0.28);
+        margin: 10px 2px;
+        padding: 0px;
+        border-radius: 10px;
+    }
+}
+@media (max-width: 425px) {
+    tr.ext-head{
+        top: 90px;
+    }
+    tr.ext-head-ref{
+        top: 47px;
+    }
+}

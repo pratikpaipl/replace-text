@@ -1,0 +1,17 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerActionAdmin($event)"></app-page-header>
+<ion-content #content [scrollEvents]="true">
+  <div class="page_wapper">
+    <div id="all_ui" *ngIf="loadMsg !=''">
+      <ion-grid class="container">
+        <ion-row class="forms_row">
+          <ion-col class="right_panel">
+            <div class="form-group" style="text-align: center; margin-top: 15px;margin-bottom: 0px;">
+              <error-view [isError]="isSuccess" [leftKey]="leftKey" [leftBtn]="leftBtn" [isShow]="isShow" [dataAction]="dataAction" [message]="loadMsg" actionFrom="auth" (change)="callAction($event)"  ></error-view>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

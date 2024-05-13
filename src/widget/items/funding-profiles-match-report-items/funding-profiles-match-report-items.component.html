@@ -1,0 +1,83 @@
+<div *ngIf="displayMode == 2">
+  <ngx-datatable #fundingProfileMatch *ngIf="rows.length>0"  id="web-ui" class="material expandable" [columnMode]="'force'" [rows]="rows" [columns]="columnsWithCheckbox" [footerHeight]="50" [scrollbarH]="true" [rowHeight]="getRowHeight" [summaryRow]="false" [summaryPosition]="'bottom'" [messages]="{emptyMessage: store.getMsg(store.searchMsg), totalMessage: 'Total'}" [loadingIndicator]="false" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)="setPage(false,$event)">
+      <ngx-datatable-column [headerClass]="column.color" [cellClass]="''" *ngFor="let column of columnsWithCheckbox ; let i = index;" [name]="store.nl2br(store.getVal(column.name))" [prop]="column.prop" [resizeable]="column.resisable" [sortable]="column.sortable"  [frozenLeft]="column.frozenLeft" [width]="column.width">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              <span [class]="''" innerHtml="{{i == 0 || (pageFrom == 'details' && i == 1)?'':column.name}}"></span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+            <div *ngIf="column.prop == 'LastIntroduceDate' && row.LastIntroduceDate == undefined && store.appType =='admin'" [class]="'l-date'" style="background-color: transparent !important;">
+              <ion-label [class]="((row.FPExpressedInterestKey =='yes' || row.FNExpressedInterestKey == 'yes') || (row.FPReactionValueKey =='yes' || row.FNReactionValueKey == 'yes'))?'patch-btn active pointer':'patch-btn disable'" (click)="((row.FPExpressedInterestKey =='yes' || row.FNExpressedInterestKey == 'yes') || (row.FPReactionValueKey =='yes' || row.FNReactionValueKey == 'yes'))?callIntroduce('fundraise_funding_profile',row):null">{{store.getVal('make_introduction')}}</ion-label>
+            </div>
+              <div [class]="column.showExp && value !=''?' action-arrow':''">
+                <i *ngIf="column.showExp && value !='' " [class.datatable-icon-right]="!row.expanded" [class.datatable-icon-down]="row.expanded" (click)="toggleExpandRow(row,rowIndex)"></i>
+                <span container="body" [adaptivePosition]="false"  [style.cursor]="(!column.isMail && (column.route =='enablers'?row.EnablerClick!=0&& value !='0'?true:false:column.click&& value !='0'))?'pointer':'auto'" [style.color]="(!column.isMail && (column.route =='enablers'?row.EnablerClick!=0&& value !='0'?true:false:column.click&& value !='0'))?'blue':''">
+                  <div [style.display]="column.name == 'enabler'?'flex':'initial'" [style.align-items]="column.name == 'enabler'?'flex-start':'initial'">
+                    <img alt=""*ngIf="column.route == 'enablers'"  [src]="row.EnablerLogo"  onerror="src='assets/images/no-image-icon-5.jpg'"/>
+
+                    <a *ngIf="column.isMail" class="expand-data"style="color: blue;" href="mailto:{{value}}" tabindex="-1">{{value}}</a>
+                    <div *ngIf="(column.route =='enablers'?row.EnablerClick!=0&& value !='0'?true:false:column.click&& value !='0')">
+                      <div (click)="!column.isMail && (column.route =='enablers'?row.EnablerClick!=0&& value !='0'?true:false:column.click&& value !='0')?onClick(row,column.route,column.extraPath,column.FilterType):null">
+                        <a [class]="row[column.prop =='FNReferenceCode'?'FNIsFeatured':'IsFeatured']==1 && column.icon ?'clickEv Featured':'clickEv'" style="color: blue;text-decoration:none" [href]="routePath(row,column.route,column.extraPath,column.FilterType)" tabindex="-1">
+                          <i class="fa-sharp fa-solid fa-eye" style="margin-right: 5px;" *ngIf="(pageFrom =='details' && i == 0)"></i>
+                          <i *ngIf="(column.prop == 'ReferenceCode' && row.IsMyFundingProfile == 1)" class="ion-img far fa-user-circle"></i>
+                          <i [class]="value.includes('SIP-')?'fa-money-bill-transfer fa-solid':column.icon" style="margin-right: 5px;" *ngIf="column.icon != undefined"></i>{{i == 0 || (pageFrom =='details' && i == 1)?this.store.getVal(column.name):value}}</a>
+                        </div>
+                  </div>
+
+                        <div *ngIf="!column.isMail && !column.isPitch && !column.isDrop&& !(column.route =='enablers'?row.EnablerClick!=0&& value !='0'?true:false:
+                        column.click&& value !='0')">
+                          <i [class]="value.includes('SIP-')?'fa-money-bill-transfer fa-solid':column.icon" style="margin-right: 5px;" *ngIf="column.icon != undefined && value != undefined && value !=''" [style.color]="column.icon != undefined?'var(--ion-color-dark-green)':'inherit'"></i>
+                          <img alt="" class="item-logo-img" style="padding-right: 0px;" *ngIf="(column.prop =='ProfileName' && row.Logo != undefined && row.Logo != '')" [src]="row.Logo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                          <img alt="" class="item-logo-img" style="padding-right: 0px;" *ngIf="(column.prop =='ProfileName' && row.FPLogo != undefined && row.FPLogo != '')" [src]="row.FPLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                          <span [style.color]="column.icon != undefined?'var(--ion-color-dark-green)':'inherit'" [class]="!column.showExp?'expand-data':''" innerHtml="{{(column.isDate?(value | date:'dd MMM yyyy hh:mm a':'UTC'):value)}}{{column.isPer?'%':''}} {{(column.isDate && value!=undefined && value!=''?store.getVal('utc'):'')}}"></span>
+                        </div>
+                        <span *ngIf="column.isPitch && column.isInvestee" style="display: block;
+                        padding-top: 4px;padding-bottom: 4px;">
+                        <ion-label *ngIf="row.PitchRequestEnable == 0 && (row.IsMyFundraise == 1 || store.appType =='admin')" class="patch-btn no-pointer" style="cursor: not-allowed !important;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+                        <ion-label *ngIf="row.PitchRequestEnable == 1 && (row.IsMyFundraise == 1 || store.appType =='admin')" [class]="'patch-btn view pointer'" (click)="callRequest(row,true)"><i [class]="'fa-solid fa-eye'"></i>{{store.getVal('view_pitch')}}</ion-label>
+                        </span>
+                        <span *ngIf="column.isPitch && column.isInvestor && row.PitchRequestEnable == 0" style="display: block; padding-top: 4px;padding-bottom: 4px;">
+                          <ion-label class="patch-btn no-pointer" style="cursor: not-allowed !important;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+                        </span>
+                      <span *ngIf="column.isPitch && column.isInvestor && row.PitchRequestEnable == 1">
+                        <div class="pitch-status" *ngIf="store.appType !='admin'">
+                          <ion-label *ngIf="row.IsMyFundingProfile == 1 && (row.PitchRequestStatus==undefined || row.PitchRequestStatus =='' || row.PitchRequestStatus=='approved' || row.PitchRequestStatus == 'blank') " [class]="row.PitchRequestStatus=='approved'?'patch-btn view pointer':'patch-btn border pointer'" (click)="callRequest(row,row.PitchRequestStatus != undefined && row.PitchRequestStatus != 'blank' && row.PitchRequestStatus != '')"><i [class]="(row.PitchRequestStatus == undefined || row.PitchRequestStatus == '' || row.PitchRequestStatus == 'blank')?'fa-regular fa-hand':'fa-solid fa-eye'"></i>{{store.getVal((row.PitchRequestStatus == undefined || row.PitchRequestStatus == '' || row.PitchRequestStatus == 'blank')?'request_pitch':'view_pitch')}}</ion-label>
+                          <ion-label *ngIf="row.IsMyFundingProfile == 1 &&(row.PitchRequestStatus != undefined && row.PitchRequestStatus !='' && row.PitchRequestStatus!='approved' && row.PitchRequestStatus!='blank')" [class]="row.PitchRequestStatus=='rejected'?'patch-btn inaccessible':'patch-btn pitch-status'"><i [class]="row.PitchRequestStatus=='rejected'?'fa-regular fa-eye-slash':row.PitchRequestStatus=='requested'?'fa-solid fa-clock-rotate-left':'fa-regular fa-eye-slash'"></i>{{row.PitchRequestStatus=='rejected'?store.getVal('pitch_inaccessible'):row.PitchRequestStatus=='requested'?store.getVal('pitch_requested'):store.getScrenigStatus(store.PitchStatusResult,row.PitchRequestStatus)}}</ion-label>
+                        </div>
+                        <ion-select interface="popover" *ngIf="store.appType =='admin'&& row.PitchRequestEnable == 1" class="status" [(ngModel)]="row.PitchRequestStatus" (ngModelChange)="changePitchStatus('fundraise','update_pitch_request',row)">
+                          <ion-select-option *ngFor="let e of store.PitchStatusResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option>
+                        </ion-select>
+                      </span>
+                      <ion-select interface="popover" *ngIf="column.isDrop && column.prop == 'FPReactionValueKey' && (row.IsMyFundingProfile == 1 || store.appType == 'admin')" class="status form-control" [(ngModel)]="row.FPReactionValueKey" [disabled]="row.LastIntroduceDate != undefined" (ngModelChange)="changeStatus('funding_profile','update_reaction','interest',row,row.FPReactionValueKey,rowIndex)" tabindex="-1">
+                    <ion-select-option *ngFor="let e of store.InterestResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option>
+                  </ion-select>
+                      <ion-select interface="popover"  *ngIf="column.isDrop && column.prop == 'FNReactionValueKey'"  class=" status form-control" [(ngModel)]="row.FNReactionValueKey" [disabled]="row.LastIntroduceDate != undefined" (ngModelChange)="changeStatus('fundraise','update_reaction','interest',row,row.FNReactionValueKey,rowIndex)" tabindex="-1">
+                        <ion-select-option  *ngFor="let e of store.InterestResult" [value]="e.ReferenceKey">
+                          {{e.ReferenceName}}
+                        </ion-select-option >
+                      </ion-select >
+                      
+
+                    </div>
+                  </span>
+              </div>
+          </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [name]="this.store.getVal('action')" [sortable]="false" [width]="80">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              <span>{{ column.name }}</span>
+          </ng-template>
+          <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-cell-template>
+              <act-menu [from]="from" [pageFrom]="pageFrom" [pageType]="pageType" [subType]="''" [prod]="row" [title]="''" [Name]="Name" [EnablerSlug]="row.EnablerSlug" [FundraiseSlug]="FN_EnablerSlug" [FN_EnablerSlug]="FN_EnablerSlug"
+                  [ProfileSlug]="row.ProfileSlug" [ActionType]="ActionType" (change)="changeAction($event)"></act-menu>
+          </ng-template>
+      </ngx-datatable-column>
+  </ngx-datatable>
+  <item-tbl id="app-ui" *ngFor="let item of rowsMobile;let i=index" [columnsWithCheckbox]="columnsWithCheckbox" [itemTitle]="getTitle(item)" [isMain]="false" [prod]="item" [subtype]="pageType" [type]="pageType" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [Name]="" [FNEnablerSlug]="FN_EnablerSlug" [FP_EnablerSlug]="item.FP_EnablerSlug" [ActionType]="ActionType" [apiAction]="apiAction" (change)="callAction($event,i)"></item-tbl>
+</div>
+<div *ngIf="displayMode == 1" [class]="'card_right_panels grid'">
+  <item-card *ngFor="let item of rowsMobile;let i=index"  [isMain]="false" [prod]="item" [subtype]="'full-report'" [type]="('matching-funding-profiles')" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [Name]="" [FNEnablerSlug]="FN_EnablerSlug" [FP_EnablerSlug]="item.FP_EnablerSlug" [ActionType]="ActionType" [apiAction]="apiAction" (change)="callAction($event,i)"></item-card>
+</div>
+<app-empty-list *ngIf="isShowMsg" [msg]="store.searchMsg" [type]="pageType"></app-empty-list>
+<app-page-end [id]="displayMode == 1?'web-ui':'app-ui'" *ngIf="rowsMobile.length !=0 && rowsMobile.length == EnablerTotal" [type]="pageType"></app-page-end>
+<infinite-scroll [id]="displayMode == 1?'web-ui':'app-ui'" [items]="rowsMobile" [itemTotal]="EnablerTotal" (change)="doInfinitePage($event)"></infinite-scroll>

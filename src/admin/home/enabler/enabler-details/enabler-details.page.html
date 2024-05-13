@@ -1,0 +1,94 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true">
+    <div class="page_wapper" *ngIf="enablerData != undefined">
+        <div id="all_ui">
+            <div id="top_card">
+                <ion-grid class="container">
+                    <refresher (change)="callPullRefresh($event)"></refresher>
+                    <bread-crump showHome="1" [pageType]="type" [pageLbl]="enablerData.EnablerName"></bread-crump>
+                    <ion-row class="main_rows mt-res">
+                        <ion-col class="main_cols auto-cols admin_right_panel">
+                            <item-card-enabler [prod]="enablerData" [isAddForm]="false" [isMain]="false" [subtype]="type" [EnablerSlug]="enablerData.EnablerSlug" [FPEnablerSlug]="" [type]="type" [apiAction]="type" [from]="'admin'" pageFrom="Top" (change)="clikCount($event)"></item-card-enabler>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+    </div>
+    <!-- <div id="serch_component" class="top_card_bottom" *ngIf="enablerData != undefined && pageType !='overview' && pageType !='permissions' &&  pageType !='settings' &&  pageType !='data-setup' && pageType != 'form-configuration'">
+        <app-search-bar [isShow]="false" fromPage="home" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)"></app-search-bar>
+    </div> -->
+    <div id="tabblings" *ngIf="enablerData != undefined ">
+        <ion-grid class="container">
+            <ion-row>
+                <ion-col style="padding: 0px">
+                    <app-tabs [segments]="segments" customClass="admin_details" [selectedSegment]="pageType" from='details'  (change)="onClickSegment($event)"> </app-tabs>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div id="tabs_contents" *ngIf="enablerData != undefined ">
+        <ion-grid class="container" [style.margin-bottom]="pageType == 'data-setup'?'80px':'initial'">
+
+            <enabler-detail-view *ngIf="pageType =='overview'" [FNImpactThemesAndAreas]="FNImpactThemesAndAreas" [FPImpactThemesAndAreas]="FPImpactThemesAndAreas" [FNSdgs]="FNSdgs" [FPSdgs]="FPSdgs" [FNEsg]="FNEsg" [FPEsg]="FPEsg" [FNFundingType]="FNFundingType" [FPFundingType]="FPFundingType" [detailData]="enablerData"></enabler-detail-view>
+            <ion-row class="counts_filter_block" *ngIf="pageType !='overview' && pageType !='settings' && pageType != 'data-setup' && pageType != 'form-configuration'">
+                <ion-col class="left_filter_panel" size="6">
+                    <div class="counts_searchbox">
+                        <div id="serch_component" style="width: 100%;" class="top_card_bottom" *ngIf="enablerData != undefined && pageType !='overview' && pageType !='permissions' &&  pageType !='settings' &&  pageType !='data-setup' && pageType != 'form-configuration'">
+                            <app-search-bar [isShow]="false" fromPage="home" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)"></app-search-bar>
+                        </div>
+                        <!-- <div class="count_boxs navigation_compo">
+                            <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+                        </div> -->
+                    </div>
+                </ion-col>
+                <ion-col class="right_filter_panel" *ngIf="pageType != 'permissions' && pageType != 'form-configuration'">
+                    <div class="filter_nav">
+                        <div class="downloads navigation_compo" *ngIf="(store.checkPermissionObj(permissionsList,'download_page_user') || store.checkPermissionObj(permissionsList,'download_all')) && allTotal>0">
+                            <i class="fas fa-download pointer" (click)="download($event)"></i>
+                        </div>
+                        <filter-count [filteCnt]="filteCnt" [pageType]="pageType" [pageFrom]="'admin'" (change)="openFilter($event)"></filter-count>
+                        <div class="drop_box">
+                            <drop-down from="sort" [itemList]="store.sortItemList" [preSlected]="sort" [slected]="sort" [isSort]="true" (change)="selectSort($event)"></drop-down>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col class="right_filter_panel" *ngIf="pageType == 'permissions'">
+                    <div class="filter_nav permission">
+                        <div class="downloads navigation_compo" *ngIf="allTotal>0">
+                            <i class="fas fa-download pointer" (click)="download($event)"></i>
+                        </div>
+                        <div class="filter_nav permission">
+                            <div class="add_buttons transfer transfer_ownership" (click)="onAction('0')" *ngIf="store.checkPermissionObj(permissionsList,'transfer_ownership')">
+                                <ion-label style="cursor: pointer;">{{this.store.getVal('transfer_ownership')}}</ion-label>
+                            </div>
+                            <div class="add_buttons" (click)="onAction('1')" *ngIf="store.checkPermissionObj(permissionsList,'add_page_user')">
+                                <i class="fa-solid fa-circle-plus"></i>
+                                <ion-label style="cursor: pointer;">{{this.store.getVal('add')}}</ion-label>
+                            </div>
+                        </div>
+
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="pageType !='overview'" style="padding-bottom: 30px;">
+                <ion-col size="12" style="padding: 0px;">
+                    <ion-label *ngIf="allTotal>0 && pageType !='overview' && pageType !='settings' && pageType != 'data-setup' && pageType != 'form-configuration'" class="note-padding filterCriteriaNote count-note">
+                        <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count> 
+                        <span *ngIf="pageType != 'permissions'">{{store.getVal('result_filter_criteria_note')}}</span>
+                        <span *ngIf="pageType == 'permissions'" class="errorTitle">{{store.getVal('enabler_contact_into')}}</span>
+                    </ion-label>
+                    <!-- <ion-label *ngIf="allTotal>0 && pageType != 'permissions'" class="note-padding filterCriteriaNote">{{store.getVal('result_filter_criteria_note')}}</ion-label> -->
+                    <!-- <ion-label *ngIf="pageType == 'permissions'" class="note-padding errorTitle">{{store.getVal('enabler_contact_into')}}</ion-label> -->
+                    <funding-profiles-submitted-items *ngIf="pageType == 'funding-profiles'" [pageType]="pageType" [subtype]="'enabler'" from="admin" pageFrom="details" [type]="pageType" [EnablerSlug]="enablerData.EnablerSlug" apiAction="funding_profile_enabler" [updateTime]="updateTime" (change)="updateCount($event)"></funding-profiles-submitted-items>
+                    <fundraise-needs-submitted-items *ngIf="pageType == 'fundraise-needs'" [pageType]="pageType" [subtype]="'enabler'" from="admin" pageFrom="details" [type]="pageType"  [EnablerSlug]="enablerData.EnablerSlug" apiAction="fundraise_enabler" [updateTime]="updateTime"  (change)="updateCount($event)"></fundraise-needs-submitted-items>
+                    <setting-items *ngIf="pageType == 'settings'" apiEnd="enabler/setting_list" [pageType]="pageType" [type]="type" from="admin" openFront="1" pageFrom="details" addImpactThemes="true" [EnablerSlug]="enablerData.EnablerSlug" [IsPublish]="enablerData.IsPublish =='1'" (change)="updateSettings($event)"></setting-items>
+                    <data-setup-items *ngIf="pageType == 'data-setup'" apiEnd="enabler/data_setup_list" [pageType]="pageType" [type]="type" from="admin" openFront="1" pageFrom="details" addImpactThemes="true" [EnablerSlug]="enablerData.EnablerSlug"></data-setup-items>
+                    <enabler-fp-fn-form-config *ngIf="pageType == 'form-configuration'" [pageType]="pageType" [type]="type" from="admin" openFront="1" pageFrom="details" [EnablerSlug]="enablerData.EnablerSlug"></enabler-fp-fn-form-config>
+                    <permissions-items style="padding-top: 12px;display: block;" *ngIf="pageType == 'permissions'" [pageType]="pageType" [type]="type" from="admin" openFront="1" pageFrom="details" [EnablerSlug]="enablerData.EnablerSlug" [updateTime]="updateTime" (change)="updateCount($event)"></permissions-items>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

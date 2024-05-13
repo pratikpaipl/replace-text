@@ -1,0 +1,33 @@
+.button_box 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px -15px;
+    margin-top: 15px;
+}
+ion-row.button_box ion-col {
+	padding: 5px 15px;
+    flex: 0 0;
+}
+.last 
+{
+    margin-top: 0px;
+}
+
+@media (max-width: 768px) 
+{
+    ion-row.button_box ion-col {
+        padding: 5px 10px;
+        flex: revert-layer;
+    }
+}
+
+@media (max-width: 420px) 
+{
+   
+    ion-row.button_box ion-col ion-button {
+        width: 100% !important;
+        display: block !important;
+    }
+}

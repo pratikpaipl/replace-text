@@ -1,0 +1,39 @@
+
+.forms_block {
+    padding: 20px;
+}
+#myprofile ion-grid {
+	padding: 0px !important;
+}
+.forms_block .switchs_block ion-label{
+    min-width: 380px;
+}
+.errorTitle {
+    color  : var(--ion-color-red);
+    width  : 100%;
+}
+.switchs_block {
+	margin: 0;
+	margin-bottom: 15px;
+}
+ion-row.main_rows.mt-res {
+	margin-bottom: 25px !important;
+}
+ion-row.main_rows.mt-res:last-child {
+	margin-bottom: 20px !important;
+}
+#myprofile.forms_block, .forms_block {
+    padding: 20px !important;
+}
+error-message {
+	margin-bottom: 10px !important;
+	display: block;
+}
+.forms_conponenl ion-label:last-child {
+    margin-bottom: 0px !important;
+}
+@media (max-width: 768px) {
+    .forms_block .switchs_block ion-label{
+        min-width: 220px;
+    }
+}

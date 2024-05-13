@@ -1,0 +1,135 @@
+<ion-grid class="p-0" *ngIf="prod != undefined">
+    <ion-row class="cardlist_filter_row p-0" style="align-items: center; justify-content: space-between;">
+        <ion-col>
+            <ion-grid class="p-0">
+                <ion-row class="counts_row">
+                    <ion-col class="fiter_names">
+                        <div class="filter_count_list">
+                            <div>
+                                <div class="count_list">
+                                    <ion-label class="points" *ngIf="prod.TotalMatchingFundraiseNeeds != undefined">
+                                        <span class="contents pointer" (click)="fundingProfileDetails(prod, 'fundraise-need-match-report',undefined,'')">
+                                            <a *ngIf="routePath(prod, 'fundraise-need-match-report',undefined,'') !=''"[href]="routePath(prod, 'fundraise-need-match-report',undefined,'')" [class]="'clickEv pointer data-point-a'" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-infinity fa-solid"></i>
+                                                </div>
+                                                <span class="count text-center">{{prod.TotalMatchingFundraiseNeeds}}</span>
+                                            </a>
+                                            <a *ngIf="routePath(prod,'fundraise-need-match-report',undefined,'') ==''" [class]="pageFrom == 'Top'?'pointer data-point-a':'no-pointer data-point-a'" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-infinity fa-solid"></i>
+                                                </div>
+                                                <span class="count text-center">{{prod.TotalMatchingFundraiseNeeds}}</span>
+                                            </a>
+                                        </span>
+                                    </ion-label>
+                                   
+                                    
+                                    <ion-label class="points" *ngIf="prod.TotalSuggestedEnabler>0">
+                                        <span class="contents pointer"  (click)="masterClick('funding-profile', prod.ProfileSlug, 'matching-enablers')">
+                                            <a [href]="routeMasterPath('funding-profile', prod.ProfileSlug, 'matching-enablers')" [class]="'clickEv pointer data-point-a'" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-solid fa-vector-square"></i>
+                                                </div>
+                                                <span class="count text-center">{{store.format(undefined,prod.TotalSuggestedEnabler)}}</span>
+                                            
+                                            </a>
+                                        </span>
+                                    </ion-label>
+                                    <ion-label class="points" *ngIf="prod.TotalMatchingFundraise>0">
+                                        <span class="contents pointer" (click)="fundingProfileDetails(prod, 'fundraise-need-match-report',undefined,'')">
+                                            <a *ngIf="routePath(prod, 'fundraise-need-match-report') !=''" [href]="routePath(prod, 'fundraise-need-match-report')" [class]="'clickEv pointer'" tabindex="-1"><i class="data-point">{{prod.TotalMatchingFundraise==1?store.getVal('matched_fundraise_need'):store.getVal('matched_fundraise_needs')}}</i><span class="count text-center">{{ store.format(undefined,prod.TotalMatchingFundraise)}} / {{store.format(undefined,prod.TotalFundraiseNeed)}}</span></a>
+                                            <a *ngIf="routePath(prod,'fundraise-need-match-report',undefined,'') ==''" [class]="pageFrom == 'Top'?'pointer':'no-pointer'" tabindex="-1"><i class="data-point">{{prod.TotalMatchingFundraise==1?store.getVal('matched_fundraise_need'):store.getVal('matched_fundraise_needs')}}</i><span class="count text-center">{{ store.format(undefined,prod.TotalMatchingFundraise) }} / {{store.format(undefined,prod.TotalFundraiseNeed)}}</span></a>
+                                        </span>
+                                    </ion-label>
+                                    
+                                    <ion-label class="online" *ngIf="prod.TotalExpressedInterest>0">
+                                        <span class="contents pointer" (click)="fundingProfileDetails(prod, 'fundraise-need-match-report',undefined,'introduction_requested')">
+                                            <a *ngIf="routePath(prod, 'fundraise-need-match-report',undefined,'introduction_requested') !=''" [href]="routePath(prod, 'fundraise-need-match-report',undefined,'introduction_requested')" [class]="'clickEv pointer data-point-a'" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </div>
+                                                <span class="count text-center">{{ prod.TotalExpressedInterest }}</span>
+                                            </a>
+
+                                            <a *ngIf="routePath(prod, 'fundraise-need-match-report') ==''" [class]="pageFrom == 'Top'?'pointer data-point-a':'no-pointer data-point-a'" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </div>
+                                                <span class="count text-center">{{store.format(undefined,prod.TotalExpressedInterest) }}</span>
+                                            </a>
+                                        </span>
+                                    </ion-label>
+                                    <ion-label class="points" *ngIf="prod.ReactionValue != undefined">
+                                        <span class="contents no-pointer">
+                                            <a [class]="'no-pointer'">
+                                                <i class="data-point">{{store.getVal('my_introduction_requested')}}</i>
+                                                <span class="count text-center" tabindex="-1">{{store.getVal(prod.ReactionValue)}} </span>
+                                            </a>
+                                        </span>
+                                    </ion-label>
+                                    <ion-label class="points" *ngIf="prod.LastIntroduceDate != undefined">
+                                        <span class="contents no-pointer">
+                                            <a [class]="'no-pointer'" tabindex="-1"><i class="data-point">{{store.getVal('last_introduced_on')}}</i><span class="count text-center" style="color: var(--ion-color-dark-green) !important;"> <i class="fa-regular fa-handshake" style="color: var(--ion-color-dark-green) !important;"></i>&nbsp;{{prod.LastIntroduceDate | date:'dd MMM yyyy hh:mm a':'UTC'}}&nbsp;{{this.store.getVal('utc')}}</span></a>
+                                        </span>
+                                    </ion-label>
+                                    <ion-label class="online" *ngIf="prod.TotalReceivedInterest>0">
+                                        <span class="contents pointer" (click)="fundingProfileDetails(prod, 'fundraise-need-match-report',undefined,'introduction_requests_received')">
+                                            <a *ngIf="routePath(prod, 'fundraise-need-match-report') !=''" [href]="routePath(prod, 'fundraise-need-match-report',undefined,'introduction_requests_received')" [class]="'clickEv pointer'" tabindex="-1"><i class="data-point">{{store.getVal('total_received_interest')}}</i><span class="count text-center">{{store.format(undefined,prod.TotalReceivedInterest) }}</span></a>
+                                            <a *ngIf="routePath(prod, 'fundraise-need-match-report') ==''" [class]="pageFrom == 'Top'?'pointer':'no-pointer'" tabindex="-1"><i class="data-point">{{store.getVal('total_received_interest')}}</i><span class="count text-center">{{store.format(undefined,prod.TotalReceivedInterest) }}</span></a>
+                                        </span>
+                                    </ion-label>
+                                    <ion-label class="points" *ngIf="prod.TotalIntroductionsWithInvestees>0">
+                                        <span class="contents pointer" (click)="fundingProfileDetails(prod, 'fundraise-need-match-report',undefined,'introductions')">
+                                            <a *ngIf="routePath(prod, 'fundraise-need-match-report',undefined,'introductions') !=''"[href]="routePath(prod, 'fundraise-need-match-report',undefined,'introductions')" [class]="'clickEv pointer data-point-a'" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-handshake fa-solid"></i>
+                                                </div>
+                                                <span class="count text-center">{{ store.format(undefined,prod.TotalIntroductionsWithInvestees)}}</span>
+
+                                            </a>
+                                            <a *ngIf="routePath(prod,'fundraise-need-match-report',undefined,'') ==''" [class]="pageFrom == 'Top'?'pointer data-point-a':'no-pointer data-point-a'" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-handshake fa-solid"></i>
+                                                </div>
+                                                <span class="count text-center">{{ store.format(undefined,prod.TotalIntroductionsWithInvestees)}}</span>
+
+                                            </a>
+                                        </span>
+                                    </ion-label>
+
+                                    <ion-label class="points" *ngIf="(prod.IsMyFundingProfile == 1 && pageFrom !='funding-profile-submissions')">
+                                        <span class="contents pointer" (click)="fundingProfileDetails(prod, 'profile-form')">
+                                            <a *ngIf="routePath(prod, 'profile-form',true) !=''" [href]="routePath(prod, 'profile-form',true)" [class]="'clickEv pointer data-point-a'" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-regular fa-user"></i>
+                                                </div>
+                                            </a>
+                                            <a *ngIf="routePath(prod, 'profile-form',true) ==''"  [class]="pageFrom == 'Top'?'pointer data-point-a':'no-pointer data-point-a'" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-regular fa-user"></i>
+                                                </div>
+                                            </a>
+                                        </span>
+                                    </ion-label>
+
+                                    <!-- (prod.IsMyFundingProfile == 1 && pageFrom !='funding-profile-submissions') &&  -->
+                                    <ion-label class="points" *ngIf="(prod.MyMatch != undefined && prod.MyMatch ==1)">
+                                        <span class="contents pointer" (click)="openFullreport(prod)">
+                                            <a [class]="'clickEv pointer data-point-a'" [href]="fullPath(prod)" tabindex="-1">
+                                                <div class="icon-container user_group_icon">
+                                                    <i class="fa-solid fa-infinity pointer"></i>
+                                                </div>
+                                            </a>
+                                        </span>
+                                    </ion-label>
+                                </div>
+                                <status-view *ngIf="from != 'front' && pageFrom !='profile'&& prod.IsActive !=undefined" [subtype]="subtype" [pageFrom]="pageFrom" [from]="from" [pageType]="pageType" [prod]="prod" [apiAction]="apiAction" [ActionType]="ActionType" [EnablerSlug]="FP_EnablerSlug!= undefined?FP_EnablerSlug:prod.EnablerSlug"></status-view>
+                            </div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-col>
+    </ion-row>
+</ion-grid>

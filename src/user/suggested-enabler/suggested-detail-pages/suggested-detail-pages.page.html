@@ -1,0 +1,105 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <refresher (change)="callPullRefresh($event)"></refresher>
+    <head-title [headTitle]="store.pageTittle"></head-title>
+    <div class="page_wapper" *ngIf="detailData != undefined ">
+        <div id="all_ui">
+            <div id="top_card">
+                <ion-grid class="container">
+                    <bread-crump *ngIf="breadCrumpData !=undefined && breadCrumpData.list.length > 0" [breadCrumpData]="breadCrumpData" [from]="from"></bread-crump>
+                    <ion-row class="main_rows mt-res">
+                        <ion-col class="main_cols auto-cols" *ngIf="!isShowFilter">
+                            <item-card [prod]="detailData" [subtype]="type+'s'" [type]="type+'s'" [isAddForm]="false" [extraMenu]="true" [extraTitle]="true" [from]="from" pageFrom="Top" [byName]="byName" [Name]="type =='funding-profile' ? detailData.ProfileName:detailData.CompanyName" [apiAction]="type+'s'" (change)="updateCount($event)"></item-card>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+    </div>
+    <div id="tabblings" *ngIf="(detailData != undefined ) != undefined ">
+        <ion-grid class="container">
+            <ion-row>
+                <ion-col>
+                    <app-tabs [segments]="segments" class="detail-tabs" customClass="explore"  [selectedSegment]="pageType" [type]="type" [pageSlug]="slug" [from]="'details'" (change)="onClickSegment($event)"> </app-tabs>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div id="tabs_contents" *ngIf="(detailData != undefined)">
+        <ion-grid class="container">           
+            <enabler-detail-view *ngIf="pageType =='overview' && type != 'impact-funding-resources'" [FNImpactThemesAndAreas]="FNImpactThemesAndAreas" [FPImpactThemesAndAreas]="FPImpactThemesAndAreas" [FNSdgs]="FNSdgs" [FPSdgs]="FPSdgs" [FNFundingType]="FNFundingType" [FNEsg]="FNEsg" [FPEsg]="FPEsg" [FPFundingType]="FPFundingType" [detailData]="detailData"></enabler-detail-view>
+            <funding-profile-details-view *ngIf="pageType =='profile-form'" [fundingProfileData]="detailData" [ImpactThemesAndAreas]="ImpactThemesAndAreas" [Esg]="Esg" [FundingType]="FundingType" [Sdgs]="Sdgs"></funding-profile-details-view>
+            <fundraise-need-details-view *ngIf="pageType =='fundraise-form'" [FundraiseData]="detailData" [ImpactThemesAndAreas]="ImpactThemesAndAreas" [FundingType]="FundingType" [Esg]="Esg" [Sdgs]="Sdgs"></fundraise-need-details-view>
+            <ion-row class="counts_filter_block" *ngIf="pageType !='overview' && pageType !='profile-form' && pageType != 'fundraise-form' && pageType != 'contact'">
+                <ion-col class="left_filter_panel">
+                    <div class="counts_searchbox">
+                        <!-- <div class="count_boxs navigation_compo">
+                            <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+                        </div> -->
+                        <div id="serch_component" class="top_card_bottom" style="width: 100%;" *ngIf="(detailData != undefined ) && pageType !='overview'&& pageType !='profile-form'&& pageType !='fundraise-form' && pageType != 'contact'">
+                            <app-search-bar [isShow]="false" fromPage="home" [pageType]="pageType" [keyword]="keyword" (change)="callSearchFilter($event)"></app-search-bar>
+                        </div>
+                        <div class="downloads navigation_compo" *ngIf="allTotal>0 && (from == 'user' || store.checkPermissionObj(permissions,'download_all')) && (pageType != 'matching-enablers')">
+                            <i class="fas fa-download pointer" (click)="download($event)"></i>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col class="right_filter_panel">
+                    <div class="filter_nav">
+                        <div class="sharing navigation_compo">
+                            <i class="fas fa-share-alt pointer" style="padding: 0 15px; font-size: 25px !important;" (click)="Share()"></i>
+                        </div>
+                        <filter-count *ngIf="type == 'matching-enablers' || pageType =='fundraise-needs' || pageType =='funding-profiles'" [filteCnt]="filteCnt" [pageType]="pageType" [pageFrom]="'details'" (change)="openFilter($event)"></filter-count>
+                        <div class="drop_box">
+                            <drop-down from="sort" [itemList]="store.sortItemList" [preSlected]="sort" [enable]="false" [slected]="sort" [isSort]="true" (change)="selectSort($event)"></drop-down>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="pageType !='overview' && pageType !='profile-form' && pageType != 'fundraise-form'">
+                <ion-col [class]="pageType=='contact'?'contact-col':''" >
+                    <ion-label *ngIf="pageType == 'matching-enablers'" class="title note-padding">{{store.getVal(type == 'funding-profile'?'fp_match_enabler_title':'fn_match_enabler_title')}}</ion-label>
+                    
+                    <ion-label *ngIf="allTotal>0" class="note-padding filterCriteriaNote count-note">
+                        <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+                        <span>{{store.getVal('result_filter_criteria_note')}}</span>
+                    </ion-label>
+                    
+                    <fundraise-items *ngIf="pageType == 'fundraise-needs'" [pageType]="'fundraise-needs'" [type]="type" [apiAction]="'fundraise_enabler'" [from]="from=='user'?'user':'front'" openFront="1" pageFrom="details" [EnablerSlug]="detailData.EnablerSlug" [FN_EnablerSlug]="detailData.FN_EnablerSlug" [Name]="Name" [parentDesc]="parentDesc" [parentLogo]="parentLogo" [ActionType]="type" [updateTime]="updateTime" [IsProfile]="from=='user'?'1':'0'" [IsSubmittedEnabler]="from=='user'?'1':'0'" (change)="updateCount($event)"></fundraise-items>
+                    <funding-profile-items *ngIf="pageType == 'funding-profiles'" apiEnd="funding_profile/valid_submitted_at_enablers_list" [pageType]="pageType" [type]="type" [from]="from=='user'?'user':'front'" pageFrom="details" openFront="1" apiAction="funding_profile_enabler"  [EnablerSlug]="detailData.EnablerSlug" [Name]="Name" [parentDesc]="parentDesc" [parentLogo]="parentLogo"  [FP_EnablerSlug]="(detailData.FP_EnablerSlug != undefined ?detailData.FP_EnablerSlug:'')" [updateTime]="updateTime" [IsProfile]="from=='user'?'1':'0'" [IsSubmittedEnabler]="from=='user'?'1':'0'" (change)="updateCount($event)"></funding-profile-items>
+                    <enabler-items *ngIf="pageType == 'matching-enablers'" apiEnd="enabler/valid_match_list" [pageType]="'enablers'" [type]="type" from="profile" [apiAction]="'enabler'" pageFrom="details" [ProfileSlug]="detailData.ProfileSlug !=undefined?detailData.ProfileSlug:''" [FundraiseSlug]="detailData.FundraiseSlug != undefined?detailData.FundraiseSlug:''" [updateTime]="updateTime" (change)="updateCount($event)"></enabler-items>
+                    <contact *ngIf="pageType == 'contact' && detailData.IsOperative !='0'" apiEnd="support/contact_enabler" [ContactData]="detailData" [ContctSlug]="detailData.EnablerSlug" [pagePath]="pagePath" pageFrom="details"></contact>
+                </ion-col>
+            </ion-row>
+            <div class="impact-funding-resources" *ngIf="pageType =='overview' && type == 'impact-funding-resources'">
+                <div class="forms_block radius" style="margin: 20px 0px;padding-bottom: 15px !important;">
+                    <div *ngIf="detailData.ShortDescription != undefined && detailData.ShortDescription != ''">
+                        <ion-label class="title">{{this.store.getVal('short_descirption')}}</ion-label>
+                        <ion-label class="brand_content" style="margin-top: 10px;display: inline-block;" [innerHtml]="store.nl2br(detailData.ShortDescription)"></ion-label>
+                    </div>
+                    <div *ngIf="detailData.Website != undefined && detailData.Website != ''">
+                        <ion-label class="title">{{this.store.getVal('website')}}</ion-label>
+                        <a href="{{detailData.Website}}" style="text-decoration: none;margin-top: 10px;display: inline-block;" target="_blank" tabindex="-1"><i class="fa fa-external-link" style="margin-right: 5px;"></i>{{detailData.Website}}</a>
+                    </div>
+                    <div *ngIf="detailData.Criteria != undefined && detailData.Criteria != ''">
+                        <ion-label class="title">{{this.store.getVal('criteria')}}</ion-label>
+                        <ion-label class="brand_content" style="margin-top: 10px;display: inline-block;" [innerHtml]="store.nl2br(detailData.Criteria)"></ion-label>
+                    </div>
+
+                    <div *ngIf="detailData.Registration != undefined && detailData.Registration != ''">
+                        <ion-label class="title">{{this.store.getVal('registration')}}</ion-label>
+                        <a href="{{detailData.Registration}}" style="text-decoration: none;margin-top: 10px;display: inline-block;" target="_blank" tabindex="-1"><i class="fa fa-external-link" style="margin-right: 5px;"></i>{{detailData.Registration}}</a>
+                    </div>
+
+                
+                    <div *ngIf="detailData.TargetCountriesRegions != undefined && detailData.TargetCountriesRegions != ''">
+                        <ion-label class="title">{{this.store.getVal('countries_regions')}}</ion-label>
+                        <ion-label class="brand_content" style="margin-top: 10px;display: inline-block;" [innerHtml]="detailData.TargetCountriesRegions"></ion-label>
+                    </div>
+                </div>
+            </div>
+        </ion-grid>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>
+<!-- <bottom-up-arrow [content]="content" [isShowUp]="isShowUp" (change)="updateScroll($event)"></bottom-up-arrow> -->

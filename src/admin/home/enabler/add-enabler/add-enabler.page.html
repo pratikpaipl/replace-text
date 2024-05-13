@@ -1,0 +1,206 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="true" (change)="store.headerAction($event)"></app-page-header>
+<ion-content  #content id="addPage" [scrollEvents]="true">
+    <div class="page_wapper">
+        <div id="all_ui">
+            <ion-grid class="container" *ngIf="isView">
+                <bread-crump showHome="1" [pageType]="'enablers'" [pageLbl]="title"></bread-crump>
+                <error-message id="topRow" [isNameUn]="'false'" [fromClass]="'m-0-5'" styleD="left" [dataAction]="[]" [message]="loadMsg"></error-message>
+                <ion-row class="forms_row">
+                    <ion-col class="forms_conponenl ">
+                        <div class="m-part alert error_boxs" *ngIf="EnablerSlug != undefined && EnablerSlug != ''">
+                            <div id="myprofile" class="forms_block">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="12">
+                                            <div [innerHTML]="store.getVal('enabler_edit_warning')" style="color:var(--ion-color-logo-red)"></div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+
+                        <div *ngIf="!isEdit" class="m-part alert">
+                            <ion-card-title>{{store.getVal('plan')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block radius">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <custom-select selectTitle="select_subscription_plan" modalName="PlanID" [modal]="PlanID" id="PlanList" listName="PlanList" openPos="auto" [isLogo]="false" [list]="PlanList" bindLabel="DisplayPlanName" bindValue="PlanID" [isValidate]="true" linkLabel="plans_and_pricing" [isError]="IsPlanUn" [isNote]="true" [linkNote]="planScrinPath()"(change)="customSelect($event)"></custom-select>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+
+                        <div class="m-part alert">
+                            <ion-card-title>{{store.getVal('company')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block radius">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col id="CompanyID">
+                                            <div class="form-group">
+                                                <custom-select selectTitle="company_name" modalName="selectedCompany" [modal]="selectedCompany" [list]="CompanyList" listName="CompanyList" bindLabel="CompanyDisplayName" bindValue="CompanyID"[isError]="IsCompanyUn" [isValidate]="!isNewCompany"[isCreate]="false" [isNewTag]="store.checkPermissionObj(permissionsList,'add')" (change)=customSelect($event)></custom-select>
+                                                <ion-note [innerHtml]="store.getVal('please_contact_us_change_company')" tabindex="-1"></ion-note>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <ion-label [class]="'labels'"> {{store.getVal('registration_number')}} </ion-label>
+                                                <input spellcheck="false" autocomplete="off" [disabled]="!isNewCompany" type="text" class="form-control" minlength="1" maxlength="100" [disabled]="!isNewCompany ||CompanyNotRegisterd" [(ngModel)]="RegistrationNo" [ngModelOptions]="{standalone: true}" (keyup.enter)="callAction('1')"/>
+                                                <ion-item style="background: transparent;--background: transparent;--min-height: auto;margin:6px 0px 0px 0px;align-items: center;">
+                                                    <ion-label [class]="'labels'" style="font-size: 13px !important;margin: 0px !important;margin-left: 5px !important;">{{store.getVal('company_is_not_registered')}}</ion-label>
+                                                    <ion-checkbox slot="start" style="margin: 0px;" [disabled]="!isNewCompany" [(ngModel)]="CompanyNotRegisterd" (ngModelChange)="changeIsRegister($event)"></ion-checkbox>
+                                                </ion-item>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <ion-label [class]="isCopmanyRegistryRecord?'labels errorTitle':'labels'"> {{store.getVal('company_registry_record')}}</ion-label>
+                                                <input spellcheck="false" id="CompanyRegistryRecord" autocomplete="off" [disabled]="!isNewCompany" type="text" class="form-control" minlength="1" maxlength="2000" [disabled]="!isNewCompany ||CompanyNotRegisterd" [(ngModel)]="CompanyRegistryRecord" [ngModelOptions]="{standalone: true}" (keyup.enter)="callAction('1')"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group">
+                                            <custom-select id="Country" selectTitle="country" modalName="selectCountry" [modal]="selectCountry" listName="countryList"
+                                            [list]="countryList" [disabled]="!isNewCompany" bindLabel="CountryName" bindValue="CountryID" [isError]="isCountry" (change)=customSelect($event)></custom-select>
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+                        <div class="m-part alert">
+                            <ion-card-title>{{store.getVal('enabler')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block radius">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <ion-label [class]="IsEnablerNameUn?'labels errorTitle':'labels'">{{store.getVal('enabler_name')}} *</ion-label>
+                                                <input autocomplete="off" type="text" class="form-control" id="EnablerName" minlength="1" maxlength="255" [(ngModel)]="EnablerName"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <ion-label class="labels">{{store.getVal('location')}}</ion-label>
+                                                <address showCurrent="0" pageFrom="company" [placeholder]="store.getVal('search')" [address]="DisplayAddress" (change)="addressChange($event)"></address>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <text-area maxlength="500" id="ShortDescription" title="short_description" [checkVar]="IsShortDescriptionUn" [isCheck]="true" [(ngModel)]="ShortDescription"></text-area>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group upload_boxs">
+                                                <ion-label [class]="isLogoUn?'labels errorTitle':'labels'">{{store.getVal('logo')}}</ion-label>
+                                                <div class="uploadButton" id="uploadButton">
+                                                    <input class="uploadButton-input" id="upload" type="file" accept="image/*" (change)="changeListener($event,'logo')"/>
+                                                    <label *ngIf="LogoFile == undefined && LogoURl == undefined" class="uploadButton-button" for="upload" tabindex="1">
+                                                        <i class="fas fa-images" style="font-size: 25px;"></i>
+                                                        {{store.getVal('upload_image')}}
+                                                    </label>
+                                                    <div *ngIf="LogoFile != undefined || LogoURl != undefined" class="uploadButton-button" for="upload"  tabindex="1">
+                                                        <div *ngIf="LogoFile != undefined">
+                                                            <img class="prod_img" alt="" [src]="LogoSrc"/>
+                                                        </div>
+                                                        <div *ngIf="LogoURl != undefined">
+                                                            <img class="prod_img" alt="" src="{{ LogoURl != null ? LogoURl : 'assets/images/no-image-icon-5.jpg'}}" onerror="src='assets/images/no-image-icon-5.jpg'" />
+                                                        </div>
+                                                        <i id="deleteImg" class="fas fa-trash" style="font-size: 25px;" (click)="onDeleteFile('logo')"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ion-col>
+
+                                        <ion-col size="12">
+                                            <div class="form-group upload_boxs">
+                                                <ion-label [class]="'labels'">
+                                                    {{store.getVal('cover_photo')}}
+                                                </ion-label>
+                                                <div class="uploadButton" style="margin-bottom: 10px !important;" id="uploadButton">
+                                                    <input class="uploadButton-input" id="uploadcocer" type="file" accept="image/*" (change)="changeListener($event,'cover-photo')" />
+                                                    <label *ngIf="CoverPhotoFile == undefined && CoverPhotoURl == undefined" class="uploadButton-button cover" for="uploadcocer" tabindex="1">
+                                                        <i class="fas fa-images" style="font-size: 25px;"></i>
+                                                        {{store.getVal('upload_image')}}
+                                                    </label>
+                                                    <div *ngIf="CoverPhotoFile != undefined || CoverPhotoURl != undefined" class="uploadButton-button cover" for="upload" >
+                                                        <div *ngIf="CoverPhotoFile != undefined" style="text-align: center;" tabindex="1">
+                                                            <img style="height: auto !important;" alt="" [src]="CoverPhotoSrc">
+                                                        </div>
+                                                        <div *ngIf="CoverPhotoURl != undefined" style="text-align: center;">
+                                                            <img style="height: auto !important;" alt="" src="{{ CoverPhotoURl != null ? CoverPhotoURl : 'assets/images/no-image-icon-5.jpg'}}" onerror="src='assets/images/no-image-icon-5.jpg'" />
+                                                        </div>
+                                                        <i id="deleteImgCov" class="fas fa-trash" style="font-size: 25px;" (click)="onDeleteFile('cover-photo')"></i>
+                                                    </div>
+                                                </div>
+                                                <ion-note tabindex="-1">{{store.getVal('cover_image_dimensions_note')}}</ion-note>
+                                            </div>
+                                            
+                                        </ion-col>
+
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <ion-label [class]="(Website.trim() !=''&&!store.regWeb.test(Website)) || IsWebsite ?'labels errorTitle':'labels'">
+                                                    {{store.getVal('website')}}</ion-label>
+                                                <input spellcheck="false" autocomplete="off" type="text" class="form-control" id="Website" minlength="1" maxlength="2000" [(ngModel)]="Website" (keyup.enter)="callAction('1',2,false)"/>
+                                            </div>
+                                        </ion-col>
+
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+                        <div class="m-part" style="flex: none !important;width: 100% !important">
+                            <ion-card-title>{{store.getVal('about')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block radius">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <text-area maxlength="2000" id="About" [(ngModel)]="About"></text-area>
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+
+                      
+                        <div class="m-part alert">
+                            <ion-card-title>{{store.getVal('contact')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="12">
+                                            <div class="form-group">
+                                                {{store.getVal('enabler_contact_into')}}
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+
+                        <act-switch [IsActive]="IsActive" [IsEnable]="IsEnable" [IsFeatured]="IsFeatured" [DataStatus]="DataStatus" [type]="'enabler'" (change)="statusSwitch($event)"></act-switch>
+
+                        <div class="form-group chkboxs_items" style="margin-bottom: 10px !important;margin-top: 10px;">
+                            <ion-item class="dark-bg" id="EnablerConfirmation">
+                                <ion-label [class]="IsEnablerConfirmation?'labels errorTitle':'labels'">
+                                    {{store.getVal('enabler_confirmation_text')}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="EnablerConfirmation"></ion-checkbox>
+                            </ion-item>
+                        </div>
+                            <bottom-btn styleD="center" [leftKey]="'submit'" [rightKey]="'cancel'" [leftBtn]="store.getVal('submit')" screen="1" [rightBtn]="store.getVal('cancel')" (change)="callAction($event,1)" isShow="1"></bottom-btn>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

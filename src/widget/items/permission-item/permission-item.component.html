@@ -1,0 +1,9 @@
+<div class="card_right_panels">
+  <item-card *ngFor="let item of labelsList" [isAddForm]="false" [prod]="item" [subtype]="type" type="{{ pageType }}" [extraMenu]="false" [from]="from" [pageFrom]="pageFrom" [EnablerSlug]="EnablerSlug"></item-card>
+  <app-empty-list *ngIf="labelsList.length==0&& isShowMsg" [msg]="store.searchMsg" type="{{ pageType }}">
+  </app-empty-list>
+  <app-page-end *ngIf="labelsList.length != 0 && labelsList.length == labelsTotal" type="{{ pageType }}">
+  </app-page-end>
+  <infinite-scroll [items]="labelsList" [itemTotal]="labelsTotal" (change)="doInfiniteLabels($event)">
+  </infinite-scroll>
+</div>

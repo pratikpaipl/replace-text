@@ -1,0 +1,28 @@
+<div class="outer_overly" ></div>
+<div [class]="disabled?'hideint':'hideint customview'">
+    <input type="text" class="hideinputs" [tabindex]="disabled?-1:1">
+    <div class="form-control custom_treviewcopo" [style.cursor]="disabled?'not-allowed':'pointer'" >
+        <div style="display: flex;flex-wrap: wrap; max-width: calc(100% - 40px);">
+            <div class="ng-value" *ngFor="let item of items | slice: 0:3;">
+                <span class="ng-value-label">{{ getLbl(item) }}</span>
+                <span [class]="disabled?'ng-value-icon right disabled':'ng-value-icon right'" (click)="disabled?null:removeFromSelect(item)">×</span>
+            </div>
+            <div class="ng-value" *ngIf="items.length > 3">
+                <span class="ng-value-label">{{ items.length - 3 }} {{store.getVal('more')}}</span>
+            </div>
+        </div>
+        <div class="right_arrows">
+            <div *ngIf="items.length > 0" [class]="disabled?'right_colse disabled':'right_colse'" (click)="disabled?null:clear()">
+                <span [class]="disabled?'ng-value-icon right disabled':'ng-value-icon right'">×</span>
+            </div>
+            <span class="ng-arrow"></span>
+        </div>        
+    </div>
+    <div>
+        <div class="main-tree-view">
+            <ion-input id="filterInput" class="form-control search-inpt" [placeholder]="TreeData.length == 0?(notFoundText != '')?notFoundText:store.getVal('search'):store.getVal('search')" type="text" inputmode="text" autocomplete="off" [(ngModel)]="filterText" (ionChange)="search($event)" tabindex="-1"></ion-input>
+            <tree-view style="padding: 5px 0;display: block;" [from]="from" [TreeData]="usersArrayFiltered"  [TreeDataOrg]="TreeData" [preSelected]="preSelected" [hasCheckbox]="hasCheckbox" (change)="onChangeCheck($event)"> </tree-view>
+        </div>
+    </div>
+    <input type="text" class="focusout_input" tabindex="-1">
+</div>

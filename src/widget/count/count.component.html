@@ -1,0 +1,3 @@
+<div class="filters_counts count-box" *ngIf="allTotal> 0 || locationTotal >0 || brandsTotal >0 || productsTotal>0 || stockistTotal >0 || labelsTotal >0">
+  <ion-label *ngIf="result"> {{(allTotal | number:'1.0-0')}} {{store.getVal((allTotal <=1?'result':'results'))}} </ion-label>
+</div>

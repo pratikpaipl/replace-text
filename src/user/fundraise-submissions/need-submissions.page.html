@@ -1,0 +1,23 @@
+<div class="top-div">
+    <btn-title [pageLbl]="store.getVal('fundraise_need_submissions')" [pageType]="pageType" [permissions]="permissions">
+    </btn-title>
+    <div class="downloads navigation_compo" *ngIf="allTotal != undefined && allTotal > 0">
+        <i class="fas fa-download pointer" (click)="download($event)"></i>
+    </div>
+</div>
+<refresher (change)="callPullRefresh($event)"></refresher>
+<div id="serch_component">
+    <app-search-bar isShow="false" fromPage="admin" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)">
+    </app-search-bar>
+</div>
+<div *ngIf="selItem != undefined" class="datachips_boxs">
+    <data-chip [isUser]="true" [isEnabler]="true" [selItem]="selItem" [type]="pageType" (change)="removeFilter($event)"></data-chip>
+</div>
+<div class="forms_conponenl">
+    <div>
+        <div class="items_counts">
+            <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+        </div>
+        <fundraise-items *ngIf="pageType == 'fundraise'" apiEnd="fundraise/my_fn_submitted_at_enablers_list" [pageType]="pageType" [type]="pageType" from="profile" pageFrom="fundraise-need-submissions" openFront="1" [updateTime]="updateTime" apiAction="fundraise_enabler" [EnablerSlug]="(selItem != undefined && selItem.itemData.EnablerSlug != undefined)?selItem.itemData.EnablerSlug:EnablerSlug" [FundraiseSlug]="''" (change)="updateCount($event)"></fundraise-items>
+    </div>
+</div>

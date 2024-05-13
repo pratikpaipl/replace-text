@@ -1,0 +1,145 @@
+
+ion-card-title {
+  background: var(--ion-color-black);
+    border-radius: 10px 10px 0px 0px;
+    padding: 10px 0px 10px 15px;
+    color: var(--ion-color-white);
+    font-size: 16px;
+}
+.forms_block{
+  overflow: inherit;
+  padding: 10px !important;
+}
+#myprofile.forms_block{
+  padding: 10px;
+}
+.forms_block .form-group {
+  margin-bottom: auto !important;
+}
+.form-group {
+  margin-bottom: auto !important;
+}
+.forms_block ion-grid ion-row {
+  margin: auto;
+}
+.forms_block ion-grid ion-row ion-col{
+	padding: 4px 8px;
+}
+
+.cnt{
+  color: var(--ion-color-black);
+    text-align: end;
+    display: block;
+    padding-top: 7px;
+}
+.title-row{
+  font-size: 17px;
+}
+ion-item{
+  --padding-start:0px;
+  background: var(--ion-color-white);
+  --background: var(--ion-color-white);
+  --inner-border-width: 0 0 0px 0;
+  display: inline-block;  
+  --background-focused: transparent;
+  --min-height: auto;
+}
+ion-item ion-label{
+  white-space: normal;
+  overflow: visible !important;
+}
+.match-everything{
+  position: relative !important; 
+  background: var(--ion-color-white) !important;
+  border-radius: 11px !important;
+  box-shadow: 0 0 4px #0000001a!important;padding: 5px 0px 0px 10px;
+}
+ion-checkbox {
+  opacity: 1;
+  cursor: pointer;
+  top: auto;
+  left: auto;
+  margin: 0px;
+  margin-right: 10px;
+  border-radius: 0px !important;
+  --border-radius: 4px !important;
+  --background-checked: var(--ion-color-logo-red) !important;
+  --border-color-checked: var(--ion-color-logo-red) !important;
+  min-width: 18px;
+}
+.m-part.alert ion-grid{
+  padding: 0px;
+}
+
+
+#FundingProfileConfirmation  {
+  background: transparent;
+  --background: transparent;
+}
+.title-label{
+  padding: 8px 20px 0 0;
+  color: var(--ion-color-blue);
+}
+.display_flex {
+  display: flex!important;
+}
+.m-part.alert ion-col{
+  flex: 0 0 50%;
+  width: 50%;
+}
+.select-enabler-cls{
+  color: var(--ion-color-blue);
+  letter-spacing: .3px;
+  text-decoration: none;
+  display: inline-block;
+}
+.min-col-33{
+  min-width: 33.33%;
+  max-width: 33.33%;
+}
+.min-col-200{
+  min-width: 250px;
+  max-width: 250px;
+}
+.min-col-25{
+  min-width: 25%;
+}
+.max-col-25{
+  max-width: 25%;
+}
+.accordion{
+  margin: 15px auto auto;
+}
+@media (max-width: 992px) {
+  .min-col-25,.max-col-25{
+    min-width: 33%;
+  }
+  .min-col-33{
+    min-width: 50%;
+  }
+}
+@media (max-width: 830px) 
+{
+  .min-col-33{
+    min-width: 50%;
+  }
+  .min-col-25,.max-col-25{
+    min-width: 50%;
+  }
+  .m-part.alert ion-col{
+    flex: 0 0 100%;
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .min-col-33{
+    min-width: 100%;
+  }
+  .min-col-25, .max-col-25{
+    min-width: 100%;
+  }
+}
+
+
+
+

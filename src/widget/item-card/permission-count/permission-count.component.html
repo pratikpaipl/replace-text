@@ -1,0 +1,45 @@
+<ion-grid class="p-0" *ngIf="prod != undefined">
+    <ion-row class="cardlist_filter_row p-0" style="align-items: center; justify-content: space-between;">
+        <ion-col>
+            <ion-grid class="p-0">
+                <ion-row class="counts_row">
+                    <ion-col size="12">
+                        <div class="filter_count_list">
+                            <ion-label class="points">
+                                <!-- <span class="icon"><i class="fas fa-map-marker-alt"></i></span> -->
+                                <span class="contents no-pointer">
+                                    <i style="font-style: normal;"class="gray">{{this.store.getVal('permission_status')}}</i>
+                                    <span class="count">{{ prod.PageRoleStatus == '1'?this.store.getVal('active'):this.store.getVal('invited') }}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="online" *ngIf="prod.IsCompanyPageOwner == 1 || prod.IsPageOwner == 1 ">
+                                <!-- <span class="icon"><i class="fas fa-link"></i></span> -->
+                                <span class="contents no-pointer">
+                                    <i style="font-style: normal;"class="gray">{{this.store.getVal(prod.IsCompanyPageOwner == 1?'company_owner':'owner')}}</i>
+                                    <span class="count">{{this.store.getVal('yes')}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="online" *ngIf="prod.IsPageAdmin == 1 ">
+                                <!-- <span class="icon"><i class="fas fa-link"></i></span> -->
+                                <span class="contents no-pointer">
+                                    <i style="font-style: normal;"class="gray">{{this.store.getVal('admin')}}</i>
+                                    <span class="count">{{this.store.getVal('yes')}}</span>
+                                </span>
+                            </ion-label>
+                            <ion-label class="online" *ngIf="prod.IsPageOwner != 1 && prod.IsPageAdmin != 1 ">
+                                <!-- <span class="icon"><i class="fas fa-link"></i></span> -->
+                                <span class="contents no-pointer">
+                                    
+                                    <i style="font-style: normal;" class="gray">{{ prod.PermissionCount > 1 ? this.store.getVal('permissions'):
+                                        this.store.getVal('permission')}}</i>
+                                    <span class="count">{{ prod.PermissionCount }}</span>
+                                </span>
+                            </ion-label>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-col>
+
+    </ion-row>
+</ion-grid>

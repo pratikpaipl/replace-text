@@ -1,0 +1,30 @@
+#page_titles ion-label {
+    font-size: var(--ion-font-eighteen) !important;
+    // text-transform   : capitalize !important;
+    display: block;
+}
+
+#page_titles .add_buttons {
+	flex: 0 0 100% !important;
+	max-width: 100%;
+}
+#page_titles .form_add_btn.Import .add_buttons {
+    flex: 0 0 94px;
+    max-width: 95px;
+}
+
+
+.form_add_btn {
+	flex: 0 0 85px;
+}
+
+.form_add_btn.Import {
+    flex: 0 0 110px;
+}
+
+.navigation_compo {
+    padding: 0px 0px 0px 10px;
+}
+h1 {
+    font-size: 18px !important
+}

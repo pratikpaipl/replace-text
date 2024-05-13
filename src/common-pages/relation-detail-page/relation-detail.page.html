@@ -1,0 +1,33 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true">
+    <div class="page_wapper" *ngIf="DetailsData != undefined">
+        <div id="all_ui">
+            <div id="top_card">
+                <ion-grid class="container">             
+                    <bread-crump *ngIf="breadCrumpData !=undefined" [showHome]="1"  [breadCrumpData]="breadCrumpData" [from]="'user'" [pageLbl]="parent=='fundraise-need'?DetailsData.FNReferenceCode:DetailsData.FNReferenceCode"></bread-crump>
+                    <ion-row class="main_rows mt-res">
+                        <ion-col class="main_cols auto-cols admin_right_panel">
+                            <item-card [prod]="DetailsData" [isAddForm]="false" [isMain]="false" [subtype]="parent=='fundraise-need'?'funding-profiles': 'fundraise-needs'" apiAction="fundraise" [type]="parent=='fundraise-need'?'funding-profiles': 'fundraise-needs'" [from]="'front'" pageFrom="Top"></item-card>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+    </div>
+    <div id="tabblings" *ngIf="DetailsData != undefined ">
+        <ion-grid class="container">            
+            <ion-row>
+                <ion-col style="padding: 0px">
+                    <app-tabs [segments]="segments" class="detail-tabs" customClass="explore" [selectedSegment]="pageType" from='details' (change)="onClickSegment($event)"> </app-tabs>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div id="tabs_contents">
+        <ion-grid class="container">
+           <fundraise-need-details-view *ngIf="pageType =='fundraise-form'" [FundraiseData]="DetailsData" [ImpactThemesAndAreas]="ImpactThemesAndAreas" [FundingType]="FundingType" [Esg]="Esg" [Sdgs]="Sdgs"></fundraise-need-details-view>
+           <funding-profile-details-view *ngIf="pageType =='profile-form'" [fundingProfileData]="DetailsData" [ImpactThemesAndAreas]="ImpactThemesAndAreas" [FundingType]="FundingType" [Esg]="Esg" [Sdgs]="Sdgs"></funding-profile-details-view>
+        </ion-grid>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

@@ -1,0 +1,29 @@
+<web-page-header *ngIf="store.appType =='front' && !store.isLogin"></web-page-header>
+<app-page-header *ngIf="store.appType =='admin'|| store.isLogin" [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerActionAdmin($event)"></app-page-header>
+<ion-content #content [scrollEvents]="true">
+  <seo-hidden-tag [head]="store.getVal('website_key_27')" [description]="store.getVal('website_key_121')" ></seo-hidden-tag>
+  <!-- <div [class]="'full '+store.appType"> -->
+    <div class="page_wapper">
+      <div id="all_ui">
+        <ion-grid class="container">
+          <ion-row class="forms_row">
+            <ion-col class="right_panel">
+              <div class="form-group">
+                <div style="padding:0px 10px;margin-bottom: -12px;">
+                  <btn-title [pageLbl]="this.store.getVal(pageType)" [pageType]="pageType" [permissions]="[]"></btn-title>
+                </div>
+                <ion-label *ngIf="allTotal>0" class="note-padding filterCriteriaNote">{{store.getVal('result_filter_criteria_note')}}</ion-label>
+                <div class="items_counts" *ngIf="allTotal>0">
+                  <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+                </div>
+                <plan-items [pageType]="pageType" pageFrom="pre-login" apiEnd="subscription_plans/explore_plan_list" [type]="pageType" apiAction="plans" [updateTime]="updateTime" (change)="updateCount($event)"></plan-items>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+    <page-contact [msg]="store.getVal('website_key_155')" btn="website_key_156" ></page-contact>
+  <!-- </div> -->
+</ion-content>
+<app-page-footer *ngIf="store.appType =='admin' || store.isLogin" [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

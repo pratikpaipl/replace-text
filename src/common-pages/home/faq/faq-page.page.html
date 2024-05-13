@@ -1,0 +1,40 @@
+<web-page-header></web-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <seo-hidden-tag [head]="store.getVal('website_key_129')" [description]="store.getVal('website_key_130')"></seo-hidden-tag>
+    <div class="section section-white overflow-hidden" style="padding-top:0px;">
+        <section class="padding-bottom b2bmarket" id="three">
+            <div class="container-fluid methodology-areasection">
+                <div class="container container-lg">
+                    <div class="row fadeInUp">
+                        <div class="col-12">
+                            <div class="heading text-center" data-aos="fade-down">
+                                <h2>{{store.getVal('website_key_25')}}</h2>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 margin-top" style="padding-right: 15px;
+                        padding-left: 15px;">
+                            <div class="methodology-box" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+
+                                <ion-searchbar searchIcon="search" autocomplete="off" type="text" inputmode="text" [placeholder]="store.getVal('search')" [(ngModel)]="keyword" ng-reflect-model="" (keyup.enter)="onEnter($event)" (ionCancel)="hideSearch($event)" clearInput (ionClear)="clearSearch($event)" (ionChange)="callFilter($event)" [ngModelOptions]="{standalone: true}"></ion-searchbar>
+
+                                <ion-accordion-group multiple="true" *ngFor="let item of faqList">
+                                    <h3 class="my-3">{{store.getVal(item.SectionTextKey)}}</h3>
+                                    <ion-accordion [value]="faq.Question" *ngFor="let faq of item.FaqJson">
+                                      <ion-item slot="header" color="light">
+                                        <ion-label>{{faq.Question}}</ion-label>
+                                      </ion-item>
+                                      <div class="ion-padding" class="details-content" slot="content">{{faq.Answer}}</div>
+                                    </ion-accordion>
+                                </ion-accordion-group>
+                                <h3 *ngIf="keyword != '' && faqList.length == 0" class="data-not-found">{{store.getVal('website_key_101')}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <page-contact [msg]="store.getVal('website_key_75')" btn="website_key_26"></page-contact>
+    </div>
+    <web-page-footer></web-page-footer>
+</ion-content>

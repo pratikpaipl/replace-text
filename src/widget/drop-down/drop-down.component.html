@@ -1,0 +1,19 @@
+<div id="DropView"></div>
+<div *ngIf="itemList.length>0" class="custom-drop" [class]="customClass">
+    <ion-label class="selected" [ngStyle]="{'opacity': (enable == 1) ? '0.5' : '1.0' }">{{getVal()}}<i class="fas fa-caret-down"></i></ion-label>
+    <!--*ngIf="(enable != 1)"-->
+    <ion-radio-group class="drop-list" [disabled]="(enable == 1)" [(ngModel)]="slected" (ionChange)="changeSelect($event)">
+        <ion-item *ngFor="let item of itemList" [disabled]="(enable == 1)">
+            <ion-label>{{item.lbl}}</ion-label>
+            <ion-radio value="{{item.val}}"></ion-radio>
+        </ion-item>
+    </ion-radio-group>
+</div>
+<ion-row id="mobile_sorting" *ngIf="isSort">
+    <ion-col class="dcol">
+        <ion-label style="text-transform: capitalize">{{slected}}</ion-label>
+    </ion-col>
+    <ion-col class="dcol select">
+        <ion-img src="assets/images/sort.png" class="filter-type" (click)="presentSortSheet()"></ion-img>
+    </ion-col>
+</ion-row>

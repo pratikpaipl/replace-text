@@ -1,0 +1,59 @@
+            
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="true" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="addPage">
+    <div class="page_wapper">
+        <div id="all_ui">
+            <div id="top_card" *ngIf="mItem.length >0 ">
+                <ion-grid class="container">
+                    <ion-row>
+                        <ion-col size="11">
+                            <bread-crump showHome="1" [pageType]="type" [showHome]="1" [breadCrumpData]="breadCrumpData" pageLbl="{{pageTitle}}" [from]="'user'"></bread-crump>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="main_rows mt-res">
+                        <ion-col class="main_cols auto-cols admin_right_panel">
+                            <div style="    display: inline-grid;">
+                                <ion-label class="title">{{store.getVal('compare_selection_criteria')}}</ion-label>
+                                <ion-label class="title" style="color: var(--ion-color-logo-red)!important;font-weight: normal;padding: 15px 0px 5px 0px;">({{store.getVal((type=='funding-profile'?'ip':'ir')+'_enabler_text' )}})</ion-label>
+                            </div>
+                            <table style="margin-top: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th class="tbl-title">
+                                            <!-- <i class="fa fa-ellipsis-v" style="color: black;" aria-hidden="true"></i> -->
+                                        </th>
+                                        <th colspan=1 [class]="type =='fundraise'?'fn-title':'fp-title'">{{store.getVal(type =='fundraise'?type+'-need':type)}}</th>
+                                        <th colspan=1 class="tbl-title">{{store.getVal(columTitle2)}}</th>
+                                    </tr>
+                                    <div *ngFor="let item of mItem" style="display: contents;">
+                                        <tr *ngIf="item.title != undefined && item.title != ''">
+                                            <td [class]="item.class">{{item.title}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr *ngFor="let d of item.data; let i = index" [class]="d.extraClss">
+                                            <td [class]="d.extraClss" innerHtml="{{d.title}}{{store.dispMatchCnt(d,d.matchCount)}}"></td>
+                                            <td [class]="d.extraClss">
+                                                <div style="display: flex;align-items:center">
+                                                    <img alt="" *ngIf="d.Logo !=''" style="width: 30px;" [src]="d.Logo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                                                    <div [innerHtml]="sanitizer.bypassSecurityTrustHtml(d.selType)"></div>
+                                                </div>
+                                            </td>
+                                            <td [class]="d.extraClss">
+                                                <div style="display: flex;align-items:center" [style.cursor]="d.img !=''?'pointer':'auto'" (click)="d.img !=''? openEnabler(fslug):null">
+                                                    <img alt="" *ngIf="d.img !=''" style="width: 30px;" [src]="d.img" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                                                    <div [innerHtml]="sanitizer.bypassSecurityTrustHtml(d.enabler)"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </thead>
+                            </table>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

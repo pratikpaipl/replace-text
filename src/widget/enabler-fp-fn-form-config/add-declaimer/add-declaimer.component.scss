@@ -1,0 +1,167 @@
+
+ .back-arrow{
+    margin: 10px 15px 10px 10px;
+    font-size: 20px;
+    color: white !important;
+ }
+ ion-toolbar {
+     background  : var(--ion-color-back) !important;
+     --background: var(--ion-color-back) !important;
+ }
+
+ .back-btn {
+     cursor  : pointer;
+     width   : 20px;
+     height  : auto;
+     margin: 10px;
+ }
+
+ .loc-header-lbl {
+     text-transform    : capitalize;
+     text-overflow     : ellipsis !important;
+     overflow          : hidden !important;
+     color             : var(--ion-color-white) !important;
+     padding           : 0px !important;
+     font-size         : var(--ion-font-sixteen) !important;
+     display           : -webkit-box;
+     -webkit-line-clamp: 1;
+     -webkit-box-orient: vertical;
+     cursor            : pointer;
+ }
+
+ .al-center {
+     align-items: center !important;
+ }
+ 
+
+.form-group div ion-label {
+    min-width: 50px;
+}
+
+.forms_block {
+    padding: 20px;
+}
+
+.radio_button {
+    display: flex;
+    align-items: center;
+}
+
+.padd-rgt-left-shopType span {
+    margin-right: 6px;
+}
+
+.opt-05 {
+    opacity: 0.5;
+}
+
+.opt-1 {
+    opacity: 1;
+}
+
+.label-name {
+    border-radius: 10px !important;
+    border: 2px solid var(--ion-color-light-gray) !important;
+    padding: 6px 6px;
+    margin-left: 10px;
+}
+
+.label-name ion-label {
+    margin-bottom: 0px;
+}
+
+.shopType {
+    padding-right: 10px;
+}
+
+.padd-rgt-left-shopType {
+    margin: auto;
+    padding-right: 10px;
+    padding-left: 10px;
+    line-height: 5px;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0px !important;
+    line-height: 15px;
+}
+
+.form-group.radio_button-type {
+    display: flex;
+}
+
+.form_add_btn {
+    flex: 0 0 100px;
+    max-width: 100px;
+}
+
+.form_add_btn.Import {
+    flex: 0 0 110px;
+    max-width: 110px;
+}
+
+.add_button {
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.add_button ion-icon {
+    color: var(--ion-color-black);
+    opacity: 1;
+    line-height: 30px;
+    padding: 0px !important;
+    height: 30px;
+    width: 30px;
+
+}
+
+@media (max-width: 640px) {
+    .form-group.radio_button-type {
+        display: block !important;
+    }
+    .form-group.radio_button-type .d-flex.radio_group {
+        display: block !important;
+    }
+    .radio_button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        margin-top: 6px;
+    }
+    ion-radio {
+        flex: 0 0 20px;
+    }
+    .form-group div ion-label {
+        min-width: 50px;
+        margin: 0px;
+    }
+    .forms_conponenl .button_box {
+        align-items: center;
+        padding: 10px 0;
+        margin: 0px -10px;
+        display: flex;
+    }
+    .forms_conponenl .button_box ion-button {
+        margin: 0px 10px !important;
+        flex: 0 0 50%;
+        width: 100%;
+        max-width: calc(50% - 20px);
+    }
+}
+
+.form-group.radio_button-type .d-flex.radio_group {
+    display: flex;
+    align-items: center;
+}
+
+.errorTitle {
+    color: var(--ion-color-red);
+    width: 100%;
+}
+
+.labels {
+    font-size: var(--ion-font-fifteen) !important;
+    letter-spacing: 0.8px;
+}

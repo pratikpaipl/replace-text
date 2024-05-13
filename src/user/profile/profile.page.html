@@ -1,0 +1,59 @@
+<btn-title [pageLbl]="store.getVal(pageType.replace('-','_'))" [pageType]="pageType" [permissions]="permissions">
+</btn-title>
+<div class="forms_conponenl">
+    <ion-grid id="myprofile" class="forms_block">
+        <refresher (change)="callPullRefresh($event)"></refresher>
+        <ion-row class="forms_body">
+            <error-message [isNameUn]="isFnameUn" styleD="left" [dataAction]="dataAction" [message]="loadMsg">
+            </error-message>
+            <ion-col size="12">
+                <div class="form-group">
+                    <ion-label>{{store.getVal('email')}} *</ion-label>
+                    <div class="right-btn-continer">
+                        <input spellcheck="false" autocomplete="off" class="form-control" minlength="5" maxlength="300" type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" disabled="true" readonly required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <ion-label [class]="isFnameUn?'labels errorMsg':'labels'">
+                        {{store.getVal('first_name')}} *</ion-label>
+                    <div class="right-btn-continer">
+                        <input spellcheck="false" autocomplete="off" type="text" class="form-control" minlength="1" maxlength="50" [(ngModel)]="fname" [ngModelOptions]="{standalone: true}" [disabled]="isEditFn" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <ion-label [class]="isLnameUn ?'labels errorMsg':'labels'">
+                        {{store.getVal('last_name')}}</ion-label>
+                    <div class="right-btn-continer">
+                        <input spellcheck="false" autocomplete="off" type="text" class="form-control" minlength="1" maxlength="50" [(ngModel)]="lname" [ngModelOptions]="{standalone: true}" [disabled]="isEditLn" required/>
+                        <!-- <ion-label (click)="edit('LastName')">
+                <ion-img style="width: 20px; margin-left: 5px;"
+                         src="{{isEditLn?'assets/images/edit.png':'assets/images/check-g.png'}}"></ion-img>
+                {{isEditLn?store.getVal('edit'):store.getVal('save')}}
+              </ion-label>-->
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <ion-label id="Gender" [class]="isGenUn ?'labels errorMsg':'labels'">
+                        {{store.getVal('gender')}} *</ion-label>
+                    <div class="right-btn-continer">
+                        <ng-select [(ngModel)]="Gender" class="form-control" [placeholder]=""
+                                   [ngModelOptions]="{standalone: true}" dropdownPosition="bottom" [items]="genderList" bindLabel="ReferenceName" bindValue="ReferenceKey"></ng-select>
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <ion-label id="language" [class]="isLngUn ?'labels errorMsg':'labels'">
+                        {{store.getVal('language')}} *</ion-label>
+                    <div class="right-btn-continer">
+                        <ng-select [(ngModel)]="langSelect" class="form-control" [placeholder]=""
+                                   [ngModelOptions]="{standalone: true}" dropdownPosition="bottom" [items]="languageList" bindLabel="LanguageName" bindValue="LanguageCode"></ng-select>
+                      
+                    </div>
+                </div> -->
+                <bottom-btn styleD="center" [leftKey]="'submit'" [leftBtn]="store.getVal('submit')"
+                            (change)="callAction($event)" isShow="0">
+                </bottom-btn>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>

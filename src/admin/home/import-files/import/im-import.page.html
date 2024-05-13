@@ -1,0 +1,73 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true">
+    <div class="page_wapper">
+        <div id="all_ui">
+            <ion-grid id="files" class="container" style="padding-bottom: 25px !important;">
+                <bread-crump showHome="1" [pageType]="'import-files'" pageLbl="{{'Import File'}}"></bread-crump>
+                <ion-row class="forms_row file_improts">
+                    <ion-col size="12">
+                        <div id="myprofile" class="forms_block">
+                            <div class="upload_boxs">
+                                <div class="uploadButton" style="position: relative;">
+                                    <input class="uploadButton-input" id="upload" type="file" accept=".xls,.xlsx" (change)="changeListener($event)" />
+                                    <label class="uploadButton-button" for="upload" tabindex="1">
+                                        <i [class]="shopType == 'physical'?'fa fa-file-excel-o':'fa-link fas'"
+                                           style="font-size: 25px"></i>{{ fileName !=
+                                        ''?fileName:store.getVal('select_excel_csv_file_drop_file_here')}}</label>
+                                    <i class="fas fa-trash" id="deleteImg" *ngIf="file != undefined" (click)="onDeleteFile()"></i>
+                                </div>
+                                <div class="uploadButton sub" *ngIf="temptUrl != undefined && temptUrl !=''">
+                                    <ion-label class="uploadButton-button" (click)="downloadTemplate()" tabindex="1">
+                                        <i class="fa fa-file-excel-o" style="font-size: 25px"></i>{{store.getVal('download_template')}}
+                                    </ion-label>
+                                </div>
+                            </div>
+                            <div *ngIf="fields.length>0" class="form-group">
+                                <ng-select *ngFor="let item of fields" class="form-control" style="margin-bottom: 5px;" [items]="item.data" id="fields" [(ngModel)]="item.selField" bindLabel="label" bindValue="id" dropdownPosition="bottom" (change)="onChange($event,item)"></ng-select>
+                            </div>
+                            <div class="button_box">
+                                <bottom-btn [leftKey]="'submit'" [leftBtn]="store.getVal('submit')" (change)="callAction($event)">
+                                </bottom-btn>
+                            </div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-grid id="files_list">
+                <ion-row class="files_list_row" *ngFor="let item of fileList">
+                    <ion-col class="filter_content_cols">
+                        <div class="display-block">
+                            <ion-img style="width: 20px; display: inline-block; vertical-align: middle;" src="assets/images/excel-file.png" alt=""></ion-img>
+                            <ion-label class="prod-title" style="padding: 10px; display: inline-block !important;vertical-align:middle;white-space: nowrap;width: calc(100% - 60px);overflow: hidden;text-overflow: ellipsis;">
+                                {{item.OriginalFileName}}</ion-label>
+                            <ion-img style="width: 20px;float: right;cursor: pointer; margin-top: 12px;" src="assets/images/view.png" (click)="onViewFile(item)" alt=""></ion-img>
+                        </div>
+                    </ion-col>
+                    <ion-col size="12">
+                        <ion-row style="align-items: center;">
+                            <ion-col>
+                                <ion-label class="title">{{store.getVal('total_records')}} {{item.TotalRecords}}
+                                </ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <div class="list_headings text-center">
+                                    <ion-img src="assets/images/success.png" alt=""></ion-img>
+                                    <ion-label>{{item.ValidRecords}} {{store.getVal('correct')}}</ion-label>
+                                </div>
+                            </ion-col>
+                            <ion-col>
+                                <div class="list_headings text-right">
+                                    <ion-img src="assets/images/error.png" alt=""></ion-img>
+                                    <ion-label>{{item.InvalidRecords}} {{store.getVal('need_corrections')}}</ion-label>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+                <infinite-scroll [items]="fileList" [itemTotal]="fTotal" (change)="doInfiniteList($event)">
+                </infinite-scroll>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

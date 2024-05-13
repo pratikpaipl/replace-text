@@ -1,0 +1,126 @@
+<web-page-header *ngIf="store.appType =='front'"></web-page-header>
+<app-page-header *ngIf="store.appType =='admin'" [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerActionAdmin($event)"></app-page-header>
+<ion-content #content *ngIf="isView" [scrollEvents]="true">
+    <div [class]="'full '+store.appType">
+        <div class="page_wapper">
+            <div id="all_ui">
+                <ion-grid class="container">
+                    <ion-row class="forms_row">
+                        <ion-col class="right_panel">
+                            <div class="forms_conponenl" id="authforms">
+                                <ion-grid id="myprofile" class="forms_block">
+                                    <tag-line [extra]="true" [fLbl]="pageType == 'login'?store.getVal('log_in'):store.getVal('sign_up')" msg="{{store.getVal('to_pi2life_and_make_a_positive_impact_to_life_everyday')}}">
+                                    </tag-line>
+                                    <ion-row class="forms_headers">
+                                        <ion-col size="12">
+                                            <app-tabs [segments]="segments" styleD="flex" customClass="auth" [selectedSegment]="pageType" from="auth" (change)="onClickSegment($event)"> </app-tabs>
+                                        </ion-col>
+                                    </ion-row>
+                                    
+                                    <ion-row class="forms_body" id="login">
+                                        <ion-col size="12">
+                                            <ng-container *ngTemplateOutlet="pageType == 'signup'?signUpTemplate:loginTemplate"></ng-container>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer  *ngIf="store.appType =='admin'" [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>
+<ng-template #loginTemplate>
+    <div>
+        <ion-label [style.color]="inviteFromConfrom?'var(--ion-color-dark-green) !important':'var(--ion-color-red) !important'" *ngIf="inviteMsg != undefined" [innerHtml]="inviteMsg"></ion-label>
+        <error-message isNameUn="true" styleD="left" [dataAction]="dataAction" [message]="loadMsgLogin"></error-message>
+    </div>
+    <div class="form-group autofocus">
+        <ion-label [class]="(emailL =='' || !store.regEmail.test(emailL) ) && emailErrL !=''?'labels errorMsg':'labels'">{{store.getVal('email')}} *</ion-label>
+        <input spellcheck="false" autocomplete="off" type="email" inputmode="email" class="form-control" id="Email" minlength="1" maxlength="300" [disabled]="isDisabled"  #emailLoginM [(ngModel)]="emailL" (keyup.enter)="callEnter('0')"/>
+    </div>
+    <div class="form-group passfild">
+        <ion-label [class]="isPasswordUnL ?'labels errorMsg':'labels'"> {{store.getVal('password')}} * </ion-label>
+        <input spellcheck="false" autocomplete="off" class="form-control" [type]="passwordTypeL" minlength="6" maxlength="20" clearOnEdit="false" [(ngModel)]="passwordL" (keyup.enter)="callEnter('0')"/>
+        <ion-icon class="form-control" [name]="passwordIconL" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+    </div>
+    <div class="form-group custom_chk">
+        <ion-checkbox slot="start" [(ngModel)]="isRemember"></ion-checkbox>
+        <ion-label>{{store.getVal('remember_me')}}</ion-label>
+    </div>
+    <bottom-btn styleD="center" [leftKey]="'log_in'" [leftBtn]="'Log in'" screen="1" (change)="callAction($event,'0')"></bottom-btn>
+    <div class="form-group" style="text-align: center; margin: 15px 0px;">
+        <ion-label><span class="under-line pointer" (click)="forgotPassword()">{{store.getVal('forgot_password')}}</span>
+        </ion-label>
+    </div>
+</ng-template>
+<ng-template #signUpTemplate>
+    <div>
+        <ion-label style="color:var(--ion-color-red) !important;" *ngIf="inviteMsg != undefined" [innerHtml]="inviteMsg"></ion-label>
+        <error-message isNameUn="true" styleD="left" [dataAction]="dataAction" [message]="loadMsgSignup"></error-message>
+    </div>
+    <div class="form-group autofocus">
+        <ion-label [class]="(email =='' || !store.regEmail.test(email) )&& emailErr !=''?'labels errorMsg':'labels'">{{store.getVal('email')}} *</ion-label>
+        <input spellcheck="false" autocomplete="off" class="form-control" #emailLogin minlength="5" [disabled]="isDisabled" maxlength="300" type="email" [(ngModel)]="email" (keyup.enter)="callEnter('1')" tabindex="1"/>
+    </div>
+    <div class="form-group passfild">
+        <ion-label [class]="isPasswordUn ?'labels errorMsg':'labels'">
+            {{store.getVal('password')}}*
+        </ion-label>
+        <input spellcheck="false" autocomplete="off" class="form-control" [type]="passwordType" minlength="6" maxlength="20" clearOnEdit="false" [(ngModel)]="password" (keyup.enter)="callEnter('1')" (keydown.space)="$event.preventDefault();" tabindex="1"/>
+        <ion-icon class="form-control" [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'>
+        </ion-icon>
+        <ion-note tabindex="-1">{{store.getVal('password_six_or_more_characters')}}
+        </ion-note>
+    </div>
+    <div class="form-group">
+        <ion-label [class]="isFnameUn && (fname.trim() =='')?'labels errorMsg':'labels'">
+            <!--|| store.hasWhiteSpace(fname)-->
+            {{store.getVal('first_name')}} *
+        </ion-label>
+        <input spellcheck="false" autocomplete="off" type="text" class="form-control" minlength="1" maxlength="50" [(ngModel)]="fname" (keyup.enter)="callEnter('1')" tabindex="1"/>
+    </div>
+    <div class="form-group">
+        <ion-label [class]="isLnameUn ?'labels errorMsg':'labels'">{{store.getVal('last_name')}}</ion-label>
+        <input spellcheck="false" autocomplete="off" type="text" class="form-control" minlength="1" maxlength="50" [(ngModel)]="lname" (keyup.enter)="callEnter('1')" tabindex="1"/>
+    </div>
+    <div *ngIf="store.appType =='admin' && InvitationKey ==''" style="margin-bottom: 15px;">
+        <div class="form-group">
+            <custom-select selectTitle="select_subscription_plan" modalName="selectPlanDetail" [modal]="selectPlanDetail" id="PlanList" listName="PlanList" openPos="auto"  [isLogo]="false" [list]="PlanList" bindLabel="DisplayPlanName" bindValue="PlanID" [isValidate]="false" linkLabel="plans_and_pricing" [isNote]="true" [linkNote]="planScrinPath()" (change)="customSelect($event)"></custom-select>
+
+        </div>
+        <div class="form-group">
+            <ion-label [class]="isCompanyNameUn ?'labels errorMsg':'labels'">{{store.getVal('company_name')}} * </ion-label>
+            <input spellcheck="false" autocomplete="off" type="text" class="form-control" minlength="1" maxlength="100" [(ngModel)]="CompanyName" (keyup.enter)="callEnter('1')" tabindex="1"/>
+        </div>
+        <div class="form-group">
+            <ion-label [class]="isRegistrationNoUn ?'labels errorMsg':'labels'">{{store.getVal('registration_number')}}</ion-label>
+            <input spellcheck="false" autocomplete="off" type="text" class="form-control" minlength="1" [disabled]="CompanyNotRegisterd" maxlength="100" [(ngModel)]="RegistrationNo" (keyup.enter)="callEnter('1')" tabindex="1"/>
+            <ion-item tabindex="1">
+                <ion-label [class]="'labels'" style="font-size: 13px !important;margin: unset;">{{store.getVal('company_is_not_registered')}}</ion-label>
+                <ion-checkbox class="registery" slot="start" [(ngModel)]="CompanyNotRegisterd" (ionChange)="changeIsRegister($event)"></ion-checkbox>
+            </ion-item>
+        </div>
+        <div class="form-group">
+            <ion-label [class]="isCopmanyRegistryRecord ?'labels errorMsg':'labels'">{{store.getVal('company_registry_record')}}</ion-label>
+            <input spellcheck="false" autocomplete="off" type="text" id="CompanyRegistryRecord" class="form-control" minlength="1" [disabled]="CompanyNotRegisterd" maxlength="2000" [(ngModel)]="CompanyRegistryRecord" (keyup.enter)="callEnter('1')" tabindex="1"/>
+        </div>
+        <div class="form-group">
+        <custom-select  id="Country" selectTitle="sign_up_country_of_incorporation" modalName="CountriesOfIncorporation" [modal]="CountriesOfIncorporation" listName="countryList" [list]="countryList" openPos="auto" bindLabel="CountryName" bindValue="CountryID" [isError]="isCountry" [multiple]="false" (change)=customSelect($event)></custom-select>
+        </div>
+    </div>
+    <bottom-btn styleD="center" [leftKey]="'agree_sign_up'" [leftBtn]="store.getVal('agree_sign_up')" screen="1" (change)="callAction($event,'1')">
+    </bottom-btn>
+    <div class="form-group" style="text-align: center; margin: 15px 0px;display: grid;">
+        <ion-label>{{store.getVal('by_submitting_you_agree_to')}} <br *ngIf="screenWidth <= 768" />
+            <span class="pointer" (click)="openPage('terms_and_conditions')" style="color: var(--ion-color-red) !important;">{{store.getVal('terms_conditions')}}
+            </span> {{store.getVal('and')}}
+            <span class="pointer" (click)="openPage('privacy_policy')" style="color: var(--ion-color-red) !important;">{{store.getVal('privacy_policy')}}&nbsp;</span>
+        </ion-label>
+        <ion-label>
+            <span class="under-line pointer" (click)="resendConfirmLink()">{{store.getVal('resend')}}</span> {{store.getVal('confirmation_link')}}
+        </ion-label>
+    </div>
+</ng-template>

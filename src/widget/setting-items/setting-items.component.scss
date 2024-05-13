@@ -1,0 +1,179 @@
+.container {
+    max-width: 900px;
+}
+ion-card-title{
+    margin-right: auto;
+}
+.setting-item{
+    flex: 0 0 calc(50% - 10px);
+    width: calc(50% - 10px);
+    max-width: calc(50% - 10px);   
+    margin: 5px;
+}
+ion-radio-group ion-item ion-label{
+    white-space: normal;
+}
+.forms_block {
+    padding: 20px;
+}
+
+.errorTitle {
+    color: var(--ion-color-red);
+    width: 100%;
+}
+
+
+.switchs_block {
+    margin: 5px;
+}
+
+.input_group {
+    max-width: 80% !important;
+}
+
+.area_section {
+    padding-left: 50px;
+}
+
+.item-child {
+    border-bottom: 1px solid var(--ion-color-light-gray);
+    margin-bottom: 10px;
+}
+
+.item-child:last-child {
+    border-bottom: none;
+    margin-bottom: 0px;
+}
+
+
+.m-part.rdo_list_cards_box {
+	margin: 0px !important;
+	border-radius: 10px;
+	box-shadow: 0 0 4px rgba(32, 33, 36, 0.28);
+	overflow: hidden;
+	margin-bottom: 25px !important;
+}
+.m-part.rdo_list_cards_box ion-card-title {
+	padding: 12px 15px !important;
+	border-radius: 0px !important;
+	color: var(--ion-color-white) !important;
+	font-size: 16px !important;
+}
+.m-part.rdo_list_cards_box ion-radio-group ion-item ion-label {
+	display: block !important;
+	margin: 12px 15px !important;
+    font-size: 15px !important;
+}
+.m-part.rdo_list_cards_box ion-radio-group ion-item ion-radio {
+	margin: 12px 15px !important;
+}
+.m-part.rdo_list_cards_box ion-radio-group ion-item {
+	--min-height: auto !important;
+	--padding-start: 0;
+	--inner-padding-end: 0;
+	margin: 0px !important;
+}
+.datalist_forms_card {
+	padding: 25px 0;
+}
+.acord-row .acord-col{
+	flex: 0 0 calc(50% - 10px) !important;
+	max-width: calc(50% - 10px) !important;
+	width: calc(50% - 10px) !important;
+	margin: 5px;
+}
+
+.accordion {
+	width: 100%;
+	margin: auto;
+	background: var(--ion-color-black);
+	border-radius: 4px;
+	margin-top: 5px;
+}
+.accordion:first-child {	
+	margin-top: 0px;
+}
+
+.accordion .menu {
+	position: relative;
+	padding:15px;
+	color: var(--ion-color-white);
+	border-bottom: 1px solid #ccc;
+	transition: all 0.4s ease;
+  }
+  
+  .accordion main:last-child .menu {
+	border-bottom: 0;
+  }
+  
+  .accordion main i {
+	position: absolute;
+	// top: 1.2rem;
+	// left: 1rem;
+	color: var(--ion-color-white);
+	transition: all 0.4s ease;
+  }
+  
+  .accordion .main i.fa-chevron-down {
+	// right: 1rem;
+	left: 10px;
+	transform: rotate(-90deg);
+  }
+  .accordion .main i.fa-eye {
+	right: 1rem;
+	left: auto;
+	position: absolute;
+	// transform: rotate(-90deg);
+  }
+  
+  .accordion .main.active i.fa-chevron-down {
+	transform: rotate(0deg);
+  }
+  .submenu .form-group{
+	margin-bottom: 0px;
+  }
+  .submenu .switchs_block{
+	margin-top: 10px;
+	justify-content: end;
+  }
+  .submenu {
+	  // overflow: hidden;
+	  // padding: 0px 20px;
+	  background: var(--ion-color-white);
+	  font-size: 14px;
+	  transition: height 0.4s ease;
+	  box-shadow: 0 0 4px;
+	  border-radius: 0px 0px 5px 5px;
+	}
+	.submenu ion-grid{
+		padding: 10px;
+	}
+@media (max-width: 992px)
+{
+	.acord-row .acord-col{
+		flex: 0 0  100% !important;
+		max-width: 100% !important;
+		width: 100% !important;
+		margin: 0px;
+	}
+	// .acord-col:empty{
+	// 	display: none;
+	// }
+    .datalist_forms_card .main_cols.auto-cols.admin_right_panel {
+        padding: 0px !important;
+    }
+    .datalist_forms_card {
+        padding: 20px 0;
+    }
+    .setting-item{
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;   
+    }
+    
+}
+@media (max-width: 768px) {
+    .switchs_block ion-label {
+        min-width: 220px;
+    }
+}

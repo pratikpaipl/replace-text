@@ -1,0 +1,36 @@
+.fixTableHead {
+    overflow-y: scroll;
+}
+
+
+
+ion-grid,
+ion-col,
+ion-row {
+    padding: 0px !important;
+}
+
+
+.navigation_compo {
+    padding: 5px 0px 0px 10px;
+}
+
+@media (max-width: 830px) {
+    td#app-ui {
+        border-radius: 0px;
+    }
+    .fixTableHead table tr {
+        display: block;
+        box-shadow: 0 0 4px rgba(32, 33, 36, 0.28);
+        margin: 10px 2px;
+        padding: 0px;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mb-tbl table tr:nth-child(3) td:nth-child(2),
+    .mb-tbl table tr:nth-child(3) td:nth-child(3) {
+        word-break: break-all;
+    }
+}

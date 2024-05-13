@@ -1,0 +1,37 @@
+<div class="filter_count_list admin_list" [ngStyle]="{display: elementClass?'block':'flex'}">
+    <div class="main-div">
+        <div class="sub-div">
+            <div class="contect-padding" *ngIf="DataStatus != undefined">
+                <ion-label>{{store.getVal(type=='enabler'?'data_status':'enablers_confirmation')}} </ion-label>
+                <ion-select interface="popover" class="status DataStatus" [(ngModel)]="prod.DataStatus" (ngModelChange)="changeStatus($event)" [disabled]="type=='enabler'?!store.IsSystemAdmin:false">
+                    <ion-select-option *ngFor="let e of store.DataStatusResult" [value]="e.val">
+                        {{e.lbl}}
+                    </ion-select-option>
+                </ion-select>       
+            </div>
+            <div class="contect-padding"  *ngIf="store.isLogin && IsActive != undefined">
+                <ion-label>{{store.getVal('active_status')}}</ion-label>
+                <ion-select interface="popover" class="status IsActive" [(ngModel)]="prod.IsActive" (ngModelChange)="changeStatus($event)">
+                    <ion-select-option *ngFor="let e of store.ActiveStatusResult" [value]="e.val">
+                        {{e.lbl}}
+                    </ion-select-option>
+                </ion-select>
+            </div>
+
+            <div class="contect-padding" *ngIf="store.appType =='admin' && store.IsSystemAdmin && IsEnable != undefined">
+                <ion-label>{{store.getVal('system_status')}}</ion-label>
+                <ion-select interface="popover" class="status IsEnable" [(ngModel)]="prod.IsEnable" (ngModelChange)="changeStatus($event)">
+                    <ion-select-option *ngFor="let e of store.EnableStatusResult" [value]="e.val">
+                        {{e.lbl}}
+                    </ion-select-option>
+                </ion-select>
+            </div>
+            <div class="contect-padding" *ngIf="IsFeatured != undefined && (store.appType =='admin' && store.AdminAccess && type !='enabler' )|| (type =='enabler' && store.IsSystemAdmin)">
+                <ion-label>{{store.getVal('featured')}}</ion-label>
+                <ion-select interface="popover" class="status IsFeatured" [(ngModel)]="prod.IsFeatured" (ngModelChange)="changeStatus($event)">
+                    <ion-select-option *ngFor="let e of store.PublishStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                </ion-select>
+            </div>
+        </div>
+    </div>
+</div>

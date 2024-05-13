@@ -1,0 +1,51 @@
+//https://stackoverflow.com/questions/55833446/search-sensitivity-in-dropdown-ng-select-angular
+.fa.fa-external-link:before {
+    margin-right: 5px;
+}
+.ng-dropdown-header {
+     padding: 0px !important; 
+}
+
+.check-list{
+     display: flex;
+     align-items: center;
+}
+
+span.checkmark {
+     display: block;
+     border: 2px solid #cccccc !important;
+     width: 18px;
+     height: 18px;
+     margin-right: 10px;
+     border-radius: 4px;
+     flex: 0 0 18px;
+     max-width: 18px;
+     position: relative;
+
+ }
+.new-lbl-msg{
+    padding: 5px 0px;
+    display: block;
+}
+.new-lbl-msg i{
+    padding: 0px 5px;
+}
+.logo-size{
+    height: 30px;
+    padding: 5px;
+    margin-right: 10px;
+    
+}
+.pannel-logo-size{
+    height: 45px;
+    padding: 5px;
+    margin-right: 10px;
+    
+}
+ .ng-select-multiple input[type=checkbox]:checked ~ .check-list span.checkmark {
+     border-color: var(--ion-color-logo-red) !important;
+     background-color: var(--ion-color-logo-red) !important;
+ }
+ .ng-select-multiple input[type="checkbox"]:checked~ .check-list label {
+     color: var(--ion-color-black)!important;
+ }

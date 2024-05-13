@@ -1,0 +1,38 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <div class="page_wapper" *ngIf="this.contentData !=''">
+        <!-- <div id="all_ui"> -->
+        <ion-grid class="container">
+            <ion-row class="forms_row">
+                <ion-col>
+                    <div class="forms_conponenl">
+                        <form>
+                            <ion-grid id="myprofile" class="forms_block">
+                                <ion-row class="forms_headers">
+                                    <ion-col size="12">
+                                        <ion-label class="heading">
+                                            <!--<span class="icons"><i class="fa fa-info-circle"></i></span> -->{{this.title}}
+                                        </ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="forms_body">
+
+                                    <ion-col size="12">
+                                        <div class="form-group">
+                                            <ion-label [innerHtml]="contentData"></ion-label>
+                                        </div>
+                                    </ion-col>
+                                    <bottom-btn *ngIf="PageSlug == 'about_us'" [ngClass]='activePage' styleD="center" [leftKey]="'add_your_selling_locations'" [leftBtn]="store.getVal('add_your_selling_locations')" isShow="0" (change)="callAction($event)">
+                                    </bottom-btn>
+                                </ion-row>
+                            </ion-grid>
+                        </form>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <!-- </div> -->
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>
+<!-- <bottom-up-arrow [content]="content" [isShowUp]="isShowUp" (change)="updateScroll($event)"> </bottom-up-arrow> -->

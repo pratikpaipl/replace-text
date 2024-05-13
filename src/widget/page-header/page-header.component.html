@@ -1,0 +1,35 @@
+<ion-header #header [myScrollVanish]="!store.IsWebView?contentID:''" height="90px" >
+    <ion-toolbar>
+                <div class="header">
+                    <div class="container container-lg flex-container flex-container-row flex-items-center">
+                        <button btnicononly="menu" type="button" aria-label="Navigation menu" class="btn btn-round btn-icon " style="background: var(--ion-color-logo-red)"><material-icon class="icon material-icons notranslate" translate="no" aria-hidden="true" (click)="openFirst()">menu</material-icon></button>
+                        <a class="flex0 clickEv" (click)="store.homePage()" style="margin-left: 5px;">
+                            <img  src="assets/icon/OriginalCircle-F2.png" alt="Funder" class="logo ">
+                        </a>
+                        <div class="flex1"></div>
+                        <div class="m-l-md m-t-xxs d-none d-md-block flex0" style="margin-right: 10px;">
+                            <div class="flex-container flex-container-row flex-items-center ">
+                                <button btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right" tabindex="0" role="button" (click)="openPage('enablers')"><i class="fa-solid fa-vector-square"></i> {{store.getVal('enablers')}}</button>
+                                <button *ngIf="this.store.appType == 'front'" btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right" tabindex="0" role="button" (click)="openPage('investor/add')"><i class="fa-solid fa-circle-plus"></i> {{store.getVal('investor')}}</button>
+                                <button *ngIf="this.store.appType == 'front'" btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right" tabindex="0" role="button" (click)="openPage('investee/add')"><i class="fa-solid fa-circle-plus"></i> {{store.getVal('investee')}}</button>
+
+                                <button *ngIf="store.appType == 'admin'" (click)="isLogin?openPage('funding-profiles-submitted'):undefined" btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right" tabindex="0" role="button"><i class="fa-rocket fa-solid"></i> {{store.getVal('investor')}}</button>
+
+                                <button *ngIf="store.appType == 'admin'" (click)="isLogin?openPage('fundraise-needs-submitted'):undefined" btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right" tabindex="0" role="button"><i class="fa-money-bill-transfer fa-solid"></i> {{store.getVal('investee')}}</button>
+
+                                <button btniconright="arrow_drop_down" type="button" class="btn btn-sm btn-transparent flex0 clickable icon-right" tabindex="0" role="button" (click)="isLogin || store.appType=='front'?openPage('full-report'):undefined"><i class="fa-infinity fa-solid"></i> {{store.getVal('matchmaking')}}</button>
+                            </div>
+                        </div>
+                        <div class="flex0 inline-sm " style="display: flex;">
+                            <a *ngIf="!isLogin" class="btn btn-round btn-outline demo login clickEv" href="/auth#login" (click)="openPage('/auth#login')">{{store.getVal('website_key_40')}}</a>
+                            <a *ngIf="!isLogin" class="btn btn-round btn-outline btn-primary d-none htwork d-xs-inline-block clickEv" href="'/auth#signup" style="margin-left: 10px;" (click)="openPage('/auth#signup')">{{store.getVal('website_key_41')}}</a>
+                            <button *ngIf="isLogin" type="button" class="btn btn-transparent flex0 clickable" tabindex="0" role="button" (click)="openProfile()">
+                                <div class="users_icons" style="display: flex;align-items: center;">
+                                    <i class="far fa-user-circle" style="margin-right: 5px;font-size: 30px;"></i><span id="web-ui" style="font-size: 17px;" *ngIf="userData != undefined">{{userData.FirstName}}{{userData.LastName !=undefined?' '+userData.LastName:'' }}</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    </ion-toolbar>
+</ion-header>

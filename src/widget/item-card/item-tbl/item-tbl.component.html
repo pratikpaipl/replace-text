@@ -1,0 +1,412 @@
+<!-- table responsive  -->
+<!-- {{type}} -->
+<ion-row [class]="isMain?'cardlist permissions_crd main-card':'cardlist permissions_crd'" [style.background-color]="'var(--ion-color-white)'">
+    <ion-col class="cardlist_content_block" style="padding: 0px;">
+        <div class="cardlist_content_box1" style="padding: 0px;">
+            <ion-row>
+                <ion-col class="cardlist_content_block">
+                    <div class="cardlist_content_box funding_profile_title">
+                        <prod-title *ngIf="type !='reference-data' && type!='matchmaking'" [pageType]="type" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [extraMenu]="extraMenu" [subType]="subtype"  [prod]="prod" [title]="type=='matchmaking'?itemTitle:type =='users'?prod.ContactName:undefined" [itemTitle]="itemTitle != undefined?itemTitle:getTitle()" [address]="address" [Name]="Name" [Slug]="prod.UserSlug != undefined?prod.UserSlug:''" [ProfileSlug]="prod.FP_EnablerSlug" [FP_EnablerSlug]="prod.FP_EnablerSlug != undefined?prod.FP_EnablerSlug:''" [FN_EnablerSlug]="prod.FN_EnablerSlug != undefined?prod.FN_EnablerSlug :''" [FundraiseSlug]="prod.FN_EnablerSlug" [EnablerSlug]="prod.EnablerSlug !=undefined?prod.EnablerSlug:EnablerSlug!=undefined?EnablerSlug:''" [ActionType]="ActionType" [apiAction]="apiAction" [hideAction]="hideAction" (change)="callFilter($event)"></prod-title>
+                        <table *ngIf="type =='reference-data'">
+                            <thead>                           
+                            <tr class="tbl-border-bottom"  >
+                                <td>{{store.getVal('reference_type')}}</td>
+                                <td>{{prod.ReferenceType}}</td>
+                            </tr>
+                            <tr class="tbl-border-bottom">
+                                <td>{{store.getVal('parent_reference_name')}}</td>
+                                <td>{{prod.ParentReferenceName}}</td>
+                            </tr>
+                            <tr  class="tbl-border-bottom">
+                                <td>{{store.getVal('reference_name')}}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <input spellcheck="false" autocomplete="off" type="text" [class]="prod.IsReferenceNameUn?'red-border form-control ':'form-control'" minlength="1" maxlength="200" [(ngModel)]="prod.ReferenceName" (ionBlur)="callAction({FunctionName:'validateReferenceName',Item:prod})" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="tbl-border-bottom">
+                                <td>{{store.getVal('original_value')}}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <input spellcheck="false" autocomplete="off" type="text" class="form-control" minlength="1" maxlength="200" [(ngModel)]="prod.OriginalValue"/>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr  class="tbl-border-bottom">
+                                <td>{{store.getVal('display_order')}}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <input spellcheck="false" autocomplete="off" type="number" [class]="prod.IsDisplayOrderUn?'red-border form-control ':'form-control '" min="0" minlength="1" maxlength="200" [(ngModel)]="prod.DisplayOrder" ondrop="return false;" onpaste="return false;" onkeypress="return event.charCode>=48 && event.charCode<=57"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr  class="tbl-border-bottom">
+                                <td>{{store.getVal('language')}}</td>
+                                <td>
+                                    <ion-select interface="popover" class="form-control status language-select" [(ngModel)]="prod.LanguageID" tabindex="-1">
+                                        <ion-select-option *ngFor="let item of LanguageList" [value]="item.LanguageID">{{item.LanguageName}}</ion-select-option>
+                                    </ion-select>
+                                </td>
+                            </tr>
+                            <tr  class="tbl-border-bottom">
+                                <td>{{store.getVal('action')}}</td>
+                                <td>
+                                    <ion-button class="btn-red update-btn" (click)="callAction({FunctionName:'updateReferenceData',Item:prod})">{{store.getVal('update')}}</ion-button>
+                                </td>
+                            </tr>
+                            </thead>
+                        </table>
+                        <table *ngIf="type =='full-report'">
+                            <thead>
+                                <tr>
+                                    <td colspan="3">
+                                        <span style="text-align: center !important;" class="pointer" (click)="Matching(prod)">
+                                            <a class="clickEv f-14" [href]="matchingPath(prod)"><i class="fa-sharp fa-solid fa-eye"></i>{{store.getVal('matching_parameters')}}</a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="tbl-title"></th>
+                                    <th class="tbl-title">{{store.getVal('funding_profile')}}</th>
+                                    <th class="tbl-title">{{store.getVal('fundraise_need')}}</th>
+                                </tr>
+                                <tr class="ext-head tbl-border-bottom">
+                                    <td>{{store.getVal('match_percentage')}}</td>
+                                    <td>{{prod.FPPercentage}}%</td>
+                                    <td>{{prod.FNPercentage}}%</td>
+                                </tr>
+                                <tr class="tbl-border-bottom">
+                                    <td>{{store.getVal('last_introduce_date')}}</td>
+                                    <td colspan="2">
+                                        <div *ngIf="prod.LastIntroduceDate != undefined" style="display: flex;color: var(--ion-color-dark-green); font-weight: bold;">
+                                            <i class="fa-regular fa-handshake"></i>{{prod.LastIntroduceDate | date:'dd MMM yyyy hh:mm a':'UTC'}}&nbsp;{{prod.LastIntroduceDate !=undefined?store.getVal('utc'):''}}
+                                        </div>
+                                        <div *ngIf="prod.LastIntroduceDate == undefined  && store.appType =='admin'">
+                                            <ion-label [class]="((prod.FPExpressedInterestKey =='yes' || prod.FNExpressedInterestKey == 'yes') || (prod.FPReactionValueKey =='yes' || prod.FNReactionValueKey == 'yes'))?'patch-btn active pointer':'patch-btn disable'" (click)="((prod.FPExpressedInterestKey =='yes' || prod.FNExpressedInterestKey == 'yes') || (prod.FPReactionValueKey =='yes' || prod.FNReactionValueKey == 'yes'))?callAction({FunctionName:'callIntroduce',type:((prod.IsMyFundingProfile ==1 && prod.IsMyFundraise ==1)?'funding_profile_fundraise':(prod.IsMyFundingProfile ==1 && prod.IsMyFundraise ==0)?'funding_profile_fundraise':(prod.IsMyFundingProfile ==0 && prod.IsMyFundraise ==1)?'fundraise_funding_profile':'funding_profile_fundraise'),row:prod}):null">{{store.getVal('make_introduction')}}</ion-label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="tbl-border-bottom">
+                                    <td>{{store.getVal('reference_number')}}</td>
+                                    <td><a [class]="prod.FPIsFeatured=='1' ?'clickEv Featured':'clickEv'" (click)="callAction({FunctionName:'onClick',Item:prod,route:'profile'})" tabindex="-1"><i *ngIf="prod.IsMyFundingProfile == 1" class="far fa-user-circle"></i><i [class]="prod.FPReferenceCode.includes('SIP-')?'fa-money-bill-transfer fa-solid':'fa-money-bills fa-solid'"></i>{{prod.FPReferenceCode}}</a></td>
+                                    <td><a [class]="prod.FNIsFeatured=='1' ?'clickEv Featured':'clickEv'" (click)="callAction({FunctionName:'onClick',Item:prod,route:'fundraise'})" tabindex="-1"><i *ngIf="prod.IsMyFundraise == 1" class="far fa-user-circle"></i> <i class="fa-rocket fa-solid"></i>{{prod.FNReferenceCode}}</a></td>
+                                </tr>
+                                <tr class="tbl-border-bottom">
+                                    <td>{{store.getVal('profile_name_company_name')}}</td>
+                                    <td><img alt="" class="item-logo-img" *ngIf="(prod.FPLogo != undefined && prod.FPLogo != '')" [src]="prod.FPLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>{{prod.FPProfileName}}</td>
+                                    <td><img alt="" class="item-logo-img" *ngIf="(prod.FNLogo != undefined && prod.FNLogo != '')" [src]="prod.FNLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>{{prod.FNCompanyName}}</td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom'">
+                                    <td>{{store.getVal('first_and_last_name')}}</td>
+                                    <td>{{prod.FPContactName}}</td>
+                                    <td>{{prod.FNContactName}}</td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom'" *ngIf="store.appType =='admin'">
+                                    <td>{{store.getVal('email')}}</td>
+                                    <td><a href="mailto:{{prod.FPContactEmail}}" tabindex="-1">{{prod.FPContactEmail}}</a></td>
+                                    <td><a href="mailto:{{prod.FNContactEmail}}" tabindex="-1">{{prod.FNContactEmail}}</a></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom'" *ngIf="store.appType =='admin'">
+                                    <td>{{store.getVal('investor_profile_company')}}</td>
+                                    <td>{{prod.FPCompanyName}}</td>
+                                    <td></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom '+(prod.hidden?'hidden':'')">
+                                    <td>{{store.getVal('matchmaking_result_matching_impact_themes_and_areas')}}</td>
+                                    <td colspan="2"><span innerHtml="{{prod.ImpactThemesAndAreas}}"></span></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom '+(prod.hidden?'hidden':'')">
+                                    <td>{{store.getVal('matchmaking_result_matching_sdgs')}}</td>
+                                    <td colspan="2"><span innerHtml="{{prod.SDGs}}"></span></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom '+(prod.hidden?'hidden':'')">
+                                    <td>{{store.getVal('matchmaking_result_matching_esg')}}</td>
+                                    <td colspan="2"><span innerHtml="{{prod.ESG}}"></span></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom '+(prod.hidden?'hidden':'')">
+                                    <td>{{store.getVal('matchmaking_result_matching_gender_lens')}}</td>
+                                    <td colspan="2"><span innerHtml="{{prod.GenderLens}}"></span></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom '+(prod.hidden?'hidden':'')">
+                                    <td>{{store.getVal('matchmaking_result_matching_investment_type')}}</td>
+                                    <td colspan="2"><span innerHtml="{{prod.FundingType}}"></span></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom'">
+                                    <td>{{store.getVal('investor_profile_expressed_interest')}}</td>
+                                    <td>
+                                        <ion-select interface="popover"  *ngIf="prod.IsMyFundingProfile == 1|| store.appType == 'admin'" [disabled]="prod.LastIntroduceDate != undefined" class="status form-control" [(ngModel)]="prod.FPExpressedInterestKey" (ngModelChange)="callAction({FunctionName:'changeStatus',type:'funding_profile', endPoint:'update_reaction',rType:'interest', row:prod,rParm:'FPExpressedInterestKey'})" tabindex="-1"><ion-select-option  *ngFor="let e of store.InterestResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option></ion-select>
+                                        <a class="clickEv" *ngIf="prod.IsMyFundingProfile != 1 && store.appType != 'admin'" [style.color]="prod.FPExpressedInterest>0?'var(--ion-color-blue)':'var(--ion-color-black)'" (click)="prod.FPExpressedInterest>0?openReport('profile',prod):null" [href]="routePathFull('profile',prod)" tabindex="-1">{{prod.FPExpressedInterest}}</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom'">
+                                    <td>{{store.getVal('investment_raise_expressed_interest')}}</td>
+                                    <td></td>
+                                    <td>
+                                        <ion-select interface="popover" *ngIf="prod.IsMyFundraise == 1 || store.appType == 'admin'" [disabled]="prod.LastIntroduceDate != undefined" class="status form-control" [(ngModel)]="prod.FNExpressedInterestKey" (ngModelChange)="callAction({FunctionName:'changeStatus',type:'fundraise', endPoint:'update_reaction',rType:'interest', row:prod,rParm:'FNExpressedInterestKey'})" tabindex="-1"><ion-select-option *ngFor="let e of store.InterestResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option></ion-select>
+                                        <a class="clickEv" *ngIf="prod.IsMyFundraise != 1 && store.appType != 'admin'" [style.color]="prod.FNExpressedInterest>0?'var(--ion-color-blue)':'var(--ion-color-black)'" (click)="prod.FNExpressedInterest>0?openReport('fundraise',prod):null" [href]="routePathFull('fundraise',prod)" tabindex="-1">{{prod.FNExpressedInterest}}</a>
+                                    </td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom'">
+                                    <td>{{store.getVal('investor_profile_matchmaking_result_total_matching_investees_for_investor_profile')}}</td>
+                                    <td>
+                                        <a class="clickEv" (click)="callAction({FunctionName:'onClick',Item:prod,route:'profile',extraPath:'fundraise-need-match-report'})" tabindex="-1">{{prod.TotalMatchingFundraiseNeed}}</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom'">
+                                    <td>{{store.getVal('matchmaking_result_total_matching_investors_for_investment_raise')}}</td>
+                                    <td></td>                                  
+                                    <td>
+                                        <a class="clickEv" (click)="callAction({FunctionName:'onClick',Item:prod,route:'fundraise',extraPath:'funding-profile-match-report'})" tabindex="-1">{{prod.TotalMatchingFundingProfile}}</a>
+                                    </td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom'">
+                                    <td>{{store.getVal('matchmaking_result_total_introductions_with_investees_for_investor_profile')}}</td>
+                                    <td>
+                                        <a class="clickEv" [style.color]="prod.TotalIntroductionsWithFundraiseNeed>0?'var(--ion-color-blue)':'var(--ion-color-black)'" (click)="prod.TotalIntroductionsWithFundraiseNeed>0?callAction({FunctionName:'openReport',Item:prod,route:'profile',extraPath:'fundraise-need-match-report',FilterType:'introductions'}):null" tabindex="-1">{{prod.TotalIntroductionsWithFundraiseNeed}}</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom'">
+                                    <td>{{store.getVal('matchmaking_result_total_introductions_with_investors_for_investment_raise')}}</td>
+                                    <td></td>                                  
+                                    <td>
+                                        <a class="clickEv" [style.color]="prod.TotalIntroductionsWithFundingProfile>0?'var(--ion-color-blue)':'var(--ion-color-black)'"(click)="prod.TotalIntroductionsWithFundingProfile>0?callAction({FunctionName:'onClick',Item:prod,route:'fundraise',extraPath:'funding-profile-match-report',FilterType:'introductions'}):null" tabindex="-1">{{prod.TotalIntroductionsWithFundingProfile}}</a>
+                                    </td>
+                                </tr>
+                                <tr [class]="'tbl-border-bottom '+(prod.hidden?'hidden':'')">
+                                    <td>{{store.getVal('investor_profile_access_to_pitch')}}</td>
+                                    <td>
+                                        <span>
+                                            <div *ngIf="store.appType != 'admin' && prod.PitchRequestEnable == 0">
+                                                <ion-label *ngIf="prod.IsMyFundingProfile == 1" class="patch-btn no-pointer" style="cursor: not-allowed !important;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+                                            </div>
+                                            <div *ngIf="store.appType != 'admin' && prod.PitchRequestEnable == 1">
+                                                <div *ngIf="(prod.PitchRequestStatus==undefined || prod.PitchRequestStatus =='' || prod.PitchRequestStatus=='approved' || prod.PitchRequestStatus == 'blank') && prod.IsMyFundingProfile == 1 ">
+                                                    <ion-label [class]="prod.PitchRequestStatus=='approved'?'patch-btn view pointer':'patch-btn border pointer'" (click)="callAction({FunctionName:'callRequest',Item:prod})"><i [class]="(prod.PitchRequestStatus == undefined || prod.PitchRequestStatus == '' || prod.PitchRequestStatus == 'blank')?'fa-regular fa-hand':'fa-solid fa-eye'"></i>{{(prod.PitchRequestStatus == undefined || prod.PitchRequestStatus == '' || prod.PitchRequestStatus == 'blank')?store.getVal('request_pitch'):store.getVal('view_pitch')}}</ion-label>
+                                                </div>
+
+                                                <ion-label *ngIf="(prod.PitchRequestStatus != undefined && prod.PitchRequestStatus !='' && prod.PitchRequestStatus!='approved' && prod.PitchRequestStatus!='blank')" [class]="prod.PitchRequestStatus=='rejected'?'patch-btn inaccessible':'patch-btn pitch-status'"><i [class]="prod.PitchRequestStatus=='rejected'?'fa-regular fa-eye-slash':prod.PitchRequestStatus=='requested'?'fa-solid fa-clock-rotate-left':'fa-regular fa-eye-slash'"></i>{{prod.PitchRequestStatus=='rejected'?store.getVal('pitch_inaccessible'):prod.PitchRequestStatus=='requested'?store.getVal('pitch_requested'):store.getScrenigStatus(store.PitchStatusResult,prod.PitchRequestStatus)}}</ion-label>
+
+                                                <!-- <div class="pitch-status" *ngIf="(prod.PitchRequestStatus !='' && prod.PitchRequestStatus!='approved'  && prod.PitchRequestStatus!='blank') || prod.IsMyFundingProfile != 1">
+                                                {{store.getScrenigStatus(store.PitchStatusResult,prod.PitchRequestStatus)}}
+                                                </div> -->
+                                            </div>
+                                            <ion-select interface="popover" *ngIf="store.appType =='admin'&& prod.PitchRequestEnable == 1" class="status" [(ngModel)]="prod.PitchRequestStatus" (ngModelChange)="callAction({FunctionName:'changePitchStatus',endPoint:'update_pitch_request',Item:prod})" tabindex="-1">
+                                                <ion-select-option *ngFor="let e of store.PitchStatusResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option>
+                                            </ion-select>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <ion-label *ngIf="prod.PitchRequestEnable == 0 && (prod.IsMyFundraise == 1 || store.appType =='admin')" class="patch-btn no-pointer" style="cursor: not-allowed !important;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+                                            <ion-label *ngIf="prod.PitchRequestEnable == 1 && (prod.IsMyFundraise == 1 || store.appType =='admin')" [class]="'patch-btn view pointer'" (click)="callAction({FunctionName:'callRequest',Item:prod,isView:true})"><i [class]="'fa-solid fa-eye'"></i>{{store.getVal('view_pitch')}}</ion-label>
+
+                                        </div>
+                                        
+                                    </td>
+
+                                </tr>
+                            </thead>
+                        </table>
+                        <table *ngIf="type =='users'">
+                            <thead>
+                                <tr class="tbl-border-bottom" *ngFor="let item of columnsWithCheckbox">                                    
+                                    <td *ngIf="item.prop != '' && item.name != 'contact_name' && item.name != 'matching_parameters' && item.name != 'see_matchmaking_report'" style="width:30%" innerHtml="{{store.nl2br(store.getVal(item.name))}}"></td>
+                                    <td *ngIf="item.prop != '' && item.name != 'contact_name'&& item.name != 'matching_parameters' && item.name != 'see_matchmaking_report'" [class]="item.click && prod[item.prop] !='0'?prod.IsFeatured=='1' && item.prop =='ReferenceCode' ?'clk-action Featured':'clk-action':''"> 
+                                        <div [class]="item.click && prod[item.prop] !='0'?'clk-action':''" (click)="item.click && prod[item.prop] !='0'?callAction({FunctionName:'onClick',Item:prod,route:item.route,FilterType:item.FilterType,isProfile:item.isProfile}):null">
+                                            <i *ngIf="item.isIndicat && (prod.IsOperative == 0 || prod.EnablerValid == 0)" class="fa fa-ban" style="color: var(--ion-color-logo-red) !important" aria-hidden="true"></i>
+                                            <i *ngIf="item.icon !=undefined&& prod[item.prop] != undefined && prod[item.prop] != ''" [class]="prod[item.prop].includes('SIP-')?'fa-money-bill-transfer fa-solid':item.icon"></i><img alt="" class="item-logo-img" *ngIf="((item.prop =='CompanyName' || item.prop =='ProfileName') && prod.Logo != undefined && prod.Logo != '')" [src]="prod.Logo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                                            <span *ngIf="!item.isDrop && !item.isMail" innerHtml="{{item.isDate?((prod[item.prop] | date:(item.isRise?'dd MMM yyyy':'dd MMM yyyy hh:mm a'):'UTC')):prod[item.prop]}}" [style.color]="item.isLastIntroduce != undefined?item.isLastIntroduce:''"></span>
+                                            <a *ngIf="item.isMail" style="color: blue;" href="mailto:{{prod[item.prop]}}" tabindex="-1">{{prod[item.prop]}}</a>
+                                            <div *ngIf="item.isDrop">
+                                                <div *ngIf="item.prop == 'IsActive'">
+                                                    <ion-select interface="popover" class="status" [(ngModel)]="''+prod[item.prop]" (ngModelChange)="callAction({FunctionName:'changeStatus',endPoint:'active',parmName:'IsActive',value:prod.IsActive, row:prod})" tabindex="-1">
+                                                        <ion-select-option *ngFor="let e of store.ActiveStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                                                    </ion-select>
+                                                </div>
+                                                <div *ngIf="item.prop == 'IsEmailverified'">
+                                                    <span>{{store.getScrenigStatus(store.PublishStatusResult,''+prod[item.prop])}}</span>
+                                                </div>
+                                                <div *ngIf="item.prop == 'IsEnable'">
+                                                    <ion-select interface="popover" class="status" *ngIf="store.checkPermission(prod,'enable')" [(ngModel)]="prod[item.prop]" (ngModelChange)="callAction({FunctionName:'changeStatus',endPoint:'enable',parmName:'IsEnable',value:prod.IsEnable, row:prod})" tabindex="-1">
+                                                        <ion-select-option *ngFor="let e of store.EnableStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                                                    </ion-select>
+                                                    <span *ngIf="!store.checkPermission(prod,'enable')">{{store.getScrenigStatus(store.EnableStatusResult,prod[item.prop])}}</span>
+                                                </div>
+                                                <div *ngIf="item.prop == 'DataStatus'">
+                                                    <ion-select interface="popover" *ngIf="store.checkPermission(prod,'data_status')" [disabled]="prod.IsEmailVerified == '0'?true:false" class=" status" [(ngModel)]="prod[item.prop]" (ngModelChange)="callAction({FunctionName:'changeStatus',endPoint:'data_status',parmName:'DataStatus',value:prod.DataStatus, row:prod,isConfig:true})" tabindex="-1">
+                                                        <ion-select-option *ngFor="let e of store.DataStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                                                    </ion-select>
+                                                    <span *ngIf="!store.checkPermission(prod,'data_status')">{{store.getScrenigStatus(store.DataStatusResult,''+prod[item.prop])}}</span>
+                                                </div>                                               
+                                            </div>
+                                        </div>
+                                                                            
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table  *ngIf="(type =='funding-profiles-submitted' || type =='funding-profiles' || type =='funding-profile')|| (type =='fundraise-needs-submitted' || type =='fundraise-needs' || type =='fundraise-need' || type =='fundraise' || type =='subscripions' || type =='activity-log')">
+                            <thead>
+                                <tr [class]="'tbl-border-bottom '+(item.hidden != undefined && item.hidden?prod.hidden?'hidden':'':'')" *ngFor="let item of columnsWithCheckbox">
+                                    <td colspan="2"  *ngIf="item.name == 'see_matchmaking_report'">
+                                        <span  style="text-align: center !important;" class="pointer" (click)="callAction({FunctionName:'onClick',Item:prod,route:item.route,extraPath:item.extraPath,FilterType:item.FilterType})">
+                                            <a class="clickEv f-14" [href]="routePathFull('full-report',prod)" tabindex="-1"><i class="fa-sharp fa-solid fa-eye"></i>{{store.getVal('see_matchmaking_report')}}</a>
+                                        </span>
+                                    </td>
+                                    <td colspan="2" *ngIf="item.name == 'matching_parameters'">
+                                        <span  style="text-align: center !important;" class="pointer" (click)="Matching(prod)">
+                                            <a class="clickEv f-14" [href]="matchingPath(prod)" tabindex="-1"><i class="fa-sharp fa-solid fa-eye"></i>{{store.getVal('matching_parameters')}}</a>
+                                        </span>
+                                    </td>
+                                    <td colspan="2" *ngIf="item.name == ''">
+                                        {{prod.PlanStatus}}
+                                        <ion-label [class]="prod.PlanStatus=='plan_active'?'select_plan pointer cancel':'select_plan pointer'" (click)="callAction({FunctionName:'selectPlan',Item:prod})">{{store.getVal(prod.PlanStatus=='plan_active'?'cancel':'select')}}</ion-label>
+                                    </td>
+                                    <td *ngIf="item.prop != '' && item.name != 'enabler_name' && item.name != 'matching_parameters' && item.name != 'see_matchmaking_report' && item.name != ''"innerHtml="{{store.nl2br(store.getVal(item.name))}}"></td>
+                                  
+                                    <td *ngIf="item.prop != '' && item.name != 'enabler_name'&& item.name != 'matching_parameters' && item.name != 'see_matchmaking_report' && item.name != '' " [class]="item.click && prod[item.prop] !='0'?prod.IsFeatured=='1' && item.prop =='ReferenceCode' ?'clk-action Featured':'clk-action':''"> 
+                                        <div [class]="item.click && prod[item.prop] !='0'?'clk-action':''" (click)="item.click && prod[item.prop] !='0'?callAction({FunctionName:'onClick',Item:prod,route:item.route,extraPath:item.extraPath,FilterType:item.FilterType}):null">
+                                            <i *ngIf="item.isIndicat && (prod.IsOperative == 0 || prod.EnablerValid == 0)" class="fa fa-ban" style="color: var(--ion-color-logo-red) !important" aria-hidden="true"></i>
+                                            <img style="width: 30px;margin-right: 10px;" alt="" *ngIf="item.route == 'enablers'" [src]="prod.EnablerLogo" onerror="src='assets/images/no-image-icon-5.jpg'" />
+                                            <i *ngIf="item.icon !=undefined && prod[item.prop] != undefined&& prod[item.prop] != ''" [class]="prod[item.prop].includes('SIP-')?'fa-money-bill-transfer fa-solid':item.icon"  [style.color]="item.isLastIntroduce != undefined?item.isLastIntroduce:''"></i>
+                                            <img alt="" class="item-logo-img" *ngIf="((item.prop =='CompanyName' || item.prop =='ProfileName') && prod.Logo != undefined && prod.Logo != '')" [src]="prod.Logo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                                            <span *ngIf="!item.isDrop && !item.isMail && !item.isStatus" innerHtml="{{item.isDate?((prod[item.prop] | date:(item.isRise?'dd MMM yyyy':'dd MMM yyyy hh:mm a'):'UTC')):prod[item.prop]}}{{item.isPer?'%':''}} {{(item.isDate && item.isRise == undefined && prod[item.prop]!=undefined && prod[item.prop]!=''?store.getVal('utc'):'')}}" [style.color]="item.isLastIntroduce != undefined?item.isLastIntroduce:''"></span>
+                                            <span *ngIf="item.isDate && isInclude('CreatedTs',item)" [innerHtml]="getDateWithName(prod,item)">
+                                            </span>
+                                            <span *ngIf="item.isDate && isInclude('FromDate',item)" style="white-space: normal;">
+                                                {{getDate(prod,item)}}
+                                            </span>
+                                            <a *ngIf="item.isMail" style="color: blue;" href="mailto:{{prod[item.prop]}}" tabindex="-1">{{prod[item.prop]}}</a>
+                                            <span *ngIf="item.isStatus">{{store.getScrenigStatus(store.SubmitterConfirmationResult,prod[item.prop])}}</span>
+                                            <div *ngIf="item.isDrop">
+                                                <div *ngIf="item.prop == 'PlanStatus'">
+                                                    <i *ngIf="prod[item.prop] =='plan_active'" style="color: var(--ion-color-dark-green);" class="fa-solid fa-circle-check"></i>
+                                                    <i *ngIf="prod[item.prop] =='plan_cancelled'" style="color: var(--ion-color-logo-red);" class="fa-regular fa-rectangle-xmark"></i>
+                                                    <i *ngIf="prod[item.prop] =='plan_expired'" style="color: var(--ion-color-yelloShade);" class="fa-solid fa-triangle-exclamation"></i>
+                                                    <span style="padding-left: 10px;">{{store.getScrenigStatus(store.PlanStatusResult,''+prod[item.prop])}}</span>
+                                                </div>
+                                                <div *ngIf="item.prop == 'IsActive'">
+
+                                                    <ion-select interface="popover" class="status" [(ngModel)]="''+prod[item.prop]" (ngModelChange)="callAction({FunctionName:'changeStatus',endPoint:'active',parmName:'IsActive',value:prod.IsActive, row:prod})" tabindex="-1">
+                                                        <ion-select-option *ngFor="let e of store.ActiveStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                                                    </ion-select>
+                                                </div>
+                                                <div *ngIf="item.prop == 'IsEmailverified'">
+                                                    <span>{{store.getScrenigStatus(store.PublishStatusResult,''+prod[item.prop])}}</span>
+                                                </div>
+                                                <div *ngIf="item.prop == 'IsEnable'">
+                                                    <ion-select interface="popover" class="status" *ngIf="store.checkPermission(prod,'enable')" [(ngModel)]="prod[item.prop]" (ngModelChange)="callAction({FunctionName:'changeStatus',endPoint:'enable',parmName:'IsEnable',value:prod.IsEnable, row:prod})" tabindex="-1">
+                                                        <ion-select-option *ngFor="let e of store.EnableStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                                                    </ion-select>
+                                                    <span *ngIf="!store.checkPermission(prod,'enable')">{{store.getScrenigStatus(store.EnableStatusResult,prod[item.prop])}}</span>
+                                                </div>
+                                                <div *ngIf="item.prop == 'DataStatus'">
+                                                    <ion-select interface="popover" *ngIf="store.checkPermission(prod,'data_status')" [disabled]="prod.IsEmailVerified == '0'?true:false" class=" status" [(ngModel)]="prod[item.prop]" (ngModelChange)="callAction({FunctionName:'changeStatus',endPoint:'data_status',parmName:'DataStatus',value:prod.DataStatus, row:prod,isConfig:true})" tabindex="-1">
+                                                        <ion-select-option *ngFor="let e of store.DataStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                                                    </ion-select>
+                                                    <span *ngIf="!store.checkPermission(prod,'data_status')">{{store.getScrenigStatus(store.DataStatusResult,''+prod[item.prop])}}</span>
+                                                </div>
+                                                <div *ngIf="item.prop == 'ScreeningStatus'">
+                                                    <span *ngIf="prod.ScreeningStatusName != undefined">{{prod.ScreeningStatusName}}</span>
+                                                </div>
+                                                <div *ngIf="item.prop == 'IsFeatured'">
+                                                    <ion-select interface="popover" *ngIf="store.checkPermission(prod,'featured')" class=" status" [(ngModel)]="prod[item.prop]" (ngModelChange)="callAction({FunctionName:'changeStatus',endPoint:'featured',parmName:'IsFeatured',value:prod.IsFeatured, row:prod})" tabindex="-1">
+                                                        <ion-select-option *ngFor="let e of store.PublishStatusResult" [value]="e.val">{{e.lbl}}</ion-select-option>
+                                                    </ion-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>                                    
+                                </tr>
+                            </thead>
+                        </table>
+                        <table *ngIf="type == 'fundraise-need-matchmaking-report' || type =='fundraise-match-report-admin' || type =='fundraise-need-match-report' || type =='funding-profile-match-report' || type=='funding-profile-match-report-admin' || type =='funding-profile-match-report'">
+                            <thead>
+                                <tr [class]="'tbl-border-bottom '+(item.hidden != undefined && item.hidden?prod.hidden?'hidden':'':'')"  *ngFor="let item of columnsWithCheckbox">
+                                    <td colspan="2" *ngIf="item.name == 'see_matchmaking_report'">
+                                        <span  style="text-align: center !important;" class="pointer" (click)="callAction({FunctionName:'onClick',Item:prod,route:item.route,extraPath:item.extraPath,FilterType:item.FilterType})">
+                                            <a class="clickEv f-14" [href]="routePathFull('full-report',prod)" tabindex="-1"><i class="fa-sharp fa-solid fa-eye"></i>{{store.getVal('see_matchmaking_report')}}</a>
+                                        </span>
+                                    </td>
+                                    <td colspan="2" *ngIf="item.name == 'matching_parameters'">
+                                        <span  style="text-align: center !important;" class="pointer" (click)="Matching(prod)">
+                                            <a class="clickEv f-14" [href]="matchingPath(prod)" tabindex="-1"><i class="fa-sharp fa-solid fa-eye"></i>{{store.getVal('matching_parameters')}}</a>
+                                        </span>
+                                    </td>
+                                    <td *ngIf="item.prop != '' && item.name != 'enabler' && item.name != 'matching_parameters' && item.name != 'see_matchmaking_report'" innerHtml="{{store.nl2br(store.getVal(item.name))}}"></td>
+                                    <td *ngIf="item.prop != '' && item.name != 'enabler' && item.name != 'matching_parameters' && item.name != 'see_matchmaking_report'" [class]="item.click && prod[item.prop] !='0'?prod.IsFeatured=='1' && item.prop =='ReferenceCode' ?'clk-action Featured':'clk-action':''">
+                                        <div [class]="item.click && prod[item.prop] !='0'?'clk-action':''" (click)="item.click && prod[item.prop] !='0'?callAction({FunctionName:'onClick',Item:prod,route:item.route,extraPath:item.extraPath,FilterType:item.FilterType}):null">
+                                            <i *ngIf="((prod.IsMyFundraise != undefined && prod.IsMyFundraise == 1) || (prod.IsMyFundingProfile != undefined && prod.IsMyFundingProfile == 1)) && item.prop == 'ReferenceCode'" class="ion-img far fa-user-circle " style="padding-right: 5px; font-size: 16px;"></i>
+                                            <i *ngIf="item.icon !=undefined && prod[item.prop] != undefined && prod[item.prop] !=''" [class]="prod[item.prop].includes('SIP-')?'fa-money-bill-transfer fa-solid':item.icon" [style.color]="item.isLastIntroduce != undefined?item.isLastIntroduce:''"></i>
+                                            <img alt="" class="item-logo-img" *ngIf="((item.prop =='CompanyName' || item.prop =='ProfileName') && prod.Logo != undefined && prod.Logo != '')" [src]="prod.Logo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                                            
+                                            <img alt="" class="item-logo-img" *ngIf="(prod.ReferenceCode.includes('SIR-') && (item.prop =='CompanyName') && prod.FNLogo != undefined && prod.FNLogo != '')" [src]="prod.FNLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                                            <img alt="" class="item-logo-img" *ngIf="(prod.ReferenceCode.includes('SIP-') && (item.prop =='ProfileName') && prod.FPLogo != undefined && prod.FPLogo != '')" [src]="prod.FPLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+
+                                            <span *ngIf="!item.isDrop && !item.isMail && !item.isPitch" innerHtml="{{item.isDate?((prod[item.prop] | date:(item.isRise?'dd MMM yyyy':'dd MMM yyyy hh:mm a'):'UTC')):prod[item.prop]}}{{item.isPer?'%':''}} {{(item.isDate && item.isRise == undefined && prod[item.prop]!=undefined && prod[item.prop]!=''?store.getVal('utc'):'')}}" [style.color]="item.isLastIntroduce != undefined?item.isLastIntroduce:''"></span>
+                                            <a *ngIf="item.isMail" style="color: blue;" href="mailto:{{prod[item.prop]}}" tabindex="-1">{{prod[item.prop]}}</a>
+                                             <div *ngIf="item.prop == 'LastIntroduceDate' && prod.LastIntroduceDate == undefined && store.appType =='admin'" [class]="'l-date'" style="background-color: transparent !important;">
+                                                <ion-label [class]="((prod.FPExpressedInterestKey =='yes' || prod.FNExpressedInterestKey == 'yes') || (prod.FPReactionValueKey =='yes' || prod.FNReactionValueKey == 'yes'))?'patch-btn active pointer':'patch-btn disable'" (click)="((prod.FPExpressedInterestKey =='yes' || prod.FNExpressedInterestKey == 'yes') || (prod.FPReactionValueKey =='yes' || prod.FNReactionValueKey == 'yes'))?callAction({FunctionName:'callIntroduce',type:item.apiType,row:prod}):null">{{store.getVal('make_introduction')}}</ion-label>
+                                            </div> 
+                                            <ion-select interface="popover" *ngIf="item.isDrop" class="status form-control" [disabled]="prod.LastIntroduceDate != undefined" [(ngModel)]="prod[item.prop]" (ngModelChange)="callAction({FunctionName:'changeStatus',type:item.appType, endPoint:'update_reaction',rType:'interest',row:prod,value:prod[item.prop]})" tabindex="-1">
+                                                <ion-select-option  *ngFor="let e of store.InterestResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option>
+                                            </ion-select>
+                                            <span *ngIf="item.isPitch && item.isInvestee">
+                                                <ion-label *ngIf="prod.PitchRequestEnable == 0 && (prod.IsMyFundraise == 1 || store.appType =='admin')" class="patch-btn no-pointer" style="cursor: not-allowed !important;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+                                                <ion-label *ngIf="prod.PitchRequestEnable == 1 && (prod.IsMyFundraise == 1 || store.appType =='admin')" [class]="'patch-btn view pointer'" (click)="callAction({FunctionName:'callRequest',Item:prod,isView:true})"><i [class]="'fa-solid fa-eye'"></i>{{store.getVal('view_pitch')}}</ion-label>
+                                            </span>
+                                            <span *ngIf="item.isPitch && item.isInvestor && prod.PitchRequestEnable == 0">
+                                                <ion-label *ngIf="(prod.IsMyFundingProfile == 1 && store.appType !='admin')" class="patch-btn no-pointer" style="cursor: not-allowed !important;"><i [class]="'fa-solid fa-ban'"></i>{{store.getVal('pitch_unavailable')}}</ion-label>
+                                            </span>
+                                            <span *ngIf="item.isPitch && item.isInvestor && prod.PitchRequestEnable == 1">
+                                                <ion-label *ngIf="prod.PitchRequestEnable == 1 && store.appType !='admin'&& prod.IsMyFundingProfile == 1 &&(prod.PitchRequestStatus==undefined || prod.PitchRequestStatus =='' || prod.PitchRequestStatus=='approved' || prod.PitchRequestStatus == 'blank')" [class]="prod.PitchRequestStatus=='approved'?'patch-btn view pointer':'patch-btn border pointer'" (click)="callAction({FunctionName:'callRequest',Item:prod,isView:(prod.PitchRequestStatus != undefined && prod.PitchRequestStatus != 'blank' && prod.PitchRequestStatus != '')})"><i [class]="(prod.PitchRequestStatus == undefined || prod.PitchRequestStatus == '' || prod.PitchRequestStatus == 'blank')?'fa-regular fa-hand':'fa-solid fa-eye'"></i>{{store.getVal((prod.PitchRequestStatus == undefined || prod.PitchRequestStatus == '' || prod.PitchRequestStatus == 'blank')?'request_pitch':'view_pitch')}}</ion-label>
+
+                                                <ion-label *ngIf="prod.PitchRequestEnable == 1 && store.appType !='admin' && prod.IsMyFundingProfile == 1 &&(prod.PitchRequestStatus != undefined && prod.PitchRequestStatus !='' && prod.PitchRequestStatus!='approved' && prod.PitchRequestStatus!='blank')" [class]="prod.PitchRequestStatus=='rejected'?'patch-btn inaccessible':'patch-btn pitch-status'"><i [class]="prod.PitchRequestStatus=='rejected'?'fa-regular fa-eye-slash':prod.PitchRequestStatus=='requested'?'fa-solid fa-clock-rotate-left':'fa-regular fa-eye-slash'"></i>{{prod.PitchRequestStatus=='rejected'?store.getVal('pitch_inaccessible'):prod.PitchRequestStatus=='requested'?store.getVal('pitch_requested'):store.getScrenigStatus(store.PitchStatusResult,prod.PitchRequestStatus)}}</ion-label>
+                                                <!-- <div *ngIf="(prod.PitchRequestStatus==undefined || prod.PitchRequestStatus =='' || prod.PitchRequestStatus=='approved' || prod.PitchRequestStatus == 'blank') && store.appType != 'admin'">
+                                                    <div *ngIf="(prod.PitchRequestStatus==undefined || prod.PitchRequestStatus =='' || prod.PitchRequestStatus=='approved' || prod.PitchRequestStatus == 'blank') && type !='funding-profile-match-report'">
+                                                        <ion-label class="patch-btn pointer" (click)="callAction({FunctionName:'callRequest',Item:prod})">{{(prod.PitchRequestStatus == undefined || prod.PitchRequestStatus == '' || prod.PitchRequestStatus == 'blank')?store.getVal('request_pitch'):store.getVal('view_pitch')}}</ion-label>
+                                                    </div>
+                                                    <div  *ngIf="(prod.PitchRequestStatus !='' && prod.PitchRequestStatus!='approved'  && prod.PitchRequestStatus!='blank') || type =='funding-profile-match-report'">{{store.getScrenigStatus(store.PitchStatusResult,prod.PitchRequestStatus)}}</div>
+                                                </div> -->
+                                                <ion-select interface="popover" *ngIf="store.appType =='admin'" class="status" [(ngModel)]="prod.PitchRequestStatus" (ngModelChange)="callAction({FunctionName:'changePitchStatus',endPoint:'update_pitch_request',Item:prod})" tabindex="-1">
+                                                    <ion-select-option *ngFor="let e of store.PitchStatusResult" [value]="e.ReferenceKey">{{e.ReferenceName}}</ion-select-option>
+                                                </ion-select>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <div *ngIf="type !='subscripions' && type != 'users' && type !='matchmaking' && type !='activity-log'" [style.justify-content]="isPublic()?'space-between':'end'" style="display: flex;align-items: center;">
+                            <ion-label *ngIf="store.appType =='admin' && isPublic()" class="round-chip-box" style="padding-top: 8px;">
+                                <span class="contents pointer public-view" (click)="store.openFrontPath(type,prod)">
+                                    <a [href]="store.openFPath(type,prod)" [class]="'clickEv pointer'" tabindex="-1"><i class="fa fa-eye"></i>{{store.getVal('front_page_url')}}</a>
+                                </span>
+                            </ion-label>
+                            <ion-label class="more-view" (click)="prod.hidden = !prod.hidden">{{store.getVal(prod.hidden?'see_more':'less')}}</ion-label>
+                        </div>
+                        <div *ngIf="type =='matchmaking'" class="display-block">
+                            <ion-label style="font-weight: bold;padding: 5px 0px;">{{store.getVal(prod.name)}}</ion-label>
+                            <div class="match-item">
+                                <ion-label *ngFor="let item of columnsWithCheckbox">{{store.getVal(item.name)}}&nbsp;<b>{{prod[item.prop]}}</b></ion-label>
+                            </div>
+                            <div style="padding: 5px 0px;">
+                                <ion-label>
+                                    <span [class]="prod.DataIssuesCount > 0?'pointer':'no-pointer'" [style.color]="prod.DataIssuesCount > 0 ?'var(--ion-color-blue)':'auto'" (click)="callAction({FunctionName:'downloadInValidResult',name:prod.name,SummaryID:prod.SummaryID})">{{store.getVal(prod.DataIssuesCount > 0 ?'download':prod.TotalCount ==0?'':'all_records_are_valid')}}</span>
+                                </ion-label>
+                            </div>
+
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-col>
+</ion-row>
+<!-- table responsive  -->

@@ -1,0 +1,24 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerActionAdmin($event)"></app-page-header>
+<ion-content #content [scrollEvents]="true">
+    <div class="page_wapper"  *ngIf="!isLoad">
+        <div id="all_ui" *ngIf="loadMsg !=''">
+            <ion-grid class="container">
+                <ion-row class="forms_row">
+                    <ion-col class="right_panel">
+                        <div class="form-group" style="text-align: center; margin-top: 15px;margin-bottom: 0px;">
+                            <error-view [from]="nmAr!= undefined?nmAr[1]:from" [isShow]="!isError" [dataAction]="dataAction" [message]="loadMsg" [leftKey]="store.appType=='admin'?store.isLogin?'go_to_dashboard':'log_in':'go_to_explore'" [leftBtn]="store.getVal(store.appType=='admin'?store.isLogin?'go_to_dashboard':'log_in':'go_to_explore')" [nav]="pageUrl"></error-view>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>
+<div *ngIf="isLoad" class="progress-loader">
+    <div class="loading-spinner" style="background: #0000004D !important;
+    z-index: 1111111;">
+      <img alt="" src="assets/images/loader.svg">
+      <span class="loading-message"></span>
+    </div>
+  </div>

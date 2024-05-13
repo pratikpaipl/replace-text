@@ -1,0 +1,40 @@
+.extra-backgrnd{
+    background: #000000cc;
+     min-height: 500px;
+ }
+.slider-title{
+     font-size: 55px !important;
+     color: #fff;
+     margin-top: 2rem;
+     margin-bottom: 30px;
+     font-weight: bold;
+}
+.slider-des {
+     color: #fff;
+     font-size: 24px !important;
+     letter-spacing: 0.7px;
+}
+p{
+    letter-spacing: 0.7px;
+    font-size: 24px;
+}
+@media (max-width: 992px) {
+    .slider-title{
+        font-size: 40px !important;
+    }
+    p{
+        font-size: 20px !important;
+    }
+}
+
+@media (max-width: 830px){
+    .slider-title{
+        font-size: 26px !important;
+    }
+    .slider-des{
+        font-size: 20px !important;
+    }
+    p{
+        font-size: 18px !important;
+    }
+}

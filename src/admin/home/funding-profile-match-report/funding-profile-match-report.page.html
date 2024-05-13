@@ -1,0 +1,19 @@
+<div class="top-div">
+    <btn-title *ngIf="from =='dashboard'" [pageLbl]="this.store.getVal(pageTitle)" [pageType]="pageType" [permissions]="permissions"></btn-title>
+    <div class="downloads navigation_compo" *ngIf="allTotal != undefined && allTotal > 0 && store.checkPermissionObj(permissions,'download_all',true)">
+        <i class="fas fa-download pointer" (click)="download($event)"></i>
+    </div>
+</div>
+<ion-grid class="container1" [ngClass]="isShow?'mb-scroll':''" #content>
+    <refresher (change)="callPullRefresh($event)"></refresher>
+    <ion-row class="counts_filter_block">
+        <ion-col class="tab_contents details-page">
+            <div id="app-ui"  class="items_counts">
+                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+            </div>
+            <div class="card_right_panels" style="padding-bottom: 25px;">
+                <funding-profiles-match-report-items *ngIf="pageType != ''" [displayMode]="2"  [pageType]="pageType" from="admin" [pageFrom]="'list'" [FN_EnablerSlug]="FN_EnablerSlug" [apiEnd]="apiEnd" apiAction="funding_profile_enabler" [updateTime]="updateTime" (change)="updateCount($event)"></funding-profiles-match-report-items>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>

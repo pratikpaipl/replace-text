@@ -1,0 +1,6 @@
+<div class="card_right_panels">
+    <item-card *ngFor="let item of FundingProfileList" [isAddForm]="false" [isMain]="false" [prod]="item" [subtype]="type" [type]="pageType" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [CompanyIDs]="''" [Name]="Name != undefined && Name != ''?Name:item.EnablerName" [EnablerSlug]="item.EnablerSlug" [ProfileSlug]="ProfileSlug" [ActionType]="ActionType" [apiAction]="'enablers'" (change)="callAction($event)"></item-card>
+    <app-empty-list *ngIf="FundingProfileList.length==0 && isShowMsg" [msg]="store.searchMsg" [type]="pageType"></app-empty-list>
+    <app-page-end *ngIf="FundingProfileList.length !=0 && FundingProfileList.length == EnablerTotal" [type]="pageType"></app-page-end>
+    <infinite-scroll [items]="FundingProfileList" [itemTotal]="EnablerTotal" (change)="doInfinitePage($event)"></infinite-scroll>
+</div>

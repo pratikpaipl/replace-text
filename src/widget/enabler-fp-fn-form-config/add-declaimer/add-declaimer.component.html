@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row class="al-center">
+                <ion-col>
+                    <div style="display:flex; align-items: center;">
+                        <ion-buttons>
+                            <i class="fa fa-chevron-left back-arrow pointer" aria-hidden="true" (click)="close()"></i>
+                        </ion-buttons>
+                        <ion-label class="loc-header-lbl">
+                            {{store.getVal(titleKey)}}
+                        </ion-label>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-header>
+<ion-content #content>
+    <div class="page_wapper" style="padding-top: 15px !important">
+        <div id="all_ui">
+            <ion-grid class="container">
+                <ion-row class="forms_row">
+                    <ion-col class="forms_conponenl">
+                        <div id="myprofile" class="forms_block" style="padding: 20px !important;">
+                            <div class="form-group" style="margin-bottom: 0 !important;">
+                                <ion-label *ngIf="titleTerm != undefined && titleTerm !=''">{{store.getVal(titleTerm)}}</ion-label>
+                                <text-area *ngIf="type != 'view'" id="desclaimerContent" [(ngModel)]="fromVar"></text-area>
+                                <ion-label *ngIf="type == 'view'" [innerHtml]="store.nl2br(fromVar)" style="margin: 0px !important;"></ion-label>
+                                <bottom-btn *ngIf="type != 'view'" styleD="center" (change)="callAction($event)" [screen]="'1'"></bottom-btn>
+                            </div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content" (change)="store.headerAction($event)"></app-page-footer>

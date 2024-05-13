@@ -1,0 +1,125 @@
+<div class="top_titles_boxs">
+    <ion-grid class="container">
+        <ion-row>
+            <ion-col>
+                <btn-title [pageLbl]="this.store.getVal('reference_data')" from="" [pageType]="pageType" [permissions]="permissions"></btn-title>
+            </ion-col>
+            <ion-col class="form_add_btn">
+                <div class="add_buttons" (click)="onAddAction()">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <ion-label style="cursor: pointer;">{{this.store.getVal('add')}}</ion-label>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>
+<ion-grid class="container">
+    <refresher (change)="callPullRefresh($event)"></refresher>
+    <ion-row class="serch_row form-group"  style="align-items: center;">
+        <ion-col class="reference-type-class">
+            <div class="form-group">
+            <custom-select selectTitle="" modalName="selectedReferenceType" [modal]="selectedReferenceType" listName="ReferenceTypeList" [list]="ReferenceTypeList" bindLabel="ReferenceType" bindValue="ReferenceType" [isError]="false" [isValidate]="false" placeholder="select_reference_type" [multiple]="false" (change)=customSelect($event) ></custom-select>
+            </div>
+        </ion-col>
+        <ion-col class="address_search-col">
+            <div id="serch_component">
+                <app-search-bar isShow="false" fromPage="admin" [pageType]="pageType" [keyword]="keyword" (change)="callSearchFilter($event)">
+                </app-search-bar>
+            </div>
+            <div id="app-ui"  class="items_counts">
+                <app-count [pageType]="pageType" [allTotal]="ReferanceTotal"></app-count>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row class="forms_row">
+        <ion-col class="forms_conponenl" size="12">
+            <div style="padding-bottom: 35px;"> 
+                <ngx-datatable #refereanceData id="web-ui" *ngIf="rows.length>0" class="material expandable" [columnMode]="'force'" [rows]="rows" [columns]="columnsWithCheckbox" [footerHeight]="50" [scrollbarH]="true" [rowHeight]="getRowHeight" [summaryRow]="false" [summaryPosition]="'bottom'" [messages]="{emptyMessage: store.getMsg(store.searchMsg), totalMessage: store.getVal('total')}" [loadingIndicator]="false" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)="setPage(false,$event)">
+                    <ngx-datatable-column [name]="this.store.getVal('reference_type')" [headerClass]="' '" [cellClass]="' '" [sortable]="false" [width]="120">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span [class]="' '">{{ column.name }}</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="row.ReferenceType" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <div>
+                                <span container="body" [adaptivePosition]="false"> {{row.ReferenceType}}
+                                </span>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [name]="this.store.getVal('parent_reference_name')" [headerClass]="' '" [cellClass]="' '" [sortable]="false" [width]="240">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span [class]="' '">{{ column.name }}</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="row.ParentReferenceName" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <span container="body"[adaptivePosition]="false"> {{row.ParentReferenceName}}
+                            </span>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [name]="this.store.getVal('reference_name')" [headerClass]="' '" [cellClass]="' '" [sortable]="false" [width]="240">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span [class]="' '">{{ column.name }}</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="row.ReferenceName" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <div class="form-group">
+                                <input spellcheck="false" autocomplete="off" type="text" [class]="row.IsReferenceNameUn?'red-border form-control ':'form-control '" minlength="1" maxlength="200" [(ngModel)]="row.ReferenceName" (ionBlur)="validateReferenceName(row)"/>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [name]="this.store.getVal('original_value')" [headerClass]="' '" [cellClass]="' '" [sortable]="false" [width]="240">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span [class]="' '">{{ column.name }}</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="row.OriginalValue" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <div class="form-group">
+                                <input spellcheck="false" autocomplete="off" type="text" class="form-control" minlength="1" maxlength="200" [(ngModel)]="row.OriginalValue"/>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [name]="this.store.getVal('display_order')" [headerClass]="' '" [cellClass]="' '" [sortable]="false" [width]="100">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span [class]="' '">{{ column.name }}</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="row.DisplayOrder" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <div class="form-group">
+                                <input spellcheck="false" autocomplete="off" type="number" [class]="row.IsDisplayOrderUn?'red-border form-control ':'form-control '" min="0" minlength="1" maxlength="200" [(ngModel)]="row.DisplayOrder" ondrop="return false;" onpaste="return false;" onkeypress="return event.charCode>=48 && event.charCode<=57"/>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+
+                    <ngx-datatable-column [name]="this.store.getVal('language')" [headerClass]="' '" [cellClass]="' '" [sortable]="false" [width]="120">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span [class]="' '">{{ column.name }}</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-cell-template>
+                            <div class="form-group">
+
+                                <ion-select interface="popover" class="form-control status language-select" [(ngModel)]="row.LanguageID" tabindex="-1">
+                                    <ion-select-option *ngFor="let item of LanguageList" [value]="item.LanguageID">{{item.LanguageName}}</ion-select-option>
+                                </ion-select>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [name]="this.store.getVal('action')" [sortable]="false" [width]="120">
+                        <ng-template ngx-datatable-header-template>
+                            <span>{{this.store.getVal('action')}}</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-cell-template>
+                            <ion-button class="btn-red update-btn" (click)="updateReferenceData(row,rowIndex)">{{this.store.getVal('update')}}</ion-button>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                </ngx-datatable>
+                <item-tbl id="app-ui" *ngFor="let item of rowsMobile;let i=index"  [isMain]="false" [prod]="item" [subtype]="pageType" [type]="pageType"  [Name]="" [ReferenceTypeList]="ReferenceTypeList" [LanguageList]="LanguageList" (change)="callAction($event,i)"></item-tbl>
+                <app-empty-list *ngIf="isShowMsg" [msg]="store.searchMsg" type="{{ pageType }}"></app-empty-list>
+                <app-page-end id="app-ui" *ngIf="rowsMobile.length !=0 && rowsMobile.length == ReferanceTotal" type="{{ pageType }}"></app-page-end>
+                <infinite-scroll id="app-ui" [items]="rowsMobile" [itemTotal]="ReferanceTotal" (change)="doInfinitePage($event)"></infinite-scroll>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>

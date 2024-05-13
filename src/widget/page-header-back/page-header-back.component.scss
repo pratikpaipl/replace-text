@@ -1,0 +1,48 @@
+ .top-count {
+     background   : red;
+     position     : absolute;
+     padding      : 2px;
+     color        : white;
+     border-radius: 50%;
+     height       : 21px;
+     transform    : translate(20px, -10px);
+     width        : 21px;
+     line-height  : 17px;
+     font-size    : 12px;
+     text-align   : center;
+ }
+
+ .back-arrow{
+    margin: 10px 15px 10px 10px;
+    font-size: 20px;
+    color: var(--ion-color-white) !important;
+ }
+
+ ion-toolbar {
+     background  : var(--ion-color-back) !important;
+     --background: var(--ion-color-back) !important;
+ }
+
+ .back-btn {
+     cursor  : pointer;
+     width   : 20px;
+     height  : auto;
+     margin: 10px;
+ }
+
+ .loc-header-lbl {
+     text-transform    : capitalize;
+     text-overflow     : ellipsis !important;
+     overflow          : hidden !important;
+     color             : var(--ion-color-white) !important;
+     padding           : 0px !important;
+     font-size         : var(--ion-font-sixteen) !important;
+     display           : -webkit-box;
+     -webkit-line-clamp: 1;
+     -webkit-box-orient: vertical;
+     cursor            : pointer;
+ }
+
+ .al-center {
+     align-items: center !important;
+ }

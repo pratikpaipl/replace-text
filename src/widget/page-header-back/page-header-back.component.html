@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row class="al-center">
+        <ion-col>
+          <div style="display:flex; align-items: center;">
+            <ion-buttons *ngIf="isShow">
+              <ion-img class="back-btn" (click)="openMenu()" src="assets/images/menu.png" alt=""></ion-img>
+              <ion-img *ngIf="home" class="logo pointer" style="width: 40px;" src='assets/images/PiLogonew.png' (click)="this.store.Explore()" alt=""></ion-img>
+            </ion-buttons>
+            <ion-buttons *ngIf="!isShow">
+              <i class="fa fa-chevron-left back-arrow pointer" aria-hidden="true" (click)="this.store.backPage()"></i>
+              <ion-img *ngIf="home" class="logo pointer" style="width: 40px;" src='assets/images/PiLogonew.png' (click)="store.homePage()" alt=""></ion-img>
+            </ion-buttons>
+            <ion-label class="loc-header-lbl">
+              {{pageTitle}}
+            </ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>

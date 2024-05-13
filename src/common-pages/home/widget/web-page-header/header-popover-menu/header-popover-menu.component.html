@@ -1,0 +1,10 @@
+<ion-grid>
+    <ion-row *ngFor="let item of items">
+        <ion-col>
+            <ion-label (click)="item.url !=undefined?openPage(item.url):undefined" >
+                <a *ngIf="item.url != undefined" class="clickEv" [href]="item.url">{{item.title}}</a>
+                <a *ngIf="item.url == undefined" class="clickEv" >{{item.title}}</a>
+                </ion-label>
+        </ion-col>
+    </ion-row>
+</ion-grid>

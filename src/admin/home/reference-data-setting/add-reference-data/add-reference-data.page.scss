@@ -1,0 +1,166 @@
+ion-card-title {
+    background: var(--ion-color-black);
+    border-radius: 10px 10px 0px 0px;
+    padding: 10px 0px 10px 15px;
+    color: var(--ion-color-white);
+    font-size: 16px;
+}
+.bread-crump-w-btn{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.form-group ion-label{
+    display: none;
+}
+#myprofile ion-row ion-col:first-child {
+    min-width: 13%;
+    flex: 0 0 13%;
+}
+#myprofile ion-row ion-col:nth-child(2) {
+    min-width: 21%;
+    flex: 0 0 21%;
+}
+#myprofile ion-row ion-col:nth-child(3) {
+    min-width: 21%;
+    flex: 0 0 21%;
+}
+#myprofile ion-row ion-col:nth-child(4) {
+    min-width: 15%;
+    flex: 0 0 15%;
+}
+#myprofile ion-row ion-col:nth-child(5) {
+    min-width: 15%;
+    flex: 0 0 15%;
+}
+#myprofile ion-row ion-col:nth-child(6) {
+    min-width: 10%;
+    flex: 0 0 10%;
+}
+#myprofile ion-row ion-col:nth-child(7) {
+    min-width: 5%;
+    flex: 0 0 5%;
+    padding-top: 6px !important;
+}
+
+.forms_block {
+    overflow: inherit;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.dark-bg {
+    background: var(--ion-color-light-white);
+    --background: var(--ion-color-light-white);
+}
+
+.flex-box-x {
+    margin: 0px 0px 0px;
+}
+
+.add-btn {
+    height: 45px;
+    width: 45px;
+    color: var(--ion-color-black);
+}
+.btn-col{
+    flex: 0 0;align-items: center;display: inline-flex;
+}
+.menuicons i {
+    font-size: 37px;
+}
+
+
+
+.cnt {
+    color: var(--ion-color-black);
+    text-align: end;
+    display: block;
+    padding-top: 7px;
+}
+
+.title-row {
+    font-size: 17px;
+}
+
+ion-item {
+    --padding-start: 0px;
+    align-items: flex-start;
+    background: var(--ion-color-white);
+    --background: var(--ion-color-white);
+    --inner-border-width: 0 0 0px 0;
+    display: inline-block;
+    --background-focused: transparent;
+}
+
+ion-item ion-label {
+    white-space: normal;
+}
+
+ion-checkbox {
+    opacity: 1;
+    cursor: pointer;
+    top: auto;
+    left: auto;
+    margin-right: 10px;
+    margin-top: 12px;
+    border-radius: 0px !important;
+    --border-radius: 4px !important;
+    --background-checked: var(--ion-color-logo-red) !important;
+    --border-color-checked: var(--ion-color-logo-red) !important;
+}
+.forms_block ion-grid ion-row ion-col {
+    padding: 0 8px!important;
+    align-items: center !important;
+}
+.m-part {
+    margin-bottom: 15px;
+}
+
+.m-part.alert ion-grid {
+    padding: 0px;
+}
+
+.m-part.alert ion-col {
+    flex: 0 0 50%;
+    width: 50%;
+}
+
+#FundingProfileConfirmation {
+    background: transparent;
+    --background: transparent;
+}
+
+.image-div {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-photo {
+    width: 200px;
+    float: left;
+    margin: 0px 10px 0px 0px;
+}
+
+.cover-photo {
+    width: 200px;
+    margin: 0px 10px 0px 0px;
+}
+@media (max-width: 830px) {
+    .form-group ion-label{
+        display: block;
+    }
+    
+    #myprofile ion-row ion-col {
+        min-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+}
+@media (max-width: 768px) {
+    .m-part.alert ion-col {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+}

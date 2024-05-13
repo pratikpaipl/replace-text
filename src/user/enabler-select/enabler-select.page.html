@@ -1,0 +1,34 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="true" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true">
+
+    <div class="page_wapper">
+        <div id="all_ui">
+            <ion-grid class="container">
+                <bread-crump showHome="1" [pageType]="type == 'funding-profile'?'funding-profiles':'fundraise-needs'" [from]="isLogin?'user':'explore'" [pageLbl]="store.getVal('match_enabler')"></bread-crump>                
+                <ion-label class="title">{{store.getVal(type == 'funding-profile'?'fp_match_enabler_title':'fn_match_enabler_title')}}</ion-label>
+
+                <div class="extra-action">
+                    <ion-label [innerHtml]="store.nl2br(store.getVal(allTotal == 0?'enablers_not_found':type=='funding-profile'?'enablers_are_found_investor':'enablers_are_found_investee'))"></ion-label>
+
+                    <bottom-btn styleD="center" [leftKey]="'submit'" [rightKey]="'cancel'" [leftBtn]="store.getVal('submit')" [rightBtn]="store.getVal('cancel')" screen="1" isShow="1" (change)="callAction($event)"></bottom-btn>
+                </div>
+
+                <ion-row class="counts_filter_block">
+                    <ion-col class="left_filter_panel">
+                        <div class="counts_searchbox">
+                            <div class="count_boxs navigation_compo">
+                                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+                            </div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row >
+                    <ion-col class="main_cols auto-cols">                      
+                        <enabler-items *ngIf="pageType == 'enablers'" apiEnd="enabler/valid_match_list" [pageType]="pageType" [type]="type" from="profile" [apiAction]="pageType" pageFrom="details" [ProfileSlug]="type=='funding-profile'?slug:''"[FundraiseSlug]="type=='fundraise-need'?slug:''" [updateTime]="updateTime" (change)="updateCount($event)"></enabler-items>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

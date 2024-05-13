@@ -1,0 +1,10 @@
+<div [class]="(pageType =='matching-funding-profiles' && fundingProfileList.length !=0) ?'card_right_panels grid':'card_right_panels'">
+    <item-card *ngFor="let item of fundingProfileList"  [isAddForm]="false" [isMain]="false" [prod]="item" [subtype]="type" [type]="pageType" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [Name]="" [EnablerSlug]="EnablerSlug" [FNEnablerSlug]="FN_EnablerSlug" [FP_EnablerSlug]="item.FP_EnablerSlug" [ActionType]="ActionType" [apiAction]="apiAction" [extraMenu]="extraMenu" [IsProfile]="IsProfile" [IsSubmittedEnabler]="IsSubmittedEnabler" (change)="callAction($event)">
+    </item-card>
+    <app-empty-list *ngIf="fundingProfileList.length==0 && isShowMsg" [msg]="store.searchMsg" type="{{ pageType }}">
+    </app-empty-list>
+    <app-page-end *ngIf="fundingProfileList.length !=0 && fundingProfileList.length == FundingProfileTotal" type="{{ pageType }}">
+    </app-page-end>
+    <infinite-scroll [items]="fundingProfileList" [itemTotal]="FundingProfileTotal" (change)="doInfinitePage($event)">
+    </infinite-scroll>
+</div>

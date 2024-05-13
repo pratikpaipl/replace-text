@@ -1,0 +1,10 @@
+<ion-row class="tag">
+  <ion-col class="tag-col">
+    <ion-label *ngIf="extra" class="tag-line home">
+      <span style="text-transform: initial;" innerHtml="{{msg}}"></span>
+    </ion-label>
+    <ion-label *ngIf="!extra" class="tag-line">
+      <span style="text-transform: initial;">{{msg}}</span>
+    </ion-label>
+  </ion-col>
+</ion-row>

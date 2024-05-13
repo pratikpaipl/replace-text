@@ -1,0 +1,156 @@
+.main-tree-view {
+    border-top: 0px !important;
+    border: 2px solid var(--ion-color-light-gray);
+    border-radius: 0px 0px 5px 5px;
+    display: none;
+    position: absolute;
+    background: var(--ion-color-white) !important;
+    width: 100%;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
+}
+
+.customview.open .main-tree-view {
+    display: block;
+}
+span.ng-value-icon.right {
+    text-align: center;
+    z-index: 111;
+}
+.outer_overly.open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11111;
+}
+
+.customview.open {
+    position: relative;
+    z-index: 111111;
+}
+
+
+.ng-value{
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    flex: 0 0 auto;
+    background: #d9d9d9 !important;
+    color: var(--ion-color-black) !important;
+    // border-radius: 50px;
+    border-radius: 10px;
+    margin: 3px;
+    padding: 7px 10px;
+    align-items: center !important;
+}
+span.ng-value-label {
+    font-size: 15px;
+    max-width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+ion-input{
+    padding: 10px !important;
+    align-items: center !important;
+    display: flex !important;
+}
+
+.search-inpt {
+    border-radius: 0px !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+}
+
+span.ng-value-icon.right {
+    cursor: pointer;
+    position: relative;
+    width: 20px;
+    font-size: 18px;
+    -webkit-user-select: none;
+    user-select: none;
+    color: var(--ion-color-black) !important;
+    line-height: 15px;
+    display: block;
+    text-align: center;
+    z-index: 111;
+    top: -1px;
+
+}
+.right_arrows {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+    cursor: pointer;
+}
+.ng-arrow {
+	border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid;
+    margin: 0px !important;
+    color: rgba(0, 0, 0, 0.54) !important;
+    display: block;
+    background: transparent !important;
+}
+.right_colse span.ng-value-icon.right {
+    display: none!important;
+    color: var(--ion-color-white)!important;
+    background: var(--ion-color-black);
+    border-radius: 50%;
+    text-align: center!important;
+    height: 20px!important;
+    width: 20px!important;
+    font-size: initial!important;
+    line-height: initial!important;
+}
+.right_colse span.ng-value-icon.right.disabled {
+    visibility: hidden !important;
+    width: 0 !important;
+}
+.right_colse::after {
+    content: "\f057";
+    font-family: fontawesome;
+    font-size: 20px;
+    display: block;
+    color: var(--ion-color-black);
+    margin: 0;
+    padding: 0;
+}
+.right_colse.disabled {
+    display: none;
+}
+
+.form-control.custom_treviewcopo {
+	display: flex;
+	padding: 4px 12px 4px 9px !important;
+	justify-content: space-between;
+	align-items: center !important;
+}
+
+.hideint .hideinputs {
+	width: 100% !important;
+	margin: 0px !important;
+	padding: 0px !important;
+	border: none !important;
+	height: 0px !important;
+	display: block;
+	opacity: 0;
+	outline: none !important;
+}
+.customview .hideinputs:focus ~ .form-control.custom_treviewcopo{
+    box-shadow: 0px 0px 3px var(--ion-color-logo-red) !important;
+	outline: none !important;
+}
+.hideint .focusout_input {
+	width: 100% !important;
+	margin: 0px !important;
+	padding: 0px !important;
+	border: none !important;
+	height: 0px !important;
+	display: block;
+	opacity: 0;
+	outline: none !important;
+}

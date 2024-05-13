@@ -1,0 +1,75 @@
+<div class="page_wapper">
+    <div id="all_ui">
+        <ion-grid class="container">
+            <ion-row class="forms_row">
+                <ion-col class="right_panel">
+                    <div class="forms_conponenl" id="authforms">
+                        <ion-grid id="myprofile" class="forms_block" style="overflow: visible !important;">
+                            <ion-row class="forms_headers">
+                                <ion-col size="12">
+                                    <app-tabs [segments]="segments" styleD="flex" customClass="" [selectedSegment]="pageType" from="details" (change)="onClickSegment($event)"> </app-tabs>
+                                </ion-col>
+                            </ion-row>
+
+                            <div class="selection_view">
+                                <div class="form-group" *ngIf="enabler_list.length>0 && pageType == 'subscripions'">
+                                    <custom-select selectTitle="enabler" modalName="selectedEnabler" [modal]="selectedEnabler" id="enabler_list" listName="enabler_list" [isLogo]="true" labelLogo="EnablerLogo" [list]="enabler_list" bindLabel="EnablerName" bindValue="EnablerID"  [isError]="isError" [multiple]="true" (change)="customSelect($event)"></custom-select>
+                                </div>
+                                <div class="form-group" *ngIf="enabler_list.length>0 && pageType == 'plans_and_pricing'">
+                                    <custom-select selectTitle="enabler" modalName="selectedPlanEnabler" [modal]="selectedPlanEnabler" id="enabler_list" listName="enabler_list" [isLogo]="true" labelLogo="EnablerLogo" [list]="enabler_list" bindLabel="EnablerName" bindValue="EnablerID" [isError]="isError" (change)="customSelect($event)"></custom-select>
+                                </div>
+                                <div class="form-group" *ngIf="pageType =='subscripions' && planList.length>0">
+                                    <custom-select selectTitle="plan"  modalName="selectedPlan" [modal]="selectedPlan" id="planList" listName="planList" [isLogo]="false" [list]="planList" bindLabel="PlanName" bindValue="PlanID" [isValidate]="false" [multiple]="true" (change)="customSelect($event)"></custom-select>
+                                </div>
+                                <div class="form-group" *ngIf="pageType =='plan_details' && planList.length>0">
+                                    <custom-select selectTitle="plan" modalName="selectPlanDetail" [modal]="selectPlanDetail" id="planList" listName="planList" [isLogo]="false" [list]="planList" bindLabel="PlanName" bindValue="PlanID" [isValidate]="false"  (change)="customSelect($event)"></custom-select>
+                                </div>                                
+                                <div class="form-group" *ngIf="pageType =='subscripions' && store.PlanStatusResult.length>0">
+                                    <custom-select selectTitle="status" modalName="selectedStatus" [modal]="selectedStatus" id="statusList"   listName="statusList" [isLogo]="false" [list]="store.PlanStatusResult" bindLabel="ReferenceName" bindValue="ReferenceKey" [isValidate]="false" [multiple]="true" (change)="customSelect($event)"></custom-select>
+                                </div>
+                            </div>
+                            <div *ngIf="pageType =='subscripions' && store.IsSystemAdmin" style="display: flex;margin: 0px 12px;align-items: center;">
+                            <ion-label>{{store.getVal('display_enablers_without_currently_active_plan')}}</ion-label>
+                                <ion-toggle [ngModelOptions]="{standalone: true}" [(ngModel)]="WithoutActivePlan">
+                                </ion-toggle>
+                            </div>
+                                                      
+                            <div *ngIf="pageType == 'subscripions'" style="padding: 10px;">
+                                <ion-row class="counts_filter_block main_rows mt-res">
+                                    <ion-col class="main_cols auto-cols">
+                                        <ion-label *ngIf="allTotal>0" class="note-padding filterCriteriaNote">{{store.getVal('result_filter_criteria_note')}}</ion-label>
+                                        <div id="app-ui"  class="items_counts">
+                                            <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+                                        </div>
+                                        <subscripions-items [pageType]="pageType" pageFrom="admin" [extraMenu]="false" [WithoutActivePlan]="WithoutActivePlan" apiEnd="subscription_plans/subscription_list"  [type]="pageType" apiAction="subscripions" [updateTime]="updateTime" (change)="updateCount($event)"></subscripions-items>
+                                    </ion-col>
+                                </ion-row>
+                            </div>
+                            <div *ngIf="pageType=='plans_and_pricing'">                                
+                                <ion-row class="counts_filter_block main_rows mt-res">
+                                    <ion-col class="main_cols auto-cols">
+                                        <plan-items [pageType]="pageType" pageFrom="admin"  [WithoutActivePlan]="WithoutActivePlan" apiEnd="subscription_plans/valid_plan_list" [type]="pageType" apiAction="plans" [updateTime]="updateTime" (change)="updateCount($event)"></plan-items>
+                                    </ion-col>
+                                </ion-row>
+                            </div>
+                            
+                            <div *ngIf="pageType=='plan_details'">                                
+                                <ion-row class="counts_filter_block main_rows mt-res">
+                                    <ion-col class="main_cols auto-cols">
+                                        <div *ngIf="selectPDetail != undefined &&  selectPDetail.PlanDescriptionDup.length >0" [class]="'card_right_panels'" style="padding: 12px;">
+                                        <item-card [isMain]="false" [extraMenu]="false" [itemTitle]="selectPDetail.PlanName" [isMain]="false" [prod]="selectPDetail" [subtype]="'plan'" [type]="'plans_and_pricing'" [pageFrom]="'details'" [Name]="" [ActionType]="'plans'" [apiAction]="'plans'"></item-card>
+                                    </div>
+                                    <div *ngIf="selectPDetail == undefined || (selectPDetail != undefined && selectPDetail.PlanDescriptionDup.length ==0)" [class]="'card_right_panels'" style="padding: 12px;">
+                                        <ion-note *ngIf="selectPDetail == undefined" tabindex="-1">{{'Please select any plan for details'}}</ion-note>
+                                        <ion-note *ngIf="selectPDetail != undefined && selectPDetail.PlanDescriptionDup.length ==0" tabindex="-1">{{'Selected plan details not found'}}</ion-note>
+                                    </div>
+                                    </ion-col>
+                                </ion-row>
+                            </div>
+                        </ion-grid>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</div>

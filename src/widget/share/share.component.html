@@ -1,0 +1,37 @@
+<ion-content>
+    <ion-grid style="padding: 8px;">
+        <ion-row class="model_header">
+            <ion-col>
+                <ion-label>{{prod.share}}</ion-label>
+            </ion-col>
+            <ion-col class="share">
+                <ion-img src="assets/images/cancel.png" (click)="close()" alt=""></ion-img>
+            </ion-col>
+        </ion-row>
+
+        <ion-row class="social">
+            <ion-col>
+                <ion-img (click)="onShare('fb')" class="share-icon" src="assets/images/facebook.png" alt=""></ion-img>
+                <!-- <ion-label *ngIf="store != undefined">{{store.getVal('facebook')}}</ion-label> -->
+                <ion-label>{{this.prod.facebook}}</ion-label>
+            </ion-col>
+            <ion-col>
+                <ion-img (click)="onShare('ln')" class="share-icon" src="assets/images/linkedin.png" alt=""></ion-img>
+                <!-- <ion-label *ngIf="store != undefined">{{store.getVal('linkedin')}}</ion-label> -->
+                <ion-label>{{this.prod.linkedin}}</ion-label>
+            </ion-col>
+            <ion-col>
+                <ion-img (click)="onShare('tw')" class="share-icon" src="assets/images/twitter-1.png" alt=""></ion-img>
+                <!-- <ion-label *ngIf="store != undefined">{{store.getVal('twitter')}}</ion-label> -->
+                <ion-label>{{this.prod.twitter}}</ion-label>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col class="url-box">
+                <ion-label id="inputId"> {{ShareUrl}} </ion-label>
+                <ion-img (click)="copyToClipboard()" src="assets/images/copy.png" alt=""></ion-img>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

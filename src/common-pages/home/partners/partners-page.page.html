@@ -1,0 +1,95 @@
+<web-page-header></web-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <seo-hidden-tag [head]="store.getVal('website_key_110')" [description]="store.getVal('website_key_111')"></seo-hidden-tag>
+    <div class="section section-white overflow-hidden" style="padding-top:0px;">
+        <section class="padding-bottom b2bmarket" id="three">
+            <div class="container-fluid methodology-areasection">
+                <div class="container container-lg">
+                    <div class="row fadeInUp">
+                        <div class="col-12">
+                            <div class="heading text-center" data-aos="fade-down">
+                                <h2>{{store.getVal('website_key_112')}}</h2>
+                            </div>
+                        </div>
+                        <div class="container-fluid methodology-areasection">
+                            <div class="container container-lg">
+                                <div class="row" style="position: relative;">
+                                    <div style="position: absolute;top: 50%;left: -16px;font-size: 25px;z-index: 2;cursor: pointer;" (click)="slidePrev()">
+                                        <i class="fa-solid fa-circle-chevron-left" style="font-size: 30px;"></i>
+                                      </div>
+                                      <div style="position: absolute;top: 50%;right: -16px;font-size: 25px;z-index: 2;cursor: pointer;" (click)="slideNext()">
+                                        <i class="fa-solid fa-circle-chevron-right" style="font-size: 30px;"></i>
+                                      </div>
+                                    <ion-slides #slides [options]='slideOpts'>
+                                        <ion-slide *ngFor="let item of partners">
+                                            <div class="margin-top">
+                                                <div class="methodology-box">
+                                                    <div class="home-block-i-circle">
+                                                        <img [src]="item.Logo" class="img-fluid"/>
+                                                    </div>
+                                                    <h3 >{{item.PartnerName}}</h3>
+                                                    <p class="b2b-desc">{{item.Descriptions}}</p>
+                                                    
+                                                    <a [href]="item.WebSite" target="_blank" class="button btn-primary htwork black">
+                                                        <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 10px;"></i>{{item.btnTitle}}</a>
+                                                </div>
+                                            </div>
+                                        </ion-slide>
+                                      </ion-slides>
+                                </div>
+                            </div>
+                        </div>   
+                        <!-- <div class="container-fluid methodology-areasection">
+                            <div class="container container-lg">
+                                <div class="row" style="position: relative;">
+                                    <div style="position: absolute;top: 50%;left: -16px;font-size: 25px;z-index: 2;cursor: pointer;" (click)="slidePrev()">
+                                        <i class="fa-solid fa-circle-chevron-left" style="font-size: 30px;"></i>
+                                      </div>
+                                      <div style="position: absolute;top: 50%;right: -16px;font-size: 25px;z-index: 2;cursor: pointer;" (click)="slideNext()">
+                                        <i class="fa-solid fa-circle-chevron-right" style="font-size: 30px;"></i>
+                                      </div>
+                                    <ion-slides #slides [options]='slideOpts'>
+                                        <ion-slide *ngFor="let item of partners">
+                                            <div class="margin-top">
+                                                <div class="methodology-box" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                                                    <div class="home-block-i-circle" >
+                                                        <img [src]="item.Logo" class="img-fluid" />
+                                                    </div>
+                                                    <h3 >{{item.PartnerName}}</h3>
+                                                    <p class="b2b-desc">{{item.Descriptions}}</p>
+                                                    <hr class="mt-4" />
+                                                    <a [href]="item.WebSite" target="_blank" class="button btn-primary my-4" style="background-color: var(--ion-color-black) !important; border: 1px solid var(--ion-color-black) !important;" ><i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 10px;"></i>{{store.getVal('website_key_26')}}</a>
+                                                    <hr class="mt-4" />
+                                                </div>
+                                            </div>
+                                        </ion-slide>
+                                      </ion-slides>
+                                </div>
+                            </div>
+                        </div>                -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="con_products">
+            <div class="container-fluid">
+                <div class="container container-lg">
+                    <div class="row outer-block fadeInUp" style="margin-top: 0px;background: transparent;">
+                        <div class="home-block m-5">
+                            <div class="row d-flex justify-content-center ">
+                                <div class="cons_title ml-auto mr-auto p-5 text-center">
+                                    <h2>{{store.getVal('website_key_154')}}</h2>
+                                <div style="padding: 30px 0 0px 0px;">
+                                    <!-- <a href="/contact-us" target="_blank" class="button btn-primary mt-4 htwork">{{store.getVal('website_key_257')}}</a> -->
+                                    <a class="btn btn-lg btn-round btn-primary htwork margin-top" href="https://share.hsforms.com/1j4ThcUAoTDGZ-zodqV6DAA51gey" target="_blank">{{store.getVal('website_key_98')}}</a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <web-page-footer></web-page-footer>
+</ion-content>

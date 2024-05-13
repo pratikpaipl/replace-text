@@ -1,0 +1,22 @@
+<div *ngIf="selItem !=undefined">
+    <ion-chip *ngIf="isInvestor && selItem.itemData.ReferenceCode != undefined && (selItem.itemData.ReferenceCode.includes('SIP-') || selItem.itemData.ReferenceCode.includes('MIP-'))&& selItem.itemData.FP_EnablerSlug !=undefined">
+        <ion-label>{{store.getVal('funding_profile')}} > {{selItem.itemData.ReferenceCode}}</ion-label>
+        <ion-icon name="close" (click)="removeFilter(true,'profile')"></ion-icon>
+    </ion-chip>
+    <ion-chip *ngIf="isInvestee && selItem.itemData.ReferenceCode != undefined && (selItem.itemData.ReferenceCode.includes('SIR-') || selItem.itemData.ReferenceCode.includes('MIR-')) && selItem.itemData.FN_EnablerSlug !=undefined">
+        <ion-label>{{store.getVal('fundraise_need')}} > {{selItem.itemData.ReferenceCode}}</ion-label>
+        <ion-icon name="close" (click)="removeFilter(true,'fundaise')"></ion-icon>
+    </ion-chip>
+    <ion-chip *ngIf="isEnabler && (selItem.itemData.EnablerName !=undefined)">
+        <ion-label>{{store.getVal('enabler')}} > {{selItem.itemData.EnablerName}}</ion-label>
+        <ion-icon name="close" (click)="removeFilter(true,'enablers')"></ion-icon>
+    </ion-chip>
+    <ion-chip *ngIf="isUser && ((selItem.itemData.UserName !=undefined))">
+        <ion-label>{{store.getVal('user')}} > {{selItem.itemData.UserName}}</ion-label>
+        <ion-icon name="close" (click)="removeFilter(true,'users')"></ion-icon>
+    </ion-chip>
+    <ion-chip *ngIf="isFilterType && selItem.itemData.EnablerFilterType != undefined && selItem.itemData.EnablerFilterType != ''">
+        <ion-label>{{store.getVal(selItem.itemData.chipLbl)}}</ion-label>
+        <ion-icon name="close" (click)="removeFilter(true,selItem.itemData.EnablerFilterType)"></ion-icon>
+    </ion-chip>
+</div>

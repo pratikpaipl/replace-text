@@ -1,0 +1,3 @@
+<ion-infinite-scroll *ngIf="items.length !=0 && items.length != itemTotal" (ionInfinite)="doInfiniteItems($event)" class="w-80">
+  <ion-infinite-scroll-content style="visibility: hidden;" loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+</ion-infinite-scroll>

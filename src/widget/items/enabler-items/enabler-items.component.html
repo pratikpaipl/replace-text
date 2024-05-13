@@ -1,0 +1,6 @@
+<div class="card_right_panels">
+    <item-card-enabler *ngFor="let item of EnablerList" [extraTitle]="extraTitle" [isAddForm]="false" [isMain]="false" [prod]="item" [subtype]="type" type="{{ pageType }}" [from]="from" [openFront]="openFront" [pageFrom]="pageFrom" [CompanyIDs]="''" [Name]="Name != undefined && Name != ''?Name:item.EnablerName" [EnablerSlug]="item.EnablerSlug" [ProfileSlug]="ProfileSlug" [FundraiseSlug]="FundraiseSlug" [ActionType]="ActionType" [apiAction]="'enablers'" (change)="callAction($event)"></item-card-enabler>
+    <app-empty-list *ngIf="EnablerList.length==0 && isShowMsg" [msg]="store.searchMsg" type="{{ pageType }}"></app-empty-list>
+    <app-page-end *ngIf="EnablerList.length !=0 && EnablerList.length == EnablerTotal" type="{{ pageType }}"></app-page-end>
+    <infinite-scroll [items]="EnablerList" [itemTotal]="EnablerTotal" (change)="doInfinitePage($event)"></infinite-scroll>
+</div>

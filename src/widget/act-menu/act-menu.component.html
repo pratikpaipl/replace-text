@@ -1,0 +1,11 @@
+<div class="action_menu">
+  <span *ngIf="showFeatured && store.IsWebView && prod.IsFeatured != undefined && (prod.IsFeatured == 1 || prod.IsFeatured == true)" class="featured menuicons pointer">
+    <i class="fas fa-award" [style.margin-right]="'5px'"></i>{{store.getVal('featured')}}
+  </span>
+  <!-- <span *ngIf="Slug != undefined && store.appType !='admin' && (pageFrom =='list' || pageFrom =='Top' || pageFrom =='details') && checkTop()" class="menuicons pointer" (click)="openShare()">
+    <i class="fas fa-share-alt"></i>
+  </span> -->
+  <span *ngIf="!(pageType == 'permissions' && (pageFrom == 'Top' || pageFrom =='top'))" class="menuicons three_dot_circle" (click)="presentPopover($event,prod)">
+    <!-- <i class="fas fa-ellipsis-v"></i> -->
+  </span>
+</div>

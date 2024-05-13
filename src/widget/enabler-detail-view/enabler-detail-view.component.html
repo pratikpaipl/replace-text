@@ -1,0 +1,72 @@
+<ion-row class="Overview_block" *ngIf="detailData != undefined">
+    <ion-col *ngIf="store.appType =='admin'" [class]="store.appType =='admin'?'Overview_box left':'Overview_box'">
+        <ion-grid class="Overview-box">
+            <ion-row class="content_box">
+                <ion-col sixe="12">
+                    <div class="m-part" *ngIf="detailData.EnablerName != undefined && detailData.EnablerName != '' || detailData.Website != undefined && detailData.Website != '' || detailData.CountryName != undefined && detailData.CountryName != '' || detailData.ShortDescription != undefined && detailData.ShortDescription != ''">
+                        <div class="forms_block">
+                            <div *ngIf="detailData.EnablerName != undefined && detailData.EnablerName != ''">
+                                <ion-label class="title">{{this.store.getVal('enabler')}}</ion-label>
+                                <ion-label class="content">{{detailData.EnablerName}}</ion-label>
+                            </div>
+                            <div *ngIf="detailData.Website != undefined && detailData.Website != ''">
+                                <ion-label class="title">{{this.store.getVal('website')}}</ion-label>
+                                <ion-label class="content"><a href="{{detailData.Website}}" target="_blank" tabindex="-1">{{detailData.Website}}<i class="fa  fa-external-link" aria-hidden="true"></i></a></ion-label>
+                            </div>
+
+                            <div *ngIf="detailData.CountryName != undefined && detailData.CountryName != ''">
+                                <ion-label class="title">{{this.store.getVal('country_text')}}</ion-label>
+                                <ion-label class="content">{{detailData.CountryName}}</ion-label>
+                            </div>
+                            <div *ngIf="detailData.ShortDescription != undefined && detailData.ShortDescription != ''">
+                                <ion-label class="title">{{this.store.getVal('short_description')}}</ion-label>
+                                <ion-label class="content" [innerHtml]="store.nl2br(detailData.ShortDescription)"></ion-label>
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-col>
+    <ion-col class="Overview_box right" *ngIf="store.appType =='admin' && detailData.CompanyDisplayName != undefined && detailData.CompanyDisplayName!= ''">
+        <ion-grid class="Overview-box">
+            <ion-row class="content_box">
+                <ion-col sixe="12">
+                    <div class="m-part">
+                        <div class="forms_block">
+                            <div *ngIf="detailData.CompanyDisplayName != undefined && detailData.CompanyDisplayName!= ''">
+                                <ion-label class="title">{{this.store.getVal('company_name')}}</ion-label>
+                                <ion-label class="content">{{detailData.CompanyDisplayName}}</ion-label>
+                            </div>
+                            <div *ngIf="detailData.CompanyRegistrationNo != undefined && detailData.CompanyRegistrationNo!= ''">
+                                <ion-label class="title">{{this.store.getVal('registration_number')}}</ion-label>
+                                <ion-label class="content">{{detailData.CompanyRegistrationNo}}</ion-label>
+                            </div>
+                            <div *ngIf="detailData.CompanyRegistryRecord != undefined && detailData.CompanyRegistryRecord!= ''">
+                                <ion-label class="title">{{this.store.getVal('company_registry_record')}}</ion-label>
+                                <ion-label class="content"><a href="{{detailData.CompanyRegistryRecord}}" target="_blank" tabindex="-1">{{detailData.CompanyRegistryRecord}}<i class="fa  fa-external-link" aria-hidden="true"></i></a></ion-label>
+                            </div>
+                            <div>
+                                <ion-label class="title">{{this.store.getVal('contact')}}</ion-label>
+                                <ion-label class="content">{{store.getVal('enabler_contact_into')}}</ion-label>
+                            </div>
+                        </div>                      
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-col>
+    
+    <ion-col size="12" class="Overview_box">
+        <enabler-config-details [FNImpactThemesAndAreas]="FNImpactThemesAndAreas" [FPImpactThemesAndAreas]="FPImpactThemesAndAreas" [FNSdgs]="FNSdgs" [FPSdgs]="FPSdgs" [FNFundingType]="FNFundingType" [FPFundingType]="FPFundingType" [FNEsg]="FNEsg" [FPEsg]="FPEsg" [enablerData]="detailData"></enabler-config-details>
+    </ion-col>
+
+    <ion-col size="12" class="Overview_box" *ngIf="detailData.About != undefined">
+        <div class="m-part">
+            <ion-card-title>{{store.getVal('about')}}</ion-card-title>
+            <div class="forms_block radius" style="padding-top: 10px;">
+                <ion-label class="content" [innerHtml]="store.nl2br(detailData.About)"></ion-label>
+            </div>
+        </div>
+    </ion-col>
+</ion-row>

@@ -1,0 +1,205 @@
+<ion-header>
+    <ion-toolbar style="--padding: 0 !important; --min-height: auto !important;">
+        <ion-grid style="padding: 0px !important;">
+            <ion-row class="filter_header">
+                <ion-col style="flex: 0 0;">
+                    <div class="heading_filter">
+                        <i class="fas fa-filter"></i>
+                        <ion-label>{{store.getVal('filter')}} <span *ngIf="filteCnt != undefined && filteCnt > 0">({{filteCnt}})</span></ion-label>
+                    </div>
+                </ion-col>
+                <ion-col style="flex: 0 0;">
+                    <div class="heading_filter">
+                        <i class="fa fa-times pointer" (click)="this.pageFrom != 'search-profile'?clearAll():close()"></i>
+                        <ion-label class="pointer" *ngIf="this.pageFrom != 'search-profile' " (click)="clearAll()">
+                            {{store.getVal('clear_all')}}</ion-label>
+                        <ion-label class="pointer" *ngIf="this.pageFrom == 'search-profile' " (click)="close()">
+                            {{store.getVal('close')}}</ion-label>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-grid class="filter_blocks">
+        <ion-row class="filter_section">
+            <ion-col>
+                <ion-grid class="p-0">
+                    <input type="text" class="hide" tabindex="-1">
+                    <ion-row *ngIf="displayFilter">
+                        <ion-col size="12" class="model_list" *ngIf="countryShow && countries.length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="countries.length>0">
+                                    <ion-col><ion-label class="model_list_title">{{store.getVal('countries')}}</ion-label></ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col>
+                                        <div class="classifications form-group filter-ng-select tree-view">
+                                            <tree-view-search clboeder="none !important" from="Investor Country Alert" page="filter" [TreeData]="countries" [preSelected]="countryOfEnabler" [hasCheckbox]="false" (change)="changeInvestorCountries($event)"></tree-view-search>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                        <ion-col size="12" class="model_list" *ngIf="impactThemeAreaShow && impactThemesAreasList.length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="impactThemesAreasList.length>0">
+                                    <ion-col>
+                                        <ion-label class="model_list_title">{{store.getVal('impact_themes_and_areas')}}</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col>
+                                        <div class="classifications form-group filter-ng-select tree-view ">
+                                            <tree-view-search id="ImpactThemeAndArea" clboeder="none !important" from="impact themes and areas" [TreeData]="impactThemesAreasList" [preSelected]="ImpactThemesAndAreasKey" [hasCheckbox]="false" (change)="changeImpactTheme($event)"></tree-view-search>
+                                        </div>  
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                        <ion-col size="12" class="model_list" *ngIf="esgShow && esgList.length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="esgList.length>0">
+                                    <ion-col>
+                                        <ion-label class="model_list_title">{{store.getVal('esg')}}</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col>
+                                        <div class="classifications form-group filter-ng-select tree-view ">
+                                            <tree-view-search id="Esg" clboeder="none !important" from="esg" [TreeData]="esgList" [preSelected]="EsgKeys" [hasCheckbox]="false" (change)="changeEsg($event)"></tree-view-search>
+                                        </div>  
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                        <ion-col size="12" class="model_list" *ngIf="sdgShow && sdgList.length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="sdgList.length > 0">
+                                    <ion-col>
+                                        <ion-label class="model_list_title">{{store.getVal('sdgs')}}</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="classifications">
+                                        <div class="form-group">
+                                            <custom-select class="custom-chk" id="SdgIDs" modalName="SdgIDs" [modal]="SdgIDs" listName="sdgList" [list]="sdgList" bindLabel="Label" bindValue="Value" [isError]="false" [multiple]="true" [isValidate]="false" [isNewTag]="false" [isFilter]="true" [isLogo]="true" labelLogo="SdgLogo" (change)=customSelect($event)></custom-select>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                        <ion-col size="12" class="model_list" *ngIf="EnablerShow && enablerList
+                        .length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="enablerList.length > 0">
+                                    <ion-col>
+                                        <ion-label class="model_list_title">{{store.getVal('enablers')}}</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="classifications">
+                                        <div class="form-group">
+                                            <ng-select #Enabler class="custom-chk filter-ng-select" id="EnablerSlug" [(ngModel)]="EnablerSlug" [multiple]="true" dropdownPosition="bottom" required [clearable]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange($event)" [items]="enablerList" bindLabel="EnablerName" bindValue="EnablerSlug" (focus)="onFocusSelect(Enabler)">
+                                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                                    <div style="display: flex;align-items: center;">
+                                                        <img alt="" style="width: 30px; margin-left: 10px; padding: 5px;" [src]="item.EnablerLogo" />
+                                                        <span [ngOptionHighlight]="search">{{item.EnablerName}}</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                        <ion-col size="12" class="model_list" *ngIf="FundingProviderTypeShow && fundingProviderTypeList
+                        .length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="fundingProviderTypeList.length > 0">
+                                    <ion-col>
+                                        <ion-label class="model_list_title">{{store.getVal('funding_provider_type')}}</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="classifications">
+                                        <div class="form-group">
+                                            <ng-select class="custom-chk filter-ng-select" id="FundingProviderType" #FProviderType [(ngModel)]="FundingProviderType" [multiple]="true" dropdownPosition="bottom" required [clearable]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange($event)" [items]="fundingProviderTypeList" bindLabel="ReferenceName" bindValue="ReferenceKey"(focus)="onFocusSelect(FProviderType)"></ng-select>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                        <ion-col size="12" class="model_list" *ngIf="FundingTypeShow && fundingTypeList
+                        .length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="fundingTypeList.length > 0">
+                                    <ion-col>
+                                        <ion-label class="model_list_title">{{store.getVal('funding_type')}}</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="classifications">
+                                        <div class="form-group">
+                                            <ng-select class="custom-chk filter-ng-select" id="FundingType" #FType [(ngModel)]="FundingType" [multiple]="true" dropdownPosition="bottom" required [clearable]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange($event)" [items]="fundingTypeList" bindLabel="ReferenceName" bindValue="ReferenceKey"(focus)="onFocusSelect(FType)"></ng-select>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                        <ion-col size="12" class="model_list" *ngIf="FundingStageShow && fundingStageList
+                        .length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="fundingStageList.length > 0">
+                                    <ion-col>
+                                        <ion-label class="model_list_title">{{store.getVal('funding_stage')}}</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="classifications">
+                                        <div class="form-group">
+                                            <ng-select class="custom-chk filter-ng-select" id="FundingStage" #FStage [(ngModel)]="FundingStage" [multiple]="true" dropdownPosition="bottom" required [clearable]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange($event)" [items]="fundingStageList" bindLabel="ReferenceName" bindValue="ReferenceKey"(focus)="onFocusSelect(FStage)"></ng-select>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                        <ion-col size="12" class="model_list" *ngIf="MinimumTicketSizeShow && investorTicketSizeList.length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="investorTicketSizeList.length > 0">
+                                    <ion-col>
+                                        <ion-label class="model_list_title">{{store.getVal('minimum_ticket_size')}}</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="classifications">
+                                        <div class="form-group">
+                                            <ng-select class="custom-chk filter-ng-select" id="MinimumTicketSize" #MinTicketSize [(ngModel)]="MinimumTicketSize" [multiple]="true" dropdownPosition="bottom" required [clearable]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange($event)" [items]="investorTicketSizeList" bindLabel="ReferenceName" bindValue="ReferenceKey"(focus)="onFocusSelect(MinTicketSize)"></ng-select>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                        <ion-col size="12" class="model_list" *ngIf="GenderLensShow && genderLensList.length>0">
+                            <ion-grid class="p-0">
+                                <ion-row *ngIf="genderLensList.length > 0">
+                                    <ion-col>
+                                        <ion-label class="model_list_title">{{store.getVal('gender_lens')}}</ion-label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="classifications">
+                                        <div class="form-group">
+                                            <ng-select class="custom-chk filter-ng-select" id="GenderLens" #GenLens [(ngModel)]="GenderLens" [multiple]="true" dropdownPosition="bottom" required [clearable]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange($event)" [items]="genderLensList" bindLabel="ReferenceName" bindValue="ReferenceKey"(focus)="onFocusSelect(GenLens)"></ng-select>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

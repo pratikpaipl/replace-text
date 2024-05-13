@@ -1,0 +1,65 @@
+<div class="datalist_forms_card">
+    <ion-row class="main_rows mt-res">
+        <ion-col class="main_cols auto-cols admin_right_panel">            
+            <div class="form-group" *ngIf="EnablerDefault != undefined">
+                <div class="switchs_block">
+                    <ion-label>{{store.getVal('enabler_default')}}</ion-label>
+                    <ion-toggle [ngModelOptions]="{standalone: true}" [(ngModel)]="EnablerDefault">
+                    </ion-toggle>
+                </div>
+              </div>
+              <div id="accordion" class="accordion" *ngIf="EnablerDefault != 1 && PublicSiteList.length>0">
+                <div class="main" [class.active]="publicListView">
+                    <ng-container *ngTemplateOutlet="dataAcItemHead; context: {isView:'publicListView',title:'public_site_visibility',validate:false,show:false  }"></ng-container>
+                    <div class="submenu" [style.height]="publicListView ? 'auto' : '0'" [style.overflow]="publicListView ? 'visible' : 'hidden'" #publicList>
+                        <ion-grid>
+                            <ion-row class="acord-row">
+                                <ion-col class="acord-col" *ngIf="type =='enablers'">
+                                    
+                                    <div class="form-group">
+                                        <div style="display: flex;">
+                                            <ion-label style="font-weight: bold;">{{store.getVal('publish_your_page')}}</ion-label>
+                                            <ion-toggle tabindex="-1" [(ngModel)]="IsPublish"></ion-toggle>
+                                        </div>
+                                    </div>
+                                </ion-col>
+                                <ion-col class="acord-col"  *ngIf="type =='enablers'">
+                                </ion-col>
+                                <ion-col class="acord-col" *ngFor="let sItem of PublicSiteList; let i= index;">
+                                    <div class="form-group">
+                                        <custom-select [selectTitle]="sItem.TextKey" modalName="AnswerKey" [modal]="sItem.AnswerKey" [isValidate]="false" [clearable]="false" listName="Answers" [list]="sItem.Answers" bindLabel="AnswerLabel" bindValue="SettingKey" (change)=checkValue($event,i,0)></custom-select>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </div>
+                </div>
+            </div>
+            <div id="accordion" class="accordion" *ngIf="EnablerDefault != 1 && UserAccountList.length>0">
+                <div class="main" [class.active]="userListView">
+                    <ng-container *ngTemplateOutlet="dataAcItemHead; context: {isView:'userListView',title:'user_account_visibility',validate:false,show:false  }"></ng-container>
+                    <div class="submenu" [style.height]="userListView ? 'auto' : '0'" [style.overflow]="userListView ? 'visible' : 'hidden'" #userList>
+                        <ion-grid>
+                            <ion-row class="acord-row">
+                                <ion-col class="acord-col" *ngFor="let sItem of UserAccountList; let i= index;">
+                                    <div class="form-group">
+                                        <custom-select [selectTitle]="sItem.TextKey" modalName="AnswerKey" [modal]="sItem.AnswerKey" [isValidate]="false" [clearable]="false" listName="Answers" [list]="sItem.Answers" bindLabel="AnswerLabel" bindValue="SettingKey" (change)=checkValue($event,i,1)></custom-select>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </div>
+                </div>
+            </div>
+            <bottom-btn styleD="center " isReset="1" rightBtn="Reset" rightKey="reset" leftBtn="Save" leftKey="save" (change)="SettingAction($event, '1')"></bottom-btn>
+        </ion-col>
+    </ion-row>
+</div>
+
+<ng-template #dataAcItemHead let-isView="isView" let-title="title" let-validate="validate" let-show="show">
+    <div class="menu" (click)="viewSH(isView)">
+        <i class="fa fa-chevron-down"></i>
+        {{store.getVal(title)}}
+        <i *ngIf="show" class="fa-solid fa-eye"></i>
+      </div>
+</ng-template>

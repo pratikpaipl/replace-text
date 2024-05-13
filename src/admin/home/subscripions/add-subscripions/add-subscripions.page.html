@@ -1,0 +1,53 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="true" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="addPage" [scrollEvents]="true">
+    <div class="page_wapper">
+        <div id="all_ui">
+            <ion-grid class="container" *ngIf="isView">
+                <bread-crump showHome="1" [pageType]="'users'" [pageLbl]="title"></bread-crump>
+                <error-message id="topRow" [isNameUn]="'false'" [fromClass]="'m-0-5'" styleD="left" [dataAction]="[]" [message]="loadMsg"></error-message>
+                <ion-row class="forms_row">
+                    <ion-col class="forms_conponenl ">                        
+                        <div class="m-part alert">
+                            <ion-card-title>{{store.getVal('user')}}</ion-card-title>
+                            <div id="myprofile" class="forms_block radius">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <ion-label [class]="IsFirstNameUn?'labels errorTitle':'labels'">{{store.getVal('first_name')}} *</ion-label>
+                                                <input autocomplete="off" type="text" class="form-control" id="FirstName" minlength="1" maxlength="50" [(ngModel)]="FirstName" (keyup.enter)="callAction($event,'1')"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <ion-label [class]="IsLastNameUn?'labels errorTitle':'labels'">{{store.getVal('last_name')}}</ion-label>
+                                                <input autocomplete="off" type="text" class="form-control" id="LastName" minlength="1" maxlength="50" [(ngModel)]="LastName" (keyup.enter)="callAction($event,'1')"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group">
+                                                <ion-label [class]="((Email =='' || !this.store.regEmail.test(Email)) && emailErr !='' )?'labels errorTitle   ':'labels'">{{store.getVal('email')}} *</ion-label>
+                                                <input spellcheck="false" autocomplete="off" class="form-control" id="Email" minlength="5" maxlength="300" type="email" [disabled]="isDisabled" [(ngModel)]="Email" [ngModelOptions]="{standalone: true}" (keyup.enter)="callAction($event,'1')"/>
+                                            </div>
+                                        </ion-col>
+                                        <ion-col>
+                                            <div class="form-group passfild">
+                                                <ion-label [class]="IsPasswordUn ?'labels errorTitle':'labels'"> {{store.getVal('password')}} {{!isEdit?'*':''}}</ion-label>
+                                                <input spellcheck="false" autocomplete="off" class="form-control" [type]="passwordType" minlength="6" maxlength="100" clearOnEdit="false" [(ngModel)]="Password" (keyup.enter)="callAction($event,'1')"/>
+                                                <ion-icon class="form-control" [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+                                            </div>
+                                            <ion-note *ngIf="passErr !=''" class="errorTitle" tabindex="-1">{{passErr}}</ion-note>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
+                        </div>
+                        <act-switch [IsActive]="IsActive" [IsEnable]="undefined" [type]="'user'" (change)="statusSwitch($event)"></act-switch>
+                        <bottom-btn styleD="center" [leftKey]="'submit'" [rightKey]="'cancel'" [leftBtn]="store.getVal('submit')" screen="1" [rightBtn]="store.getVal('cancel')" (change)="callAction($event,1)" isShow="1"></bottom-btn>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

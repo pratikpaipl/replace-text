@@ -1,0 +1,9 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content [scrollEvents]="true">
+  <div id="main1">
+    <div class="fof">
+      <ion-label [innerHtml]="error_404"></ion-label>
+    </div>
+  </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

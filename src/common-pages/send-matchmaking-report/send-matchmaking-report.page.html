@@ -1,0 +1,50 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content [scrollEvents]="true">
+    <div class="page_wapper" *ngIf="loadData">
+        <ion-grid class="container">
+            <bread-crump *ngIf="breadCrumpData !=undefined && from !='list'" [showHome]="1" [breadCrumpData]="breadCrumpData" [from]="'admin'" [pageLbl]="title" [DisplayName]="title"></bread-crump>
+            <bread-crump *ngIf="breadCrumpData ==undefined" [showHome]="1" [from]="'admin'" [pageType]="ptype+'s-submitted'" [pageLbl]="title"></bread-crump>
+            <ion-row class="forms_row">
+                <ion-col>
+                    <error-message [isNameUn]="false" styleD="left" [dataAction]="[]" [message]="loadMsg"></error-message>
+                    <div class="contact_forms">
+                        <div class="contact-form">
+                            <div class="section">
+                                <div class="form-group form-control info-line" style="margin-top: 10px;" *ngIf="detailData !=undefined">
+                                    <span class="fw-lspacing">{{store.getVal('send_matchmaking_report_info_msg')}}</span>
+                                </div>
+                                <div class="form-group form-control" [style.margin-top]="loadMsg != undefined && loadMsg !=''?'10px':'0px'"*ngIf="detailData !=undefined">
+
+                                    <span class="fw-lspacing">{{store.getVal('to')}}: <ion-chip>{{detailData.Email}} ({{detailData.FirstName}}<span *ngIf="detailData.LastName !=undefined">&nbsp;{{detailData.LastName}}</span>, {{detailData.ReferenceCode}})</ion-chip></span>
+                                </div>
+                                <div class="form-group">
+                                    <input spellcheck="false" autocomplete="off" type="text" [placeholder]="store.getVal('subject')+' *'" [disabled]="subjectReadOnly" [(ngModel)]="subject" maxlength="200" [class]="subject ==''&&subjectErr !=''?'form-control error':'form-control'"/>
+                                    <span *ngIf="(subject ==''&&subjectErr !='')" [class]="subject ==''&&subjectErr !=''?'errorMsg':''">{{subjectErr}}</span>
+                                </div>
+                                <div class="form-group">
+                                    <textarea [placeholder]="store.getVal('your_message_type_here')+' *'" style="min-height: 280px !important;" [(ngModel)]="message" maxlength="500" [ngModelOptions]="{standalone: true}" [class]="this.checkSPChar() && messageErr !=''?'form-control error':'form-control'"></textarea>
+                                    <ion-note style="margin-left: 5px; margin-top: 5px !important;" tabindex="-1">{{store.getVal('characters_left')}} {{500 - message.length}}.</ion-note>
+                                    <span *ngIf="(this.checkSPChar() && messageErr !='')" [class]="this.checkSPChar() && messageErr !=''?'errorMsg':''">{{messageErr}}</span>
+                                </div>
+                                <div  class="form-group">
+                                    <div class="form-group chkboxs_items" style="margin-bottom: 7px;">
+                                        <ion-item class="dark-bg" id="EnablerConfirmation">
+                                            <ion-label [class]="'labels'">{{store.getVal('include_contact_email')}}</ion-label>
+                                            <ion-checkbox slot="start" [(ngModel)]="Email1"></ion-checkbox>
+                                        </ion-item>
+                                    </div>
+                                    <email-input-chip [isInclude]="Email1" [emails]="emails" class="form-control" (change)="callEmails($event)"></email-input-chip>
+                                    <span *ngIf="Email1 && emails.length == 0" [class]="'errorMsg'">{{store.getVal('include_contact_email_error')}}</span>
+                                </div>
+                                <div class="button_box">
+                                    <bottom-btn styleD="center" [leftKey]="'send'" [rightKey]="'cancel'" [leftBtn]="store.getVal('send')" [rightBtn]="store.getVal('cancel')" (change)="callAction($event)"></bottom-btn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

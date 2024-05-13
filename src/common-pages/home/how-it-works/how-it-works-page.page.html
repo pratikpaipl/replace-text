@@ -1,0 +1,199 @@
+<web-page-header></web-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <seo-hidden-tag [head]="store.getVal('website_key_102')" [description]="store.getVal('website_key_103')"></seo-hidden-tag>
+    <div class="section section-white overflow-hidden" style="padding-top:0px;">
+        <section class="padding-bottom b2bmarket" id="three">
+            <div class="container-fluid methodology-areasection">
+                <div class="container container-lg">
+
+                    <div class="row fadeInUp">
+                        <div class="col-12">
+                            <div class="heading text-center" data-aos="fade-down">
+                                <h2>{{store.getVal('website_key_99')}}</h2>
+                            </div>
+                            <div style="position: relative;">
+                                <div style="padding: 30px;text-align: center;">
+                                    <h3 class="tield-title">{{store.getVal('website_key_48')}}</h3>
+                                    <div class="margin-top">
+                                        <a class="btn btn-lg btn-round btn-primary htwork" [href]="adminPath" target="_blank">{{store.getVal('website_key_12')}}</a>
+                                    </div>
+                                </div>
+                                <div class="slider-arrow left" *ngIf="store.windowWidth < 830" (click)="slidePrev('slidesEnablers')">
+                                    <i class="fa-solid fa-circle-chevron-left" style="font-size: 30px;"></i>
+                                  </div>
+                                  <div class="slider-arrow right" *ngIf="store.windowWidth < 830" (click)="slideNext('slidesEnablers')">
+                                    <i class="fa-solid fa-circle-chevron-right" style="font-size: 30px;"></i>
+                                  </div>
+                                <ion-slides #slidesEnablers pager="true" [options]='slideOpts' (ionSlideDidChange)="sliderChanges('slidesEnablers')">
+                                    <ion-slide *ngFor="let item of howItWorksEnablers;let i = index;"style="position: relative;">
+                                        <div class="methodology-box slide" >
+                                            <span class="pos-top-fx">{{(i+1)}}</span>
+                                            <div>
+                                                <h3>
+                                                    <div class="home-block-i-circle">
+                                                        <img [src]="item.img1" class="img-fluid"  height="40" width="40" />
+                                                    </div>
+                                                    <div *ngIf="item.img2 != undefined" class="home-block-i-circle">
+                                                        <img  [src]="item.img2" class="img-fluid"  height="40" width="40" />
+                                                    </div>
+                                                </h3>
+                                                <hr class="mt-4" />
+                                                <p class="b2b-desc" [innerHtml]="item.cotent"></p>
+                                            </div>
+                                        </div>
+                                    </ion-slide>
+                                </ion-slides>
+                            </div>
+
+                            <div style="position: relative;">
+                                <div style="padding: 30px;text-align: center;">
+                                    <h3 class="tield-title">{{store.getVal('website_key_131')}}</h3>
+                                    <div class="margin-top">
+                                        <a class="btn btn-lg btn-round btn-primary htwork clickEv" href="/explore/enablers" (click)="openPage('/explore/enablers')">{{store.getVal('website_key_13')}}</a>
+                                    </div>
+                                </div>
+                                <div style="padding: 5px;padding-left: 17px;padding-bottom: 17px;">
+                                    <i class="fa-solid fa-user-lock f-size-13" style="margin-right:10px;"></i><span>{{store.getVal('website_key_42')}}</span>
+                                    
+                                </div>
+                                <div class="slider-arrow left" *ngIf="store.windowWidth < 830" (click)="slidePrev('slidesInvestors')">
+                                    <i class="fa-solid fa-circle-chevron-left" style="font-size: 30px;"></i>
+                                  </div>
+                                  <div class="slider-arrow right" *ngIf="store.windowWidth < 830" (click)="slideNext('slidesInvestors')">
+                                    <i class="fa-solid fa-circle-chevron-right" style="font-size: 30px;"></i>
+                                  </div>
+                                <ion-slides #slidesInvestors pager="true" [options]='slideOpts' (ionSlideDidChange)="sliderChanges('slidesInvestors')">
+                                    <ion-slide *ngFor="let item of howItWorksInvestors;let i = index;"style="position: relative;">
+                                        <div class="methodology-box slide" >
+                                            <span class="pos-top-fx">{{(i+1)}}</span>
+                                            <div>
+                                                <h3>
+                                                    <div class="home-block-i-circle">
+                                                        <img [src]="item.img1" class="img-fluid"  height="40" width="40" />
+                                                    </div>
+                                                    <div *ngIf="item.img2 != undefined" class="home-block-i-circle">
+                                                        <img  [src]="item.img2" class="img-fluid"  height="40" width="40" />
+                                                    </div>
+                                                </h3>
+                                                <hr class="mt-4" />
+                                                <p class="b2b-desc" [innerHtml]="item.cotent"></p>
+                                            </div>
+                                        </div>
+                                    </ion-slide>
+                                </ion-slides>
+                            </div>
+
+
+                            <div style="position: relative;">
+                                <div style="padding: 30px;text-align: center;">
+                                    <h3 class="tield-title">{{store.getVal('website_key_132')}}</h3>
+                                    <div class="margin-top">
+                                        <a class="btn btn-lg btn-round btn-primary htwork clickEv" href="/explore/enablers" (click)="openPage('/explore/enablers')">{{store.getVal('website_key_13')}}</a>
+                                    </div>
+                                </div>
+                                <div style="padding: 5px;padding-left: 17px;padding-bottom: 17px;">
+                                    <i class="fa-solid fa-user-lock f-size-13" style="margin-right:10px;"></i><span>{{store.getVal('website_key_42')}}</span>
+                                   
+                                </div>
+                                <div class="slider-arrow left" *ngIf="store.windowWidth < 830" (click)="slidePrev('slidesInvestees')">
+                                    <i class="fa-solid fa-circle-chevron-left" style="font-size: 30px;"></i>
+                                  </div>
+                                  <div class="slider-arrow right" *ngIf="store.windowWidth < 830" (click)="slideNext('slidesInvestees')">
+                                    <i class="fa-solid fa-circle-chevron-right" style="font-size: 30px;"></i>
+                                  </div>
+                                <ion-slides #slidesInvestees pager="true" [options]='slideOpts' (ionSlideDidChange)="sliderChanges('slidesInvestees')">
+                                    <ion-slide *ngFor="let item of howItWorksInvestees;let i = index;"style="position: relative;">
+                                        <div class="methodology-box slide" >
+                                            <span class="pos-top-fx">{{(i+1)}}</span>
+                                            <div>
+                                                <h3>
+                                                    <div class="home-block-i-circle">
+                                                        <img [src]="item.img1" class="img-fluid"  height="40" width="40" />
+                                                    </div>
+                                                    <div *ngIf="item.img2 != undefined" class="home-block-i-circle">
+                                                        <img  [src]="item.img2" class="img-fluid"  height="40" width="40" />
+                                                    </div>
+                                                </h3>
+                                                <hr class="mt-4" />
+                                                <p class="b2b-desc" [innerHtml]="item.cotent"></p>
+                                            </div>
+                                        </div>
+                                    </ion-slide>
+                                </ion-slides>
+                            </div>
+
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </section>
+        <page-contact [msg]="store.getVal('website_key_155')" btn="website_key_156"></page-contact>
+    </div>
+    <web-page-footer></web-page-footer>
+</ion-content>
+<ng-template #FunderMarketplace>
+    <div class="FunderMarketplace">
+        <ion-label>{{store.getVal('website_key_43')}}</ion-label>
+        <ion-grid>
+            <ion-row>
+                <ion-col class="FunderMarketplace">
+                    <i class="fa-solid fa-user-lock f-size-13 pos-fix"></i><span>{{store.getVal('website_key_44')}}</span></ion-col>
+                <ion-col class="FunderMarketplace"><i class="fa-solid fa-user-lock f-size-13 pos-fix"></i><span>{{store.getVal('website_key_45')}}</span></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col class="FunderMarketplace"><i class="fa-solid fa-user-lock f-size-13 pos-fix"></i><span>{{store.getVal('website_key_46')}}</span></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col class="FunderMarketplace"><i class="fa-solid fa-user-lock f-size-13 pos-fix"></i><span>{{store.getVal('website_key_47')}}</span></ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ng-template>
+<ng-template #FunderBackoffice>
+    <div class="FunderBackoffice">
+        <ion-label>{{store.getVal('website_key_48')}}</ion-label>
+        <ion-grid class="config-row">
+            <ion-row>
+                <ion-col class="just-center">
+                   <img src="../../../assets/images/how-it-work/img1.png"/><span class="configration">{{store.getVal('website_key_49')}}</span>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <div><span class="pos-left-fx">1</span></div>
+                <ion-col class="just-center"><img src="../../../assets/images/how-it-work/img2.png"/><span class="configration">{{store.getVal('website_key_50')}}</span></ion-col>
+                <ion-col class="just-center"><img src="../../../assets/images/how-it-work/img3.png"/><span class="configration">{{store.getVal('website_key_51')}}</span></ion-col>
+            </ion-row>
+            <ion-row>
+                <div><span class="pos-left-fx">2</span></div>
+                <ion-col class="just-center"><img class="w-50" src="../../../assets/images/how-it-work/img4.png"/><span class="configration red">{{store.getVal('website_key_52')}}</span></ion-col>
+            </ion-row>
+            <ion-row>
+                <div><span class="pos-left-fx">3</span></div>
+                <ion-col class="just-center"><img class="w-40" src="../../../assets/images/how-it-work/img5.png"/><span class="configration red">{{store.getVal('website_key_53')}}</span></ion-col>
+            </ion-row>
+            <ion-row>
+                <div><span class="pos-left-fx">4</span></div>
+                <ion-col class="just-center"><img class="w-40" src="../../../assets/images/how-it-work/img6.png"/><span class="configration">{{store.getVal('website_key_54')}}</span></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col class="just-center"><img class="w-40" src="../../../assets/images/how-it-work/img7.png"/><span class="configration red">{{store.getVal('website_key_55')}}</span></ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ng-template>
+<ng-template #FunderExtensions>
+    <div class="FunderExtensions">
+        <ion-label>{{store.getVal('website_key_56')}}</ion-label>
+        <ion-grid>
+            <ion-row>
+                <ion-col class="FunderExtensions"><span>{{store.getVal('website_key_57')}}</span></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col class="FunderExtensions"><span>{{store.getVal('website_key_58')}}</span></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col class="FunderExtensions"><span>{{store.getVal('website_key_59')}}</span></ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ng-template>

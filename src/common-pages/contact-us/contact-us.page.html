@@ -1,0 +1,114 @@
+<web-page-header *ngIf="store.appType =='front' && !store.isLogin"></web-page-header>
+<app-page-header *ngIf="store.appType =='admin' || store.isLogin" [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerActionAdmin($event)"></app-page-header>
+<ion-content #content [scrollEvents]="true">
+    <div class="header-img">
+        <section>
+            <div class="container-fluid extra-backgrnd">
+                <div class="container container-lg">
+                    <div id="banner-owl-carousel" class="slider owl-carousel owl-theme my-0">
+                        <div class="item">
+                            <div class="row justify-content-between" style="justify-content: center;align-items: center;">
+                                <div class="col-lg-12 col-md-12 col-sm-12 my-auto">
+                                    <div class="extra" style="text-align: center;">
+                                        <div class="slider-text"  style="margin-bottom: 3rem!important;">
+                                            <h1 class="slider-title fadeInUp">{{store.getVal('contact')}}</h1>                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="page_wapper" style="margin-top: 25px;">
+        <ion-grid class="container">
+            <!-- <bread-crump *ngIf="breadCrumpData == undefined && title != undefined" [showHome]="1" [from]="'contact'" [pageType]="'dashboard'" [pageLbl]="title"></bread-crump> -->
+            <ion-row class="forms_row" style="justify-content: center;">
+                <ion-col class="contact-col">
+                    <error-message *ngIf="loadMsg != undefined && loadMsg !=''" [isNameUn]="false" styleD="left" [dataAction]="[]" [message]="loadMsg"></error-message>
+                    <div class="contact_forms">
+                        <div class="contact-form">
+                            <div class="section">
+                                <form>
+                                    <div *ngIf="ContactData !=undefined && PermissionKey == 'contact_enabler'" class="form-group extra-view">
+                                        <ion-label style="font-size: 17px;">{{store.getVal('to')}}&nbsp;</ion-label>
+                                        <a [href]="enablerPath()" class="clickEv pointer" style="text-decoration: none;display: flex;"  (click)="openEnabler()">
+                                            <div style="display: flex;align-items: center;">
+                                                <img [alt]="ContactData.EnablerName" [class]="'ion-img no-pointer'" src="{{ ContactData.EnablerLogo != null ? ContactData.EnablerLogo!=''?ContactData.EnablerLogo:'assets/images/no-image-icon-5.jpg' : 'assets/images/no-image-icon-5.jpg' }}" onerror="this.src='assets/images/no-image-icon-5.jpg'"/>
+                                            </div>
+                                            <ion-label class="title-ds">{{ContactData.EnablerName}}</ion-label>
+                                        </a>
+                                    </div>
+                                    <div *ngIf="ContactData !=undefined" class="form-group extra-view">
+                                        <ion-label *ngIf="ContactData.EnablerName != undefined && ContactData.EnablerName != ''" class="title-ds">
+                                            <span class="contents no-pointer public-view f-lbl">{{store.getVal('enabler')}}</span><span class="contents pointer public-view" (click)="store.openFrontPath('enablers',ContactData,true)">
+                                                <a [href]="store.openFPath('enablers',ContactData,true)" [class]="'clickEv pointer'">{{ContactData.EnablerName}}</a>
+                                            </span>
+                                        </ion-label>
+                                        <ion-label *ngIf="ContactData.FP_ReferenceCode != undefined && ContactData.FP_ReferenceCode !=''" class="title-ds">
+                                            <span class="contents no-pointer public-view f-lbl">{{store.getVal('investor')}}</span><span class="contents pointer public-view" (click)="store.openFrontPath('funding-profile',ContactData,true)">
+                                                <a [href]="store.openFPath('funding-profile',ContactData,true)" [class]="'clickEv pointer'">{{ContactData.FP_ReferenceCode}}</a>
+                                            </span>
+                                        </ion-label>
+                                        <ion-label *ngIf="ContactData.FN_ReferenceCode != undefined && ContactData.FN_ReferenceCode !=''" class="title-ds">
+                                            <span class="contents no-pointer public-view f-lbl">{{store.getVal('investee')}}</span><span class="contents pointer public-view" (click)="store.openFrontPath('fundraise-need',ContactData,true)">
+                                                <a [href]="store.openFPath('fundraise-need',ContactData,true)" [class]="'clickEv pointer'">{{ContactData.FN_ReferenceCode}}</a>
+                                            </span>
+                                        </ion-label>
+                                    </div>
+                                    <ion-grid>
+                                        <ion-row>
+                                            <ion-col size="12">
+                                                <div class="form-group">
+                                                    <ion-item>
+                                                        <ion-label position="floating" [class]="'label'">{{store.getVal('name')+' *'}}</ion-label>
+                                                        <ion-input autocomplete="off" [disabled]="store.isLogin" type="text" spellcheck="false" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"></ion-input>
+                                                    </ion-item>
+                                                    <span [class]="name ==''&&nameErr !=''?'errorMsg':''">{{nameErr}}</span>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col size="12">
+                                                <div class="form-group">
+                                                    <ion-item>
+                                                        <ion-label position="floating" [class]="'label'">{{store.getVal('email')+' *'}}</ion-label>
+                                                        <ion-input autocomplete="off" [disabled]="store.isLogin" type="email" maxlength="300" spellcheck="false" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"></ion-input>
+                                                    </ion-item>
+                                                    <span *ngIf="emailErr !=''" [class]="'errorMsg'">{{emailErr}}</span>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col size="12" >
+                                                <div class="form-group">
+                                                    <ion-item>
+                                                        <ion-label position="floating" [class]="'label'">{{store.getVal('subject')+' *'}}</ion-label>
+                                                        <ion-input autocomplete="off" [disabled]="subjectReadOnly" type="text" spellcheck="false" [(ngModel)]="subject" [ngModelOptions]="{standalone: true}"></ion-input>
+                                                    </ion-item>
+                                                    <span *ngIf="subject =='' && subjectErr !=''" [class]="'errorMsg'">{{subjectErr}}</span>
+                                                </div>
+                                            </ion-col>
+                                            <ion-col size="12">
+                                                <div class="form-group">
+                                                    <ion-item>
+                                                        <ion-label position="floating" [class]="'label'">{{store.getVal('your_message_type_here')+' *'}}</ion-label>
+                                                        <ion-textarea autoGrow="true" [(ngModel)]="message" [ngModelOptions]="{standalone: true}"  maxlength="500"></ion-textarea>
+                                                        <ion-note style="display: block;text-align: end;padding: 5px 0px;" tabindex="-1">{{ 500 - message.length }} {{store.getVal('characters_left')}}</ion-note>
+                                                    </ion-item>
+                                                    <span *ngIf="message ==''||messageErr !=''" [class]="'errorMsg'">{{messageErr}}</span>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                    <div oncopy="return false" oncut="return false" onpaste="return false" class="button_box">
+                                        <ion-button class="btn-red" (click)="sendMail()">{{store.getVal('send')}}</ion-button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+    </ion-grid>
+    </div>
+</ion-content>
+<app-page-footer *ngIf="store.appType =='admin' || store.isLogin" [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

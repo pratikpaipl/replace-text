@@ -1,0 +1,25 @@
+<ion-col class="lbl_count_img" style="padding: 0px; margin:0px">
+    <div [class]="allDisplay?'vagen_icons_block visible open':'vagen_icons_block'">
+        <div class="vagen_icons_list">
+            <div class="vagen_imgboxs" *ngIf="SdgList !=undefined && SdgList.length > 0">
+                <div class="image_main" *ngFor="let entry of SdgList">
+                    <span *ngIf="dataType != undefined && pageFrom != 'Top'" (click)="callFilter(entry)">
+                        <img [alt]="entry.Title" [class]="Click?'certimg pointer':'certimg no-pointer'" [src]="entry.SdgLogo" onerror="this.src='assets/images/no-image-icon-5.jpg'" />
+                        <ion-label>{{entry.Title}}</ion-label>
+                    </span>
+                    <span *ngIf="dataType != undefined && pageFrom == 'Top'" [href]="entry.SdgUrl" target="_blank">
+                        <img [alt]="entry.Title"[class]="Click?'certimg pointer':'certimg no-pointer'" [src]="entry.SdgLogo" onerror="this.src='assets/images/no-image-icon-5.jpg'" />
+                        <ion-label>{{entry.Title}}</ion-label>
+                    </span>
+                    <span *ngIf="dataType == undefined && pageFrom != 'list'" [href]="entry.SdgUrl" target="_blank">
+                        <img [alt]="entry.Title" [class]="Click?'certimg pointer':'certimg no-pointer'" [src]="entry.SdgLogo" onerror="this.src='assets/images/no-image-icon-5.jpg'" />
+                        <ion-label>{{entry.Title}}</ion-label>
+                    </span>
+                </div>
+                <ion-label *ngIf="!allDisplay" [class]="Click?'pointer less_info_img':'less_info_img no-pointer'">{{store.getVal('less')}}</ion-label>
+            </div>
+            <!-- {{SdgList.length}} {{minCount}} -->
+            <ion-label *ngIf="!allDisplay" class="more_info_img">+{{(SdgList.length-minCount)}}</ion-label>
+        </div>
+    </div>
+</ion-col>

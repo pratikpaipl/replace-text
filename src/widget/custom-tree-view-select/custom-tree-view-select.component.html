@@ -1,0 +1,5 @@
+
+  <ion-label *ngIf="showTitle" [class]="isError?'labels errorTitle':'labels'" [style.opacity]="disabled?'0.5':'1.0'"><i *ngIf="icon != undefined" style="margin-right: 5px;" [class]="icon"></i>{{store.getVal(selectTitle)}}<spna *ngIf="isLimit">{{store.getVal('upto_three')}}</spna>
+      <span class="tree-cnt">({{selectedImpactTheme.length}} / {{total}})</span><span *ngIf="isValidate">&nbsp;*</span>
+  </ion-label>
+  <tree-view-search *ngIf="isTreePrepare" [disabled]="disabled" [from]="from" [page]="type" [TreeData]="nList" [isCountry]="isCountry" [ComponentKey]="ComponentKey" [preSelected]="selectedImpactTheme" [hasCheckbox]="false" [notFoundText]="store.getVal('no_items_found')" (change)="changeData($event)"></tree-view-search>

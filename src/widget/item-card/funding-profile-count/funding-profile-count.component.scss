@@ -1,0 +1,203 @@
+ion-col {
+    padding: 0;
+}
+
+.users_icons a i, .users_icons i {
+    padding-top: 5px;
+    font-size: 28px;
+}
+.fa-infinity {
+    font-size: 24px !important;
+}
+.users_icons a {
+    color: var(--ion-color-black);
+}
+
+.count_list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+// .filter_count_list {
+//     display: flex;
+//     align-items: center !important;
+//     // margin: 0px -8px !important;
+//     flex-wrap: wrap;
+// }
+
+.filter_count_list ion-label {
+	position: relative;
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	padding: 0 30px 0px 0px;
+	white-space: nowrap;
+	margin-bottom: 0px !important;
+}
+
+.filter_count_list ion-label .contents {
+    display: block;
+    font-size: 15px;
+}
+
+.filter_count_list ion-label .icons {
+    position: relative;
+    display: inline-block;
+    height: 0px;
+    width: 0px;
+    border-radius: 50%;
+    color: var(--ion-color-white);
+    line-height: 30px;
+    text-align: center;
+    font-size: 16px;
+    background-color: var(--ion-color-logo-red);
+    margin-right: 0px;
+    visibility: hidden;
+}
+
+.filter_count_list ion-label .icon {
+    position: relative;
+    height: 30px;
+    width: 30px;
+    display: block;
+    font-size: 13px;
+    color: var(--ion-color-black);
+    font-weight: 400;
+    border: 1px solid var(--ion-color-black);
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+    flex: 0 0 30px;
+}
+
+.vagen_icons_list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+}
+
+.lbl-img {
+    margin: 0px !important;
+    display: flex !important;
+    max-width: 80px;
+    overflow: hidden;
+}
+
+
+.counts_row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    position: relative;
+    flex-wrap: nowrap !important;
+    width: 100%;
+}
+
+.counts_row ion-col.fiter_names {
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+}
+
+.counts_row ion-col.lbl_count_img {
+    display: flex;
+    max-width: 106px;
+    justify-content: flex-end;
+}
+
+.vagen_icons_list ion-label {
+    font-size: 15px;
+    line-height: 15px;
+    margin-left: 4px;
+}
+.btn-red {
+    border-radius: 8px !important;
+    --padding-start: 0px;
+    --padding-end: 0px;
+    --padding-top: 0px;
+    --padding-bottom: 0px;
+    height: unset;
+    margin: 3px !important;
+}
+
+ion-label.web-d-none.labels {
+    display: none !important;
+}
+
+.btn-padding {
+    padding: 3px
+}
+
+i#web-ui {
+    color: var(--ion-color-light-trolley-gray);
+    letter-spacing: 0.3px;
+    text-decoration: none;
+}
+
+@media (max-width: 830px) {
+    
+    .filter_count_list ion-label {
+        padding: 0 20px 8px 0px;
+    }
+    .counts_row ion-col.lbl_count_img {
+        padding: 8px 8px 8px 0px;
+    }
+
+    // .filter_count_list {
+    //     margin: 0px !important;
+    // }
+    
+}
+
+@media (max-width: 640px) {
+    .counts_row {
+        flex-wrap: wrap !important;
+    }
+    .counts_row ion-col.fiter_names {
+        padding: 0px;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    .counts_row ion-col.fiter_names ~ ion-col {
+        text-align: end;
+        padding: 8px 8px 0 8px !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    .counts_row ion-col.lbl_count_img {
+        padding: 8px 8px 0 0px;
+    }
+    .counts_row {
+        align-items: flex-start !important;
+    }
+    // .count_list {
+    //     justify-content: space-between;
+    // }
+    .right_boxs_btns .btn-green {
+        margin: 8px 5px 0px 0px;
+    }
+}
+
+@media (max-width: 480px) 
+{
+    .lbl-img {
+        max-width: 56px;
+        overflow: hidden;
+    }
+    .vagen_icons_list ion-label {
+        font-size: 14px !important;
+        line-height: 15px;
+        margin-left: 2px;
+        margin-top: 0;
+        padding-left: 3px !important;
+    }
+    .counts_row ion-col.lbl_count_img {
+        max-width: 87px;
+        padding-top: 5px !important;
+    }
+}

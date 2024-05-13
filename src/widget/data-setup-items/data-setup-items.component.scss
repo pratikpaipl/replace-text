@@ -1,0 +1,73 @@
+.container {
+    max-width: 900px;
+}
+
+ion-card-title {
+    margin-right: auto;
+}
+
+ion-radio-group ion-item ion-label {
+    white-space: normal;
+}
+.action-add{
+    max-width: 80.8% !important;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    margin-bottom: 5px;
+}
+.forms_block {
+    padding: 20px;
+}
+
+.switchs_block ion-label {
+    min-width: 380px;
+}
+
+.errorTitle {
+    width: 100%;
+    padding: 5px;
+    display: block;
+}
+
+
+.switchs_block {
+    margin: 5px;
+    justify-content: space-between;
+}
+
+.input_group {
+    max-width: 80% !important;
+}
+
+.area_section {
+    padding-left: 50px;
+}
+
+.item-child {
+    border-bottom: 1px solid var(--ion-color-light-gray);
+    margin-bottom: 10px;
+}
+
+.item-child:last-child {
+    border-bottom: none;
+    margin-bottom: 0px;
+}
+.datalist_forms_card {
+	padding: 25px 0;
+}
+.datalist_forms_card .forms_block.radius {
+	padding-bottom: 8px !important;
+}
+@media (max-width: 768px) {
+    .switchs_block ion-label {
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 640px)
+{
+    .datalist_forms_card .main_cols.auto-cols.admin_right_panel {
+        padding: 0px !important;
+    }
+}

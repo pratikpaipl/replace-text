@@ -1,0 +1,69 @@
+<app-page-header [contentID]="content" page="home" [cnt]="store.cnt" isHome="false" (change)="store.headerAction($event)"></app-page-header>
+<ion-content #content id="page" [scrollEvents]="true">
+    <div class="admin-page_wapper">
+        <div id="all_ui">
+            <ion-grid class="p-0">
+                <ion-row id="slide_bars_panel" class="ion-justify-content-end ">
+                    <ion-col class="admin_left_panel">
+                        <div class="left_navigation">
+                            <app-tabs [segments]="segments" styleD="block !important" color="var(--ion-color-white)" backColor="var(--ion-color-dark-green)" indHeight="0px" [selectedSegment]="pageType" from="profile" (change)="onClickSegment($event)"></app-tabs>
+                        </div>
+                    </ion-col>
+                    <ion-col class="admin_right_panel">
+                        <profile *ngIf="pageType == 'my-profile'"></profile>
+                        <!-- <change-email *ngIf="pageType == 'change-email'"></change-email> -->
+                        <change-password *ngIf="pageType == 'change-password'"></change-password>
+
+                        <div *ngIf="store.appType != 'admin'">
+                            <ng-container *ngIf="pageType == 'enablers'">
+                                <!-- [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined" -->
+                                <user-enablers [pageType]="pageType" openFront="1" [updateTime]="updateTime"></user-enablers>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="pageType == 'full-report'">
+                                <my-full-report [pageType]="pageType" openFront="1" [updateTime]="updateTime"></my-full-report>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="pageType == 'activity-log'">
+                                <activity-log></activity-log>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="pageType == 'my-funding-profiles'">
+                                <my-funding-profile [updateTime]="updateTime"></my-funding-profile>
+                            </ng-container>
+                            <!-- [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined" -->
+                            <ng-container *ngIf="pageType == 'funding-profile-submissions'">
+                                <profile-submissions [sort]="'recent'" [updateTime]="updateTime" (change)="click($event)"></profile-submissions>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="pageType == 'my-fundraise-needs'">
+                                <my-fundraise-need [updateTime]="updateTime"></my-fundraise-need>
+                            </ng-container>
+                            <!-- [selItem]="(selItem!=undefined && selItem.action == pageType)?selItem:undefined" -->
+                            <ng-container *ngIf="pageType == 'fundraise-need-submissions'">
+                                <need-submissions [updateTime]="updateTime" (change)="click($event)"></need-submissions>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="pageType == 'investore-suggested-enabler'">
+                                <suggested-enabler apiEnd="funding_profile/my_suggested_enabler_list" titleType="investore_suggested_enabler" [extraTitle]="true" (change)="click($event)" [updateTime]="updateTime"></suggested-enabler>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="pageType == 'investee-suggested-enabler'">
+                                <suggested-enabler apiEnd="fundraise/my_suggested_enabler_list" titleType="investee_suggested_enabler" [extraTitle]="true" (change)="click($event)" [updateTime]="updateTime"></suggested-enabler>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="pageType == 'funding-profile-match-report'">
+                                <profile-matchmaking-report pageTitle="fundraise_need_match_report" [pageType]="pageType" pageFrom="profile" openFront="1" [updateTime]="updateTime" (change)="click($event)"></profile-matchmaking-report>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="pageType == 'fundraise-need-match-report'">
+                                <fundrais-matchmaking-report pageTitle="funding_profile_match_report" [pageType]="pageType" pageFrom="profile" openFront="1" [updateTime]="updateTime" (change)="click($event)"></fundrais-matchmaking-report>
+                            </ng-container>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<app-page-footer [contentID]="content"(change)="store.headerAction($event)"></app-page-footer>

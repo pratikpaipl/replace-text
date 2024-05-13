@@ -1,0 +1,19 @@
+<div [ngClass]="displayMode == 1?'top-div top_cards_boxs mods right-action-switch-1':'top-div top_cards_boxs right-action-switch-1'"  style="justify-content: space-between;">
+    <div style="display: flex;">
+        <btn-title [pageLbl]="this.store.getVal('user_enablers')" [pageType]="pageType" [permissions]="[]"></btn-title>
+        <!-- <div class="downloads navigation_compo" *ngIf="allTotal != undefined && allTotal > 0">
+            <i class="fas fa-download pointer" (click)="download($event)"></i>
+        </div> -->
+    </div>
+</div>
+<ion-grid class="container1" style="padding-top: 0px !important;" [ngClass]="isShow?'mb-scroll':''" #content>
+    <refresher (change)="callPullRefresh($event)"></refresher>
+    <ion-row class="counts_filter_block">        
+        <ion-col class="tab_contents details-page" style="padding-top: 0px !important;">
+            <div class="items_counts">
+                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+            </div>
+            <enabler-items apiEnd="enabler/user_enabler_list" [pageType]="pageType" from="user" pageFrom="list" [type]="pageType" apiAction="enabler" [updateTime]="updateTime" IsProfile="1" IsSubmittedEnabler="1" (change)="updateCount($event)"> </enabler-items>
+        </ion-col>
+    </ion-row>
+</ion-grid>

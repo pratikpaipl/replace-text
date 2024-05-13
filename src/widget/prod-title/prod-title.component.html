@@ -1,0 +1,51 @@
+<div class="prod_title_blocks">
+    <!-- {{pageType}} - {{subType}} - {{pageFrom}} -->
+    <div class="prod_title_box" [style.margin-left]="prod.IsFeatured !=1?'initial':''" [style.justify-content]="(pageType =='users' || pageType =='full-report' || pageType =='funding-profile-match-report' || pageType == 'fundraise-need-match-report' || pageType =='funding-profile-match-report-admin' || pageType == 'fundraise-need-match-report-admin' || pageType == 'funding-profile' || pageType == 'fundraise-need'  || pageType == 'fundraise-needs' || pageType == 'fundraise' || pageType == 'activity-log')?'flex-end':'space-between'" *ngIf="(pageType !='impact-funding-resources' && pageType != 'enablers' && pageType != 'permissions' && extraMenu)">
+        <div class="title-line" *ngIf="(pageType != 'enablers' &&  prod.EnablerName != undefined && prod.EnablerName != '')">
+            <ion-label class="sell-lbl brand_content">
+               <div class="card_title new_title">
+                    <h2 [class]="prod.IsFeatured != undefined && (prod.IsFeatured == 1 || prod.IsFeatured == true)?'featured':''" >
+                        <a *ngIf="prod.EnablerClick == 1" [href]="enablerPath()" [class]="'card_content clickEv pointer'" (click)="openEnabler()" tabindex="-1">
+                            <img alt="" [src]="prod.EnablerLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                            <span class="card_content with-img bold">{{prod.EnablerName}}</span>
+                            <ng-container *ngTemplateOutlet="(prod.EnablerValid == 0 || prod.EnablerValid == '0' || (prod.EnablerValid == undefined && pageType =='enablers' && (prod.IsOperative == '0' || prod.IsOperative == 0)))?InOperative:undefined; context: {}"></ng-container>
+                        </a>
+                        <a *ngIf="prod.EnablerClick != 1"  [class]="'card_content clickEv no-pointer'" tabindex="-1">
+                            <img alt="" [src]="prod.EnablerLogo" onerror="src='assets/images/no-image-icon-5.jpg'"/>
+                            <span class="card_content with-img">{{prod.EnablerName}}</span>
+                            <ng-container *ngTemplateOutlet="(prod.EnablerValid == 0 || prod.EnablerValid == '0' || (prod.EnablerValid == undefined && pageType =='enablers' && (prod.IsOperative == '0' || prod.IsOperative == 0)))?InOperative:undefined; context: {}"></ng-container>
+                        </a>
+                    </h2>
+                </div>
+            </ion-label>            
+        </div>        
+        <act-menu *ngIf="hideAction !='1' && !isAddForm && (pageType =='full-report' || subType =='users' || subType =='full-report' || subType =='funding-profile-match-report' || subType == 'fundraise-need-match-report' || subType =='funding-profile-match-report-admin' || subType == 'fundraise-need-match-report-admin')" [isAddForm]="isAddForm" [from]="from" [pageFrom]="pageFrom" [pageType]="pageType" [Slug]="Slug" [subType]="subType" [prod]="prod" [itemTitle]="itemTitle" [title]="title" [Name]="Name" [EnablerSlug]="EnablerSlug" [FP_EnablerSlug]="FP_EnablerSlug" [FN_EnablerSlug]="FN_EnablerSlug" [apiAction]="apiAction" [ActionType]="ActionType" [showFeatured]="false" (change)="itemDetails(true)"></act-menu>
+    </div>
+    <!-- {{pageType}} -->
+    <div [class]="'prod_title_box'" [style.margin-left]="prod.IsFeatured !=1?'initial':''" [style.border]="pageType !='matchmaking'?'initial':'none'" [style.padding-top]="((pageType.includes('funding-profiles') || pageType.includes('funding-profile')) || (pageType.includes('fundraise-needs') || pageType.includes('fundraise-need')|| pageType.includes('fundraise'))) && (pageType != 'enablers' &&  prod.EnablerName != undefined && prod.EnablerName != '')?'12px !important':'0px !important'" *ngIf="title != undefined && !(pageType =='matched-fundraise-needs' || pageType =='matching-funding-profiles')">
+        <div class="title-line">
+                <ion-label class="prod-title onlytitle">
+                    <span [style.align-items]="extraTitle && prod.Logo != undefined && prod.Logo !=''?'center !important':'initial !important'">
+                        <h2 [class]="prod.IsFeatured != undefined && (prod.IsFeatured == 1 || prod.IsFeatured == true)?'featured':''">
+                            <img *ngIf="extraTitle && prod.Logo != undefined && prod.Logo !=''" [src]="prod.Logo" onerror="src='assets/images/no-image-icon-5.jpg'" style="width: 30px;margin-right: 10px;"/>
+
+                            <a *ngIf="this.pageType == 'permissions' || pageFrom == 'Top' || pageType =='users'" [class]="'clickEv no-pointer'"><i *ngIf="pageType !='impact-funding-resources' && pageType != 'enablers' && pageType != 'permissions' && !(extraTitle && prod.Logo != undefined && prod.Logo !='') " [class]="pageType =='users'?'fa-solid fa-user':(pageType.includes('fundraise-needs') || pageType.includes('fundraise-need')|| pageType.includes('fundraise'))?title.includes('MIR-')?'fa-brands fa-space-awesome':'fa-rocket fa-solid':title.includes('SIP-')?'fa-money-bill-transfer fa-solid':'fa-money-bills fa-solid'" style="padding-right: 5px;"  tabindex="-1"></i>{{(pageType.includes('funding-profiles') || pageType.includes('funding-profile'))?(!extraTitle || pageFrom =='details' ?prod.FundingProviderType:prod.ProfileName)+' ('+store.getVal('investor')+')':(pageType.includes('fundraise-needs') || pageType.includes('fundraise-need')|| pageType.includes('fundraise'))?(!extraTitle || pageFrom =='details'?prod.FundingType:prod.CompanyName)+' ('+store.getVal('investment_raise')+')':title }}<ng-container *ngTemplateOutlet="(prod.IsOperative == 0 || prod.IsOperative == '0')?InOperative:undefined; context: {}"></ng-container></a>
+                            
+                            <a *ngIf="this.pageType != 'permissions' && pageFrom != 'Top'&& title != undefined && pageType !='users'" [href]="routePath(false)" [class]="this.pageType == 'permissions'?'clickEv no-pointer':'clickEv pointer'" (click)="pageFrom != 'Top'?itemDetails(false):null" tabindex="-1"> <i *ngIf="pageType != 'enablers' && pageType != 'permissions' && pageType !='matchmaking' && pageType !='impact-funding-resources' && !(extraTitle && prod.Logo != undefined && prod.Logo !='')" [class]="pageType =='users'?'fa-solid fa-user':(pageType.includes('fundraise-needs') || pageType.includes('fundraise-need')|| pageType.includes('fundraise'))?title.includes('MIR-')?'fa-brands fa-space-awesome':'fa-rocket fa-solid':title.includes('SIP-')?'fa-money-bill-transfer fa-solid':pageType =='impact-funding-resources'?'':'fa-money-bills fa-solid'" style="padding-right: 5px;"></i>{{(pageType.includes('funding-profiles') || pageType.includes('funding-profile'))?(!extraTitle || pageFrom =='details'?prod.FundingProviderType:prod.ProfileName)+' ('+store.getVal('investor')+')':(pageType.includes('fundraise-needs') || pageType.includes('fundraise-need')|| pageType.includes('fundraise'))?(!extraTitle || pageFrom =='details'?prod.FundingType:prod.CompanyName)+' ('+store.getVal('investment_raise')+')':title }}<ng-container *ngTemplateOutlet="(prod.IsOperative == 0 || prod.IsOperative == '0')?InOperative:undefined; context: {}"></ng-container></a>
+                        </h2>
+                    </span>
+                </ion-label>
+                <span *ngIf="((!store.IsWebView && prod.IsFeatured != undefined && (prod.IsFeatured == 1 || prod.IsFeatured == true)) && !extraTitle)" class="featured menuicons">
+                    <i class="fas fa-award" [style.margin-right]="'5px'"></i>{{store.getVal('featured')}}
+                </span>
+        </div>
+        <act-menu *ngIf="hideAction !='1' && !isAddForm" [isAddForm]="isAddForm" [from]="from" [pageFrom]="pageFrom" [pageType]="pageType" [Slug]="Slug" [subType]="subType" [prod]="prod" [title]="title" [Name]="Name" [itemTitle]="itemTitle" [EnablerSlug]="EnablerSlug" [FP_EnablerSlug]="FP_EnablerSlug" [FN_EnablerSlug]="FN_EnablerSlug" [apiAction]="apiAction" [ActionType]="ActionType" [showFeatured]="true" (change)="itemDetails(true)"></act-menu>
+    </div>
+    
+    
+</div>
+<ng-template #InOperative>
+    <ion-lable class="errorTitle">
+        <ion-lable style="font-size: 17px;">&nbsp;(</ion-lable><i class="fa fa-ban"></i><ion-lable>{{store.getVal('inoperative')}}</ion-lable><ion-lable style="font-size: 17px;">)</ion-lable>
+    </ion-lable>
+</ng-template>

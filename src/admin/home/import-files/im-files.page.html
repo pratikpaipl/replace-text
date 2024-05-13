@@ -1,0 +1,41 @@
+
+<btn-title [pageLbl]="this.store.getVal('import_files')" [pageType]="'import_files'" [permissions]="permissions">
+</btn-title>
+<ion-grid class="container1" [ngClass]="''" #content>
+    <ion-row class="counts_filter_block">
+        <ion-col class="tab_contents details-page">
+            
+        </ion-col>
+    </ion-row>
+</ion-grid>
+<ion-grid id="files_list">
+    <ion-row class="files_list_row" *ngFor="let item of fileList">
+        <ion-col class="filter_content_cols">
+            <div class="display-block">
+                <ion-img style="width: 20px; display: inline-block; vertical-align: middle;" src="assets/images/excel-file.png" alt=""></ion-img>
+                <ion-label class="prod-title" style="padding: 10px; display: inline-block !important;vertical-align:middle;white-space: nowrap;width: calc(100% - 60px);overflow: hidden;text-overflow: ellipsis;">{{item.OriginalFileName}}</ion-label>
+                <ion-img style="width: 20px;float: right;cursor: pointer; margin-top: 12px;" src="assets/images/view.png" (click)="onViewFile(item)" alt=""></ion-img>
+            </div>
+        </ion-col>
+        <ion-col size="12">
+            <ion-row style="align-items: center;">
+                <ion-col>
+                    <ion-label class="title">{{store.getVal('total_records')}} {{item.TotalRecords}}</ion-label>
+                </ion-col>
+                <ion-col>
+                    <div class="list_headings text-center">
+                        <ion-img src="assets/images/success.png" alt=""></ion-img>
+                        <ion-label>{{item.ValidRecords}} {{store.getVal('correct')}}</ion-label>
+                    </div>
+                </ion-col>
+                <ion-col>
+                    <div class="list_headings text-right">
+                        <ion-img src="assets/images/error.png" alt=""></ion-img>
+                        <ion-label>{{item.InvalidRecords}} {{store.getVal('need_corrections')}}</ion-label>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-col>
+    </ion-row>
+    <infinite-scroll [items]="fileList" [itemTotal]="fTotal" (change)="doInfiniteList($event)"></infinite-scroll>
+</ion-grid>

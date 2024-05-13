@@ -1,0 +1,42 @@
+<div [ngClass]="displayMode == 1?'top-div top_cards_boxs':'top-div top_cards_boxs'">
+    <div class="titles_names" style="display: flex;">
+        <btn-title [pageLbl]="this.store.getVal(pageType)" [pageType]="pageType" [permissions]="permissions"></btn-title>
+        <div class="downloads navigation_compo" *ngIf="allTotal != undefined && allTotal > 0 && store.checkPermissionObj(permissions,'download_all',true)">
+            <i class="fas fa-download pointer" (click)="download($event)"></i>
+        </div>
+    </div>
+    <div class="tabs_nave_filters" *ngIf="store.appType =='admin' && allTotal > 0" style="display: flex;">
+        <div class="filters_btns">
+            <div class="views_btns btn-group pull-right">
+                <ion-radio-group class="drop-list" [(ngModel)]="displayMode">
+                    <ion-item>
+                        <ion-label><i class="fa-brands fa-microsoft"></i><span>{{store.getVal('card_view')}}</span></ion-label>
+                        <ion-radio [value]="1"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label><i class="fa-solid fa-list-ul"></i><span>{{store.getVal('list_view')}}</span></ion-label>
+                        <ion-radio [value]="2"></ion-radio>
+                    </ion-item>
+                </ion-radio-group>
+            </div>
+        </div>
+    </div>
+</div>
+<ion-grid id="fullrepo_data" class="container1" [ngClass]="isShow?'mb-scroll':''" #content>
+    <refresher (change)="callPullRefresh($event)"></refresher>
+    <ion-row class="counts_filter_block">
+        <ion-col size="12" class="datachips_block" *ngIf="selItem != undefined">
+            <div  class="datachips_boxs">
+                <data-chip [isUser]="true" [isInvestor]="true" [isInvestee]="true" [isEnabler]="true" [isFilterType]="true" [selItem]="selItem" type="full-report" [extraType]="selItem.extraType" (change)="removeFilter($event)"></data-chip>
+            </div>
+        </ion-col>
+        <ion-col class="tab_contents details-page" style="padding-right: 0px;">
+            <div [id]="displayMode == 1 && allTotal > 0?'web-ui':'app-ui'"  class="items_counts">
+                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+            </div>
+            <div style="padding-bottom: 25px;" *ngIf="updateTime != undefined">
+                <full-report-items apiEnd="report/full_report" [pageType]="pageType" [displayMode]="displayMode" [from]="'admin'" [itemActionType]="isProfile?'matched-fundraise-needs':'matching-funding-profiles'" [ExtraViewType]="displayMode == 1?isProfile?'investor_profile_view':'investment_raise_view':''" [EnablerFilterType]="EnablerFilterType" [EnablerSlug]="EnablerSlug" [FN_EnablerSlug]="FN_EnablerSlug" [FP_EnablerSlug]="FP_EnablerSlug" [UserSlug]="UserSlug" [updateTime]="updateTime" apiAction="funding_profile_fundraise" (change)="updateCount($event)"></full-report-items>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>

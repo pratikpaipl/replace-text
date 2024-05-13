@@ -1,0 +1,45 @@
+<btn-title [pageLbl]="this.store.getVal('enablers')" [from]="from" [pageType]="pageType" [permissions]="permissions"></btn-title>
+<ion-grid [ngClass]="isShow?'container1 mb-scroll':'container1'" #content>
+    <refresher (change)="callPullRefresh($event)"></refresher>
+    <!-- <div id="serch_component">
+        <ion-row class="serch_row">
+            <ion-col class="address_search-col" style="max-width: 650px;">
+                <div id="serch_component">
+                    <app-search-bar isShow="false" fromPage="admin" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)"></app-search-bar>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div> -->
+    <ion-row class="counts_filter_block">
+        <ion-col class="left_filter_panel" size="6">
+            <div class="counts_searchbox" style="display: flex;">
+                <div id="serch_component" style="width: 100%;">
+                    <app-search-bar isShow="false" fromPage="admin" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)"></app-search-bar>
+                </div>
+                <!-- <div class="count_boxs navigation_compo">
+                    <app-count pageType="companies" [allTotal]="allTotal"></app-count>
+                </div> -->
+            </div>
+        </ion-col>
+        <ion-col class="right_filter_panel">
+            <div class="filter_nav">
+                <div class="downloads navigation_compo" *ngIf="allTotal>0 && store.checkPermissionObj(permissions,'download_all')">
+                    <i class="fas fa-download pointer" (click)="download($event)"></i>
+                </div>
+                <filter-count [filteCnt]="filteCnt" [pageType]="'enablers'" [pageFrom]="'admin'" (change)="openFilter($event)"></filter-count>
+                <div class="drop_box" *ngIf="store.sortItemList.length>0 &&  store.sortItemList[0].lbl !=''">
+                    <drop-down from="sort" [itemList]="store.sortItemList" [preSlected]="sort" [slected]="sort" [isSort]="true" (change)="selectSort($event)" pageType="enabler"></drop-down>
+                </div>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row class="counts_filter_block main_rows mt-res">
+        <ion-col class="main_cols auto-cols">
+            <ion-label *ngIf="allTotal>0" class="note-padding filterCriteriaNote count-note">
+                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count> 
+                <span>{{store.getVal('result_filter_criteria_note')}}</span>
+            </ion-label>
+            <enabler-items *ngIf="pageType != ''" apiEnd="enabler/valid_explorer_list_admin" [pageType]="pageType" from="admin" pageFrom="list" [type]="pageType" apiAction="enabler" [updateTime]="updateTime" (change)="updateCount($event)"> </enabler-items>
+        </ion-col>
+    </ion-row>
+</ion-grid>

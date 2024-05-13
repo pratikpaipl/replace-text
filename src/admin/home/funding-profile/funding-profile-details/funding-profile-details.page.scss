@@ -1,0 +1,29 @@
+
+.page_wapper {
+    padding: 0px !important;
+    background: white;
+}
+
+.filter_nav.permission {
+    margin: 0px -10px !important;
+    display: flex;
+}
+
+#serch_component {
+    // padding: 20px;
+    padding-top: 0px;
+}
+
+@media (max-width: 768px) {
+   
+    .filter_nav.permission {
+        display: block;
+    }
+    .filter_nav .add_buttons:nth-child(2) {
+        display: inline-flex;
+        margin-top: 5px;
+    }
+    .content_info {
+        padding: 10px 15px 20px 10px;
+    }
+}

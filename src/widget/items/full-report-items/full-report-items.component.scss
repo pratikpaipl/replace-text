@@ -1,0 +1,61 @@
+.fixTableHead {
+    overflow-y: scroll;
+}
+
+.btn-red{
+    --padding-start:10px !important;
+    --padding-end:10px !important;
+    min-width:auto !important;
+    height: auto !important;
+    font-size: 14px !important;
+}
+ion-grid,
+ion-col,
+ion-row {
+    padding: 0px !important;
+}
+.item-flex {
+    display: flex;
+}
+.pitch-status {
+    background: transparent !important;
+    border:1px solid #18213c !important;
+    cursor: not-allowed;
+    color: #18213c !important;
+}
+
+
+.cardlist {
+    background-color: var(--ion-color-white);
+    border-radius: 10px;
+    display: flex;
+    box-shadow: 0 0 4px rgba(32, 33, 36, 0.28);
+    position: relative;
+    margin-bottom: 15px;
+    padding: 10px;
+    overflow: visible;
+}
+
+.sect-data {
+    display: grid;
+}
+
+@media (max-width: 830px) {
+    td#app-ui {
+        border-radius: 0px;
+    }
+    .fixTableHead table tr {
+        display: block;
+        box-shadow: 0 0 4px rgba(32, 33, 36, 0.28);
+        margin: 10px 2px;
+        padding: 0px;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mb-tbl table tr:nth-child(3) td:nth-child(2),
+    .mb-tbl table tr:nth-child(3) td:nth-child(3) {
+        word-break: break-all;
+    }
+}

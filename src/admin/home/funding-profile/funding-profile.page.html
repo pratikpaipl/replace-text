@@ -1,0 +1,36 @@
+<btn-title [pageLbl]="this.store.getVal('funding_profiles')" [from]="from" [pageType]="pageType" [permissions]="permissions"></btn-title>
+
+<ion-grid class="container1" [ngClass]="isShow?'mb-scroll':''" #content>
+    <refresher (change)="callPullRefresh($event)"></refresher>
+    <div id="serch_component" style="margin-bottom: 10px;">
+        <ion-row class="serch_row">
+            <ion-col class="address_search-col">
+                <div id="serch_component">
+                    <app-search-bar isShow="false" fromPage="admin" [pageType]="pageType" [keyword]="keyword" (change)="callEnablerFilter($event)"></app-search-bar>
+                </div>
+            </ion-col>
+            <ion-col class="right_filter_panel">
+                <div class="filter_nav">
+                    <div class="downloads navigation_compo" *ngIf="allTotal>0 && store.checkPermissionObj(permissions,'download_all')">
+                        <i class="fas fa-download pointer" (click)="download($event)"></i>
+                    </div>
+                    <filter-count [filteCnt]="filteCnt" [pageType]="'enablers'" [pageFrom]="'admin'" (change)="openFilter($event)"></filter-count>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
+    <ion-row class="counts_filter_block main_rows mt-res">
+        <ion-col size="12" class="datachips_block" *ngIf="selItem != undefined">
+            <div  class="datachips_boxs">
+                <data-chip  [isUser]="true" [selItem]="selItem" type="full-report" [extraType]="selItem.extraType" (change)="removeFilter($event)"></data-chip>
+            </div>
+        </ion-col>
+        <ion-col class="main_cols auto-cols">
+            <ion-label *ngIf="allTotal>0" class="note-padding filterCriteriaNote">{{store.getVal('result_filter_criteria_note')}}</ion-label>
+            <div id="app-ui"  class="items_counts">
+                <app-count [pageType]="pageType" [allTotal]="allTotal"></app-count>
+            </div>
+            <funding-profiles-submitted-items *ngIf="pageType != ''" [pageType]="pageType" from="admin" pageFrom="explore" apiEnd="funding_profile/fp_list_admin" [type]="pageType" [UserSlug]="UserSlug" apiAction="funding_profile" [updateTime]="updateTime" (change)="updateCount($event)"></funding-profiles-submitted-items>
+        </ion-col>
+    </ion-row>
+</ion-grid>

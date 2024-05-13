@@ -1,0 +1,6 @@
+<div class="m-part" *ngIf="content != undefined && content != ''">
+    <ion-card-title *ngIf="title != '' ">{{title}}</ion-card-title>
+    <div class="forms_block radius"  [style.padding-top]="title != ''?'20px':'auto'">
+        <ion-label class="content" [innerHtml]="store.nl2br(content)"></ion-label>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<ion-segment *ngIf="from =='auth'" [value]="selectedSegment" [class]="customClass" scrollable="true" (ionChange)="onClickSegment($event)" tabindex="-1">
+    <ion-segment-button [style.--indicator-height]="indHeight" *ngFor="let segment of segments" [value]="segment.key" (click)="onClick($event,segment)" tabindex="-1">
+        <ion-label [class]="segment.key"><span *ngIf="segment.icon != undefined&& segment.icon !=''" class="icons"><i [class]="segment.icon"></i></span> {{segment.label}}</ion-label>
+    </ion-segment-button>
+</ion-segment>
+
+
+<div id="tab_navs" *ngIf="from !='admin' && from !='auth' && from != 'profile'" [class]="(from !='admin' && segments.length > 6) ? 'scrollable':''">
+    
+    <div id="app-ui" >
+        <div id="prev_scroll" class="navs_btn pointer" *ngIf="segments.length > 2 && store.windowWidth<=store.aboveScroll && (from != 'home' && from !='f-details')">
+            <i class="fa fa-chevron-left"></i>
+        </div>
+    </div>
+    <ion-segment [value]="selectedSegment" [class]="customClass" scrollable="true" (ionChange)="onClickSegment($event)" tabindex="-1">
+        <!-- [style.max-width]="showTwoLine?'150px':'auto'" -->
+        <ion-segment-button [style.--indicator-height]="indHeight"  *ngFor="let segment of segments" [value]="segment.key" (click)="onClick($event,segment)" tabindex="-1">
+            <ion-label [class]="showTwoLine?'show-two-line '+segment.key:segment.key">
+                <span *ngIf="segment.icon != undefined && segment.icon !=''" class="icons"><i [class]="segment.icon"></i></span>
+                <span>{{segment.label}}</span>
+            </ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <div id="app-ui">
+        <div id="next_scroll" class="navs_btn pointer" *ngIf="segments.length > 2&& store.windowWidth<store.aboveScroll&& (from != 'home' && from !='f-details')">
+        <i class="fa fa-chevron-right"></i>
+    </div>
+</div>
+</div>
+
+
+<ion-segment *ngIf="from =='profile' || from =='admin'" [class]="'left-menu_blocks '" [value]="selectedSegment" style="display: block !important;" scrollable="true"  (ionChange)="onClickSegment($event)" tabindex="-1">
+    <div *ngFor="let segment of segments">
+        <ion-label class="title" *ngIf="segment.title != undefined ">
+            <span class="small">{{segment.title}}</span>
+            <span class="full">{{segment.mTitle}}</span>
+        </ion-label>
+        <ion-segment-button [title]="segment.label" [class]="'left-menu_blocks admin '+((segment.key == 'subscripions' && (selectedSegment == 'plan_details' || selectedSegment=='plans_and_pricing') || segment.key == 'matchmaking' && (selectedSegment == 'activity-log' || selectedSegment=='data-format-rules') )?'segment-button-checked':'')" [style.justify-content]="segment.key =='back-office'?'center':'left'" [style.--indicator-height]="indHeight" [value]="segment.key" (click)="onClick($event,segment)" tabindex="-1" [disabled]="segment.key =='back-office'"  >
+            <ion-label [class]="segment.key" ><!--(click)="segment.key=='switch-to-marcket-place'?onClick($event,segment):undefined"-->
+                <span *ngIf="segment.icon != undefined&& segment.icon !=''" class="icons"><i [class]="segment.icon"></i></span>
+                <span class="menu_content">{{segment.label}}</span>
+            </ion-label>
+        </ion-segment-button>
+    </div>
+</ion-segment>

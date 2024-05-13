@@ -1,0 +1,604 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "defaultProject": "front",
+    "newProjectRoot": "projects",
+    "projects": {
+        "front": {
+            "root": "front",
+            "sourceRoot": "src",
+            "projectType": "application",
+            "prefix": "front",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "front/html",
+                        "index": "src/front/index.html",
+                        "main": "src/front/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.app.json",
+                        "buildOptimizer": true,
+                        "optimization": true,
+                        "sourceMap": false,
+                        "namedChunks": false,
+                        "aot": true,
+                        "extractLicenses": true,
+                        "vendorChunk": false,
+                        "watch": false,
+                        "progress": true,
+                        "assets": [
+                            {"glob": "**/*","input": "src/assets","output": "assets"},
+                            { "glob": "**/*.svg", "input": "node_modules/ionicons/dist/ionicons/svg", "output": "./svg"}
+                        ],
+                        "styles": [
+                            "src/theme/variables.scss",
+                            "src/global.scss",
+                            "src/container.scss",
+                            "src/web-header-sections.scss",
+                            "src/global-media.scss",
+                            "node_modules/@ng-select/ng-select/themes/default.theme.css",
+                            "node_modules/@ng-select/ng-select/themes/material.theme.css",
+                            "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
+                            "scripts": [
+                                "src/assets/js/jquery.min.js",
+                                "src/assets/js/jquery-3.1.1.js",
+                                "src/assets/js/custom.js",
+                                "src/assets/js/dev-ganyalitics.js"
+                            ],
+                            "outputHashing": "all",
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2MB",
+                                "maximumError": "11MB"
+                            }]
+                        },
+                        "dev": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.dev.ts"
+                            }],
+                            "scripts": [
+                                "src/assets/js/jquery.min.js",
+                                "src/assets/js/jquery-3.1.1.js",
+                                "src/assets/js/custom.js",
+                                "src/assets/js/dev-ganyalitics.js"
+                            ],
+
+                            "outputHashing": "all",
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2MB",
+                                "maximumError": "11MB"
+                            }]
+                        },
+                        "local": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.local.ts"
+                            }],
+                            "scripts": [
+                                "src/assets/js/jquery.min.js",
+                                "src/assets/js/jquery-3.1.1.js",
+                                "src/assets/js/custom.js",
+                                "src/assets/js/dev-ganyalitics.js"
+                            ],
+                            "outputHashing": "all",
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2MB",
+                                "maximumError": "11MB"
+                            }]
+                        },
+                         "beta": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.beta.ts"
+                            }],
+                            "scripts": [
+                                "src/assets/js/jquery.min.js",
+                                "src/assets/js/jquery-3.1.1.js",
+                                "src/assets/js/custom.js",
+                                "src/assets/js/beta-ganyalitics.js"
+                            ],
+                            "index": "src/front/beta-html/index.html",
+
+                            "outputHashing": "all",
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2MB",
+                                "maximumError": "11MB"
+                            }]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "front:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "front:build:production"
+                        },
+                        "dev": {
+                            "browserTarget": "front:build:dev"
+                        },
+                        "local": {
+                            "browserTarget": "front:build:local"
+                        },
+                        "beta": {
+                            "browserTarget": "front:build:beta"
+                        }
+                    }
+                },
+                "server": {
+                    "builder": "@angular-devkit/build-angular:server",
+                    "options": {
+                      "outputPath": "front/server",
+                      "main": "src/front/server.ts",
+                      "tsConfig": "src/front/tsconfig.server.json",
+                      "externalDependencies": ["canvas"]
+                    },
+                    "configurations": {
+                      "production": {
+                        "outputHashing": "all",
+                        "fileReplacements": [
+                          {
+                            "replace": "src/environments/environment.ts",
+                            "with": "src/environments/environment.prod.ts"
+                          }
+                        ]
+                      },
+                      "dev": {
+                        "outputHashing": "all",
+                        "fileReplacements": [
+                          {
+                            "replace": "src/environments/environment.ts",
+                            "with": "src/environments/environment.dev.ts"
+                          }
+                        ]
+                      },
+                      "local": {
+                        "outputHashing": "all",
+                        "fileReplacements": [
+                          {
+                            "replace": "src/environments/environment.ts",
+                            "with": "src/environments/environment.local.ts"
+                          }
+                        ]
+                      },
+                       "beta": {
+                        "outputHashing": "all",
+                        "fileReplacements": [
+                          {
+                            "replace": "src/environments/environment.ts",
+                            "with": "src/environments/environment.beta.ts"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                "serve-ssr": {
+                    "builder": "@nguniversal/builders:ssr-dev-server",
+                    "options": {
+                      "browserTarget": "front:build",
+                      "serverTarget": "front:server"
+                    },
+                    "configurations": {
+                      "production": {
+                        "browserTarget": "front:build:production",
+                        "serverTarget": "front:server:production"
+                      },
+                       "dev": {
+                        "browserTarget": "front:build:dev",
+                        "serverTarget": "front:server:dev",
+                        "fileReplacements": [
+                            {
+                              "replace": "src/environments/environment.ts",
+                              "with": "src/environments/environment.dev.ts"
+                            }
+                          ]
+                      }, 
+                       "local": {
+                        "browserTarget": "front:build:local",
+                        "serverTarget": "front:server:local",
+                        "fileReplacements": [
+                            {
+                              "replace": "src/environments/environment.ts",
+                              "with": "src/environments/environment.local.ts"
+                            }
+                          ]
+                      }, 
+                      "beta": {
+                        "browserTarget": "front:build:beta",
+                        "serverTarget": "front:server:beta",
+                        "fileReplacements": [
+                            {
+                              "replace": "src/environments/environment.ts",
+                              "with": "src/environments/environment.beta.ts"
+                            }
+                          ]
+                      }
+                    }
+                  },
+          
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "front:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.spec.json",
+                        "karmaConfig": "karma.conf.js",
+                        "styles": [],
+                        "scripts": [],
+                        "assets": [{
+                                "glob": "funder-favicon-F.ico",
+                                "input": "src/",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "src/assets",
+                                "output": "/assets"
+                            }
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "src/**/*.ts",
+                            "src/**/*.html"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "front:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "front:serve:production"
+                        },
+                        "beta": {
+                            "devServerTarget": "front:serve:beta"
+                        },
+                        "dev": {
+                            "devServerTarget": "front:serve:dev"
+                        },
+                        "local": {
+                            "devServerTarget": "front:serve:local"
+                        },
+                        "ci": {
+                            "devServerTarget": "front:serve:ci"
+                        }
+                    }
+                },
+                "ionic-cordova-serve": {
+                    "builder": "@ionic/cordova-builders:cordova-serve",
+                    "options": {
+                        "cordovaBuildTarget": "front:ionic-cordova-build",
+                        "devServerTarget": "front:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "cordovaBuildTarget": "front:ionic-cordova-build:production",
+                            "devServerTarget": "front:serve:production"
+                        },
+                        "dev": {
+                            "cordovaBuildTarget": "front:ionic-cordova-build:dev",
+                            "devServerTarget": "front:serve:dev"
+                        },
+                        "local": {
+                            "cordovaBuildTarget": "front:ionic-cordova-build:local",
+                            "devServerTarget": "front:serve:local"
+                        },
+                        "beta": {
+                            "cordovaBuildTarget": "front:ionic-cordova-build:beta",
+                            "devServerTarget": "front:serve:beta"
+                        }
+                    }
+                },
+                "ionic-cordova-build": {
+                    "builder": "@ionic/cordova-builders:cordova-build",
+                    "options": {
+                        "browserTarget": "front:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "front:build:production"
+                        },
+                        "beta": {
+                            "browserTarget": "front:build:beta"
+                        },
+                        "dev": {
+                            "browserTarget": "front:build:dev"
+                        },
+                        "local": {
+                            "browserTarget": "front:build:local"
+                        }
+                    }
+                }
+            }
+        },
+        "admin": {
+            "root": "projects/admin",
+            "sourceRoot": "src",
+            "projectType": "application",
+            "prefix": "admin",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "admin/browser",
+                        "index": "src/admin/index.html",
+                        "main": "src/admin/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.app.json",
+                        "buildOptimizer": true,
+                        "optimization": true,
+                        "sourceMap": false,
+                        "namedChunks": false,
+                        "aot": true,
+                        "extractLicenses": true,
+                        "vendorChunk": false,
+                        "watch": false,
+                        "progress": true,
+                        "assets": [{
+                                "glob": "**/*",
+                                "input": "src/assets",
+                                "output": "assets"
+                            },
+                            {
+                                "glob": "**/*.svg",
+                                "input": "node_modules/ionicons/dist/ionicons/svg",
+                                "output": "./svg"
+                            }
+                        ],
+                        "styles": [
+                            "src/theme/variables.scss",
+                            "src/global.scss",
+                            "src/container.scss",
+                            "src/web-header-sections.scss",
+                            "src/global-media.scss",
+                            "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
+                            "scripts": [
+                                "src/assets/js/jquery.min.js",
+                                "src/assets/js/jquery-3.1.1.js",
+                                "src/assets/js/custom.js",
+                                "src/assets/js/dev-ganyalitics.js"
+                            ],
+                            "outputHashing": "all",
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2MB",
+                                "maximumError": "11MB"
+                            }]
+                        },
+                        "dev": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.dev.ts"
+                            }],
+                            "scripts": [
+                                "src/assets/js/jquery.min.js",
+                                "src/assets/js/jquery-3.1.1.js",
+                                "src/assets/js/custom.js",
+                                "src/assets/js/dev-ganyalitics.js"
+                            ],
+
+                            "outputHashing": "all",
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2MB",
+                                "maximumError": "11MB"
+                            }]
+                        },
+                        "local": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.local.ts"
+                            }],
+                            "scripts": [
+                                "src/assets/js/jquery.min.js",
+                                "src/assets/js/jquery-3.1.1.js",
+                                "src/assets/js/custom.js",
+                                "src/assets/js/dev-ganyalitics.js"
+                            ],
+                            "outputHashing": "all",
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2MB",
+                                "maximumError": "11MB"
+                            }]
+                        },
+                        "beta": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.beta.ts"
+                            }],
+                            "scripts": [
+                                "src/assets/js/jquery.min.js",
+                                "src/assets/js/jquery-3.1.1.js",
+                                "src/assets/js/custom.js",
+                                "src/assets/js/beta-ganyalitics.js"
+                            ],
+                            "index": "src/admin/beta-html/index.html",
+                            "outputHashing": "all",
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2MB",
+                                "maximumError": "11MB"
+                            }]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "admin:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "admin:build:production"
+                        },
+                        "dev": {
+                            "browserTarget": "admin:build:dev"
+                        },
+                        "local": {
+                            "browserTarget": "admin:build:local"
+                        },
+                        "beta": {
+                            "browserTarget": "admin:build:beta"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "admin:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.spec.json",
+                        "karmaConfig": "karma.conf.js",
+                        "styles": [],
+                        "scripts": [],
+                        "assets": [{
+                                "glob": "funder-favicon-F.ico",
+                                "input": "src/",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "src/assets",
+                                "output": "/assets"
+                            }
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "src/**/*.ts",
+                            "src/**/*.html"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "admin:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "admin:serve:production"
+                        },
+                        "dev": {
+                            "devServerTarget": "admin:serve:dev"  
+                        },
+                        "local": {
+                            "devServerTarget": "admin:serve:local"
+                        },
+                        "beta": {
+                            "devServerTarget": "admin:serve:beta"
+                        },
+                        "ci": {
+                            "devServerTarget": "admin:serve:ci"
+                        }
+                    }
+                },
+                "ionic-cordova-serve": {
+                    "builder": "@ionic/cordova-builders:cordova-serve",
+                    "options": {
+                        "cordovaBuildTarget": "admin:ionic-cordova-build",
+                        "devServerTarget": "admin:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "cordovaBuildTarget": "admin:ionic-cordova-build:production",
+                            "devServerTarget": "admin:serve:production"
+                        },
+                        "beta": {
+                            "cordovaBuildTarget": "admin:ionic-cordova-build:beta",
+                            "devServerTarget": "admin:serve:beta"
+                        },
+                        "dev": {
+                            "cordovaBuildTarget": "admin:ionic-cordova-build:dev",
+                            "devServerTarget": "admin:serve:dev"
+                        },
+                        "local": {
+                            "cordovaBuildTarget": "admin:ionic-cordova-build:local",
+                            "devServerTarget": "admin:serve:local"
+                        }
+                    }
+                },
+                "ionic-cordova-build": {
+                    "builder": "@ionic/cordova-builders:cordova-build",
+                    "options": {
+                        "browserTarget": "admin:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "admin:build:production"
+                        },
+                         "dev": {
+                            "browserTarget": "admin:build:dev"
+                        },
+                         "local": {
+                            "browserTarget": "admin:build:local"
+                        },
+                         "beta": {
+                            "browserTarget": "admin:build:beta"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "cli": {
+         "analytics": false
+    },
+    "schematics": {
+        "@ionic/angular-toolkit:component": {
+            "styleext": "scss"
+        },
+        "@ionic/angular-toolkit:page": {
+            "styleext": "scss"
+        }
+    }
+}

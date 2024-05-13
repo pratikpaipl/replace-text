@@ -1,0 +1,217 @@
+ion-select {
+    text-align: left !important;
+}
+
+.forms_row {
+    display: flex;
+    margin: 0 -15px;
+    align-items: flex-start;
+}
+
+.forms_row ion-col {
+    padding: 0 15px;
+}
+
+.left_navigation {
+    position: relative;
+    left: 0;
+    width: 100%;
+    margin: 0px;
+    background: var(--ion-color-white);
+    padding: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+}
+
+.left_navigation ion-label {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 30px;
+    line-height: 30px;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--ion-color-dark-gray);
+    text-align: left;
+    cursor: pointer;
+    border-right: 2px solid transparent;
+    border-right-color: transparent;
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -ms-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    transition: all 500ms ease;
+    font-weight: 400;
+}
+
+.left_navigation ion-label .icons {
+    position: sticky;
+    font-size: 20px;
+    color: var(--ion-color-light-shade-blue2);
+    text-align: left;
+    width: 32px;
+    flex: 0 0 32px;
+}
+
+.left_navigation ion-label.active .icons {
+    color: #1b2032;
+}
+
+.left_navigation ion-label.active {
+    color: #1b2032;
+    border-color: #1b2032;
+    background: #f9fafc;
+}
+
+.forms_headers {
+    position: relative;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    background: var(--ion-color-white);
+    padding: 10px 30px;
+    border-bottom: 1px solid #f1f3f7;
+    min-height: 60px;
+}
+
+.forms_headers .heading {
+    position: relative;
+    font-size: 18px;
+    line-height: 30px;
+    color: #1b2032;
+    font-weight: 400;
+}
+
+.forms_headers .heading i {
+    font-size: 24px;
+    margin-right: 10px;
+    line-height: 30px;
+    color: var(--ion-color-light-shade-blue2);
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 23px;
+}
+
+.forms_body {
+    position: relative;
+    padding: 15px 15px 10px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.forms_body:last-child {
+    border: none !important;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group ion-label {
+    font-size: 15px;
+    line-height: 28px;
+    color: #1b2032;
+    margin-bottom: 3px;
+    display: inline-block;
+}
+
+select option {
+    color: var(--ion-color-dark-gray) !important;
+    font-size: 15px !important;
+    line-height: 30px !important;
+}
+
+
+.uploadButton .uploadButton-input {
+    opacity: 0;
+    position: absolute;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+    display: none;
+}
+
+.uploadButton {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.uploadButton .uploadButton-button:hover {
+    border-color: #021f4a;
+}
+
+.uploadButton .uploadButton-file-name {
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0 10px;
+    padding-left: 18px;
+    min-height: 36px;
+    top: 1px;
+    position: relative;
+    color: #1b2032;
+    background-color: transparent;
+    overflow: hidden;
+    line-height: 22px;
+}
+
+.notes {
+    position: relative;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ion-color-dark-gray);
+    display: block;
+}
+
+.uploadButton .uploadButton-button i {
+    color: var(--ion-color-light-shade-blue2);
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+ion-button.btn-red {
+    margin-right: 25px !important;
+}
+
+.button_box {
+    margin-top: 20px;
+}
+
+.right-btn-continer ion-label {
+    padding-left: 15px;
+    flex: 0 0 137px;
+    cursor: pointer;
+}
+
+.right-btn-continer ion-label {
+    display: flex;
+}
+
+.right-btn-continer ion-label ion-img {
+    margin-right: 5px;
+}
+
+.right-btn-continer {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .right-btn-continer ion-label {
+        padding-left: 0px;
+    }
+    .right-btn-continer {
+        display: block;
+    }
+}
+
+.forms_block {
+    overflow: visible !important;
+}

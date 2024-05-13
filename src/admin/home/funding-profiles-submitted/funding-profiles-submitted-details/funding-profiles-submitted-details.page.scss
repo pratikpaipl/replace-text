@@ -1,0 +1,29 @@
+.card_list {
+    padding: 0px 0px 30px 0px;
+}
+
+.page_wapper {
+    padding: 0px !important;
+    background: white;
+}
+
+.filter_nav.permission {
+    // margin: 0px -10px !important;
+    display: flex;
+}
+
+
+#serch_component {
+    padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+    
+    .filter_nav.permission {
+        display: block;
+    }
+    .filter_nav .add_buttons:nth-child(2) {
+        display: inline-flex;
+        margin-top: 5px;
+    }
+}

@@ -1,0 +1,38 @@
+<web-page-header></web-page-header>
+<ion-content #content id="page" [scrollEvents]="true" (ionScroll)="function($event)">
+    <seo-hidden-tag [head]="store.getVal('website_key_124')" [description]="store.getVal('website_key_125')" ></seo-hidden-tag>
+    <div class="section section-white overflow-hidden" style="padding-top:0px;">
+        <section class="padding-bottom b2bmarket" id="three">
+            <div class="container-fluid methodology-areasection">
+                <div class="container container-lg">
+                    <div class="row fadeInUp">
+                        <div class="col-12">
+                            <div class="heading text-center" data-aos="fade-down">
+                                <h2>{{store.getVal('website_key_28')}}</h2>
+                            </div>
+                        </div>                        
+                        <div class="col-12 margin-top" style="display: flex;
+                        justify-content: center;;">
+                            <div class="methodology-box" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                             <ion-grid >
+                                <ion-row class="header-row">
+                                    <ion-col><ion-label class="key-features">{{store.getVal('website_key_60')}}</ion-label></ion-col>
+                                    <ion-col class="enablers-col"><ion-label class="data-header-lbl">{{store.getVal('website_key_61')}}</ion-label></ion-col>
+                                    <ion-col class="InvestorsInvestees-col"><ion-label class="data-header-lbl">{{store.getVal('website_key_62')}}</ion-label></ion-col>
+                                </ion-row>
+                                <ion-row class="data-row" *ngFor="let item of viewItems">
+                                    <ion-col><ion-label style="text-align: left;">{{item.KeyFeatures}}</ion-label></ion-col>
+                                    <ion-col class="enablers-col"><i [class]="item.Enablers"></i></ion-col>
+                                    <ion-col  class="InvestorsInvestees-col"><i *ngIf="item.InvestorsAndInvesteesMsg == ''" [class]="item.InvestorsAndInvestees"></i><ion-label *ngIf="item.InvestorsAndInvesteesMsg != ''">{{item.InvestorsAndInvesteesMsg}}</ion-label> </ion-col>
+                                </ion-row>
+                             </ion-grid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <page-contact [msg]="store.getVal('website_key_74')" btn="website_key_26"></page-contact>
+    </div>
+    <web-page-footer></web-page-footer>
+</ion-content>

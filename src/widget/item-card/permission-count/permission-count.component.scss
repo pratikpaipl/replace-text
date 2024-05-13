@@ -1,0 +1,157 @@
+.filter_count_list {
+    display: flex;
+    align-items: center;
+    margin:0px;
+}
+
+.filter_count_list ion-label {
+    position: relative;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px 0px 0px;
+    white-space: nowrap;
+}
+
+.filter_count_list ion-label .contents {
+    display: block;
+    font-size: 15px !important;
+}
+
+.filter_count_list ion-label .icons {
+    position: relative;
+    display: inline-block;
+    height: 0px;
+    width: 0px;
+    border-radius: 50%;
+    color: var(--ion-color-white);
+    line-height: 30px;
+    text-align: center;
+    font-size: 16px;
+    background-color: var(--ion-color-logo-red);
+    margin-right: 0px;
+    visibility: hidden;
+}
+
+.filter_count_list ion-label .icon {
+    position: relative;
+    height: 30px;
+    width: 30px;
+    display: block;
+    font-size: 13px;
+    color: var(--ion-color-black);
+    font-weight: 400;
+    border: 1px solid var(--ion-color-black);
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+    flex: 0 0 30px;
+}
+
+.vagen_icons_list {
+    display: flex;
+    align-items: center;
+    min-width: 102px;
+    justify-content: flex-end;
+}
+
+.lbl-img {
+    margin: 0px !important;
+    display: flex !important;
+    max-width: 80px;
+    overflow: hidden;
+}
+
+.vagen_icons_list ion-label {
+    font-size: 15px;
+    line-height: 15px;
+    margin-left: 4px;
+}
+
+ion-label.web-d-none.labels {
+    display: none !important;
+}
+
+.prod-title span a {
+    max-width: 100% !important;
+    padding-right: 0px !important;
+}
+
+.prod-title {
+    padding-right: 0px !important;
+}
+
+
+.filter_count_list .count_list {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+@media (max-width: 992px) {
+    .counts_row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0px -8px;
+    }
+    .counts_row ion-col {
+        flex: 0 0;
+        padding: 0px 8px;
+    }
+    .filter_count_list {
+        margin: 8px;
+    }
+}
+
+
+@media (max-width: 680px) {
+   
+    .vagen_icons_list {
+        display: none !important;
+    }
+
+    .counts_row ion-col {
+        flex: 0 0;
+        padding: 0px !important;
+    }
+    .counts_row {
+        margin: 0px;
+    }
+}
+
+@media (max-width: 640px) {
+    .prod-title span a {
+        max-width: 100% !important;
+        padding-right: 0px !important;
+    }
+    .prod-title {
+        padding-right: 0px !important;
+    }
+    .counts_row {
+        flex-wrap: wrap !important;
+        align-items: flex-start !important;
+    }
+    .count_list {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .vagen_icons_list {
+        min-width: 88px;
+        justify-content: flex-start !important;
+        margin-top: 8px;
+        margin-left: 3px;
+    }
+    .lbl-img {
+        max-width: 66px;
+    }
+    .vagen_icons_list ion-label {
+        font-size: 14px !important;
+        line-height: 15px;
+        margin-left: 2px;
+        margin-top: 8px !important;
+        padding-left: 3px !important;
+    }
+}

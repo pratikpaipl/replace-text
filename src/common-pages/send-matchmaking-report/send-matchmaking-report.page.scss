@@ -1,0 +1,87 @@
+ion-title {
+  text-transform: capitalize;
+}
+
+.wrap {
+  position: relative;
+  // display: inline-block;
+}
+.wrap span {
+  position: absolute;
+  bottom: 5px;
+  right: 0px;
+  }
+.counter{
+  background-color: var(--ion-color-dark-green);
+  color: var(--ion-color-white);
+  font-size: 10px;
+  padding: 2px 5px;
+  line-height: 12px;
+  height: 14px;
+  text-align: center;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  font-weight: 400;
+}
+
+.contact_forms .form-group span.errorMsg {
+  color: var(--ion-color-red);
+  padding-top: 5px;
+  line-height: 14px;
+  font-size: 14px !important;
+  display: block;
+}
+
+.contact_forms .form-control.error {
+  border: 1px solid var(--ion-color-red);
+}
+
+.info-line {
+  color: var(--ion-color-red);
+  font-weight: bold;
+}
+
+ion-chip{
+  background-color: var(--ion-color-gray-96);
+  cursor: auto;
+  font-size: 17px;
+  padding: 10px;
+  height: auto;
+  border-radius: 40px;
+}
+// .formbold-input-file {
+//   margin: 15px 0px;
+//   flex-wrap: wrap;
+//   display: inline-flex;
+// }
+
+label.formbold-input-label {
+  align-items: center !important;
+  display: inline-flex;
+  white-space: nowrap;
+}
+.chkboxs_items{
+  display: flex;
+}
+ion-item{
+  --padding-start: 0px;
+  width: auto;
+  display: block;
+  --border-color: transparent;
+  --background-focused: transparent;
+}
+input#upload {
+  margin-left: 5px;
+}
+
+
+.form-group.chkboxs_items ion-item ion-label {
+  font-size: 14px !important;
+  white-space: normal;
+}
+
+@media (max-width: 830px){
+  ion-chip{
+      display: block;
+  }
+}
