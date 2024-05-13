@@ -22,6 +22,8 @@ jobs:
 
     - name: Commit and push changes
       run: |
+       git config --local user.email "pratikpa.aipl@gmail.com"
+        git config --local user.name "Pratik Pagada"
         git add .
         git commit -m "Automated text replacement"
         git push origin test
