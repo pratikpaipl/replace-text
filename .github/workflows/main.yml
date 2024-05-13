@@ -10,19 +10,20 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.1.0
       
       # Add this step to add an exception for the workspace directory
       - name: Add exception for workspace directory
-        run: git config --global --add safe.directory /github/workspace
+        run: git config --system --add safe.directory '*'
+        # run: git config --global --add safe.directory /github/workspace
 
       - name: Setup Node.js 20
         uses: actions/setup-node@v2
         with:
           node-version: '20'
 
-      # - name: Create new branch
-      #   run: git checkout -b text-replace-test
+      - name: Create new branch
+        run: git checkout -b text-replace-test
       
       - name: Replace text
         run: |
@@ -40,4 +41,4 @@ jobs:
         uses: ad-m/github-push-action@v0.5.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          branch: text-replace-test
