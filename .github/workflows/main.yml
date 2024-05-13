@@ -3,7 +3,7 @@ name: Replace Text and Create Branch
 on:
   push:
     branches:
-      - design-update # Change this to your main branch name
+      - main # Change this to your main branch name
 
 jobs:
   replace-text:
